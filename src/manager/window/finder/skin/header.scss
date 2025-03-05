@@ -1,0 +1,20 @@
+&-topbar{
+  &__container{
+    flex: 1;
+    border-bottom: 1px solid $default-text-color;
+    border-radius: $default-border-radius-top;
+    height: 44px;
+  }
+  &__title{
+    margin: auto;
+    @include typo($size:14px,$line:21px,$weight:300,$color:$default-text-color);
+  };
+  &__control{
+    position: absolute;
+    height: 100%;
+    right: 0;    
+    .icon{
+      color: #2F2F2F;
+    }
+  }
+}

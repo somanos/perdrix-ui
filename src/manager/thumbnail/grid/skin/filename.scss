@@ -1,0 +1,51 @@
+.filename {
+  cursor: pointer;
+  //left: 0px;
+  max-height: 31px;
+  overflow: hidden;
+  padding: 2px 12px;
+  position: absolute;
+  text-align: center;
+  text-overflow: ellipsis;
+  width: calc(100% - 0px);
+  border-radius:$default-border-radius-bottom;
+  @include typo($line: 14px, $size: 11px, $color: $core-default-text-color);
+
+  &[data-hover="on"] {
+    color: $core-default-text-color;
+    &.image-capable{
+      background-color: rgb(255,255,255, 0.4);
+    }
+  }
+  &.image-capable{
+    background-color: rgb(55,55,55, 0.3);
+  }
+
+}
+
+.filename-tooltips {
+  background: $core-default-block-background;
+  border-radius: $default-border-radius-bottom-small;// 0 0 4px 4px;
+  display: none;
+  max-height: calc(100% - 5px);
+  max-width: 100%;
+  opacity: 0;
+  overflow-wrap: anywhere;
+  padding: 6px 4px;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity 1ms;
+  white-space: pre-wrap;
+  @include typo($line:14px,$size:10px,$weight:400,$color:$core-default-text-color);
+
+  &[data-hover="on"] {
+    background-color: $ewhite;
+    color: $core-default-text-color;
+    display: block;
+    opacity: 1;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 20;
+  }
+}

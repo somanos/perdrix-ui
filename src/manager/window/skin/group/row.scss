@@ -1,0 +1,297 @@
+&__row {
+  &-wrapper {
+    @include typo($color: $core-default-text-color, $size: 16px);
+    background-color: $core-default-block-background;
+    border-radius: 6px;
+    box-sizing: border-box;
+    height: 100%;
+    margin-bottom: 18px;
+    max-height: 46px;
+    width: 100%;
+    padding: 0 5px;
+  }
+
+  &-container {
+    display: grid;
+    grid-template-columns: 46px minmax(100px, 100%) 46px;
+    grid-template-rows: 100%;
+    height: 100%;
+    width: 100%;
+
+    &.signle-line {
+      height: 46px;
+    }
+
+    &.acknowledge {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      height: auto;
+    }
+  }
+
+  &-entry {
+    &.with-icon {
+      border: none;
+      height: 100%;
+      width: 100%;
+    }
+
+    &.name {
+      background-color: $core-default-block-background;
+    }
+
+    & .entry-reminder {
+      &__main {
+        &.showerror {
+          overflow: visible;
+          padding-bottom: 0;
+          min-height: 34px;
+
+          .entry-reminder_error {
+            z-index: 100000;
+            min-width: 200px;
+            height: auto;
+            bottom: 10px;
+          }
+        }
+
+        textarea,
+        input {
+          @include typo($size: 16px, $line: 20px, $color: $core-default-text-color);
+          background-color: $core-default-block-background;
+          border: 0;
+          border-radius: 6px;
+          flex: 1;
+          height: 100%;
+          padding-left: 10px;
+        }
+
+        textarea {
+          padding-top: 5px;
+          height: calc(100% - 7px);
+          min-height: 94px;
+          resize: none;
+          overflow: auto;
+        }
+      }
+
+      &__input-wrap,
+      &__component {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    &[data-status="error"] {
+      border: 1px solid $core-default-border-error;
+      border-radius: 6px;
+    }
+  }
+
+  &-icon {
+    color: $core-default-icon-neutral;
+    width: 100%;
+    padding: 17px;
+
+    // &.small {
+    //   width: 16px;
+    // }
+
+    &.action {
+      cursor: pointer;
+
+      &:hover {
+        //border: 2px solid $btn-rollback-border-hover ;
+        color: $btn-rollback-text-hover;
+      }
+    }
+
+    &.medium {
+      padding: 14px;
+    }
+
+    &.acknowledge {
+      height: 46px;
+      width: 46px;
+    }
+
+    &.type-info,
+    &.big {
+      padding: 10px;
+
+      svg {
+        margin-left: -3px;
+      }
+    }
+
+    &.message {
+      height: 18px;
+      margin: 0 9px 0 9px;
+      top: 6px;
+    }
+
+    &.info-icon {
+      color: $core-special-icon-info;
+      cursor: pointer;
+      height: 25px;
+      padding: 5px;
+      width: 25px;
+      position: absolute;
+      right: 5px;
+      top: 10px;
+
+      .tooltips {
+        &:before {
+          background: $core-background-tooltips;
+          border-radius: 1px;
+          content: '';
+          height: 10px;
+          position: absolute;
+          left: 70px;
+          top: -5px;
+          transform: rotate(45deg);
+          width: 10px;
+        }
+
+        background-color: $core-background-tooltips;
+        @include typo($size: 11px, $line: 15px, $color: $core-default-text-tooltips);
+        border-radius:$default-border-radius;
+        font-size: 11px;
+        max-width: 300px;
+        min-width: 210px;
+        padding: 5px 10px;
+        position: absolute;
+        left: -62px;
+        top: 30px;
+        text-align: center;
+        text-align: justify;
+        text-overflow: ellipsis;
+        z-index: 200000;
+        // overflow: hidden;
+        // white-space: nowrap;
+      }
+    }
+  }
+
+  &-label {
+    @include typo($size: 16px, $line: 16px, $color: $core-default-text-title);
+    width: 100%;
+    align-items: center;
+    &.acknowledge {
+      width: auto;
+    }
+  }
+
+  &-note {
+    &.label {
+      @include typo($size: 13px, $line: 16px, $color: $core-default-text-title);
+      max-width: 150px;
+      padding-left: 5px;
+      width: 100%;
+    }
+
+    &.tips {
+      @include typo($size: 12px, $line: 1.5, $weight: 300, $color: $core-default-text-title);
+      align-items: center;
+      margin-bottom: 18px;
+      width: 40%;
+    }
+  }
+
+  &-button-wrapper {
+    align-items: center;
+    height: 120px;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &-button {
+    &.button {
+      align-items: center;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 46px;
+      justify-content: center;
+      width: 180px;
+    }
+
+    &.action-btn {
+      @include typo($size: 18px, $line: 28px, $color: $core-default-text-reverse);
+      align-items: center;
+      background: $core-background-btn-active;
+
+      &:hover {
+        background-color: $btn-commit-background-hover;
+        border-color: $btn-commit-border-hover;
+      }
+    }
+
+    &.cancel-btn {
+      @include typo($size: 18px, $line: 28px, $color: $btn-rollback-text);
+      border: 1px solid $btn-rollback-border;
+
+      &:hover {
+        border: 2px solid $btn-rollback-border-hover ;
+        color: $btn-rollback-text-hover;
+      }
+    }
+  }
+
+  &-switch {
+    //padding: 10px 0px 0px 0px; //10px 0px 0px 50px;
+    width: 100%;
+    justify-content: center;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+
+    & .button-switch {
+      &__toggle {
+
+        &.on,
+        &.off {
+          @include typo($size: 16px, $line: 44px);
+          text-align: left;
+          width: auto;
+        }
+
+        &.on {
+          color: $core-default-text-color;
+          opacity: 1;
+
+          &[data-state="0"] {
+            opacity: 0.6;
+          }
+        }
+
+        &.off {
+          color: $core-default-text-color;
+
+          &[data-state="1"] {
+            opacity: 0.6;
+          }
+        }
+
+        &.change {
+          padding: 0 5px;
+
+          & .inner.note-content {
+            background-color: $admin-toggle-background;
+            border-radius: $default-border-radius-small;
+            height: 4px;
+            width: 24px;
+          }
+
+          &::before,
+          &::after {
+            background-color: $admin-toggle-switch-radio;
+            height: 12px;
+            opacity: 0.7;
+            padding: 4px 0 3px;
+            width: 12px;
+          }
+        }
+      }
+    }
+  }
+}

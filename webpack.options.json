@@ -1,0 +1,8 @@
+{
+  "dev": {
+    "bundle_path": "/home/somanos/DrumeeLocal/local.drumee/somanos/serp/app",
+    "public_path": "/app/",
+    "output_filename":"[name].js"
+,    "mode": "development"
+  }
+}

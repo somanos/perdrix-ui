@@ -1,0 +1,64 @@
+&__title{
+//  padding:10px 9px 10px 10px;
+  justify-content: center;
+  @include typo($size:16px,$line:22px,$weight:400,$color:$core-default-text-color);//$size:18px
+}
+&__header{
+  .dialog__button--close{
+    margin-top: -26px;
+    right:-16px;
+  }
+}
+
+
+
+// &-topbar{
+//   &__icon{
+//     width: 20px; 
+//     height: 20px;
+//     margin: auto 0 auto 15px;
+//     color:$default-icon-reverse;  
+//     &.desktopgroup{
+//       margin-top: 11px;
+//     }
+//     &:hover{
+//       color:$default-icon-hover;
+//       opacity:1;
+//     }
+//   }
+//   &__control{
+//     .icon{
+//       width: 12px;
+//       height: 12px;
+//       margin: auto 15px auto 0;
+//       padding: 0;
+//       color:$default-icon-reverse; 
+//     }
+//   }
+// }
+
+// &__topbar{
+//   &-container{
+//     width: 100%;
+//     height: auto;
+//     justify-content: center;
+//   }
+//   &-title{
+//     align-items: center;
+//     max-width: 200px;
+//     justify-content: center;
+//     margin: auto;
+//     .name {
+//       @include overflow-text;
+//       @include typo($size:18px,$line:24px,$weight:400,$color:$default-text-reverse);
+//       width: 316px;
+//       justify-content: center;
+//       .inner{
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//         white-space: nowrap;
+//       }
+//     }
+//   }
+// }
+
