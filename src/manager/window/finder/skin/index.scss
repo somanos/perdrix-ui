@@ -5,16 +5,16 @@
 
   &__ui {
     background-color: $core-default-background;
-    width: 626px;
-    height: 525px;
+    width: 800px;
+    height: 600px;
     box-shadow: $drumee-shadow-container;
     overflow: visible;
     min-width: 340px;
     min-height: 200px;
     flex-direction: column;
     display: flex;
-    left: calc(50vw - 300px);
-    top: 85px;
+    left: calc(50vw - 400px);
+    top: 60px;
     max-width: 100vw;
     max-height: 100vh;
     z-index : 10001 !important;
@@ -24,15 +24,16 @@
       left: 0;
       top: 0;
     }
-
-    // &[data-state="0"] {
-    //   display: none;
-    // }
   }
 
   &__main {
     width: 100%;
     height: 100%;
     align-items: center;
+  }
+
+  &__content-results {
+    width: 100%;
+    height: 100%;
   }
 }

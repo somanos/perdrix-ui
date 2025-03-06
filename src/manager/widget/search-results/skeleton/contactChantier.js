@@ -12,6 +12,7 @@
 function contactchantierview(ui) {
   const { nomClient, numVoie, typeVoie, nomVoie, nom, telBureau, telDom, mobile, fax } = ui.mget(_a.content);
   const kids = [
+    require('./header')(ui, 'user_settings', "Contact Chantier"),
     require('./cartridge')(ui, 'Nom du contact', nom),
     require('./cartridge')(ui, 'Telephone Bureau', telBureau),
     require('./cartridge')(ui, 'Telephone Domicile', telDom),
@@ -21,10 +22,6 @@ function contactchantierview(ui) {
     require('./cartridge')(ui, 'Nom du client', nomClient),
     require('./cartridge')(ui, 'Adresse du client', [numVoie, typeVoie, nomVoie].join(' '))
   ]
-  let icon = Skeletons.Button.Svg({
-    className: `${ui.fig.family}__icon`,
-    ico: "user_settings"
-  })
-  return { kids, icon };
+  return kids;
 }
 module.exports = contactchantierview;

@@ -3,6 +3,10 @@ require('./skin');
 const Leaflet = require('leaflet');
 require('leaflet/dist/leaflet.css');
 
+function px(v){
+  return `${v}px`
+}
+
 class __perdrix_manager extends DrumeeWm {
   constructor(...args) {
     super(...args);
@@ -68,10 +72,10 @@ class __perdrix_manager extends DrumeeWm {
         string,
         trigger: source,
         uiHandler: [source],
-        style: {
-          top: top + source.$el.height(),
-          left,
-        }
+        // style: {
+        //   top: top + source.$el.height(),
+        //   left,
+        // }
       };
       this.windowsLayer.append(item);
       return
@@ -150,15 +154,15 @@ class __perdrix_manager extends DrumeeWm {
       let html = require("./thumbnail/template/location")(loc);
       //this.debug("AAA:147", loc, html, c);
       let { left, top } = media.$el.offset();
-      c.el.style.left = Utils.px(left);
+      c.el.style.left = px(left);
       if (!lon || !lat) {
         if (mode == 'single-line') {
-          c.el.style.top = Utils.px(top - 53);
+          c.el.style.top = px(top - 53);
         } else {
-          c.el.style.top = Utils.px(top - 70);
+          c.el.style.top = px(top - 70);
         }
       } else {
-        c.el.style.top = Utils.px(top - 214);
+        c.el.style.top = px(top - 214);
       }
       c.el.dataset.state = "1";
       c.el.dataset.mode = mode;

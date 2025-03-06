@@ -1,8 +1,3 @@
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2021
-//   FILE : /src/drumee/builtins/window/search/index.js
-//   TYPE : Component
-// ==================================================================== *
 const __window = require('..');
 
 class __window_finder extends __window {
@@ -21,6 +16,7 @@ class __window_finder extends __window {
     if (!opt.words || opt.words.length < 3) {
       opt.dataset = { ...opt.dataset, state: _a.closed };
     }
+    opt.noDefaultStyle = true;
     super.initialize(opt);
     this.isSearch = 1;
     this.model.set({
@@ -39,6 +35,7 @@ class __window_finder extends __window {
       delete this.sources[source.cid];
       this.hide();
     });
+    this.style.unset();
     this.style.set({
       display: _a.none
     })
@@ -64,7 +61,7 @@ class __window_finder extends __window {
     }
   }
 
-
+ 
   getCurrentApi() {
     return {
       service: 'perdrix.search',
@@ -97,8 +94,8 @@ class __window_finder extends __window {
     }
     this.debug("AAA:101", words);
     let { top, left } = source.$el.offset();
-    this.el.style.top = (top + source.$el.height()) + 'px';
-    this.el.style.left = left + 'px';
+    // this.el.style.top = (top + source.$el.height()) + 'px';
+    // this.el.style.left = left + 'px';
     this.el.style.display = 'flex';
     if (!this.sources[source.cid]) {
       this.sources[source.cid] = 1;
@@ -147,7 +144,6 @@ class __window_finder extends __window {
       this.hide();
     }
     this.feed(require("./skeleton")(this));
-    this.setupInteract();
   }
 
   /**
@@ -157,6 +153,9 @@ class __window_finder extends __window {
     switch (pn) {
       case _a.content:
         child.feed(require('./skeleton/results')(this));
+        break;
+      case "window-header":
+        this.setupInteract();
         break;
     }
   }

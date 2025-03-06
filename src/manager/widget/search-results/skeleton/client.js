@@ -13,15 +13,10 @@ function clientview(ui) {
   const { nomClient, numVoie, typeVoie, nomVoie } = ui.mget(_a.content);
 
   const kids = [
+    require('./header')(ui, 'account_contacts', "Client"),
     require('./cartridge')(ui, 'Nom', nomClient),
     require('./cartridge')(ui, 'Adresse', [numVoie, typeVoie, nomVoie].join(' ')),
   ]
-  
-  let icon = Skeletons.Button.Svg({
-    className: `${ui.fig.family}__icon`,
-    ico: "account_contacte"
-  })
-
-  return {kids, icon};
+  return kids;
 }
 module.exports = clientview;

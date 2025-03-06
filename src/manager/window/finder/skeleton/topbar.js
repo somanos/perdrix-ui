@@ -15,7 +15,7 @@ module.exports = function(_ui_) {
             sys_pn: "topbar-name",
             kids: [Skeletons.Note(LOCALE.SEARCH_RESULTS)]})
         ]}),
-      Skeletons.Window.TopbarControl(_ui_, "vsc")
+      Skeletons.Window.TopbarControl(_ui_, "sc")
     ]});
 
   return a;

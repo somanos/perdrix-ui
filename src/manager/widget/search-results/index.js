@@ -3,7 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 
-class __client_list extends LetcBox{
+class __search_result extends LetcBox{
 
   //constructor(...args) {
   //  super(...args);
@@ -17,7 +17,7 @@ class __client_list extends LetcBox{
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.debug(`client_list`, opt)
+    this.debug(`search-result`, opt)
     /* uncomment below line to subscribe to websocket events */
     // this.bindEvent("live");
   }
@@ -86,4 +86,4 @@ class __client_list extends LetcBox{
   //}
 }
 
-module.exports = __client_list
+module.exports = __search_result

@@ -1,12 +1,3 @@
-//[data-flow].window, .window {
-// [data-flow] is no longer necessary, and it has some performance cost
-// @import 'mixins/colors/index.scss';
-// @import 'mixins/typo.scss';
-// @import 'mixins/exports.scss';
-// @import 'mixins/handles.scss';
-// @import 'mixins/utils.scss';
-// @import 'mixins/vendor.scss';
-// @import 'mixins/z-index.scss';
 @import "mixins/drumee";
 @import "warning.scss";
 

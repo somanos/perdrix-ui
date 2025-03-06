@@ -9,21 +9,22 @@
  * @returns 
  */
 
-function cartridge(ui, label, text) {
-  return Skeletons.Box.G({
-    className: `${ui.fig.family}__cartridge`,
+function header(ui, ico, content) {
+  let icon = Skeletons.Button.Svg({
+    className: `${ui.fig.family}__icon-header`,
+    ico,
+  })
+  return Skeletons.Box.X({
+    className: `${ui.fig.family}__cartridge-header`,
     debug: __filename,
     kids: [
+      icon,
       Skeletons.Note({
-        className: `${ui.fig.family}__label`,
-        content: label
-      }),
-      Skeletons.Note({
-        className: `${ui.fig.family}__text`,
-        content: text
+        className: `${ui.fig.family}__text type`,
+        content
       }),
     ]
   })
 
 }
-module.exports = cartridge;
+module.exports = header;

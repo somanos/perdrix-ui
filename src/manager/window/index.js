@@ -9,21 +9,12 @@ class __window_perdrix extends DrumeeInteractWindow {
    * 
    * @param {*} opt 
    */
-  async initialize(opt) {
-    this.size = {
-      width: 600,
-      height: 450
-    }
+  // async initialize(opt) {
 
-    super.initialize(opt);
+  //   super.initialize(opt);
+  //   RADIO_BROADCAST.on(_e.responsive, this._responsive);
 
-    this.style.set({
-      width: this.size.width,
-      height: this.size.height
-    });
-    RADIO_BROADCAST.on(_e.responsive, this._responsive);
-
-  }
+  // }
 
   static initClass() {
     this.prototype.behaviorSet = {

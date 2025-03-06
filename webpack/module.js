@@ -2,7 +2,6 @@ const Path = require("path");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function(basedir, mode){
-  console.log("Bbbbbbbbbb", Path.resolve(basedir, 'src', 'skin'));
   let prodution = /^prod/.test(mode);
   a = {
     rules: [{
