@@ -23,7 +23,7 @@ function found_item(ui) {
       break;
   }
   const skeleton = Skeletons.Box.Y({
-    className: `${ui.fig.family}__main`,
+    className: `${ui.fig.family}__main ${ui.mget('ctype')}`,
     debug: __filename,
     kids: [
       Skeletons.Box.Y({

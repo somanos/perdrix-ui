@@ -26,6 +26,7 @@ module.exports = function(basedir, mode){
           loader: 'sass-loader',
           options:{
             sourceMap: true,
+            // api: "modern",
             sassOptions: {
               sourceMap: true,
               sourceMapEmbed: true,

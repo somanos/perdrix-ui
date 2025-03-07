@@ -9,13 +9,15 @@
  * @returns 
  */
 function chantierview(ui) {
-  const { nomClient, numVoie, typeVoie, nomVoie } = ui.mget(_a.content);
-
+  const {
+    nomClient, clientId, numVoie, typeVoie, nomVoie
+  } = ui.mget(_a.content);
+  const itemId = ui.mget('itemId');
+  const adresse = [numVoie, typeVoie, nomVoie].join(' ');
   const kids = [
     require('./header')(ui, 'maintenance', "Chantier"),
-    require('./cartridge')(ui, 'Nom du client', nomClient),
-    require('./cartridge')(ui, 'Adresse du chantier',
-      [numVoie, typeVoie, nomVoie].join(' ')),
+    require('./cartridge')(ui, 'Nom du client', nomClient, clientId),
+    require('./cartridge')(ui, 'Adresse du chantier', adresse, itemId),
   ]
   return kids;
 }

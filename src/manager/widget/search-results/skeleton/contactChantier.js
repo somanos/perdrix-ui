@@ -10,17 +10,26 @@
  */
 
 function contactchantierview(ui) {
-  const { nomClient, numVoie, typeVoie, nomVoie, nom, telBureau, telDom, mobile, fax } = ui.mget(_a.content);
+  const {
+    nomClient, numVoie, typeVoie, nomVoie, clientId, civilite,
+    nom, telBureau, telDom, mobile, fax, email, categorie
+  } = ui.mget(_a.content);
+  let name = `${civilite} ${nom}`;
+  if (categorie) name = `${name} (${categorie})`;
+  let telbur, teldom, telport, telecopy;
+  if (telBureau) telbur = require('./cartridge')(ui, 'Telephone Bureau', telBureau);
+  if (telDom) teldom = require('./cartridge')(ui, 'Telephone Bureau', telBureau);
+  if (mobile) telport = require('./cartridge')(ui, 'Telephone Bureau', telBureau);
+  if (fax) telecopy = require('./cartridge')(ui, 'Telephone Bureau', telBureau);
+
   const kids = [
-    require('./header')(ui, 'user_settings', "Contact Chantier"),
-    require('./cartridge')(ui, 'Nom du contact', nom),
-    require('./cartridge')(ui, 'Telephone Bureau', telBureau),
-    require('./cartridge')(ui, 'Telephone Domicile', telDom),
-    require('./cartridge')(ui, 'Telephone mobile', mobile),
-    require('./cartridge')(ui, 'Fax', fax),
-    require('./cartridge')(ui, 'Nom du contact', nomClient),
-    require('./cartridge')(ui, 'Nom du client', nomClient),
-    require('./cartridge')(ui, 'Adresse du client', [numVoie, typeVoie, nomVoie].join(' '))
+    require('./header')(ui, 'desktop_mysharing', "Contact Chantier"),
+    require('./cartridge')(ui, 'Nom du contact', `${name}`),
+    require('./cartridge')(ui, 'Email', email),
+    telBureau, telDom, mobile, telecopy,
+    require('./cartridge')(ui, 'Nom du client', nomClient, clientId),
+    require('./cartridge')(ui, 'Adresse du client',
+      [numVoie, typeVoie, nomVoie].join(' '), clientId)
   ]
   return kids;
 }

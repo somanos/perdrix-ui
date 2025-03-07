@@ -1,119 +1,140 @@
-&__header {
-  background-color: orange;
-  border-radius: $default-border-radius-top;
-  width: 100%;
-  z-index: 200;
-}
+@use "mixins/drumee";
 
-&-topbar {
-  &__container {
-    height: 44px;
-    width: 100%;
-    &[data-device="mobile"] {
-      min-width: 305px;
-      height: 35px;
-    }
-    flex: 1;
-    flex-direction: row;
-    border-radius: $default-border-radius-top;
-    width: 100%;
-    max-height: 44px;
+@mixin header_main {
+  &__header {
     background-color: orange;
-  }
-  &__copy-link-ack {
-    position: absolute;
-    width: 320px;
-    height: 200px;
-    padding: 10px;
-    z-index: 1000000;
-    top: 42px;
-    left: calc(50% - 160px);
-    box-shadow: 0px 0px 31px 0 rgba(0, 0, 0, 0.4);
-    border-radius: $default-border-radius-small;//4px;
-  }
-  &__action {
-    z-index: 1000;
-    &--container {
-      position: absolute;
-      width: 42px;
-      height: 44px;
-      &[data-state="1"] {
-        margin-left: 35px;
-      }
-    }
-    &--icon {
-      width: 12px;
-      color: $core-default-background-hover;
-      height: 12px;
-      margin: auto 15px;
-      cursor: pointer;
-      &:hover {
-        color: $core-default-icon-hover;
-      }
-    }
-  }
-  &__title {
-    //  max-width: 210px; //200px;
-    color: $ewhite;
-    height: 100%;
-    justify-content: center;
-    margin: auto 0;
-    flex: 1;
-    position: absolute;
+    border-radius: drumee.$default-border-radius-top;
     width: 100%;
-    .name {
-      max-width: calc(100% - 285px);
-      align-items: flex-start;
-      white-space: nowrap;
-      @include typo($size: 18px, $line: 24px, $weight: 400, $color: $core-default-text-reverse);
-      @include overflow-text;
-      //padding-left: 25px;//14%
-      align-items: center;
-      width: auto;
-      .inner {
-        overflow: hidden;
-        text-overflow: ellipsis;
+    z-index: 200;
+    height: 44px;
+  }
+
+  &-topbar {
+    &__container {
+      height: 44px;
+      width: 100%;
+
+      &[data-device="mobile"] {
+        min-width: 305px;
+        height: 35px;
+      }
+
+      flex: 1;
+      flex-direction: row;
+      border-radius: drumee.$default-border-radius-top;
+      width: 100%;
+      max-height: 44px;
+      background-color: orange;
+    }
+
+    &__copy-link-ack {
+      position: absolute;
+      width: 320px;
+      height: 200px;
+      padding: 10px;
+      z-index: 1000000;
+      top: 42px;
+      left: calc(50% - 160px);
+      box-shadow: 0px 0px 31px 0 rgba(0, 0, 0, 0.4);
+      border-radius: drumee.$default-border-radius-small; //4px;
+    }
+
+    &__action {
+      z-index: 1000;
+
+      &--container {
+        position: absolute;
+        width: 42px;
+        height: 44px;
+
+        &[data-state="1"] {
+          margin-left: 35px;
+        }
+      }
+
+      &--icon {
+        width: 12px;
+        color: drumee.$core-default-background-hover;
+        height: 12px;
+        margin: auto 15px;
+        cursor: pointer;
+
+        &:hover {
+          color: drumee.$core-default-icon-hover;
+        }
+      }
+    }
+
+    &__title {
+      //  max-width: 210px; //200px;
+      color: drumee.$ewhite;
+      height: 100%;
+      justify-content: center;
+      margin: auto 0;
+      flex: 1;
+      position: absolute;
+      width: 100%;
+
+      .name {
+        max-width: calc(100% - 285px);
+        align-items: flex-start;
         white-space: nowrap;
+        @include drumee.typo($size: 18px, $line: 24px, $weight: 400, $color: drumee.$core-default-text-reverse);
+        @include drumee.overflow-text;
+        //padding-left: 25px;//14%
+        align-items: center;
+        width: auto;
+
+        .inner {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .icon {
+        cursor: pointer;
+        width: 21px;
+        height: 21px;
+        padding: 4px;
+        // margin-left: 10px;
+        //  margin-top: 1.5px;
+        color: drumee.$core-special-icon-setting; //rgba(252, 252, 252, 0.7);
+        min-width: 21px;
+        margin: auto 15px auto 5px; // 1.5px 15px auto 5px;
+
+        &:hover {
+          color: drumee.$core-default-icon-hover;
+        }
       }
     }
-    .icon {
-      cursor: pointer;
-      width: 21px;
-      height: 21px;
-      padding: 4px;
-      // margin-left: 10px;
-      //  margin-top: 1.5px;
-      color: $core-special-icon-setting;//rgba(252, 252, 252, 0.7);
-      min-width: 21px;
-      margin: auto 15px auto 5px; // 1.5px 15px auto 5px;
-      &:hover {
-        color: $core-default-icon-hover;
-      }
-    }
-  }
-  &__control {
-    position: absolute;
-    height: 100%;
-    right: 0;
-    display: flex;
-    .icon {
-      width: 12px;
-      height: 12px;
-      padding: 0px;
+
+    &__control {
+      position: absolute;
+      height: 100%;
+      right: 0;
       display: flex;
-      color: $core-default-icon-reverse;
-      cursor: pointer;
-      margin: auto 15px auto 0;
-      &:hover {
-        color: $core-default-icon-hover;
+
+      .icon {
+        width: 12px;
+        height: 12px;
+        padding: 0px;
+        display: flex;
+        color: drumee.$core-default-icon-reverse;
+        cursor: pointer;
+        margin: auto 15px auto 0;
+
+        &:hover {
+          color: drumee.$core-default-icon-hover;
+        }
       }
     }
   }
-}
 
 
-// custom classes for separate windows
+  // custom classes for separate windows
 
-&-account__header {
-  background-color: orange !important;
+  &-account__header {
+    background-color: orange !important;
+  }
 }

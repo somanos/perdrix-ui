@@ -10,12 +10,12 @@
  */
 
 function clientview(ui) {
-  const { nomClient, numVoie, typeVoie, nomVoie } = ui.mget(_a.content);
-
+  const { clientId, nom, numVoie, typeVoie, nomVoie } = ui.mget(_a.content);
+  const adresse = [numVoie, typeVoie, nomVoie].join(' ');
   const kids = [
     require('./header')(ui, 'account_contacts', "Client"),
-    require('./cartridge')(ui, 'Nom', nomClient),
-    require('./cartridge')(ui, 'Adresse', [numVoie, typeVoie, nomVoie].join(' ')),
+    require('./cartridge')(ui, 'Nom', nom, clientId),
+    require('./cartridge')(ui, 'Adresse', adresse, clientId),
   ]
   return kids;
 }

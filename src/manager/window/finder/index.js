@@ -1,10 +1,13 @@
 const __window = require('..');
-
+const { modelComparator } = require('../../utils')
+const CTYPE = 'ctype';
 class __window_finder extends __window {
   constructor(...args) {
     super(...args);
     this.getCurrentApi = this.getCurrentApi.bind(this);
     this.hide = this.hide.bind(this);
+    this._onDataReceived = this._onDataReceived.bind(this);
+    this._onFilterClosed = this._onFilterClosed.bind(this);
   }
 
 
@@ -39,6 +42,34 @@ class __window_finder extends __window {
     this.style.set({
       display: _a.none
     })
+    this._storedModels = [];
+    this._timer = new Date().getTime();
+    this._filters = [];
+  }
+
+  /**
+   * 
+   */
+  onBeforeDestroy() {
+    let list = this.getPart(_a.list);
+    if (list) list.off("change:state", this._onDataReceived)
+  }
+
+  /**
+   * 
+   */
+  _onDataReceived(menu) {
+    this.ensurePart(_a.list).then((p) => {
+      this._storedModels = [...p.collection.models];
+      this.raise();
+    })
+  }
+
+  /**
+   * 
+   */
+  _onFilterClosed(menu) {
+    this.debug("AAA:47");
   }
 
   /**
@@ -61,7 +92,7 @@ class __window_finder extends __window {
     }
   }
 
- 
+
   getCurrentApi() {
     return {
       service: 'perdrix.search',
@@ -82,6 +113,51 @@ class __window_finder extends __window {
   /**
    * 
    */
+  sortContent(cmd) {
+    let order, name;
+    if (cmd) {
+      name = cmd.model.get(_a.name);
+      order = cmd.model.get(_a.state) ? "asc" : "desc";
+    } else {
+      name = _a.filename;
+      order = "asc";
+    }
+    let cmp = modelComparator(name);
+    switch (name) {
+      case _a.filesize:
+      case _a.mtime:
+      case _a.filename:
+      case _a.ext:
+        if (/^desc/.test(order)) {
+          this.iconsList.collection.comparator = reverseSortBy(cmp);
+        } else {
+          this.iconsList.collection.comparator = cmp;
+        }
+        this.iconsList.collection.sort();
+        break;
+      default:
+        this.warn("[729] - Unexpected name", name);
+        return;
+    }
+  }
+
+  /**
+   * 
+   */
+  async filterContent(cmd) {
+    let filters = await this._updateFilter();
+    this.ensurePart(_a.list).then((p) => {
+      let models = this._storedModels.filter((m) => {
+        return filters.includes(m.get(CTYPE))
+      })
+      p.collection.set(models)
+    })
+  }
+
+
+  /**
+   * 
+   */
   search(source, win, args) {
     if (!source || !source.getValue) {
       this.warn("Invalid search source");
@@ -92,10 +168,7 @@ class __window_finder extends __window {
       this.hide();
       return;
     }
-    this.debug("AAA:101", words);
-    let { top, left } = source.$el.offset();
-    // this.el.style.top = (top + source.$el.height()) + 'px';
-    // this.el.style.left = left + 'px';
+
     this.el.style.display = 'flex';
     if (!this.sources[source.cid]) {
       this.sources[source.cid] = 1;
@@ -105,21 +178,19 @@ class __window_finder extends __window {
         this.hide();
       });
     }
-    let searchOpt = source.mget('searchOpt');
-    // if (!searchOpt || !searchOpt.api) return;
-    // this._api.service = searchOpt.api;
-    // this._api.words = words;
-    // let { itemsOpt } = searchOpt
-    // this.mset({ itemsOpt });
-    //this.debug("AAA:101", this, itemsOpt, this._api);
+
     let api = {
       service: "perdrix.search",
       words
     }
     this.debug("AAA:101", api);
-
+    let now = new Date().getTime();
+    if ((now - this._timer) < 300) {
+      this.debug("AAA:191", now, this._timer, now - this._timer);
+      return
+    }
     this.ensurePart(_a.list).then((list) => {
-      this.debug("AAA:116", api);
+      this._timer = new Date().getTime();
       if (!api.words) return;
       let a = api.words.split(/:+/);
       if (a.length == 0) return;
@@ -128,7 +199,10 @@ class __window_finder extends __window {
         api.words = a[1];
       };
       if (api.words.length < 3) return;
-      list.mset({ api, columns: ['ctime', 'id', 'type'] });
+      if (this._filters.length) {
+        api.tables = this._filters;
+      }
+      list.mset({ api });
       list.restart();
     })
   }
@@ -147,6 +221,19 @@ class __window_finder extends __window {
   }
 
   /**
+   * 
+   */
+  async _updateFilter() {
+    let roll = await this.ensurePart('filter-roll');
+    let filters = roll.collection.map((m) => {
+      if (m.get(_a.state)) return m.get(CTYPE);
+      return null
+    })
+    this._filters = _.filter(filters);
+    return filters;
+  }
+
+  /**
    *
    */
   onPartReady(child, pn) {
@@ -154,6 +241,14 @@ class __window_finder extends __window {
       case _a.content:
         child.feed(require('./skeleton/results')(this));
         break;
+      case _a.list:
+        child.on(_e.data, this._onDataReceived);
+        break;
+      case _a.filter:
+        this._updateFilter();
+        child.on(_e.close, this._onFilterClosed);
+        break;
+
       case "window-header":
         this.setupInteract();
         break;
@@ -172,10 +267,9 @@ class __window_finder extends __window {
     switch (service) {
       case _e.close:
         this.hide();
-        // this.setValue('');
-        // setTimeout(()=>{
-        //   this.el.dataset.state = _a.closed;
-        // }, 200);
+        return;
+      case _a.filter:
+        this.filterContent(cmd);
         return;
       default:
         return super.onUiEvent(cmd, args);

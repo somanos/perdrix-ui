@@ -11,7 +11,7 @@
 
 function header(ui, ico, content) {
   let icon = Skeletons.Button.Svg({
-    className: `${ui.fig.family}__icon-header`,
+    className: `${ui.fig.family}__icon-header ${ui.mget('ctype')}`,
     ico,
   })
   return Skeletons.Box.X({

@@ -1,394 +1,400 @@
-&-form {
-  @import './dropdown';
+@use "sass:meta";
+@use "mixins/drumee";
 
-  &__main {
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    background-color: rgb(137, 146, 158, 0.9);
-    background-color: $ewhite;
-  }
+@mixin form {
+  &-form {
+    @include meta.load-css('dropdown');
 
-  &__container {
-    width: 100%;
-    height: 100%;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 450px;
-  }
-
-  &__content {
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  &__wrapper {
-    height: 100%;
-    width: 100%;
-
-  }
-
-  &__subtitle {
-    &-container {
-      justify-content: center;
-      width: 100%;
-      height: 72px;
-      align-content: center;
-      flex-wrap: wrap;
-    }
-    @include typo($size: 22px, $line: 28px, $color: $core-default-text-color);
-  }
-
-  &-menu__items-wrapper {
-    max-height: 250px;
-    overflow-y: scroll;
-  }
-
-  &__row-wrapper {
-    @include typo($color: $core-default-text-color, $size: 16px);
-    background-color: $core-default-block-background;
-    border-radius: 6px;
-    box-sizing: border-box;
-    height: 100%;
-    margin-bottom: 18px;
-    max-height: 46px;
-    width: 100%;
-
-    &.contact.name {
-      background-color: $core-default-background;
-      gap: 10px;
-    }
-
-    &.message {
-      height: auto;
-      min-height: 100px;
-
-      & .entry-reminder__ui {
-        height: 100%;
-      }
-    }
-
-    &.terms-and-conditions {
-      justify-content: center;
-    }
-
-    &.terms-and-conditions,
-    &.ssl-dns-setup {
-      background-color: $core-default-background;
-      align-items: center;
-    }
-
-    &.acme_ssl_ca_path {
-      &[data-mode="closed"] {
-        display: none;
-      }
-    }
-  }
-
-  &__entry {
-    &.with-icon {
-      border: none;
+    &__main {
       height: 100%;
       width: 100%;
+      align-items: center;
+      background-color: rgb(137, 146, 158, 0.9);
+      background-color: drumee.$ewhite;
     }
 
-    &.name {
-      background-color: $core-default-block-background;
+    &__container {
+      width: 100%;
+      height: 100%;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 450px;
     }
 
-    & .entry-reminder {
-      &__main {
-        &.showerror {
-          overflow: visible;
-          padding-bottom: 0;
-          min-height: 34px;
+    &__content {
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
 
-          .entry-reminder_error {
-            z-index: 100000;
-            min-width: 200px;
-            height: auto;
-            bottom:10px;
-          }
-        }
+    &__wrapper {
+      height: 100%;
+      width: 100%;
 
-        textarea,
-        input {
-          @include typo($size: 16px, $line: 20px, $color: $core-default-text-color);
-          background-color: $core-default-block-background;
-          border: 0;
-          border-radius: 6px;
-          flex: 1;
+    }
+
+    &__subtitle {
+      &-container {
+        justify-content: center;
+        width: 100%;
+        height: 72px;
+        align-content: center;
+        flex-wrap: wrap;
+      }
+
+      @include drumee.typo($size: 22px, $line: 28px, $color: drumee.$core-default-text-color);
+    }
+
+    &-menu__items-wrapper {
+      max-height: 250px;
+      overflow-y: scroll;
+    }
+
+    &__row-wrapper {
+      @include drumee.typo($color: drumee.$core-default-text-color, $size: 16px);
+      background-color: drumee.$core-default-block-background;
+      border-radius: 6px;
+      box-sizing: border-box;
+      height: 100%;
+      margin-bottom: 18px;
+      max-height: 46px;
+      width: 100%;
+
+      &.contact.name {
+        background-color: drumee.$core-default-background;
+        gap: 10px;
+      }
+
+      &.message {
+        height: auto;
+        min-height: 100px;
+
+        & .entry-reminder__ui {
           height: 100%;
-          padding-left: 10px;
-        }
-
-        textarea {
-          padding-top: 5px;
-          height: calc(100% - 7px);
-          min-height: 94px;
-          resize: none;
-          overflow: auto;
         }
       }
 
-      &__input-wrap,
-      &__component {
+      &.terms-and-conditions {
+        justify-content: center;
+      }
+
+      &.terms-and-conditions,
+      &.ssl-dns-setup {
+        background-color: drumee.$core-default-background;
+        align-items: center;
+      }
+
+      &.acme_ssl_ca_path {
+        &[data-mode="closed"] {
+          display: none;
+        }
+      }
+    }
+
+    &__entry {
+      &.with-icon {
+        border: none;
         height: 100%;
         width: 100%;
       }
-    }
 
-    &[data-status="error"] {
-      border: 1px solid $core-default-border-error;
-      border-radius: 6px;
-    }
-  }
-
-  &__icon {
-    color: $core-default-icon-neutral;
-    margin: 0px 9px 0px 10px;
-    width: 18px;
-
-    &.message {
-      height: 18px;
-      margin: 0 9px 0 9px;
-      top: 6px;
-    }
-
-    &.checkbox {
-      border: 1px solid $core-default-checkbox-border;
-      border-radius: $default-checkbox-border-radius;
-      box-shadow: none;
-      color: $core-default-checkbox-background;
-      cursor: pointer;
-      height: 20px;
-      width: 20px;
-      margin: 0;
-      margin-left: 5px;
-
-      &[data-state="1"] {
-        color: $core-default-checkbox-checked;
-        border: 1px solid $core-default-checkbox-border; //$default-checkbox;
-        box-shadow: none;
+      &.name {
+        background-color: drumee.$core-default-block-background;
       }
-    }
 
-    &.info-icon {
-      color: $core-special-icon-info;
-      cursor: pointer;
-      height: 25px;
-      padding: 5px;
-      width: 25px;
-      position: absolute;
-      right: 5px;
-      top: 10px;
+      & .entry-reminder {
+        &__main {
+          &.showerror {
+            overflow: visible;
+            padding-bottom: 0;
+            min-height: 34px;
 
-      .tooltips {
-        &:before {
-          background: $core-background-tooltips;
-          border-radius: 1px;
-          content: '';
-          height: 10px;
-          position: absolute;
-          left: 70px;
-          top: -5px;
-          transform: rotate(45deg);
-          width: 10px;
+            .entry-reminder_error {
+              z-index: 100000;
+              min-width: 200px;
+              height: auto;
+              bottom: 10px;
+            }
+          }
+
+          textarea,
+          input {
+            @include drumee.typo($size: 16px, $line: 20px, $color: drumee.$core-default-text-color);
+            background-color: drumee.$core-default-block-background;
+            border: 0;
+            border-radius: 6px;
+            flex: 1;
+            height: 100%;
+            padding-left: 10px;
+          }
+
+          textarea {
+            padding-top: 5px;
+            height: calc(100% - 7px);
+            min-height: 94px;
+            resize: none;
+            overflow: auto;
+          }
         }
 
-        background-color: $core-background-tooltips;
-        @include typo($size: 11px, $line: 15px, $color: $core-default-text-tooltips);
-        border-radius:$default-border-radius;
-        font-size: 11px;
-        max-width: 300px;
-        min-width: 210px;
-        padding: 5px 10px;
+        &__input-wrap,
+        &__component {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      &[data-status="error"] {
+        border: 1px solid drumee.$core-default-border-error;
+        border-radius: 6px;
+      }
+    }
+
+    &__icon {
+      color: drumee.$core-default-icon-neutral;
+      margin: 0px 9px 0px 10px;
+      width: 18px;
+
+      &.message {
+        height: 18px;
+        margin: 0 9px 0 9px;
+        top: 6px;
+      }
+
+      &.checkbox {
+        border: 1px solid drumee.$core-default-checkbox-border;
+        border-radius: drumee.$default-checkbox-border-radius;
+        box-shadow: none;
+        color: drumee.$core-default-checkbox-background;
+        cursor: pointer;
+        height: 20px;
+        width: 20px;
+        margin: 0;
+        margin-left: 5px;
+
+        &[data-state="1"] {
+          color: drumee.$core-default-checkbox-checked;
+          border: 1px solid drumee.$core-default-checkbox-border; //$default-checkbox;
+          box-shadow: none;
+        }
+      }
+
+      &.info-icon {
+        color: drumee.$core-special-icon-info;
+        cursor: pointer;
+        height: 25px;
+        padding: 5px;
+        width: 25px;
         position: absolute;
-        left: -62px;
-        top: 30px;
-        text-align: center;
-        text-align: justify;
-        text-overflow: ellipsis;
-        z-index: 200000;
-        // overflow: hidden;
-        // white-space: nowrap;
-      }
-    }
-  }
-
-  &__note {
-    &.label {
-      @include typo($size: 13px, $line: 16px, $color: $core-default-text-title);
-      max-width: 150px;
-      padding-left: 5px;
-      width: 100%;
-    }
-
-    &.own-ssl-label {
-      @include typo($size: 16px, $line: 20px, $color: $core-default-text-title);
-      padding-left: 20px;
-      width: 100%;
-    }
-
-    &.tips {
-      @include typo($size: 12px, $line: 1.5, $weight: 300, $color: $core-default-text-title);
-      align-items: center;
-      margin-bottom: 18px;
-      width: 40%;
-    }
-
-    &.conditions {
-      &.static {
-        @include typo($size: 14px, $line: 16px, $weight: 400, $color: $core-default-text-title);
-        justify-content: center;
-        width: 75px;
-      }
-
-      &.trigger {
-        justify-content: flex-start;
         right: 5px;
+        top: 10px;
+
+        .tooltips {
+          &:before {
+            background: drumee.$core-background-tooltips;
+            border-radius: 1px;
+            content: '';
+            height: 10px;
+            position: absolute;
+            left: 70px;
+            top: -5px;
+            transform: rotate(45deg);
+            width: 10px;
+          }
+
+          background-color: drumee.$core-background-tooltips;
+          @include drumee.typo($size: 11px, $line: 15px, $color: drumee.$core-default-text-tooltips);
+          border-radius:drumee.$default-border-radius;
+          font-size: 11px;
+          max-width: 300px;
+          min-width: 210px;
+          padding: 5px 10px;
+          position: absolute;
+          left: -62px;
+          top: 30px;
+          text-align: center;
+          text-align: justify;
+          text-overflow: ellipsis;
+          z-index: 200000;
+          // overflow: hidden;
+          // white-space: nowrap;
+        }
+      }
+    }
+
+    &__note {
+      &.label {
+        @include drumee.typo($size: 13px, $line: 16px, $color: drumee.$core-default-text-title);
+        max-width: 150px;
+        padding-left: 5px;
+        width: 100%;
+      }
+
+      &.own-ssl-label {
+        @include drumee.typo($size: 16px, $line: 20px, $color: drumee.$core-default-text-title);
+        padding-left: 20px;
+        width: 100%;
+      }
+
+      &.tips {
+        @include drumee.typo($size: 12px, $line: 1.5, $weight: 300, $color: drumee.$core-default-text-title);
+        align-items: center;
+        margin-bottom: 18px;
+        width: 40%;
+      }
+
+      &.conditions {
+        &.static {
+          @include drumee.typo($size: 14px, $line: 16px, $weight: 400, $color: drumee.$core-default-text-title);
+          justify-content: center;
+          width: 75px;
+        }
+
+        &.trigger {
+          justify-content: flex-start;
+          right: 5px;
+
+          &:hover {
+            color: drumee.$eviolet;
+          }
+        }
+
+        &.text-underline {
+          @include drumee.typo($size: 14px, $line: 16px, $weight: 700, $color: drumee.$core-default-text-title);
+          cursor: pointer;
+          text-decoration-line: underline;
+        }
+      }
+    }
+
+    &__button-wrapper {
+      align-items: center;
+      height: 120px;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    &__button {
+      &.button {
+        align-items: center;
+        border-radius: 6px;
+        cursor: pointer;
+        height: 46px;
+        justify-content: center;
+        width: 180px;
+      }
+
+      &.action-btn {
+        @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$core-default-text-reverse);
+        align-items: center;
+        background: drumee.$core-background-btn-active;
 
         &:hover {
-          color: $eviolet;
+          background-color: drumee.$btn-commit-background-hover;
+          border-color: drumee.$btn-commit-border-hover;
         }
       }
 
-      &.text-underline {
-        @include typo($size: 14px, $line: 16px, $weight: 700, $color: $core-default-text-title);
-        cursor: pointer;
-        text-decoration-line: underline;
+      &.cancel-btn {
+        @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$btn-rollback-text);
+        border: 1px solid drumee.$btn-rollback-border;
+
+        &:hover {
+          border: 2px solid drumee.$btn-rollback-border-hover ;
+          color: drumee.$btn-rollback-text-hover;
+        }
       }
     }
-  }
 
-  &__button-wrapper {
-    align-items: center;
-    height: 120px;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  &__button {
-    &.button {
-      align-items: center;
-      border-radius: 6px;
-      cursor: pointer;
-      height: 46px;
+    &__switch {
+      //padding: 10px 0px 0px 0px; //10px 0px 0px 50px;
+      width: 100%;
       justify-content: center;
-      width: 180px;
-    }
+      border: 1px solid lightgrey;
+      border-radius: 4px;
 
-    &.action-btn {
-      @include typo($size: 18px, $line: 28px, $color: $core-default-text-reverse);
-      align-items: center;
-      background: $core-background-btn-active;
+      & .button-switch {
+        &__toggle {
 
-      &:hover {
-        background-color: $btn-commit-background-hover;
-        border-color: $btn-commit-border-hover;
+          &.on,
+          &.off {
+            @include drumee.typo($size: 16px, $line: 44px);
+            text-align: left;
+            width: auto;
+          }
+
+          &.on {
+            color: drumee.$core-default-text-color;
+            opacity: 1;
+
+            &[data-state="0"] {
+              opacity: 0.6;
+            }
+          }
+
+          &.off {
+            color: drumee.$core-default-text-color;
+
+            &[data-state="1"] {
+              opacity: 0.6;
+            }
+          }
+
+          &.change {
+            padding: 0 5px;
+
+            & .inner.note-content {
+              background-color: drumee.$admin-toggle-background;
+              border-radius: drumee.$default-border-radius-small;
+              height: 4px;
+              width: 24px;
+            }
+
+            &::before,
+            &::after {
+              background-color: drumee.$admin-toggle-switch-radio;
+              height: 12px;
+              opacity: 0.7;
+              padding: 4px 0 3px;
+              width: 12px;
+            }
+          }
+        }
       }
     }
 
-    &.cancel-btn {
-      @include typo($size: 18px, $line: 28px, $color: $btn-rollback-text);
-      border: 1px solid $btn-rollback-border;
+    // &__switch[data-mode="disable"] {
+    //   & .button-switch__toggle {
+    //     &.on,
+    //     &.off,
+    //     &.change {
+    //       color: $admin-default-text-inactive !important;
+    //       cursor: not-allowed !important;
+    //       opacity: 0.6;
+    //     }
 
-      &:hover {
-        border: 2px solid $btn-rollback-border-hover ;
-        color: $btn-rollback-text-hover;
-      }
-    }
+    //     &.change:before,
+    //     &.change:after {
+    //       background-color: $admin-toggle-background  !important;
+    //     }
+
+    //   }
+    //   & .inner.note-content {
+    //     background-color:$admin-toggle-background;
+    //     border-radius: $default-border-radius-small;
+    //     height: 4px;
+    //     width: 24px;
+    //   }
+
+    //   &::before,
+    //   &::after {
+    //     background-color:$admin-toggle-switch-radio;
+    //     height: 12px;     
+    //     opacity:0.7;
+    //     padding: 4px 0 3px;
+    //     width: 12px;
+    //   }
+
+    // }
   }
-
-  &__switch {
-    //padding: 10px 0px 0px 0px; //10px 0px 0px 50px;
-    width: 100%;
-    justify-content: center;
-    border: 1px solid lightgrey;
-    border-radius: 4px;
-
-    & .button-switch {
-      &__toggle {
-
-        &.on,
-        &.off {
-          @include typo($size: 16px, $line: 44px);
-          text-align: left;
-          width: auto;
-        }
-
-        &.on {
-          color: $core-default-text-color;
-          opacity: 1;
-
-          &[data-state="0"] {
-            opacity: 0.6;
-          }
-        }
-
-        &.off {
-          color: $core-default-text-color;
-
-          &[data-state="1"] {
-            opacity: 0.6;
-          }
-        }
-
-        &.change {
-          padding: 0 5px;
-
-          & .inner.note-content {
-            background-color: $admin-toggle-background;
-            border-radius: $default-border-radius-small;
-            height: 4px;
-            width: 24px;
-          }
-
-          &::before,
-          &::after {
-            background-color: $admin-toggle-switch-radio;
-            height: 12px;
-            opacity: 0.7;
-            padding: 4px 0 3px;
-            width: 12px;
-          }
-        }
-      }
-    }
-  }
-
-  // &__switch[data-mode="disable"] {
-  //   & .button-switch__toggle {
-  //     &.on,
-  //     &.off,
-  //     &.change {
-  //       color: $admin-default-text-inactive !important;
-  //       cursor: not-allowed !important;
-  //       opacity: 0.6;
-  //     }
-
-  //     &.change:before,
-  //     &.change:after {
-  //       background-color: $admin-toggle-background  !important;
-  //     }
-
-  //   }
-  //   & .inner.note-content {
-  //     background-color:$admin-toggle-background;
-  //     border-radius: $default-border-radius-small;
-  //     height: 4px;
-  //     width: 24px;
-  //   }
-
-  //   &::before,
-  //   &::after {
-  //     background-color:$admin-toggle-switch-radio;
-  //     height: 12px;     
-  //     opacity:0.7;
-  //     padding: 4px 0 3px;
-  //     width: 12px;
-  //   }
-
-  // }
 }

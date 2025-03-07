@@ -1,4 +1,4 @@
-@import 'mixins/drumee';
+@use 'mixins/drumee';
 
 // window__main
 
@@ -32,16 +32,16 @@
     justify-items: center;
     align-content: center;    
     min-height: 60%;
-    border-radius: $default-border-radius; //4px; //2px;
+    border-radius: drumee.$default-border-radius; //4px; //2px;
   //  border: 1px solid $default-background-tooltips;  // #DDE2E8;
-    background: $core-default-background; //$default-background-popup; //rgba(255,255,255, 0.7);
+    background: drumee.$core-default-background; //$default-background-popup; //rgba(255,255,255, 0.7);
     min-width: 350px;
     .drumee-text{
       justify-content: center;
       align-items: center;
       padding: 10px;
       text-align: center;
-      @include typo($weight:300, $size:16px, $line:26px, $color:$core-default-text-color); //$ewhite); //$size:14px, $weight:400,
+      @include drumee.typo($weight:300, $size:16px, $line:26px, $color:drumee.$core-default-text-color); //$ewhite); //$size:14px, $weight:400,
     }
   }
   // &__header{
@@ -55,21 +55,21 @@
   }
   &__button{
     .inner{
-      @include typo($size:15px, $line:26px, $color:$ewhite);
+      @include drumee.typo($size:15px, $line:26px, $color:drumee.$ewhite);
     }
     height: 32px;//30px; //26px;
     width: 90px;//80px;//
-    background-color: $btn-commit-background; //$egreen;
+    background-color: drumee.$btn-commit-background; //$egreen;
     padding: 0 12px;
     margin: 0px auto;//auto;
     //border: 1px solid #DDE2E8;
-    border-radius: $default-border-radius;// 6px; //2px;
+    border-radius: drumee.$default-border-radius;// 6px; //2px;
     justify-content: center;
     cursor: pointer;
-    @include typo($size:15px, $line:26px, $color:$ewhite);
+    @include drumee.typo($size:15px, $line:26px, $color:drumee.$ewhite);
    // @include typo($weight:300, $size:16px, $line:26px, $color:#494949);
     &:hover{
-      background-color:$btn-commit-background-hover;  
+      background-color:drumee.$btn-commit-background-hover;  
     }
 
     &.settings {
@@ -84,6 +84,6 @@
     width : 100%;
     height: calc(100% - 52px);
     justify-content: space-around;
-    @include typo($weight:300, $size:14px, $line:26px, $color:#89929E);
+    @include drumee.typo($weight:300, $size:14px, $line:26px, $color:#89929E);
   }
 }

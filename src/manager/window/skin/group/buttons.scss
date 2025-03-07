@@ -1,65 +1,69 @@
-&__button-cancel {
-  border: 1px solid $btn-rollback-border;
-  width: 120px;
-  height: 46px;
-  border-radius: $default-border-radius;
-  text-align: center;
-  @include typo($line: 22px, $size: 16px, $weight: 300, $color: $btn-rollback-text);
-  justify-content: center;
-  padding-top: 12px;
+@use "mixins/drumee";
 
-  &:hover {
-    border: 2px solid $btn-rollback-border-hover ;
-    color: $btn-rollback-text-hover;
-  }
-}
-
-&__button-confirm {
-  width: 120px;
-  background-color: $btn-commit-background; // $btn-primary-background; 
-  height: 46px;
-  border-radius: $default-border-radius;
-  text-align: center;
-  @include typo($line: 22px, $size: 16px, $weight: 300, $color: $btn-commit-text);
-  justify-content: center;
-  padding-top: 12px;
-}
-
-&__button {
-  &.button {
-    align-items: center;
-    border-radius: 6px;
-    cursor: pointer;
+@mixin button_cancel {
+  &__button-cancel {
+    border: 1px solid drumee.$btn-rollback-border;
+    width: 120px;
     height: 46px;
+    border-radius: drumee.$default-border-radius;
+    text-align: center;
+    @include drumee.typo($line: 22px, $size: 16px, $weight: 300, $color: drumee.$btn-rollback-text);
     justify-content: center;
-    width: 180px;
+    padding-top: 12px;
+
+    &:hover {
+      border: 2px solid drumee.$btn-rollback-border-hover ;
+      color: drumee.$btn-rollback-text-hover;
+    }
   }
 
-  &.action-btn {
-    @include typo($size: 18px, $line: 28px, $color: $core-default-text-reverse);
+  &__button-confirm {
+    width: 120px;
+    background-color: drumee.$btn-commit-background; // $btn-primary-background; 
+    height: 46px;
+    border-radius: drumee.$default-border-radius;
+    text-align: center;
+    @include drumee.typo($line: 22px, $size: 16px, $weight: 300, $color: drumee.$btn-commit-text);
+    justify-content: center;
+    padding-top: 12px;
+  }
+
+  &__button {
+    &.button {
+      align-items: center;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 46px;
+      justify-content: center;
+      width: 180px;
+    }
+
+    &.action-btn {
+      @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$core-default-text-reverse);
+      align-items: center;
+      background: drumee.$core-background-btn-active;
+
+      &:hover {
+        background-color: drumee.$btn-commit-background-hover;
+        border-color: drumee.$btn-commit-border-hover;
+      }
+    }
+
+    &.cancel-btn {
+      @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$btn-rollback-text);
+      border: 1px solid drumee.$btn-rollback-border;
+
+      &:hover {
+        border: 2px solid drumee.$btn-rollback-border-hover ;
+        color: drumee.$btn-rollback-text-hover;
+      }
+    }
+  }
+
+  &__buttons-wrapper {
     align-items: center;
-    background: $core-background-btn-active;
-
-    &:hover {
-      background-color: $btn-commit-background-hover;
-      border-color: $btn-commit-border-hover;
-    }
+    height: 120px;
+    justify-content: space-evenly;
+    width: 100%;
   }
-
-  &.cancel-btn {
-    @include typo($size: 18px, $line: 28px, $color: $btn-rollback-text);
-    border: 1px solid $btn-rollback-border;
-
-    &:hover {
-      border: 2px solid $btn-rollback-border-hover ;
-      color: $btn-rollback-text-hover;
-    }
-  }
-}
-
-&__buttons-wrapper {
-  align-items: center;
-  height: 120px;
-  justify-content: space-evenly;
-  width: 100%;
 }

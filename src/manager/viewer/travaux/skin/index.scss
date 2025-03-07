@@ -1,15 +1,16 @@
-@import 'mixins/drumee';
+@use "sass:meta";
+@use 'mixins/drumee';
 
 .viewer-perdrix-topbar {
-  @import 'topbar';
+  @include meta.load-css('topbar');
 }
 
 
 .viewer-perdrix {
   &__ui {
-    background-color: $core-default-background;
-    border-radius: $default-border-radius;
-    box-shadow: $drumee-shadow-container;
+    background-color: drumee.$core-default-background;
+    border-radius: drumee.$default-border-radius;
+    box-shadow: drumee.$drumee-shadow-container;
     display: flex;
     flex-direction: column;
     height: 300px;
@@ -46,24 +47,24 @@
   }
 
   &__header {
-    background-color: $sharebox-main;
+    background-color: drumee.$sharebox-main;
     border-bottom: none;
-    border-radius: $default-border-radius-top;
+    border-radius: drumee.$default-border-radius-top;
     height: 44px;
     min-height: 44px;
     width: 100%;
   }
 
   &__title {
-    @include typo($size: 16px, $line: 30px, $weight: 400, $color: $sharebox-main);
+    @include drumee.typo($size: 16px, $line: 30px, $weight: 400, $color: drumee.$sharebox-main);
     justify-content: center;
     padding: 20px 9px 0px 10px;
   }
 
   &__icon {
-    border-radius: $default-border-radius;
+    border-radius: drumee.$default-border-radius;
     // border: 1px $default-icon-reverse solid;
-    color: $core-special-schedule-icon;
+    color: drumee.$core-special-schedule-icon;
     height: 30px;
     margin-right: 5px;
     min-width: 30px;
@@ -104,8 +105,8 @@
   }
 
   &__tooltips.perdrix-tooltips {
-    background-color: $core-background-tooltips;
-    border-radius: $default-border-radius-small; // $default-border-radius-tiny;
+    background-color: drumee.$core-background-tooltips;
+    border-radius: drumee.$default-border-radius-small; // $default-border-radius-tiny;
     opacity: 1;
     padding: 8px;
     position: absolute;
@@ -114,10 +115,10 @@
     z-index: 10;
     user-select: none;
     left: -14px; // -100%;
-    @include typo($size: 11px, $line: 10px, $weight: 400, $color: $core-default-text-color); //$line: 14px,
+    @include drumee.typo($size: 11px, $line: 10px, $weight: 400, $color: drumee.$core-default-text-color); //$line: 14px,
 
     &::before {
-      background: $core-background-tooltips;
+      background: drumee.$core-background-tooltips;
       top: -5px; //-4px;
       content: " ";
       height: 10px;
@@ -197,7 +198,7 @@
     flex: 1;
     max-height: 89px;
     overflow: auto;
-    @include typo($color: $core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
 
     &.date {
       & .note-content {
@@ -229,7 +230,7 @@
     height: 20px;
     width: 20px;
     margin: 20px;
-    color: $core-default-icon-neutral;
+    color: drumee.$core-default-icon-neutral;
     cursor: pointer;
     z-index: 10;
   }
@@ -254,39 +255,39 @@
 
     &.text {
       align-items: center;
-      border-radius: $default-border-radius;
+      border-radius: drumee.$default-border-radius;
       height: 35px;
       justify-content: center;
       max-width: 200px;
       min-width: 120px;
       padding: 0 10px;
       margin: 0 3%;
-      @include typo($size: 16px, $line: 19px, $color: $btn-commit-text);
+      @include drumee.typo($size: 16px, $line: 19px, $color: drumee.$btn-commit-text);
     }
 
     &.primary {
-      background-color: $btn-commit-background;
+      background-color: drumee.$btn-commit-background;
 
       &:hover {
-        background-color: $btn-commit-background-hover
+        background-color: drumee.$btn-commit-background-hover
       }
     }
 
     &.secondery {
-      background-color: $btn-rollback-background;
-      border: 2px solid $btn-rollback-border;
-      color: $btn-rollback-text;
+      background-color: drumee.$btn-rollback-background;
+      border: 2px solid drumee.$btn-rollback-border;
+      color: drumee.$btn-rollback-text;
 
       &:hover {
-        color: $btn-rollback-text-hover;
-        border: $btn-rollback-border-hover 2px solid;
+        color: drumee.$btn-rollback-text-hover;
+        border: drumee.$btn-rollback-border-hover 2px solid;
       }
     }
 
     &.icon {
       align-items: center;
-      border-radius: $default-border-radius;
-      color: $core-default-icon-neutral;
+      border-radius: drumee.$default-border-radius;
+      color: drumee.$core-default-icon-neutral;
       height: 25px;
       margin: 0 3%;
       opacity: 0.75;
@@ -295,7 +296,7 @@
       width: 25px;
 
       &:hover {
-        color: $core-default-icon-hover;
+        color: drumee.$core-default-icon-hover;
       }
     }
   }
@@ -307,10 +308,10 @@
     border-radius: 3px;
     justify-items: center;
     justify-content: center;
-    @include typo($color: $core-default-text-color, $weight: 400, $line: 30px, $size: 12px);
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 12px);
 
     .drumee-svg {
-      color: $core-default-icon-success;
+      color: drumee.$core-default-icon-success;
       height: 20px;
       padding: 2px;
       width: 25px;
@@ -324,7 +325,7 @@
   &__bdy_footer {
     // overflow-y: auto;
     width: 100%;
-    background: $core-default-background; //white;
+    background: drumee.$core-default-background; //white;
     border-radius: 0px 0px 5px 5px;
     padding-bottom: 10px;
   }
@@ -342,8 +343,8 @@
 
     & input {
       width: calc(100% - 10px);
-      background: $core-default-block-background; //#f2f2f2;
-      color: $core-default-text-color; //#2f2f2f;
+      background: drumee.$core-default-block-background; //#f2f2f2;
+      color: drumee.$core-default-text-color; //#2f2f2f;
       width: 98%;
       height: 25px;
       padding-left: 5px;
@@ -359,8 +360,8 @@
       width: 100%;
 
       & textarea {
-        background: $core-default-block-background;
-        border-radius: $default-border-radius;
+        background: drumee.$core-default-block-background;
+        border-radius: drumee.$default-border-radius;
         border: none;
         outline: none;
         padding: 10px 5px 10px;
@@ -368,18 +369,18 @@
         width: 99%;
         margin: 3px 0px 1px 0px;
         min-height: 77px;
-        @include typo($size: 14px, $line: 22px, $color: $core-default-text-color); //$size: 16px, $line: 21px,
+        @include drumee.typo($size: 14px, $line: 22px, $color: drumee.$core-default-text-color); //$size: 16px, $line: 21px,
 
         &::placeholder {
-          @include typo($size: 14px, $line: 14px, $weight: 300, $color: $core-default-text-placeholder);
+          @include drumee.typo($size: 14px, $line: 14px, $weight: 300, $color: drumee.$core-default-text-placeholder);
         }
       }
     }
   }
 
   &__ok-btn {
-    background: $btn-commit-background;
-    border-radius: $default-border-radius;
+    background: drumee.$btn-commit-background;
+    border-radius: drumee.$default-border-radius;
     padding: 5px;
     margin-left: 5px;
     margin: 3px;
@@ -388,10 +389,10 @@
     height: 26px; //24px;
     justify-content: center;
     align-items: center;
-    @include typo($size: 12px, $color: $white);
+    @include drumee.typo($size: 12px, $color: drumee.$white);
 
     &:hover {
-      background-color: $btn-commit-background-hover;
+      background-color: drumee.$btn-commit-background-hover;
     }
   }
 
@@ -409,8 +410,8 @@
       bottom: 0;
       justify-items: center;
       align-items: center;
-      border-radius: $default-border-radius-bottom;
-      background-color: $core-transparency-container-overlay; //$transparency-container-overlay;
+      border-radius: drumee.$default-border-radius-bottom;
+      background-color: drumee.$core-transparency-container-overlay; //$transparency-container-overlay;
     }
   }
 

@@ -17,9 +17,7 @@ class __search_result extends LetcBox{
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.debug(`search-result`, opt)
-    /* uncomment below line to subscribe to websocket events */
-    // this.bindEvent("live");
+
   }
 
   /**

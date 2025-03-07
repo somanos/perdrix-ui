@@ -5,23 +5,6 @@ class __window_perdrix extends DrumeeInteractWindow {
     this.getCurrentApi = this.getCurrentApi.bind(this);
   }
 
-  /**
-   * 
-   * @param {*} opt 
-   */
-  // async initialize(opt) {
-
-  //   super.initialize(opt);
-  //   RADIO_BROADCAST.on(_e.responsive, this._responsive);
-
-  // }
-
-  static initClass() {
-    this.prototype.behaviorSet = {
-      bhv_radio: 1,
-    };
-  }
-
   onPartReady(child, pn) {
     this.raise();
     switch (pn) {
@@ -79,7 +62,6 @@ class __window_perdrix extends DrumeeInteractWindow {
 
 }
 
-__window_perdrix.initClass();
 
 module.exports = __window_perdrix;
 
