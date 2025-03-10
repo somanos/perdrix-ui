@@ -21,6 +21,11 @@ function found_item(ui) {
     case 'contactChantier':
       kids = require('./contactChantier')(ui);
       break;
+    case 'travaux':
+      kids = require('./travaux')(ui);
+      break;
+    default:
+      kids = require('./header')(ui, 'account_contacts', "Type se donnees inconnues")
   }
   const skeleton = Skeletons.Box.Y({
     className: `${ui.fig.family}__main ${ui.mget('ctype')}`,

@@ -9,9 +9,14 @@
  * @returns 
  */
 function chantierview(ui) {
-  const {
-    nomClient, clientId, numVoie, typeVoie, nomVoie
+  let {
+    nomClient, civilite, clientId, numVoie, typeVoie, nomVoie
   } = ui.mget(_a.content);
+
+  if(civilite){
+    nomClient = `${civilite} ${nom}`;
+  }
+
   const itemId = ui.mget('itemId');
   const adresse = [numVoie, typeVoie, nomVoie].join(' ');
   const kids = [

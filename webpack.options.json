@@ -1,6 +1,6 @@
 {
   "dev": {
-    "bundle_path": "/home/somanos/DrumeeLocal/local.drumee/somanos/serp/app",
+    "bundle_path": "/home/somanos/DrumeeLocal/local.drumee/somanos/perdrix/app",
     "public_path": "/app/",
     "output_filename":"[name].js"
 ,    "mode": "development"

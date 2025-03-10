@@ -29,6 +29,7 @@ function filterSelector(ui) {
       menuItems(ui, "Client", "client"),
       menuItems(ui, "Chantier", "chantier"),
       menuItems(ui, "Contact Chantier", "contactChantier"),
+      menuItems(ui, "Travaux", "travaux"),
     ]
   });
 

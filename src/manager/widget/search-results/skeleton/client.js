@@ -10,11 +10,17 @@
  */
 
 function clientview(ui) {
-  const { clientId, nom, numVoie, typeVoie, nomVoie } = ui.mget(_a.content);
+  const { civilite, clientId, nom, numVoie, typeVoie, nomVoie } = ui.mget(_a.content);
   const adresse = [numVoie, typeVoie, nomVoie].join(' ');
+
+  let nomClient = nom;
+  if(civilite){
+    nomClient = `${civilite} ${nom}`;
+  }
+
   const kids = [
     require('./header')(ui, 'account_contacts', "Client"),
-    require('./cartridge')(ui, 'Nom', nom, clientId),
+    require('./cartridge')(ui, 'Nom', nomClient, clientId),
     require('./cartridge')(ui, 'Adresse', adresse, clientId),
   ]
   return kids;
