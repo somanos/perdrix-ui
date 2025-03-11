@@ -1,0 +1,90 @@
+@use "mixins/drumee";
+
+@mixin header {
+  &-topbar {
+    &__container {
+      flex: 1;
+      border-bottom: 1px solid drumee.$default-text-color;
+      border-radius: drumee.$default-border-radius-top;
+      height: 44px;
+    }
+
+    &__title {
+      margin: auto;
+      // @include drumee.typo($size: 16px, $line: 21px, $weight: 300, $color: white);
+      @include drumee.typo($color: white, $size: 16px, $line: 21px);
+
+    }
+
+    &__control {
+      position: absolute;
+      height: 100%;
+      right: 0;
+
+      .icon {
+        color: #2F2F2F;
+      }
+    }
+
+    &__filter {
+      &__container {
+        position: absolute;
+        height: 100%;
+        left: 0;
+      }
+
+      &__menu {
+        height: 100%;
+
+        &-trigger {
+          color: white;
+          cursor: pointer;
+        }
+
+        .menu-topic-items__wrapper {
+          color: white;
+          background: white;
+          margin-top: 1px;
+          overflow: hidden;
+          box-shadow: drumee.$drumee-shadow-main;
+          padding: 0 15px 15px 15px;
+          border-radius: 3px;
+        }
+
+        .menu-item {
+          min-width: 90px;
+          white-space: nowrap;
+          @include drumee.typo($color: #687B7F, $size: 14px, $line: 24px);
+          height: 22px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          &:hover {
+            background-color: rgba(148, 226, 203, 0.1);
+          }
+
+          svg {
+            height: 22px;
+            width: 22px;
+            margin-right: 3px;
+            padding: 5px;
+          }
+
+          margin-top:5px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    &__searchbox {
+      margin-left: 60px;
+      height: 100%;
+      padding: 5px 0;
+
+      .entry-reminder__main.showerror {
+        padding-bottom: 5px;
+      }
+    }
+  }
+}

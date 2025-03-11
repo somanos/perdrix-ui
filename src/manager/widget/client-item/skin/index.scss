@@ -1,0 +1,80 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+
+.client-item {
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(148, 226, 203, 0.1);
+    }
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+    width: 100%;
+
+    &.client {
+      cursor: pointer;
+    }
+  }
+
+  &__topbar__title {
+    @include drumee.typo($color: white, $size: 14px, $line: 24px);
+  }
+
+  &__container {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  &__text {
+    border: none;
+    @include drumee.typo($color: #787B7F, $size: 14px, $line: 24px);
+
+    &.type {
+      @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      align-content: center;
+    }
+
+    &.see-details {
+      cursor: pointer;
+    }
+  }
+
+  &__label {
+    border: none;
+    @include drumee.typo($color: #687B7F, $size: 14px, $line: 24px);
+  }
+
+  &__cartridge {
+    flex: 1;
+  }
+
+  &__cartridge-header {
+    height: 30px;
+    flex: 2;
+    margin-bottom: 3px;
+  }
+
+  &__icon-header {
+    width: 30px;
+    height: 100%;
+    padding: 0;
+    margin-right: 8px;
+    color: rgb(8, 216, 70);
+    padding: 5px;
+  }
+}

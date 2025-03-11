@@ -1,7 +1,7 @@
 const __window = require('..');
-const { modelComparator } = require('../../utils')
+const { modelComparator, reverseSortBy } = require('../../utils')
 const CTYPE = 'ctype';
-class __window_finder extends __window {
+class __window_client_list extends __window {
   constructor(...args) {
     super(...args);
     this.getCurrentApi = this.getCurrentApi.bind(this);
@@ -28,9 +28,6 @@ class __window_finder extends __window {
     });
     this.contextmenuSkeleton = 'a';
     this.sources = {};
-    this._api = {
-      hub_id: Visitor.id,
-    };
     let source = opt.trigger;
     if (!source) return;
     this.sources[source.cid] = 1;
@@ -46,7 +43,6 @@ class __window_finder extends __window {
     this._timer = new Date().getTime();
     this._filters = [];
     this._launchOptions = { explicit: 1, singleton: 1 };
-
   }
 
   /**
@@ -96,10 +92,15 @@ class __window_finder extends __window {
 
 
   getCurrentApi() {
-    return {
-      service: 'perdrix.search',
-      words: this.getValue()
+    if (!this._api) {
+      this._api = {
+        service: 'perdrix.client_list',
+        sort_by: _a.ctime,
+        order: "desc"
+      }
     }
+    this.debug("AAA:100", this._api)
+    return this._api;
   }
   /**
    * 
@@ -115,39 +116,9 @@ class __window_finder extends __window {
   /**
    * 
    */
-  sortContent(cmd) {
-    let order, name;
-    if (cmd) {
-      name = cmd.model.get(_a.name);
-      order = cmd.model.get(_a.state) ? "asc" : "desc";
-    } else {
-      name = _a.filename;
-      order = "asc";
-    }
-    let cmp = modelComparator(name);
-    switch (name) {
-      case _a.filesize:
-      case _a.mtime:
-      case _a.filename:
-      case _a.ext:
-        if (/^desc/.test(order)) {
-          this.iconsList.collection.comparator = reverseSortBy(cmp);
-        } else {
-          this.iconsList.collection.comparator = cmp;
-        }
-        this.iconsList.collection.sort();
-        break;
-      default:
-        this.warn("[729] - Unexpected name", name);
-        return;
-    }
-  }
-
-  /**
-   * 
-   */
   async filterContent(cmd) {
     let filters = await this._updateFilter();
+
     this.ensurePart(_a.list).then((p) => {
       let models = this._storedModels.filter((m) => {
         return filters.includes(m.get(CTYPE))
@@ -160,50 +131,34 @@ class __window_finder extends __window {
   /**
    * 
    */
-  search(source) {
-    if (!source || !source.getValue) {
-      this.warn("Invalid search source");
-      return;
-    }
-    let words = source.getValue();
-    if (!words) {
-      this.hide();
-      return;
-    }
-
-    this.el.style.display = 'flex';
-    if (!this.sources[source.cid]) {
-      this.sources[source.cid] = 1;
-      source.once(_e.destroy, () => {
-        delete this.sources[source.cid];
-        this._currentSource = null;
-        this.hide();
-      });
+  sortContent(cmd) {
+    let order, name;
+    if (cmd) {
+      name = cmd.mget(_a.name);
+      order = cmd.mget(_a.state) ? "asc" : "desc";
+    } else {
+      name = this._api.sort_by || _a.ctime;
+      order = this._api.order || "desc";
     }
 
-    let api = {
-      service: "perdrix.search",
-      words
-    }
-    let now = new Date().getTime();
-    if ((now - this._timer) < 300) {
-      this.debug("AAA:191", now, this._timer, now - this._timer);
-      return
-    }
-    this.ensurePart(_a.list).then((list) => {
-      this._timer = new Date().getTime();
-      if (!api.words) return;
-      let a = api.words.split(/:+/);
-      if (a.length == 0) return;
-      if (a.length >= 2) {
-        api.table = a[0];
-        api.words = a[1];
-      };
-      if (api.words.length < 3) return;
-      if (this._filters.length) {
-        api.tables = this._filters;
+    this._api.sort_by = name;
+    this._api.order = order;
+    if (cmd.getValue) {
+      let words = cmd.getValue();
+      this.debug("AAA:148", words)
+      if (words && words.length) {
+        this._api.words = words;
+      } else {
+        this._api.words = null;;
+        // this.ensurePart(_a.list).then((p) => {
+        //   p.collection.set(this._storedModels)
+        // })
+        // return;
       }
-      list.mset({ api });
+    }
+
+    this.ensurePart(_a.list).then((list) => {
+      list.mset({ api: this._api });
       list.restart();
     })
   }
@@ -212,12 +167,6 @@ class __window_finder extends __window {
   *
   */
   onDomRefresh() {
-    if (this._api.words) {
-      this.setState(1);
-    } else {
-      this.setState(0);
-      this.hide();
-    }
     this.feed(require("./skeleton")(this));
   }
 
@@ -240,10 +189,11 @@ class __window_finder extends __window {
   onPartReady(child, pn) {
     switch (pn) {
       case _a.content:
-        child.feed(require('./skeleton/results')(this));
+        child.feed(require('./skeleton/list')(this));
         break;
       case _a.list:
         child.on(_e.data, this._onDataReceived);
+        this.list = child;
         break;
       case _a.filter:
         this._updateFilter();
@@ -259,13 +209,16 @@ class __window_finder extends __window {
   /**
    * 
    */
-  loadClient(content, type) {
-    let { id } = content;
+  loadClient(cmd, type) {
+    const {
+      civilite, localite, nom, numVoie, typeVoie, nomVoie, stype, clientId
+    } = cmd.model.toJSON();
     Wm.windowsLayer.append({
       kind: 'window_client',
-      id : `clien-${id}`,
-      content,
-      type
+      id: `clien-${clientId}`,
+      content: {
+        civilite, localite, nom, numVoie, typeVoie, nomVoie, stype, clientId
+      },
     });
   }
 
@@ -281,15 +234,12 @@ class __window_finder extends __window {
       case _e.close:
         this.hide();
         return;
-      case _a.filter:
-        this.filterContent(cmd);
+      case _e.sort:
+      case _e.search:
+        this.sortContent(cmd);
         return;
       case 'open-viewer':
-        this.hide();
-        switch (type) {
-          case "client":
-            this.loadClient(content, type)
-        }
+        this.loadClient(cmd)
         return
 
         //this.filterContent(cmd);
@@ -303,4 +253,4 @@ class __window_finder extends __window {
 
 }
 
-module.exports = __window_finder;
+module.exports = __window_client_list;

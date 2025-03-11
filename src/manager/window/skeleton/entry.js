@@ -1,9 +1,3 @@
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2023
-//   FILE : liceman\src\manager\skeleton\form\domain-setup.js
-//   TYPE : Skeleton
-// ==================================================================== *
-
 module.exports = function(_ui_, name, opt = {}) {
   const formFig = `${_ui_.fig.family}-form`;
 

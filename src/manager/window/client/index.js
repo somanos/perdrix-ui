@@ -11,8 +11,6 @@ class __window_client extends __window {
    */
   onDomRefresh() {
     super.onDomRefresh();
-    this.debug(`STARTING CLIENT WINDOW`, this);
-
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
