@@ -3,7 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 
-class __search_result extends LetcBox{
+class __search_result extends LetcBox {
 
   //constructor(...args) {
   //  super(...args);
@@ -13,7 +13,7 @@ class __search_result extends LetcBox{
   /**
    * 
    */
-  initialize (opt={}){
+  initialize(opt = {}) {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
@@ -25,22 +25,22 @@ class __search_result extends LetcBox{
    * @param {View} child
    * @param {String} pn
    */
-  onPartReady (child, pn){
+  onPartReady(child, pn) {
     //this.debug("onPartReady", child, pn);
-    switch(pn){
+    switch (pn) {
       case "my-part-name":
         /** Do something **/
         break;
       default:
-        /** Delegate to parent if any **/
-        //if(super.onPartReady) super.onPartReady(child, pn);
+      /** Delegate to parent if any **/
+      //if(super.onPartReady) super.onPartReady(child, pn);
     }
   }
 
   /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
-  onDomRefresh(){
+  onDomRefresh() {
     this.feed(require('./skeleton')(this));
   }
 
@@ -48,18 +48,17 @@ class __search_result extends LetcBox{
    * User Interaction Evant Handler
    * @param {View} trigger
    * @param {Object} args
-   */  
-  onUiEvent (trigger, args={}){
+   */
+  onUiEvent(trigger, args = {}) {
     const service = args.service || trigger.get(_a.service);
-    this.debug(`onUiEvent service was called with : `, {service, args, trigger})
-    //switch(service){
-    //  case  "my-service":
-    //    /** Do something **/
-    //  break;
-    //  default:
-    //    /** Delegate to parent if any **/
-    //    if(super.onUiEvent) super.onUiEvent(trigger, args)
-    //}
+    let ctype = this.mget('ctype');
+    let type = this.mget(_a.type);
+    console.log("AAA:18", { type, ctype })
+    this.triggerHandlers({
+      content: this.mget(_a.content),
+      type,
+      service: "open-viewer"
+    })
   }
 
 

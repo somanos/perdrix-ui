@@ -1,15 +1,9 @@
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2019
-//   FILE : __dbg_path
-//   TYPE : Skelton
-// ==================================================================== *
 
 module.exports = function(_ui_, title) {
 
   const figname = "topbar";
-  const a = Skeletons.Box.X({
+  return Skeletons.Box.X({
     className : `${_ui_.fig.group}-${figname}__container customer ${_ui_.mget(_a.area)}`,
-    //sys_pn    : _a.topBar,
     service   : _e.raise,
     debug     : __filename,
     kids : [
@@ -27,9 +21,7 @@ module.exports = function(_ui_, title) {
             className : _a.name,
             content   : title
           })
-          //settings
         ]}),
       Skeletons.Window.TopbarControl(_ui_, "sc")
     ]});
-  return a;
 };;

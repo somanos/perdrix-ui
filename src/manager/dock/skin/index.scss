@@ -103,12 +103,12 @@
 
   &__container.application {
 
-    &::after {
-      background-color: $core-default-background; //$ewhite;
-      content: " ";
-      height: 90%;
-      width: 1px;
-    }
+    // &::after {
+    //   background-color: $core-default-background; //$ewhite;
+    //   content: " ";
+    //   height: 90%;
+    //   width: 1px;
+    // }
 
     &.launcher {
       &[data-device="desktop"] {

@@ -1,12 +1,4 @@
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2021
-//   FILE : /src/drumee/modules/desk/wm/dock/skeleton/launcher.coffee
-//   TYPE : Skeleton
-// ==================================================================== *
-
-//const helper = require('./helper');
-
-const _helpers = function (_ui_, content, name) {
+function _helpers (_ui_, content, name) {
   const pfx = `${_ui_.fig.family}__helper`
   const a = Skeletons.Box.X({
     debug: __filename,
@@ -22,7 +14,6 @@ const _helpers = function (_ui_, content, name) {
         ico: 'desktop_videofile',
         className: `${pfx}-icon`,
         innerClass:'helper',
-        // service: _e.launch
       }),
       Skeletons.Note({
         className: `${pfx}-text`,
@@ -34,10 +25,7 @@ const _helpers = function (_ui_, content, name) {
   return a;
 };
 
-// ==================================================================== *
-//
-// ==================================================================== *
-const __dock_button = function (_ui_, opt, label, extra) {
+const dockButtom = function (_ui_, opt, label, extra) {
   const a = Skeletons.Box.X({
     debug: __filename,
     className: `${_ui_.fig.family}__action`,
@@ -50,4 +38,4 @@ const __dock_button = function (_ui_, opt, label, extra) {
   return a;
 };
 
-module.exports = __dock_button;
+module.exports = dockButtom;

@@ -2,7 +2,7 @@
 
 @mixin header_main {
   &__header {
-    background-color: orange;
+    background-color: drumee.$default-header;
     border-radius: drumee.$default-border-radius-top;
     width: 100%;
     z-index: 200;
@@ -24,7 +24,8 @@
       border-radius: drumee.$default-border-radius-top;
       width: 100%;
       max-height: 44px;
-      background-color: orange;
+      background-color: inherit;
+
     }
 
     &__copy-link-ack {

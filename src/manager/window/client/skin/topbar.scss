@@ -2,8 +2,8 @@
 
 @mixin header {
   &.window-topbar__container {
-    &.customer {
-      background-color: drumee.$customer-header;
+    &.client {
+      background-color: drumee.$client-header;
     }
   }
 
@@ -12,7 +12,7 @@
     height: 44px;
     min-height: 44px;
     border-bottom: none;
-    background-color: drumee.$customer-header;
+    background-color: drumee.$cyan;
 
     .menu-items {
       background: drumee.$core-default-background;
@@ -46,13 +46,7 @@
 
     &__control {
       .icon {
-        width: 12px;
-        height: 12px;
-        margin: auto 15px auto 0;
-        padding: 0;
-        color: drumee.$core-default-icon-reverse;
-        /*color:#89929e;
-      opacity:0.7;*/
+        color: drumee.$blue-midnight;
       }
     }
 
@@ -77,10 +71,6 @@
       margin: auto;
 
       .name {
-        /* align-items: flex-start;
-      @include overflow-text;
-      margin-left: -54px;
-      @include typo($size:18px,$line:24px,$weight:400,$color:#ffffff);*/
         align-items: flex-start;
         @include drumee.overflow-text;
         margin-left: -30px; //-54px;

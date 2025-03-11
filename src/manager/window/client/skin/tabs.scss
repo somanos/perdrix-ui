@@ -1,0 +1,34 @@
+@use "mixins/drumee";
+
+@mixin tabs {
+  &__tabs {
+    width: 100%;
+    background-color: drumee.$blue-midnight;
+    height: 40px;
+    justify-content: space-around;
+
+    .client__button {
+      cursor: pointer;
+      height: 100%;
+      padding: 5px;
+      display: flex;
+      flex-direction: row;
+      @include drumee.typo($size: 16px, $line: 25px, $weight: 400, $color: white);
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+      flex: 1;
+
+      &:hover {
+        background-color: drumee.$eblue;
+      }
+
+      svg {
+        width: 25px;
+        height: 25px;
+        padding: 4px;
+      }
+    }
+  }
+
+}

@@ -45,6 +45,8 @@ class __window_finder extends __window {
     this._storedModels = [];
     this._timer = new Date().getTime();
     this._filters = [];
+    this._launchOptions = { explicit: 1, singleton: 1 };
+
   }
 
   /**
@@ -69,7 +71,7 @@ class __window_finder extends __window {
    * 
    */
   _onFilterClosed(menu) {
-    this.debug("AAA:47");
+    /** DO NOT REMOVE */
   }
 
   /**
@@ -255,13 +257,25 @@ class __window_finder extends __window {
     }
   }
 
+  /**
+   * 
+   */
+  loadClient(content, type) {
+    let { id } = content;
+    Wm.windowsLayer.append({
+      kind: 'window_client',
+      id : `clien-${id}`,
+      content,
+      type
+    });
+  }
 
   /**
    * @param {*} cmd
    * @param {*} args
   */
   onUiEvent(cmd, args = {}) {
-    const service = args.service || cmd.mget(_a.service);
+    const { service, type, content } = args
     this.debug(`onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
@@ -271,6 +285,17 @@ class __window_finder extends __window {
       case _a.filter:
         this.filterContent(cmd);
         return;
+      case 'open-viewer':
+        this.hide();
+        switch (type) {
+          case "client":
+            this.loadClient(content, type)
+        }
+        return
+
+        //this.filterContent(cmd);
+        return;
+
       default:
         return super.onUiEvent(cmd, args);
     }

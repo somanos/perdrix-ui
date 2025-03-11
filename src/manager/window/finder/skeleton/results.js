@@ -15,10 +15,11 @@ const __media_skl_row = function (ui) {
       flow: _a.x,
       service: ui.mget('itemService') || 'open-node',
       role: ui.mget(_a.role) || '',
-      logicalParent: ui
+      logicalParent: ui,
+      uiHandler:[ui]
     },
     vendorOpt: Preset.List.Orange_e,
-    api: ui.getCurrentApi
+    api: ui.getCurrentApi,
   });
 
   return list;

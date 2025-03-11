@@ -1,24 +1,23 @@
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2018
-//   FILE : desk/window/project-room/skeleton/main
-//   TYPE : Skelton
-// ==================================================================== *
+module.exports = function (ui) {
+  const topbar = require("./content/topbar")(ui)
+  const main = require("./content/main")(ui)
 
 
-module.exports = function(_ui_) {
-  const menu = Skeletons.Box.X({
-    debug     : __filename,
-    className : `${_ui_.fig.family}__header ${_ui_.fig.group}__header`, 
-    sys_pn    : "window-header",
-    kidsOpt: {
-      radio : _a.on,
-      uiHandler    : _ui_
-    },
-    kids : [require('../../skeleton/topbar')(_ui_, LOCALE.CUSTOMERS)]
-    // kids : [require('./topbar')(_ui_, "editbox_list-plus")]
+  const dialog = Skeletons.Wrapper.Y({
+    className: `${ui.fig.group}__wrapper--modal dialog__wrapper--modal ${ui.fig.family}`,
+    name: "dialog"
   });
 
-  //const a = Skeletons.Window.Main(_ui_, menu);
-  const a = require("../../skeleton/content")(_ui_, menu);
-  return a;
-};
+  const tooltips = Skeletons.Wrapper.Y({
+    className: `${ui.fig.group}__wrapper-container`,
+    name: "tooltips"
+  });
+
+  return Skeletons.Box.Y({
+    className: `${ui.fig.family}__main ${ui.fig.group}__main drive-popup`,
+    radio: _a.parent,
+    debug: __filename,
+    kids: [topbar, tooltips, main, dialog]
+  });
+
+};;

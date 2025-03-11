@@ -11,7 +11,9 @@
 
     &__title {
       margin: auto;
-      @include drumee.typo($size: 16px, $line: 21px, $weight: 300, $color: white);
+      // @include drumee.typo($size: 16px, $line: 21px, $weight: 300, $color: white);
+      @include drumee.typo($color: white, $size: 16px, $line: 21px);
+
     }
 
     &__control {

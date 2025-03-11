@@ -14,7 +14,7 @@ function chantierview(ui) {
   } = ui.mget(_a.content);
 
   if(civilite){
-    nomClient = `${civilite} ${nom}`;
+    nomClient = `${civilite} ${nomClient}`;
   }
 
   const itemId = ui.mget('itemId');

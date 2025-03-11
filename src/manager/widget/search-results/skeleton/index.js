@@ -30,10 +30,11 @@ function found_item(ui) {
   const skeleton = Skeletons.Box.Y({
     className: `${ui.fig.family}__main ${ui.mget('ctype')}`,
     debug: __filename,
+    uiHandler: [ui],
     kids: [
       Skeletons.Box.Y({
         className: `${ui.fig.family}__container`,
-        kids
+        kids,
       })
     ]
   })
