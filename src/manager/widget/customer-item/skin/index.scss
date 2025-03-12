@@ -4,12 +4,11 @@
 * ==================================================================== */
 @use 'mixins/drumee';
 
-.search-result {
+.customer-item {
   &__ui {
     background-color: inherit;
     width: 100%;
-    width: 100%;
-
+    cursor: pointer;
     &:hover {
       background-color: rgba(148, 226, 203, 0.1);
     }
@@ -61,12 +60,12 @@
   }
 
   &__cartridge {
-    grid-template-columns: 150px auto;
+    flex: 1;
   }
 
   &__cartridge-header {
     height: 30px;
-    width: 100%;
+    flex: 2;
     margin-bottom: 3px;
   }
 
@@ -75,24 +74,7 @@
     height: 100%;
     padding: 0;
     margin-right: 8px;
-
-    &.customer {
-      color: rgb(8, 216, 70);
-      padding: 5px;
-    }
-
-    &.chantier {
-      color: rgba(238, 90, 4, 0.801);
-      padding: 5px;
-    }
-
-    &.contactChantier {
-      color: rgb(112, 135, 238);
-    }
-    &.travaux {
-      color: rgba(218, 155, 40, 0.932);
-      padding: 5px;
-    }
-
+    color: rgb(8, 216, 70);
+    padding: 5px;
   }
 }

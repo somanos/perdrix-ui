@@ -1,11 +1,3 @@
-/* ==================================================================== *
-*   Copyright Xialia.com  2011-2020
-*   FILE : /home/somanos/devel/ui/letc/template/index.coffee
-*   TYPE : Component
-* ==================================================================== */
-
-//#########################################
-
 class __perdrix_dock extends LetcBox {
 
   constructor(...args) {
@@ -72,14 +64,12 @@ class __perdrix_dock extends LetcBox {
   mediaDragOverBin(e, ui) {
     e.stopPropagation();
     e.stopImmediatePropagation();
-    this.debug("FSSFSFSF", e, ui);
     const m = ui.helper.moving;
     if ((m == null)) {
       return;
     }
     m.isHoveringBin = true;
     if (m.containsHub) {
-      //this.moveForbiden(LOCALE.ACTION_NOT_PERMITTED);
       this.moveForbiden(LOCALE.USE_MANAGER_TO_DELETE);
       ui.helper.moving.valid = false;
       return;
@@ -103,22 +93,22 @@ class __perdrix_dock extends LetcBox {
   }
 
 
-  // ==================
-  //
-  // ==================
+  /**
+   * 
+   * @param {*} reason 
+   * @returns 
+   */
   moveForbiden(reason) {
     const d = document.getElementById(this._id + '-forbiden');
-    //setTimeout(this.moveAllowed.bind(this), Visitor.timeout());
     if (d != null) {
       return;
     }
     const m = reason || LOCALE.FILE_NOT_DISPOSABLE;
-    //this.__trashBin.$el.prepend(require('builtins/media/template/forbiden')(this, m));
   }
 
-  // ==================
-  //
-  // ==================
+  /**
+   * 
+   */
   moveAllowed() {
     const d = document.getElementById(this._id + '-forbiden');
     if (Visitor.parseModuleArgs().timeout) {

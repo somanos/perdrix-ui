@@ -26,10 +26,10 @@ function filterSelector(ui) {
     className: `${pfx}-${name}__menu-items`,
     sys_pn: "filter-roll",
     kids: [
-      menuItems(ui, "Client", "client"),
-      menuItems(ui, "Chantier", "chantier"),
-      menuItems(ui, "Contact Chantier", "contactChantier"),
-      menuItems(ui, "Travaux", "travaux"),
+      menuItems(ui, "Client", "customer"),
+      menuItems(ui, "Chantier", "site"),
+      menuItems(ui, "Contact Chantier", "conpoctactChantier"),
+      menuItems(ui, "Travaux", "work"),
     ]
   });
 

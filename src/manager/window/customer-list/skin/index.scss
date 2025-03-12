@@ -1,0 +1,41 @@
+@use "sass:meta";
+@use 'mixins/drumee';
+@use 'header' as *;
+
+.window-customer-list {
+  @include header;
+
+  &__ui {
+    background-color: drumee.$core-default-background;
+    width: 800px;
+    height: 600px;
+    box-shadow: drumee.$drumee-shadow-container;
+    overflow: visible;
+    min-width: 340px;
+    min-height: 200px;
+    flex-direction: column;
+    display: flex;
+    left: calc(50vw - 400px);
+    top: 60px;
+    max-width: 100vw;
+    max-height: 100vh;
+
+    &[data-device="mobile"] {
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+    }
+  }
+
+  &__main {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
+  &__content-results {
+    width: 100%;
+    height: 100%;
+  }
+}

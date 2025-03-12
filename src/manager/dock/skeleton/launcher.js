@@ -15,7 +15,7 @@ function dockLaunchers(_ui_, ismobile) {
         className: `${button_class} customer launcher-icon`,
         innerClass: 'customer',
         sys_pn: 'customer-launcher',
-        respawn: 'window_client_list',
+        respawn: 'window_customer_list',
         helperName: 'customer',
         service: _e.launch
       }, "Liste des client"),

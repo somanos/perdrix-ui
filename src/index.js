@@ -22,11 +22,12 @@ async function preloadKinds() {
   Kind.registerAddons({
     'perdrix_dock' : import('./manager/dock'),
     'search_results': import('./manager/widget/search-results'),
-    'client_item': import('./manager/widget/client-item'),
-    //'viewer_client': import('./manager/viewer/client/index.js'),
-    'viewer_travaux': import('./manager/viewer/travaux'),
-    'window_client_list': import('./manager/window/client-list'),
-    'window_client': import('./manager/window/client'),
+    // 'customer_input': import('./manager/input/customer-input'),
+    'customer_item': import('./manager/widget/customer-item'),
+    //'viewer_customer': import('./manager/viewer/customer/index.js'),
+    'customer_form': import('./manager/widget/form/customer'),
+    'window_customer_list': import('./manager/window/customer-list'),
+    'window_customer': import('./manager/window/customer'),
     'window_finder': import('./manager/window/finder'),
   });
 }

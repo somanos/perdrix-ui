@@ -12,17 +12,17 @@
 function found_item(ui) {
   let kids = [];
   switch (ui.mget('ctype')) {
-    case 'chantier':
-      kids = require('./chantier')(ui);
+    case 'site':
+      kids = require('./site')(ui);
       break;
-    case 'client':
-      kids = require('./client')(ui);
+    case 'customer':
+      kids = require('./customer')(ui);
       break;
-    case 'contactChantier':
-      kids = require('./contactChantier')(ui);
+    case 'poc':
+      kids = require('./poc')(ui);
       break;
-    case 'travaux':
-      kids = require('./travaux')(ui);
+    case 'work':
+      kids = require('./work')(ui);
       break;
     default:
       kids = require('./header')(ui, 'account_contacts', "Type se donnees inconnues")
