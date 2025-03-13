@@ -4,42 +4,51 @@
  * @returns 
  */
 
-function cartridge(ui, opt) {
-  let type = ui.mget(_a.type);
-  let { label, adresse, service, extraClass, itemId, city } = opt;
-  extraClass = extraClass || "";
-  let kids = [];
-  if (label) {
-    kids.push(Skeletons.Note({
-      className: `${ui.fig.family}__label  ${extraClass}`,
-      content: label,
-      service,
-      itemId,
-      type
-    }))
-  }
-  if (adresse) {
-    kids.push(Skeletons.Note({
-      className: `${ui.fig.family}__text ${extraClass}`,
-      content: adresse,
-      service,
-      itemId,
-      type
-    }))
-  }
-  if (city) {
-    kids.push(Skeletons.Note({
-      className: `${ui.fig.family}__text ${extraClass}`,
-      content: city,
-      service,
-      itemId,
-      type
-    }))
-  }
-  return Skeletons.Box.X({
+function cartridge(ui) {
+  let { location, postcode, city } = ui.model.toJSON();
+  const adresse = location.join(' ');
+
+  // let kids = [
+  //   Skeletons.Note({
+  //     className: `${ui.fig.family}__label`,
+  //     content: label,
+  //     service,
+  //     itemId,
+  //     type
+  //   }),
+  //   Skeletons.Box.Y({
+  //     className: `${ui.fig.family}__address`,
+  //     kids: [
+  //       Skeletons.Note({
+  //         className: `${ui.fig.family}__text`,
+  //         content: adresse,
+  //         service,
+  //         itemId,
+  //         type
+  //       }),
+  //       Skeletons.Note({
+  //         className: `${ui.fig.family}__text`,
+  //         content: `${postcode} ${city}`,
+  //         service,
+  //         itemId,
+  //         type
+  //       })
+  //     ]
+  //   })
+  // ];
+  return Skeletons.Box.Y({
     className: `${ui.fig.family}__cartridge`,
     debug: __filename,
-    kids
+    kids: [
+      Skeletons.Note({
+        className: `${ui.fig.family}__text`,
+        content: adresse,
+      }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__text`,
+        content: `${postcode} ${city}`,
+      })
+    ]
   })
 }
 module.exports = cartridge;

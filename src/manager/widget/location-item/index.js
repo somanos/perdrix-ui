@@ -1,5 +1,5 @@
 
-class __customer_item extends LetcBox {
+class __location_item extends LetcBox {
 
   /**
    * 
@@ -32,6 +32,7 @@ class __customer_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
+    this.debug("AAA:18", this)
     this.feed(require('./skeleton')(this));
   }
 
@@ -42,6 +43,7 @@ class __customer_item extends LetcBox {
    */
   onUiEvent(trigger, args = {}) {
     const service = args.service || trigger.get(_a.service);
+    let ctype = this.mget('ctype');
     let type = this.mget(_a.type);
     this.triggerHandlers({
       content: this.mget(_a.content),
@@ -72,4 +74,4 @@ class __customer_item extends LetcBox {
   //}
 }
 
-module.exports = __customer_item
+module.exports = __location_item

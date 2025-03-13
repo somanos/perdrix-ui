@@ -1,29 +1,22 @@
 const __window = require('..');
 class __window_perdrix extends __window {
 
-  // ===========================================================
-  //
-  // ===========================================================
-  async initialize(opt) {
+  /**
+   * 
+   * @param {*} opt 
+   */
+  initialize(opt) {
     require('./skin');
     super.initialize(opt);
     this.model.atLeast({
       widgetId: this._id,
-      filename: LOCALE.LICENCES,
-      itemsOpt: {
-        kind: opt.currentView || 'thumbnail_grid',
-        type: 'perdrix',
-        filetype: 'perdrix'
-      }
     });
-    this.style.set({ height: 525 });
   }
 
   /**
    * 
    */
   onDomRefresh() {
-    this.debug("AAA:26", this)
     super.onDomRefresh();
     this.feed(require('./skeleton')(this));
     this.setupInteract();
@@ -33,10 +26,6 @@ class __window_perdrix extends __window {
    * 
    */
   getCurrentApi() {
-    this.debug("AAA:26", {
-      service: _SVC.perdrix.list,
-      hub_id : Visitor.id
-    })
     return {
       service: _SVC.perdrix.list,
       hub_id : Visitor.id

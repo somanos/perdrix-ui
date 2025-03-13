@@ -23,8 +23,8 @@ function dockLaunchers(_ui_, ismobile) {
         ico: 'desktop_contactbook',
         className: `${button_class} company launcher-icon`,
         innerClass: 'company',
-        sys_pn: 'company-launcher',
-        respawn: 'window_company',
+        sys_pn: 'new-customer-launcher',
+        respawn: 'customer_form',
         service: _e.launch,
         helperName: 'company'
       }, "Ajouter un client"),

@@ -1,6 +1,6 @@
 @use "mixins/drumee";
 
-@mixin customer {
+@mixin form-topbar {
   &__main {
     background-color: drumee.$sharebox-main;
     border-bottom: none;

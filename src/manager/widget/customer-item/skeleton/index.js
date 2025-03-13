@@ -18,10 +18,7 @@ function customer_item(ui) {
     custName = `${gender} ${custName}`;
   }
   if (compType) {
-    custName = `${nom} (${compType})`;
-  }
-  if (gender) {
-    custName = `${gender} ${custName}`;
+    custName = `${custName} (${compType})`;
   }
 
   let icon = 'account_contacts';

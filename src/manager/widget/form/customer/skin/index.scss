@@ -1,23 +1,26 @@
 @use "sass:meta";
 @use 'mixins/drumee';
+@use 'topbar' as *;
+@use 'form' as *;
 
-.viewer-perdrix-topbar {
-  @include meta.load-css('topbar');
+.form-customer-topbar {
+  @include form-topbar;
 }
 
 
-.viewer-perdrix {
+.form-customer {
   &__ui {
     background-color: drumee.$core-default-background;
     border-radius: drumee.$default-border-radius;
     box-shadow: drumee.$drumee-shadow-container;
     display: flex;
     flex-direction: column;
-    height: 300px;
+    height: auto;
+    max-height: 95vh;
     left: calc(50vw - 300px);
     min-width: 300px;
     overflow: visible;
-    width: 626px;
+    width: 600px;
 
     &[data-device="mobile"] {
       height: 100vh;
@@ -26,9 +29,6 @@
       width: 100vw;
     }
 
-    &[data-tmp="1"] {
-      z-index: 9000 !important;
-    }
   }
 
   &__main {
@@ -36,6 +36,12 @@
     height: 100%;
     width: 100%;
   }
+
+  &__container {
+    min-height: 300px;
+    justify-content: start;
+  }
+
 
   &__details {
     align-items: center;
@@ -90,12 +96,12 @@
       background-color: drumee.$core-default-background-hover; //#879bff;
       color: drumee.$core-default-text-hover; //#fff;
 
-      & .viewer-perdrix__text,
-      .viewer-perdrix__icon {
+      & .form-customer__text,
+      .form-customer__icon {
         color: drumee.$ewhite;
       }
 
-      & .viewer-perdrix__edit-icon {
+      & .form-customer__edit-icon {
         color: drumee.$ewhite;
         cursor: pointer;
         display: flex;
@@ -104,7 +110,7 @@
 
   }
 
-  &__tooltips.perdrix-tooltips {
+  &__tooltips.customer-tooltips {
     background-color: drumee.$core-background-tooltips;
     border-radius: drumee.$default-border-radius-small; // $default-border-radius-tiny;
     opacity: 1;
@@ -168,30 +174,15 @@
 
   &__container {
     margin-top: 12px;
-    width: 371px;
+    width: 100%;
 
-    &.view-mode {
-      &:hover {
-        background-color: drumee.$core-default-background-hover; //#879bff;
-        color: drumee.$core-default-text-hover; //#fff;
-
-        & .viewer-perdrix__text,
-        .viewer-perdrix__icon {
-          color: drumee.$ewhite;
-        }
-
-        & .viewer-perdrix__edit-icon {
-          color: drumee.$ewhite;
-          cursor: pointer;
-          display: flex;
-        }
-      }
-    }
 
     &.description {
       min-height: auto;
     }
   }
+
+  @include form-content;
 
   &__text {
     display: flex;
@@ -334,46 +325,6 @@
     display: none;
   }
 
-  &__entry {
-    width: 100%;
-
-    & input {
-      width: calc(100% - 10px);
-      background: drumee.$core-default-block-background; //#f2f2f2;
-      color: drumee.$core-default-text-color; //#2f2f2f;
-      width: 98%;
-      height: 25px;
-      padding-left: 5px;
-      border-radius: 2px;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      // white-space: nowrap; 
-    }
-  }
-
-  &__entry {
-    &.message {
-      width: 100%;
-
-      & textarea {
-        background: drumee.$core-default-block-background;
-        border-radius: drumee.$default-border-radius;
-        border: none;
-        outline: none;
-        padding: 10px 5px 10px;
-        resize: none;
-        width: 99%;
-        margin: 3px 0px 1px 0px;
-        min-height: 77px;
-        @include drumee.typo($size: 14px, $line: 22px, $color: drumee.$core-default-text-color); //$size: 16px, $line: 21px,
-
-        &::placeholder {
-          @include drumee.typo($size: 14px, $line: 14px, $weight: 300, $color: drumee.$core-default-text-placeholder);
-        }
-      }
-    }
-  }
-
   &__ok-btn {
     background: drumee.$btn-commit-background;
     border-radius: drumee.$default-border-radius;
@@ -413,7 +364,7 @@
 
 }
 
-.viewer {
+.form {
   &__dialog-overlay {
     background-color: rgb(0 0 0 / 30%); // .3);
     height: calc(100% - 44px);

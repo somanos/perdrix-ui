@@ -26,7 +26,7 @@ function filterSelector(ui) {
     className: `${pfx}-${name}__menu-items`,
     sys_pn: "filter-roll",
     kids: [
-      menuItems(ui, "Nom", "nom"),
+      menuItems(ui, "Nom", _a.name),
       menuItems(ui, "Date", _a.ctime),
     ]
   });

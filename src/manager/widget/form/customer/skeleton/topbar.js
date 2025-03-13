@@ -1,45 +1,28 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2019
-//   FILE : /src/drumee/builtins/player/skeleton/topbar.coffee
-//   TYPE : Skeleton
-// ==================================================================== *
 
-
-// ===========================================================
-//
-// ===========================================================
-
-module.exports = function (_ui_, size) {
-  let a;
-  const fig = `${_ui_.fig.family}-topbar ${_ui_.fig.group}-topbar`;
+module.exports = function (ui) {
+  const fig = `${ui.fig.family}-topbar ${ui.fig.group}-topbar`;
   const name = Skeletons.Note({
     className: _a.name,
-    content:  _ui_.mget(_a.filename)
+    content:  "Ajouter un client"
   });
 
-
-  return a = Skeletons.Box.X({
+  return Skeletons.Box.X({
     className: `${fig}__main`,
     debug: __filename,
     sys_pn: 'topbar',
     justify: _a.right,
     service: _e.raise,
-    uiHandler: _ui_,
+    uiHandler: ui,
     kids: [
       Skeletons.Box.X({
         className: `${fig}__title`,
         service: _e.raise,
-        uiHandler: _ui_,
+        uiHandler: ui,
         kids: [
           name
         ]
       }),
-      Skeletons.Window.TopbarControl(_ui_, "c")
+      Skeletons.Window.TopbarControl(ui, "c")
     ]
   });
 };

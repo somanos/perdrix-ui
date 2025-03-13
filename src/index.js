@@ -24,7 +24,7 @@ async function preloadKinds() {
     'search_results': import('./manager/widget/search-results'),
     // 'customer_input': import('./manager/input/customer-input'),
     'customer_item': import('./manager/widget/customer-item'),
-    //'viewer_customer': import('./manager/viewer/customer/index.js'),
+    'location_item': import('./manager/widget/location-item'),
     'customer_form': import('./manager/widget/form/customer'),
     'window_customer_list': import('./manager/window/customer-list'),
     'window_customer': import('./manager/window/customer'),

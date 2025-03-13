@@ -145,18 +145,15 @@ class __window_customer_list extends __window {
     this._api.order = order;
     if (cmd.getValue) {
       let words = cmd.getValue();
+      if(this._lastWords == words) return;
       this.debug("AAA:148", words)
       if (words && words.length) {
         this._api.words = words;
       } else {
         this._api.words = null;;
-        // this.ensurePart(_a.list).then((p) => {
-        //   p.collection.set(this._storedModels)
-        // })
-        // return;
       }
     }
-
+    this._lastWords = this._api.words;
     this.ensurePart(_a.list).then((list) => {
       list.mset({ api: this._api });
       list.restart();
