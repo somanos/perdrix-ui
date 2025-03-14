@@ -28,7 +28,7 @@ function filterSelector(ui) {
     kids: [
       menuItems(ui, "Client", "customer"),
       menuItems(ui, "Chantier", "site"),
-      menuItems(ui, "Contact Chantier", "conpoctactChantier"),
+      menuItems(ui, "Contact Chantier", "poc"),
       menuItems(ui, "Travaux", "work"),
     ]
   });

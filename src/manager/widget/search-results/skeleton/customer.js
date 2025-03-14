@@ -14,7 +14,7 @@ function customerview(ui) {
   const adresse = location.join(' ');
 
   if(gender){
-    custName = `${gender} ${nom}`;
+    custName = `${gender} ${custName}`;
   }
 
   const kids = [

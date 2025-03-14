@@ -1,5 +1,5 @@
 
-const { entry, namebox, category, list } = require("./entries")
+const { entries, category, list } = require("./entries")
 module.exports = function (ui) {
   const pfx = ui.fig.family;
   const header = Skeletons.Box.X({
@@ -20,14 +20,8 @@ module.exports = function (ui) {
       category(ui),
       Skeletons.Box.Y({
         className: `${pfx}__entries-container`,
-        kids: [
-          Skeletons.Box.X({
-            className: `${pfx}__namebox`,
-            sys_pn: "namebox",
-            kids: [namebox(ui, 'company')]
-          }),
-          entry(ui, { placeholder: "Adresse", name: _a.location }),
-        ]
+        sys_pn: "entries",
+        kids:entries(ui) 
       }),
     ]
   });

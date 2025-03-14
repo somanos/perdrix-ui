@@ -40,9 +40,15 @@
   &__text {
     border: none;
     @include drumee.typo($color: #787B7F, $size: 14px, $line: 24px);
+    &.searchbox{
+      @include drumee.typo($color: #787B7F, $size: 12px, $line: 14px);
+    }
 
     &.type {
       @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
+      &.searchbox{
+        @include drumee.typo($color: #787B7F, $size: 12px, $line: 14px);
+      }
       display: flex;
       width: 100%;
       flex-wrap: wrap;

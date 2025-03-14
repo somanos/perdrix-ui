@@ -6,15 +6,30 @@
     padding: 0 10px;
   }
 
-  &__entries-container {
-    width: 100%;
-    padding: 0 10px;
-    border-radius: 5px;
-    border: solid 0.5px lightblue;
-    margin: 10px 0 20px 0;
+  &__entries {
+    &-container {
+      width: 100%;
+      padding: 0 10px;
+      border-radius: 5px;
+      border: solid 0.5px lightblue;
+      margin: 10px 0 20px 0;
+    }
+
+    &-main,
+    &-content {
+      width: 100%;
+    }
+
+    &-person {
+      width: 100%;
+      height: 45px;
+      align-content: center;
+      grid-template-columns: 100px 1fr 1fr;
+      grid-gap: 0.5rem;
+    }
   }
 
-  &__namebox {
+  &__entrybox {
     width: 100%;
 
     &-content {
@@ -85,24 +100,74 @@
 
   &__body {
     align-items: center;
-    height: 100%;
+    height: auto;
     width: 100%;
     align-items: center;
     justify-content: start;
     padding: 0 15px;
+    top: 0px;
   }
 
   &__footer {
     height: 250px;
+    height: 100%;
+    justify-content: flex-start;
+    width: 100%;
 
     &[data-state="0"] {
       display: none;
+    }
+
+  }
+
+  &__address {
+    grid-gap: 0.5rem;
+    width: 100%;
+
+    &.street {
+      grid-template-columns: 100px 100px 1fr;
+    }
+
+    &.city {
+      grid-template-columns: 1fr 5fr;
     }
   }
 
   &__searchbox {
     height: 100%;
     overflow: auto;
-    scale: 0.85;
+  }
+
+  &__buttons-container {
+    width: 100%;
+    height: 60px;
+  }
+
+  &__buttons-main {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__button-go {
+    width: 100px;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    color: drumee.$white;
+    background-color: drumee.$btn-commit-background;
+    @include drumee.typo($size: 16px, $line: 22px, $color: drumee.$white);
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: drumee.$btn-commit-background-hover
+    }
+  }
+
+  &__placeholder {
+    justify-content: center;
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 18px)
   }
 }

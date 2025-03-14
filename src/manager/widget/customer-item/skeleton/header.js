@@ -14,13 +14,14 @@ function header(ui, ico, content) {
     className: `${ui.fig.family}__icon-header ${ui.mget('ctype')}`,
     ico,
   })
+  let origin = ui.mget(_a.origin) || "";
   return Skeletons.Box.X({
     className: `${ui.fig.family}__cartridge-header`,
     debug: __filename,
     kids: [
       icon,
       Skeletons.Note({
-        className: `${ui.fig.family}__text type`,
+        className: `${ui.fig.family}__text type ${origin}`,
         content
       }),
     ]

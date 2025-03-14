@@ -11,7 +11,7 @@
 
 function location_item(ui) {
   let { city, street, housenumber, postcode} = ui.mget('properties') || {};
-  let kids = Skeletons.Box.X({
+  let kids = Skeletons.Box.G({
     className: `${ui.fig.family}__cartridge`,
     debug: __filename,
     kids: [

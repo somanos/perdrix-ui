@@ -31,6 +31,10 @@
     border-bottom: 1px solid lightgrey;
   }
 
+  &__cartridge {
+    grid-template-columns: 30px 3fr 1fr 2fr;
+  }
+
   &__text {
     border: none;
     @include drumee.typo($color: #787B7F, $size: 12px, $line: 24px);
@@ -45,7 +49,7 @@
   }
 
   &__cartridge {
-    width:100%;
+    width: 100%;
   }
 
 }

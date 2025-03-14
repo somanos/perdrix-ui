@@ -32,7 +32,6 @@ class __location_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:18", this)
     this.feed(require('./skeleton')(this));
   }
 
@@ -42,13 +41,9 @@ class __location_item extends LetcBox {
    * @param {Object} args
    */
   onUiEvent(trigger, args = {}) {
-    const service = args.service || trigger.get(_a.service);
-    let ctype = this.mget('ctype');
-    let type = this.mget(_a.type);
+    const service = this.mget(_a.service) || "open-viewer";
     this.triggerHandlers({
-      content: this.mget(_a.content),
-      type,
-      service: "open-viewer"
+      service,
     })
   }
 

@@ -11,7 +11,7 @@
 
 function customer_item(ui) {
 
-  let { custName, gender, location, compType, category, city} = ui.model.toJSON();
+  let { custName, gender, location, compType, category} = ui.model.toJSON();
   const adresse = location.join(' ');
 
   if (gender) {
@@ -28,7 +28,7 @@ function customer_item(ui) {
   }
   const kids = [
     require('./header')(ui, icon, custName),
-    require('./cartridge')(ui, { adresse, city}),
+    require('./cartridge')(ui),
   ]
 
   return Skeletons.Box.X({
