@@ -11,8 +11,11 @@
 
 function customer_item(ui) {
 
-  let { custName, gender, location, compType, category} = ui.model.toJSON();
-  const adresse = location.join(' ');
+  let { custName, gender, location, compType, category } = ui.model.toJSON();
+  let adresse = "";
+  if (location) {
+    adresse = location.join(' ');
+  }
 
   if (gender) {
     custName = `${gender} ${custName}`;

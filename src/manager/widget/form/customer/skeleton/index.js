@@ -13,15 +13,21 @@ module.exports = function (ui) {
     name: "dialog"
   });
 
+  const selection = Skeletons.Wrapper.Y({
+    className: `${ui.fig.family}__street-selection-container`,
+    sys_pn: "street-selection"
+  });
+
   const body = Skeletons.Box.Y({
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
       category(ui),
+      selection,
       Skeletons.Box.Y({
         className: `${pfx}__entries-container`,
         sys_pn: "entries",
-        kids:entries(ui) 
+        kids: entries(ui)
       }),
     ]
   });

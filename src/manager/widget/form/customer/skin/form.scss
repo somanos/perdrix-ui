@@ -136,6 +136,10 @@
   &__searchbox {
     height: 100%;
     overflow: auto;
+
+    .smart-container {
+      min-height: 100px;
+    }
   }
 
   &__buttons-container {
@@ -167,7 +171,68 @@
   }
 
   &__placeholder {
+    &-main {
+      flex-wrap: wrap;
+      align-content: center;
+    }
+
     justify-content: center;
-    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 18px)
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 22px, $size: 16px);
+    margin: 10px auto;
+
+    &.button {
+      background-color: drumee.$btn-commit-background;
+      @include drumee.typo($size: 16px, $line: 22px, $color: drumee.$white);
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 20px;
+
+      &:hover {
+        background-color: drumee.$btn-commit-background-hover
+      }
+    }
+  }
+
+  &__street-selection {
+    &-container {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: visible;
+
+    }
+
+    &-main {
+      width: auto;
+      height: auto;
+      overflow-x: hidden;
+      position: absolute;
+      padding: 10px;
+      background-color: drumee.$white;
+      box-shadow: drumee.$drumee-shadow-main;
+      border-radius: 3px;
+      max-height: 265px;
+      overflow-y: auto;
+
+      .streettype {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: start;
+        @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 22px, $size: 14px);
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:hover {
+          background-color: rgba(125, 230, 198, 0.267);
+        }
+    
+        &[data-state="1"] {
+          color: drumee.$white;
+          background-color: drumee.$btn-commit-background;
+        }
+      }
+    }
   }
 }

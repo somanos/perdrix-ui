@@ -1,8 +1,3 @@
-// ==================================================================== *
-//   Copyright Xialia.com  2011-2023
-//   FILE : \src\manager\skeleton\form\user-details.js
-//   TYPE : Skeleton
-// ==================================================================== *
 
 function __row (_ui_, iconName, opt) {
   const formFig = `${_ui_.fig.family}-form`;

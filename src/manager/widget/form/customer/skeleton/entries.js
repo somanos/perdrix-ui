@@ -1,4 +1,4 @@
-const { selectionMenu } = require("../../../skeleton/selection-menu");
+const { selectionMenu, inputMenu } = require("../../../skeleton/selection-menu");
 
 /**
  * 
@@ -18,6 +18,7 @@ export function entry(ui, opt) {
     mode: _a.interactive,
     service: _a.input,
     placeholder,
+    uiHandler:[ui],
     errorHandler: [ui]
   }
   if (sys_pn) {
@@ -44,12 +45,14 @@ function _entries(ui) {
       ]
       break;
     case 'person':
+      const itemsList = Env.get('genderList');
+      let label = LOCALE.GENDER;
       kids = [
         Skeletons.Box.G({
           className: `${ui.fig.family}__entries-${type}`,
           kids: [
             selectionMenu(ui,
-              { label: LOCALE.GENDER, innerClass: "gender", itemName: "gender" }),
+              { itemsList, label, innerClass: "gender", itemName: "gender" }),
             entry(ui, { placeholder: "Nom", name: _a.lastname }),
             entry(ui, { placeholder: "Prenom", name: _a.firstname }),
           ]
@@ -87,6 +90,19 @@ export function address(ui, opt) {
   const { street, city, housenumber, postcode } = opt;
   let type = "";
   if (street) type = street.split(/ +/)[0]
+  // let streeType;
+  // if (type) {
+  //   streeType = entry(ui, {
+  //     placeholder: "Type de voie", name: 'streettype', value: type
+  //   });
+  // } else {
+  //   let itemsList = Env.get('streetType');
+  //   let placeholder = "Type de voie"
+  //   streeType = inputMenu(ui, {
+  //     itemsList, placeholder, name: 'streetype', direction: _a.up
+  //   })
+  // }
+
   return Skeletons.Box.Y({
     className: `${ui.fig.family}__entries-container`,
     kids: [
@@ -99,7 +115,8 @@ export function address(ui, opt) {
             className: `${ui.fig.family}__address street`,
             kids: [
               entry(ui, { placeholder: "Numero", name: "housenumber", value: housenumber }),
-              entry(ui, { placeholder: "Type de voie", name: 'streettype', value: type }),
+              // streeType,
+              entry(ui, { placeholder: "Type de voie", name: 'streettype', value: type, sys_pn: "streettype" }),
               entry(ui, { placeholder: "Nom de voie", name: 'streetname', value: street }),
             ]
           }),
@@ -126,10 +143,6 @@ export function list(ui) {
     sys_pn: _a.list,
     flow: _a.none,
     uiHandler: null,
-    placeholder: Skeletons.Note({
-      className: `${ui.fig.family}__placeholder`,
-      content: "Aucune correspondance"
-    }),
     spinnerWait: 1500,
     spinner: true,
     itemsOpt: {
@@ -187,6 +200,7 @@ export function buttons(ui) {
   return Skeletons.Box.X({
     className: `${pfx}__buttons-container`,
     sys_pn: "buttons",
+    id: `${ui._id}-button`,
     kids: Skeletons.Box.X({
       className: `${pfx}__buttons-main`,
       kids: [ok]

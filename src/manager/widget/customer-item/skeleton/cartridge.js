@@ -6,7 +6,11 @@
 
 function cartridge(ui) {
   let { location, postcode, city } = ui.model.toJSON();
-  const adresse = location.join(' ');
+  let adresse = "";
+  if (location) {
+    adresse = location.join(' ');
+  }
+
   let origin = ui.mget(_a.origin) || "";
 
   return Skeletons.Box.Y({

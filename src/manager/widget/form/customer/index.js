@@ -32,29 +32,144 @@ class __form_customer extends __form {
       case "topbar":
         this.setupInteract();
         break;
+      case "wrapper-dialog":
+        this._dialogPos = child.$el.offset()
+        break;
     }
   }
 
   /**
    * 
    */
-  async feedList(api, itemsOpt, will, wont) {
+  getStreetType(cmd) {
+    let r = []
+    if (!cmd || !cmd.getValue) return r;
+    let val = cmd.getValue();
+    let reg = new RegExp(val)
+    for (let item of Env.get('streetType')) {
+      if (reg.test(item.label) || reg.test(item.longTag)) {
+        let name = `streettype`
+        let el = Skeletons.Note({
+          ...item,
+          className: name,
+          content: item.longTag,
+          service: "streettype-selected",
+          uiHandler: [this],
+          formItem: name,
+          name,
+          state: 0
+        })
+        r.push(el);
+        if (val) {
+          if (r.length > 10) break;
+        }
+      }
+    }
+    this.ensurePart('street-selection').then((p) => {
+      let o1 = cmd.$el.offset();
+      let o2 = this.$el.offset();
+      let top = o1.top - o2.top - 15;
+      let left = o1.left - o2.left - 30;
+      this._selIndex = 0;
+      p.feed(Skeletons.Box.Y({
+        className: `${this.fig.family}__street-selection-main`,
+        sys_pn: "streettypes",
+        kids: r
+      }))
+      p.$el.css({ top, left })
+    })
+    return r;
+  }
+
+  /**
+   * 
+   */
+  commitStreetType(cmd) {
+    this.ensurePart("streettype").then((p) => {
+      p.setValue(cmd.mget(_a.content));
+      p.mset({
+        streettype: cmd.mget(_a.id)
+      })
+    })
+    this.ensurePart('street-selection').then((p) => { p.clear() })
+
+  }
+  /**
+   * 
+   */
+  async selectStreetType(cmd, key) {
+    if (!key) {
+      return this.commitStreetType(cmd)
+    }
+    let wrapper = await this.ensurePart('street-selection');
+    if (key == _e.Escape) {
+      wrapper.clear();
+      return;
+    }
+    if (key == _e.Enter && this._curSelection) {
+      return this.commitStreetType(this._curSelection)
+    }
+    let content = await this.ensurePart('streettypes');
+    let i = 0;
+    if (/down/i.test(key)) {
+      if (wrapper.isEmpty()) {
+        let input = await this.ensurePart("streettype");
+        this.getStreetType(input);
+        return;
+      }
+    }
+    this._curSelection;
+    for (let c of content.children.toArray()) {
+      if (this._selIndex == i) {
+        c.el.dataset.state = "1";
+        this._curSelection = c;
+      } else {
+        c.el.dataset.state = "0";
+      }
+      i++;
+    }
+    if (/up/i.test(key)) {
+      this._selIndex--;
+    } else if (/down/i.test(key)) {
+      this._selIndex++;
+    } else {
+      return
+    }
+
+    if (this._selIndex >= content.collection.length) {
+      this._selIndex = 0;
+    }
+    if (this._selIndex < 0) {
+      this._selIndex = content.collection.length - 1;
+    }
+    let delta = this._curSelection.$el.position().top + this._curSelection.$el.height() - content.el.innerHeight();
+    if (delta) {
+      content.el.scrollBy(0, delta);
+    }
+  }
+
+  /**
+   * 
+   */
+  async feedList(api, itemsOpt, onEmpty) {
     let list = await this.ensurePart(_a.list);
     list.mset({ api, itemsOpt });
     list.restart();
     let footer = await this.ensurePart(_a.footer);
     footer.el.dataset.state = 1;
+
     list.once(_e.data, async (data) => {
-      this.debug("AAA:66 GOT DATA", data)
-      will(data);
+      if (list.isNaturalyEmpty()) {
+        onEmpty(list);
+      }
     })
     list.once(_e.eod, async () => {
-      this.debug("AAA:70 GOT EOD", data)
-      will(data);
+      if (list.isNaturalyEmpty()) {
+        onEmpty(list);
+      }
     });
     list.once(_e.error, async () => {
-      this.debug("AAA:104 ERROR", list.isEmpty())
-      will([]);
+      onEmpty(list);
     });
   }
 
@@ -73,9 +188,15 @@ class __form_customer extends __form {
       origin: 'searchbox',
       service: null
     }
+    const placeholder = Skeletons.Note({
+      className: `${this.fig.family}__placeholder`,
+      content: "Aucune correspondance trouvee."
+    });
+
     return new Promise((will, wont) => {
       if (!words || !words.length) return will();
-      this.feedList(api, itemsOpt, will, wont)
+      this.feedList(api, itemsOpt, (data) => {
+      })
     })
   }
 
@@ -93,57 +214,31 @@ class __form_customer extends __form {
       kind: 'location_item',
       service: 'select-address'
     }
+
     return new Promise(async (will, wont) => {
       if (length <= 2) return will(null);
-      this.feedList(api, itemsOpt, will, wont)
+      this.feedList(api, itemsOpt, (list) => {
+        const placeholder = Skeletons.Box.Y({
+          className: `${this.fig.family}__placehoder-main`,
+          kids: [
+            Skeletons.Note({
+              className: `${this.fig.family}__placeholder`,
+              content: "Aucune correspondance trouvee."
+            }),
+            Skeletons.Note({
+              className: `${this.fig.family}__placeholder button`,
+              service: "prompt-location",
+              content: "Faire une saisie manuelle",
+              uiHandler: [this]
+            }),
+          ]
+        })
+        list.model.unset(_a.itemsOpt)
+        list.feed(placeholder);
+      })
     })
   }
 
-  /**
-   * 
-   */
-  // throtleLocation(cmd) {
-  //   this.debug("AAA:121", cmd, this._pending.location, this._locationCompleted, this._currentWords, this._timer.location)
-  //   if (this._locationCompleted) return;
-  //   if (!cmd || !cmd.getValue) return;
-  //   if (this._timer.location) return;
-  //   let words = cmd.getValue() || "";
-  //   let { length } = words.split(/[ ,]+/)
-  //   this.debug("AAA:129", cmd, length, words, this._pending.location, this._locationCompleted, this._currentWords)
-  //   if (length <= 2) return;
-  //   if (this._currentWords == words) return;
-  //   this._timer.location = setTimeout(() => {
-  //     words = cmd.getValue() || "";
-  //     this._currentWords = words;
-  //     this.searchLocation(words);
-  //     this._timer.location = 0;
-  //     if (this._pending.location && this._pending.location != this._currentWords) {
-  //       this.searchLocation(words);
-  //     }
-  //   }, 1000)
-  // }
-
-  /**
-   * 
-   */
-  // throtleCustomer(cmd) {
-  //   if (!cmd || !cmd.getValue) return;
-  //   if (this._timer.customer) return;
-  //   let words = cmd.getValue() || "";
-  //   let { length } = words.split(/[ ,]+/)
-  //   if (length <= 2) return;
-  //   if (this._currentWords == words) return;
-  //   this._timer.customer = setTimeout(() => {
-  //     words = cmd.getValue() || "";
-  //     this._currentWords = words;
-  //     this.debug("AAA:121", cmd, length, this._pending.customer, this._currentWords)
-  //     this.searchCustomer(words);
-  //     this._timer.customer = 0;
-  //     if (this._pending.customer && this._pending.customer != this._currentWords) {
-  //       this.searchCustomer(words);
-  //     }
-  //   }, 1000)
-  // }
 
   /**
     * 
@@ -164,11 +259,20 @@ class __form_customer extends __form {
   * 
   */
   itemMenuSelected(cmd) {
-    this.debug("AAA:158", cmd)
     this.ensurePart("menu-trigger").then((p) => {
-      this.debug("AAA:158", this, p, cmd);
       p.setLabel(cmd.mget(_a.label));
       this._data[cmd.mget(_a.name)] = cmd.mget(_a.value)
+    })
+  }
+
+  /**
+* 
+*/
+  prompLocation(cmd) {
+    this.ensurePart(_a.list).then(async (p) => {
+      const { address, buttons } = require("./skeleton/entries")
+      p.feed(address(this, {}));
+      this.append(buttons(this));
     })
   }
 
@@ -176,13 +280,11 @@ class __form_customer extends __form {
   * 
   */
   addressSelected(cmd) {
-    this.debug("AAA:158", cmd)
     this.ensurePart(_a.list).then(async (p) => {
       p.model.unset(_a.itemsOpt);
       const {
         street, city, housenumber, postcode, label
       } = cmd.mget('properties') || {};
-      this.debug("AAA:158", this, p, cmd, { street, city, housenumber, postcode });
       this._locationCompleted = 1;
       const { address, buttons } = require("./skeleton/entries")
       p.feed(address(this, { street, city, housenumber, postcode }));
@@ -199,7 +301,6 @@ class __form_customer extends __form {
    */
   createCustomer() {
     let args = this.getData();
-    this.debug("AAA:201", args)
     this.postService("perdrix.customer_create", args).then((data) => {
       this.debug("AAAA:202", data)
     }).catch((e) => {
@@ -230,7 +331,11 @@ class __form_customer extends __form {
       case "item-selected":
         this.itemMenuSelected(cmd);
         break;
+      case "streettype-selected":
+        this.selectStreetType(cmd);
+        break;
       case _a.input:
+        this.debug("AAAA:266", args, service, cmd.mget(_a.name), cmd)
         switch (cmd.mget(_a.name)) {
           case _a.name:
           case _a.lastname:
@@ -239,10 +344,21 @@ class __form_customer extends __form {
           case _a.location:
             this.throtle(cmd).then(this.searchLocation);
             break;
+          case 'streettype':
+            let { key } = args;
+            if (!key) {
+              this.getStreetType(cmd);
+            } else {
+              this.selectStreetType(cmd, key);
+            }
+            break;
         }
         break;
       case 'select-address':
         this.addressSelected(cmd);
+        break;
+      case "prompt-location":
+        this.prompLocation(cmd);
         break;
       case _e.create:
         this.createCustomer(cmd);

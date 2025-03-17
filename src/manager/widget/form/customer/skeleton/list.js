@@ -11,7 +11,6 @@ module.exports = function (ui) {
     },
     itemsOpt: {
       kind: 'customer_item',
-      flow: _a.x,
       service: ui.mget('itemService') || 'open-node',
       role: ui.mget(_a.role) || '',
       logicalParent: ui,
