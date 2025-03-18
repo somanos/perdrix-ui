@@ -29,20 +29,12 @@ module.exports = function (ui) {
         sys_pn: "entries",
         kids: [
           entries(ui),
-          Skeletons.Box.Y({
-            className: `${pfx}__entries-manual`,
-            sys_pn: "entries-manual",
-            kids:{
-              kind:'menu_input',
-              className: `${pfx}__menu-input`,
-              items:Env.get('streetType'),
-              name:'streetType',
-              placeholder:"Type de voie",
-              refAttribute:'longTag'
-            }
-          })
         ]
       }),
+      Skeletons.Wrapper.Y({
+        className: `${pfx}__entries-manual`,
+        sys_pn: "entries-manual",
+      })
     ]
   });
 

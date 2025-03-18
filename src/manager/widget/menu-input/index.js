@@ -11,7 +11,6 @@ class __menu_input extends LetcBox {
     this.model.atLeast({
       axis: _a.y
     })
-
   }
 
   /**
@@ -35,7 +34,7 @@ class __menu_input extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:38", this)
+    this.debug("AAA:38", this,)
     this.feed(require('./skeleton')(this));
   }
 
@@ -86,7 +85,6 @@ class __menu_input extends LetcBox {
     let reg = new RegExp(val, 'i')
     let name = this.mget(_a.name);
     let refAttribute = this.mget('refAttribute');
-    this.debug("AAA:89", { val, reg, refAttribute });
     this._selIndex = 0;
     for (let item of this.mget(_a.items)) {
       let ref = item[refAttribute]
@@ -94,7 +92,7 @@ class __menu_input extends LetcBox {
         let el = Skeletons.Note({
           ...item,
           className: `${this.fig.family}__item ${name}`,
-          content: item.longTag,
+          content: ref || item.label,
           service: "item-selected",
           uiHandler: [this],
           formItem: name,
