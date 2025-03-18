@@ -22,7 +22,7 @@ async function preloadKinds() {
   Kind.registerAddons({
     'perdrix_dock' : import('./manager/dock'),
     'search_results': import('./manager/widget/search-results'),
-    // 'customer_input': import('./manager/input/customer-input'),
+    'menu_input': import('./manager/widget/menu-input'),
     'customer_item': import('./manager/widget/customer-item'),
     'location_item': import('./manager/widget/location-item'),
     'customer_form': import('./manager/widget/form/customer'),

@@ -115,7 +115,6 @@ export function address(ui, opt) {
             className: `${ui.fig.family}__address street`,
             kids: [
               entry(ui, { placeholder: "Numero", name: "housenumber", value: housenumber }),
-              // streeType,
               entry(ui, { placeholder: "Type de voie", name: 'streettype', value: type, sys_pn: "streettype" }),
               entry(ui, { placeholder: "Nom de voie", name: 'streetname', value: street }),
             ]

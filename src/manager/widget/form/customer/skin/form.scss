@@ -27,6 +27,12 @@
       grid-template-columns: 100px 1fr 1fr;
       grid-gap: 0.5rem;
     }
+
+    &-manuel {
+      .menu-input__wraper {
+        max-height: 200px;
+      }
+    }
   }
 
   &__entrybox {
@@ -227,7 +233,7 @@
         &:hover {
           background-color: rgba(125, 230, 198, 0.267);
         }
-    
+
         &[data-state="1"] {
           color: drumee.$white;
           background-color: drumee.$btn-commit-background;
