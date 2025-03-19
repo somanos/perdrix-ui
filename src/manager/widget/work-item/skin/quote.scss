@@ -1,0 +1,36 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+
+@mixin quote {
+
+  &__quote {
+
+    &-main {
+      width: 100%;
+    }
+
+    &-header {
+      width: 100%;
+
+      .label {
+        @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
+        width: 100%;
+      }
+    }
+
+    &-row {
+      width: 100%;
+      grid-template-columns: 150px 1fr;
+      @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+
+      .value {
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+}

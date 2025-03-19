@@ -11,31 +11,60 @@ class __menu_input extends LetcBox {
     this.model.atLeast({
       axis: _a.y
     })
+    this.kbdHandler = this.kbdHandler.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
   }
 
   /**
    * 
-   * @param {View} child
-   * @param {String} pn
    */
-  onPartReady(child, pn) {
-    //this.debug("onPartReady", child, pn);
-    switch (pn) {
-      case "my-part-name":
-        /** Do something **/
-        break;
-      default:
-      /** Delegate to parent if any **/
-      //if(super.onPartReady) super.onPartReady(child, pn);
+  onDestroy() {
+    RADIO_KBD.off(_e.keyup, this.kbdHandler)
+    RADIO_BROADCAST.off(_e.click, this.clickHandler)
+  }
+
+  /**
+   * 
+   * @param {*} key 
+   */
+  kbdHandler(key) {
+    if (key == _e.Escape) {
+      this.clearItems();
     }
+  }
+
+  /**
+   * 
+   * @param {*} key 
+   */
+  clickHandler(e, origin) {
+    this.debug()
+    if (mouseDragged) {
+      return;
+    }
+    if (e && this.el.contains(e.currentTarget)) {
+      return;
+    }
+    if (origin && (this.contains(origin) || ([_e.data, _a.idle].includes(origin.status)))) {
+      return;
+    }
+    this.clearItems();
+  }
+
+  /**
+   * 
+   */
+  clearItems() {
+    this.ensurePart('items').then((p) => { p.clear() })
   }
 
   /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:38", this,)
     this.feed(require('./skeleton')(this));
+    RADIO_KBD.on(_e.keyup, this.kbdHandler)
+    RADIO_BROADCAST.on(_e.click, this.clickHandler)
   }
 
   /**
@@ -52,15 +81,7 @@ class __menu_input extends LetcBox {
         this.selectItem(cmd);
         break;
       case _a.input:
-        this.debug("AAAA:266", args, service, name, cmd.mget(_a.name), cmd)
         switch (cmd.mget(_a.name)) {
-          // case _a.name:
-          // case _a.lastname:
-          //   this.throtle(cmd).then(this.searchCustomer);
-          //   break;
-          // case _a.location:
-          //   this.throtle(cmd).then(this.searchLocation);
-          //   break;
           case name:
             let { key } = args;
             if (!key) {
@@ -71,7 +92,6 @@ class __menu_input extends LetcBox {
             break;
         }
         break;
-
     }
   }
 
@@ -116,10 +136,12 @@ class __menu_input extends LetcBox {
    */
   commitSelection(cmd) {
     this.ensurePart("entry").then((p) => {
-      p.setValue(cmd.mget(_a.content));
+      let value = cmd.mget(_a.content) || cmd.mget(_a.label)
+      p.setValue(value);
       const name = this.mget(_a.name);
       p.mset(name, cmd.mget(name))
-      this.ensurePart('items').then((p) => { p.clear() })
+      p.mset(_a.value, value)
+      this.clearItems();
     })
   }
 

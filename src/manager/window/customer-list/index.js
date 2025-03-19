@@ -145,7 +145,7 @@ class __window_customer_list extends __window {
     this._api.order = order;
     if (cmd.getValue) {
       let words = cmd.getValue();
-      if(this._lastWords == words) return;
+      if (this._lastWords == words) return;
       this.debug("AAA:148", words)
       if (words && words.length) {
         this._api.words = words;
@@ -207,16 +207,16 @@ class __window_customer_list extends __window {
    * 
    */
   loadCustomer(cmd, type) {
-    const {
-      gender, city,location, stype, custId
-    } = cmd.model.toJSON();
+    const { custId } = cmd.model.toJSON();
     Wm.windowsLayer.append({
       kind: 'window_customer',
       id: `customer-${custId}`,
-      content: {
-        gender, city,location, stype, custId
-      },
+      customer: cmd
     });
+    setTimeout(()=>{
+      let w = Wm.windowsLayer.children.last();
+      if(w && w.raise) w.raise()
+    }, 1000)
   }
 
   /**

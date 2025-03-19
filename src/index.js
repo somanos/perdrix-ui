@@ -20,15 +20,17 @@ async function preloadKinds() {
   window.DrumeeInteractWindow = await Kind.waitFor('DrumeeInteractWindow');
   window.DrumeeInteractPlayer = await Kind.waitFor('DrumeeInteractPlayer');
   Kind.registerAddons({
-    'perdrix_dock' : import('./manager/dock'),
-    'search_results': import('./manager/widget/search-results'),
-    'menu_input': import('./manager/widget/menu-input'),
+    'customer_form': import('./manager/widget/form/customer'),
     'customer_item': import('./manager/widget/customer-item'),
     'location_item': import('./manager/widget/location-item'),
-    'customer_form': import('./manager/widget/form/customer'),
+    'menu_input': import('./manager/widget/menu-input'),
+    'perdrix_dock' : import('./manager/dock'),
+    'search_results': import('./manager/widget/search-results'),
     'window_customer_list': import('./manager/window/customer-list'),
     'window_customer': import('./manager/window/customer'),
     'window_finder': import('./manager/window/finder'),
+    'work_item': import('./manager/widget/work-item/index.js'),
+    'work_list': import('./manager/widget/work-list'),
   });
 }
 /**

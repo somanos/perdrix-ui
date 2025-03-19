@@ -43,7 +43,7 @@ class __window_finder extends __window {
       display: _a.none
     })
     this._storedModels = [];
-    this._timer = new Date().getTime();
+    this._timer = {};
     this._filters = [];
     this._launchOptions = { explicit: 1, singleton: 1 };
 
@@ -157,10 +157,12 @@ class __window_finder extends __window {
   }
 
 
+
+
   /**
-   * 
-   */
-  search(source) {
+ * 
+ */
+  async _search(source) {
     if (!source || !source.getValue) {
       this.warn("Invalid search source");
       return;
@@ -180,31 +182,37 @@ class __window_finder extends __window {
         this.hide();
       });
     }
+    let list = await this.ensurePart(_a.list);
+    if (list.isWaiting()) return;
 
     let api = {
       service: "perdrix.search",
       words
     }
-    let now = new Date().getTime();
-    if ((now - this._timer) < 300) {
-      this.debug("AAA:191", now, this._timer, now - this._timer);
-      return
+    if (!api.words) return;
+    let a = api.words.split(/:+/);
+    if (a.length == 0) return;
+    if (a.length >= 2) {
+      api.table = a[0];
+      api.words = a[1];
+    };
+    if (api.words.length < 3) return;
+    if (this._filters.length) {
+      api.tables = this._filters;
     }
-    this.ensurePart(_a.list).then((list) => {
-      this._timer = new Date().getTime();
-      if (!api.words) return;
-      let a = api.words.split(/:+/);
-      if (a.length == 0) return;
-      if (a.length >= 2) {
-        api.table = a[0];
-        api.words = a[1];
-      };
-      if (api.words.length < 3) return;
-      if (this._filters.length) {
-        api.tables = this._filters;
-      }
-      list.mset({ api });
-      list.restart();
+    list.mset({ api });
+    list.restart();
+  }
+
+
+
+  /**
+   * 
+   * @param {*} source 
+   */
+  search(source) {
+    this.throtle(source).then(() => {
+      this._search(source)
     })
   }
 
@@ -219,8 +227,7 @@ class __window_finder extends __window {
       this.hide();
     }
     this.feed(require("./skeleton")(this));
-    this.fetchService("perdrix.get_env").then((data)=>{
-      this.debug("AAA:31 GET ENV", data)
+    this.fetchService("perdrix.get_env").then((data) => {
       Env.set(data)
     })
   }
@@ -260,18 +267,25 @@ class __window_finder extends __window {
     }
   }
 
-  /**
-   * 
-   */
-  loadCustomer(content, type) {
-    let { id } = content;
-    Wm.windowsLayer.append({
-      kind: 'window_customer',
-      id: `clien-${id}`,
-      content,
-      type
-    });
-  }
+  // /**
+  //  * 
+  //  */
+  // loadCustomer(content, type) {
+  //   let { id } = content;
+  //   Wm.windowsLayer.append({
+  //     kind: 'window_customer',
+  //     id: `clien-${id}`,
+  //     content,
+  //     type
+  //   });
+  //   setTimeout(() => {
+  //     let w = Wm.windowsLayer.children.last();
+  //     if (w && w.raise) {
+  //       w.raise()
+  //       this.hide();
+  //     }
+  //   }, 1000)
+  // }
 
   /**
    * @param {*} cmd
@@ -279,7 +293,7 @@ class __window_finder extends __window {
   */
   onUiEvent(cmd, args = {}) {
     const { service, type, content } = args
-    this.debug(`onUiEvent service=${service}`, cmd, this);
+    this.debug(`onUiEvent service=${service}`, cmd, args, this);
 
     switch (service) {
       case _e.close:
@@ -289,11 +303,8 @@ class __window_finder extends __window {
         this.filterContent(cmd);
         return;
       case 'open-viewer':
-        this.hide();
-        switch (type) {
-          case "customer":
-            this.loadCustomer(content, type);
-            break;
+        if (cmd.data) {
+          this.loadCustomer(cmd, 1);
         }
         return
 

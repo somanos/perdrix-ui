@@ -19,6 +19,11 @@
       justify-content: center;
       flex: 1;
 
+      &[data-state="1"] {
+        border: solid 0.5ps drumee.$white;
+        background-color: drumee.$core-background-blue;
+      }
+
       &:hover {
         background-color: drumee.$eblue;
       }

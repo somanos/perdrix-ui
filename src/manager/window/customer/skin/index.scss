@@ -20,7 +20,7 @@
     flex-direction: column;
     display: flex;
     left: calc(50vw - 400px);
-    top: 60px;
+    top: 40px;
 
     &[data-device="mobile"] {
       width: 100vw;
@@ -42,4 +42,14 @@
 
   @include overview;
   @include tabs;
+
+  &__list-content {
+    width: 100%;
+    height: calc(100% - 40px);
+    align-items: center;
+    max-height: calc(100% - 40px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
 }

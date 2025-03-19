@@ -3,16 +3,17 @@
 @mixin overview {
   &__overview {
     width: 100%;
-    padding: 5px;
+    padding: 5px 5px 8px 5px;
 
     .customer-text {
       display: flex;
+      flex-direction: column;
       flex-wrap: wrap;
-      align-content: end;
+      justify-content: flex-end;
     }
 
-    .customer-nom {
-      @include drumee.typo($size: 25px, $line: 25px, $weight: 400, $color: drumee.$blue-midnight);
+    .customer-custname {
+      @include drumee.typo($size: 25px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
 
       &::after {
         content: ">";
@@ -21,7 +22,7 @@
     }
 
     .customer-city {
-      @include drumee.typo($size: 20px, $line: 20px, $weight: 400, $color: drumee.$blue-midnight);
+      @include drumee.typo($size: 20px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
 
       &::after {
         content: ",";
@@ -29,8 +30,9 @@
       }
     }
 
-    .customer-adresse {
-      @include drumee.typo($size: 15px, $line: 15px, $weight: 400, $color: drumee.$blue-midnight);
+    .customer-adress {
+      @include drumee.typo($size: 15px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
+      margin-bottom: 2px;
     }
   }
 

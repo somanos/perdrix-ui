@@ -1,6 +1,37 @@
-
+/**
+ * 
+ * @param {*} v 
+ * @returns 
+ */
 export function px(v){
   return `${v}px`
+}
+
+/**
+ * 
+ * @param {*} v 
+ * @returns 
+ */
+export function fromUnixtime(time){
+  return new Date(time * 1000).toLocaleDateString(Visitor.language())
+}
+
+/**
+ * 
+ * @param {*} v 
+ * @returns 
+ */
+export function devise(v){
+  return `${v} €`
+}
+
+/**
+ * 
+ * @param {*} v 
+ * @returns 
+ */
+export function vat(v){
+  return `${(v*100).toFixed(2,2)}%`
 }
 
 /**
@@ -34,3 +65,4 @@ export function reverseSortBy(sortByFunction) {
     return l < r ? 1 : l > r ? -1 : 0;
   };
 }
+

@@ -3,39 +3,34 @@ function customerTabs(ui) {
   let item = ui.fig.name;
   return Skeletons.Box.X({
     className: `${pfx}__tabs`,
+    kidsOpt: {
+      className: `${item}__button`,
+      radio: `${ui.cid}-tabs`,
+      labelClass: `${item}__label contacts`,
+    },
     kids: [
       Skeletons.Button.Label({
         ico: 'desktop_mysharing',
-        className: `${item}__button`,
-        labelClass: `${item}__label contacts`,
         label: 'Contacs',
         service: 'show-contacts',
       }),
       Skeletons.Button.Label({
         ico: 'desktop_picture',
-        className: `${item}__button`,
-        labelClass: `${item}__label photos`,
         label: 'Photos',
         service: 'show-photos',
       }),
       Skeletons.Button.Label({
         ico: 'editbox_pencil',
-        className: `${item}__button`,
-        labelClass: `${item}__label notes`,
-        label: 'Contacs',
+        label: 'Notes',
         service: 'show-notes',
       }),
       Skeletons.Button.Label({
         ico: 'desktop_desksettings',
-        className: `${item}__button`,
-        labelClass: `${item}__label travaux`,
         label: 'Travaux',
-        service: 'show-travaux',
+        service: 'show-work',
       }),
       Skeletons.Button.Label({
         ico: 'editbox_openmenu',
-        className: `${item}__button`,
-        labelClass: `${item}__label solde`,
         label: 'Solde',
         service: 'show-solde',
       }),

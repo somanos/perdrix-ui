@@ -11,7 +11,7 @@
 
 function customer_item(ui) {
 
-  let { custName, gender, location, compType, category } = ui.model.toJSON();
+  let { custName, gender, location, companyclass, category } = ui.model.toJSON();
   let adresse = "";
   if (location) {
     adresse = location.join(' ');
@@ -20,8 +20,8 @@ function customer_item(ui) {
   if (gender) {
     custName = `${gender} ${custName}`;
   }
-  if (compType) {
-    custName = `${custName} (${compType})`;
+  if (companyclass) {
+    custName = `${custName} (${companyclass})`;
   }
 
   let icon = 'account_contacts';

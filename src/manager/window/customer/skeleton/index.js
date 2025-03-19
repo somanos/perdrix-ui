@@ -1,7 +1,5 @@
 module.exports = function (ui) {
-  const topbar = require("./content/topbar")(ui)
-  const main = require("./content/main")(ui)
-
+  const { main, topbar } = require("./content/widget")
 
   const dialog = Skeletons.Wrapper.Y({
     className: `${ui.fig.group}__wrapper--modal dialog__wrapper--modal ${ui.fig.family}`,
@@ -17,7 +15,7 @@ module.exports = function (ui) {
     className: `${ui.fig.family}__main ${ui.fig.group}__main drive-popup`,
     radio: _a.parent,
     debug: __filename,
-    kids: [topbar, tooltips, main, dialog]
+    kids: [topbar(ui), tooltips, main(ui), dialog]
   });
 
 };;

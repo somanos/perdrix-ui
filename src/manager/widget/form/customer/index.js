@@ -1,5 +1,7 @@
 
 const __form = require('..');
+const { entries, address, placeholder} = require("./skeleton/entries")
+
 class __form_customer extends __form {
 
   constructor(...args) {
@@ -45,116 +47,6 @@ class __form_customer extends __form {
     }
   }
 
-  /**
-   * 
-   */
-  // getStreetType(cmd) {
-  //   let r = []
-  //   if (!cmd || !cmd.getValue) return r;
-  //   let val = cmd.getValue();
-  //   let reg = new RegExp(val)
-  //   for (let item of Env.get('streetType')) {
-  //     if (reg.test(item.label) || reg.test(item.longTag)) {
-  //       let name = `streettype`
-  //       let el = Skeletons.Note({
-  //         ...item,
-  //         className: name,
-  //         content: item.longTag,
-  //         service: "streettype-selected",
-  //         uiHandler: [this],
-  //         formItem: name,
-  //         name,
-  //         state: 0
-  //       })
-  //       r.push(el);
-  //       if (val) {
-  //         if (r.length > 10) break;
-  //       }
-  //     }
-  //   }
-  //   this.ensurePart('street-selection').then((p) => {
-  //     let o1 = cmd.$el.offset();
-  //     let o2 = this.$el.offset();
-  //     let top = o1.top - o2.top - 15;
-  //     let left = o1.left - o2.left - 30;
-  //     this._selIndex = 0;
-  //     p.feed(Skeletons.Box.Y({
-  //       className: `${this.fig.family}__street-selection-main`,
-  //       sys_pn: "streettypes",
-  //       kids: r
-  //     }))
-  //     p.$el.css({ top, left })
-  //   })
-  //   return r;
-  // }
-
-  /**
-   * 
-   */
-  // commitStreetType(cmd) {
-  //   this.ensurePart("streettype").then((p) => {
-  //     p.setValue(cmd.mget(_a.content));
-  //     p.mset({
-  //       streettype: cmd.mget(_a.id)
-  //     })
-  //   })
-  //   this.ensurePart('street-selection').then((p) => { p.clear() })
-
-  // }
-
-  /**
-   * 
-   */
-  // async selectStreetType(cmd, key) {
-  //   if (!key) {
-  //     return this.commitStreetType(cmd)
-  //   }
-  //   let wrapper = await this.ensurePart('street-selection');
-  //   if (key == _e.Escape) {
-  //     wrapper.clear();
-  //     return;
-  //   }
-  //   if (key == _e.Enter && this._curSelection) {
-  //     return this.commitStreetType(this._curSelection)
-  //   }
-  //   let content = await this.ensurePart('streettypes');
-  //   let i = 0;
-  //   if (/down/i.test(key)) {
-  //     if (wrapper.isEmpty()) {
-  //       let input = await this.ensurePart("streettype");
-  //       this.getStreetType(input);
-  //       return;
-  //     }
-  //   }
-  //   this._curSelection;
-  //   for (let c of content.children.toArray()) {
-  //     if (this._selIndex == i) {
-  //       c.el.dataset.state = "1";
-  //       this._curSelection = c;
-  //     } else {
-  //       c.el.dataset.state = "0";
-  //     }
-  //     i++;
-  //   }
-  //   if (/up/i.test(key)) {
-  //     this._selIndex--;
-  //   } else if (/down/i.test(key)) {
-  //     this._selIndex++;
-  //   } else {
-  //     return
-  //   }
-
-  //   if (this._selIndex >= content.collection.length) {
-  //     this._selIndex = 0;
-  //   }
-  //   if (this._selIndex < 0) {
-  //     this._selIndex = content.collection.length - 1;
-  //   }
-  //   let delta = this._curSelection.$el.position().top + this._curSelection.$el.height() - content.el.innerHeight();
-  //   if (delta) {
-  //     content.el.scrollBy(0, delta);
-  //   }
-  // }
 
   /**
    * 
@@ -237,23 +129,23 @@ class __form_customer extends __form {
     return new Promise(async (will, wont) => {
       if (length <= 2) return will(null);
       this.feedList(api, itemsOpt, (list) => {
-        const placeholder = Skeletons.Box.Y({
-          className: `${this.fig.family}__placehoder-main`,
-          kids: [
-            Skeletons.Note({
-              className: `${this.fig.family}__placeholder`,
-              content: "Aucune correspondance trouvee."
-            }),
-            Skeletons.Note({
-              className: `${this.fig.family}__placeholder button`,
-              service: "prompt-location",
-              content: "Faire une saisie manuelle",
-              uiHandler: [this]
-            }),
-          ]
-        })
+        // const placeholder = Skeletons.Box.Y({
+        //   className: `${this.fig.family}__placehoder-main`,
+        //   kids: [
+        //     Skeletons.Note({
+        //       className: `${this.fig.family}__placeholder`,
+        //       content: "Aucune correspondance trouvee."
+        //     }),
+        //     Skeletons.Note({
+        //       className: `${this.fig.family}__placeholder button`,
+        //       service: "prompt-location",
+        //       content: "Faire une saisie manuelle",
+        //       uiHandler: [this]
+        //     }),
+        //   ]
+        // })
         list.model.unset(_a.itemsOpt)
-        list.feed(placeholder);
+        list.feed(placeholder(this));
       })
     })
   }
@@ -280,7 +172,6 @@ class __form_customer extends __form {
   */
   selectCategory(cmd) {
     this._locationCompleted = 0;
-    const { entries } = require("./skeleton/entries")
     this.ensurePart("entries").then((p) => {
       let category = cmd.mget(_a.type) == 'company' ? 0 : 1;
       this.mset({ type: cmd.mget(_a.type), category })
@@ -326,7 +217,6 @@ class __form_customer extends __form {
   async prompLocation(cmd) {
     await this.clearList();
     let p = await this.ensurePart("entries-manual");
-    const { address } = require("./skeleton/entries")
     p.feed(address(this, {}));
   }
 
@@ -341,7 +231,6 @@ class __form_customer extends __form {
       street, city, housenumber, postcode, label
     } = cmd.mget('properties') || {};
     this._locationCompleted = 1;
-    const { address } = require("./skeleton/entries")
     p.feed(address(this, { street, city, housenumber, postcode }));
     let addr = await this.ensurePart("address-entry");
     addr.setValue(label)

@@ -213,8 +213,6 @@ export function list(ui) {
   });
 };
 
-
-
 export function category(ui) {
   let uiHandler = [ui];
   let type = ui.mget(_a.type)
@@ -264,3 +262,21 @@ export function buttons(ui) {
     })
   })
 };
+
+export function placeholder(ui){
+  return Skeletons.Box.Y({
+    className: `${ui.fig.family}__placehoder-main`,
+    kids: [
+      Skeletons.Note({
+        className: `${ui.fig.family}__placeholder`,
+        content: "Aucune correspondance trouvee."
+      }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__placeholder button`,
+        service: "prompt-location",
+        content: "Faire une saisie manuelle",
+        uiHandler: [ui]
+      }),
+    ]
+  })
+}

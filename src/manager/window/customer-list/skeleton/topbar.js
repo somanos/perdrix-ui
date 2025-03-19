@@ -14,8 +14,8 @@ module.exports = function (ui) {
     uiHandler: [ui],
     showError:false
   };
-  return Skeletons.Box.X({
-    className: `${ui.fig.family}-${figname}__container u-jc-sb`,
+  return Skeletons.Box.G({
+    className: `${ui.fig.family}-${figname}__container`,
     sys_pn: "browser-top-bar",
     service: _e.raise,
     debug: __filename,
