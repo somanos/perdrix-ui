@@ -89,6 +89,38 @@ export function buttons(ui) {
   })
 };
 
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function actionButtons(ui, buttons) {
+  const pfx = `${ui.fig.family}`;
+  let uiHandler = [ui];
+  let kids = [];
+  let i = 0;
+  for (let b of buttons) {
+    kids.push(
+      Skeletons.Note({
+        className: `${pfx}__button-item`,
+        ...b,
+        position: i,
+        uiHandler,
+      })
+    )
+    i++;
+  }
+
+  return Skeletons.Box.X({
+    className: `${pfx}__buttons-container`,
+    sys_pn: "buttons",
+    kids: Skeletons.Box.X({
+      className: `${pfx}__buttons-main`,
+      kids,
+    })
+  })
+};
+
 export function placeholder(ui) {
   return Skeletons.Box.Y({
     className: `${ui.fig.family}__placehoder-main`,
@@ -119,4 +151,77 @@ export function menuInput(ui, opt) {
     className: `${pfx}__menu-input`,
     uiHandler: [ui]
   }
+}
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} opt 
+ * @returns 
+ */
+export function footerWrapper(ui, opt) {
+  return Skeletons.Wrapper.Y({
+    className: `${pfx}__footer`,
+    sys_pn: _a.footer,
+    kids: [list(ui)],
+    state: 0,
+    ...opt
+  })
+}
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} opt 
+ * @returns 
+ */
+export function dialogWrapper(ui, opt) {
+  return Skeletons.Wrapper.Y({
+    className: `${ui.fig.group}__wrapper--modal dialog__wrapper--modal ${ui.fig.family}__wrapper--modal`,
+    name: "dialog",
+    ...opt
+  })
+}
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} opt 
+ * @returns 
+ */
+export function entryLabel(ui, opt) {
+
+  let { value, name, placeholder, sys_pn, ico, label } = opt;
+  const pfx = `${ui.fig.family}_entry-label ${name}`;
+  let args = {
+    className: `${pfx} entry`,
+    name,
+    value,
+    formItem: name,
+    innerClass: name,
+    mode: _a.interactive,
+    service: _a.input,
+    placeholder,
+    uiHandler: [ui],
+    errorHandler: [ui],
+    tpe: _a.textarea
+  }
+  if (sys_pn) {
+    args.sys_pn = sys_pn;
+    args.partHandler = [ui];
+  }
+  Skeletons.Entry(args)
+
+  return Skeletons.Box.Y({
+    className: `${pfx}__main`,
+    kids: [
+      Skeletons.Button.Label({
+        ico,
+        label,
+        className: `${formFig} icon`
+      }),
+      Skeletons.Entry(args)
+    ]
+  });
+
 }

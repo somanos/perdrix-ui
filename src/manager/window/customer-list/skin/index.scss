@@ -1,6 +1,8 @@
 @use "sass:meta";
 @use 'mixins/drumee';
+@use 'mixins/window' as *;
 @use 'header' as *;
+
 
 .window-customer-list {
   @include header;

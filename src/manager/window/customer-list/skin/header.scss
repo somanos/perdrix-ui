@@ -4,19 +4,18 @@
   &-topbar {
     &__container {
       flex: 1;
-      grid-template-columns: 40px 150px 1fr 190px;
+      grid-template-columns: 40px 150px 1fr;
       border-bottom: 1px solid drumee.$default-text-color;
       border-radius: drumee.$default-border-radius-top;
       height: 44px;
     }
 
     &__title {
-      // margin: auto;
-      // @include drumee.typo($size: 16px, $line: 21px, $weight: 300, $color: white);
       width: 100%;
       justify-content: center;
       align-items: center;
       @include drumee.typo($color: white, $size: 16px, $line: 21px);
+      margin-right: 150px;
 
     }
 

@@ -1,9 +1,10 @@
 @use "sass:meta";
 @use 'mixins/drumee';
-@use '../../skin/group/header/topbar.scss' as *;
-@use './tabs.scss' as *;
-@use './overview.scss' as *;
+@use '../../skin/group/header/topbar' as *;
+@use 'tabs' as *;
+@use 'overview' as *;
 @use "mixins/form" as *;
+@use "menu" as *;
 
 .window-customer {
   @include window-topbar;
@@ -44,7 +45,7 @@
   @include overview;
   @include tabs;
   @include form-placeholder;
-
+  @include selection-menu;
   &__list-content {
     width: 100%;
     height: calc(100% - 40px);

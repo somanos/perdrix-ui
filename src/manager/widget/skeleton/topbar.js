@@ -11,7 +11,7 @@ export function topbarBox(ui, opt) {
 
 
   return Skeletons.Box.X({
-    className: `${fig}__main`,
+    className: `${fig}__main ${ui.fig.group}-topbar`,
     debug: __filename,
     sys_pn: 'topbar',
     justify: _a.right,

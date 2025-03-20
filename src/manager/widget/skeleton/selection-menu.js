@@ -1,105 +1,51 @@
-/**
- * 
- * @param {*} ui 
- * @param {*} opt 
- * @param {*} innerClass 
- * @returns 
- */
-function menuItem(ui, opt, innerClass) {
+function menuItems(ui, opt) {
   let pfx = ui.fig.family;
   return Skeletons.Button.Label({
-    className: `${pfx}__menu-item  ${innerClass}`,
-    uiHandler: [ui],
-    service: "item-selected",
-    state: 0,
-    radio: "selection-menu",
-    ...opt,
-    icons: ["raw-radio-unchecked", "raw-radio-checked"],
-  });
-}
-
-
-/**
- * 
- */
-function buildMenu(ui, trigger, opt) {
-  let pfx = ui.fig.family;
-  const { innerClass, itemName, itemsList, direction } = opt;
-  let _items = [];
-  for (let item of itemsList) {
-    item.name = itemName;
-    _items.push(menuItem(ui, item, innerClass))
-  }
-
-  const items = Skeletons.Box.Y({
-    className: `${pfx}__menu-items  ${innerClass}`,
-    sys_pn: "filter-roll",
-    kids: _items
-  });
-
-  return {
-    kind: KIND.menu.topic,
-    className: `${pfx}__menu-main  ${innerClass}`,
-    partHandler: ui,
-    sys_pn: "selection-menu",
-    trigger,
-    direction,
-    items,
+    className: `${pfx}__menu-item`,
     uiHandler: ui,
-    persistence: _a.none
-  };
-
+    state: 0,
+    icons: ["raw-radio-unchecked", "raw-radio-checked"],
+    ...opt,
+  });
 }
 
 export function selectionMenu(ui, opt) {
   let pfx = ui.fig.family;
-  const { innerClass, label } = opt;
+  let { buttons, ico, label, service } = opt;
+  const name = "menu";
   const trigger = Skeletons.Button.Label({
-    ico: "account",
-    className: `${pfx}__menu-trigger ${innerClass}`,
-    uiHandler: ui,
-    sys_pn: "menu-trigger",
-    label
+    className: `${pfx}__${name}-trigger`,
+    ico,
+    service,
+    label,
+  })
+  let content = []
+  for (let b of buttons) {
+    b.service = b.service || service;
+    content.push(
+      menuItems(ui, b)
+    )
+  }
+  const items = Skeletons.Box.Y({
+    className: `${pfx}__${name}-items`,
+    sys_pn: `${name}-items`,
+    kids: content
   });
+
+  const kids = {
+    kind: KIND.menu.topic,
+    className: `${pfx}__${name}-main`,
+    partHandler: ui,
+    sys_pn: `${name}-main`,
+    trigger,
+    items,
+    uiHandler: ui
+  };
 
   return Skeletons.Box.Y({
     debug: __filename,
-    className: `${pfx}__menu-container  ${innerClass}`,
-    sys_pn: "filter-container",
-    partHandler: ui,
-    state: 0,
-    kids: buildMenu(ui, trigger, opt)
+    className: `${pfx}__${name}-container`,
+    kids
   });
+
 };
-
-export function inputMenu(ui, opt) {
-  let pfx = ui.fig.family;
-  const { innerClass, name, value, placeholder, sys_pn } = opt;
-  let args = {
-    className: `${pfx} entry`,
-    name,
-    value,
-    formItem: name,
-    innerClass: name,
-    mode: _a.interactive,
-    service: "input-menu",
-    placeholder,
-    errorHandler: [ui]
-  }
-  if (sys_pn) {
-    args.sys_pn = sys_pn;
-    args.partHandler = [ui];
-  }
-
-  const trigger = Skeletons.Entry(args);
-
-  return Skeletons.Box.Y({
-    debug: __filename,
-    className: `${pfx}__menu-container  ${innerClass}`,
-    sys_pn: "filter-container",
-    partHandler: ui,
-    state: 0,
-    kids: buildMenu(ui, trigger, opt)
-  });
-
-}

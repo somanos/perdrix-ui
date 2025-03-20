@@ -1,5 +1,3 @@
-const { customerHeader, selectionMenu } = require("../../../../widget/skeleton")
-
 /**
  * 
  * @param {*} ui 
@@ -8,22 +6,6 @@ const { customerHeader, selectionMenu } = require("../../../../widget/skeleton")
 export function tabs(ui) {
   let pfx = ui.fig.family;
   let item = ui.fig.name;
-  let service = "show-works";
-  let state = 1;
-  let status = null;
-  let works = selectionMenu(ui, {
-    label: 'Travaux',
-    ico: 'desktop_desksettings',
-    service,
-    buttons: [
-      { label: "Travaux (0)", status: 0, state },
-      { label: "Travaux (1)", status: 1, state },
-      { label: "Travaux (2)", status: 2, state },
-      { label: "Travaux (3)", status: 3, state },
-      { label: "Travaux (4)", status: 4, state },
-    ]
-  })
-
   return Skeletons.Box.X({
     className: `${pfx}__tabs`,
     kidsOpt: {
@@ -47,12 +29,11 @@ export function tabs(ui) {
         label: 'Notes',
         service: 'show-notes',
       }),
-      works,
-      // Skeletons.Button.Label({
-      //   ico: 'desktop_desksettings',
-      //   label: 'Travaux',
-      //   service: 'show-work',
-      // }),
+      Skeletons.Button.Label({
+        ico: 'desktop_desksettings',
+        label: 'Travaux',
+        service: 'show-work',
+      }),
       Skeletons.Button.Label({
         ico: 'editbox_openmenu',
         label: 'Solde',
@@ -124,7 +105,7 @@ export function topbar(ui) {
     kids: [
       Skeletons.Box.X({
         className: `${group}__title ${ui.fig.family}-${figname}__title`,
-        kids: customerHeader(ui), //require("./overview")(ui)
+        kids: require("./overview")(ui)
       }),
       Skeletons.Window.TopbarControl(ui, "sc")
     ]

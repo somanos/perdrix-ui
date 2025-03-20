@@ -1,4 +1,4 @@
-function switcher(ui) {
+module.exports = function (ui) {
   let uiHandler = [ui];
   const pfx = `${ui.fig.family}`;
   let { buttons, service, name, value } = ui.model.toJSON();
@@ -28,6 +28,3 @@ function switcher(ui) {
     kids
   })
 };
-
-
-module.exports = switcher;
