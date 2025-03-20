@@ -57,6 +57,12 @@ export function placeholder(ui) {
         className: `${ui.fig.family}__placeholder`,
         content: "Aucun travail encours."
       }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__placeholder button`,
+        service: "create-quote",
+        content: "Saisir un devis",
+        uiHandler: [ui]
+      }),
     ]
   })
 }

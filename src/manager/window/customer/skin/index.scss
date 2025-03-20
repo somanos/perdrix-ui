@@ -3,6 +3,7 @@
 @use '../../skin/group/header/topbar.scss' as *;
 @use './tabs.scss' as *;
 @use './overview.scss' as *;
+@use "mixins/form" as *;
 
 .window-customer {
   @include window-topbar;
@@ -42,6 +43,7 @@
 
   @include overview;
   @include tabs;
+  @include form-placeholder;
 
   &__list-content {
     width: 100%;

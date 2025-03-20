@@ -1,0 +1,23 @@
+@use "../drumee";
+
+@mixin dialog-overlay {
+
+  &__wrapper--modal.dialog__wrapper,
+  &__dialog-overlay {
+    position: absolute;
+    height: auto;
+
+    &[data-state="open"] {
+      width: 100%;
+      height: calc(100%);
+      left: 0;
+      right: 0;
+      top: 0px;
+      bottom: 0;
+      justify-items: center;
+      align-items: center;
+      border-radius: drumee.$default-border-radius-bottom;
+      background-color: drumee.$core-transparency-container-overlay;
+    }
+  }
+}

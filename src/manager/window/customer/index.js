@@ -7,7 +7,6 @@ class __window_customer extends __window {
     require('./skin');
     super.initialize(opt);
     this.source = opt.source;
-    this.debug("AAA:10", opt.source.data())
     this.mset(opt.source.data())
   }
 
@@ -16,6 +15,7 @@ class __window_customer extends __window {
    */
   onDomRefresh() {
     super.onDomRefresh();
+    this.debug("AAA:10", this.source.data())
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();

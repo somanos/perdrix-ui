@@ -1,6 +1,6 @@
 
 const __form = require('..');
-const { entries, address, placeholder} = require("./skeleton/entries")
+const { customerBox, placeholder} = require("../../skeleton")
 
 class __form_customer extends __form {
 
@@ -129,21 +129,6 @@ class __form_customer extends __form {
     return new Promise(async (will, wont) => {
       if (length <= 2) return will(null);
       this.feedList(api, itemsOpt, (list) => {
-        // const placeholder = Skeletons.Box.Y({
-        //   className: `${this.fig.family}__placehoder-main`,
-        //   kids: [
-        //     Skeletons.Note({
-        //       className: `${this.fig.family}__placeholder`,
-        //       content: "Aucune correspondance trouvee."
-        //     }),
-        //     Skeletons.Note({
-        //       className: `${this.fig.family}__placeholder button`,
-        //       service: "prompt-location",
-        //       content: "Faire une saisie manuelle",
-        //       uiHandler: [this]
-        //     }),
-        //   ]
-        // })
         list.model.unset(_a.itemsOpt)
         list.feed(placeholder(this));
       })
@@ -173,9 +158,9 @@ class __form_customer extends __form {
   selectCategory(cmd) {
     this._locationCompleted = 0;
     this.ensurePart("entries").then((p) => {
-      let category = cmd.mget(_a.type) == 'company' ? 0 : 1;
-      this.mset({ type: cmd.mget(_a.type), category })
-      p.feed(entries(this))
+      let category = cmd.mget(_a.value) == 'company' ? 0 : 1;
+      this.mset({ type: cmd.mget(_a.value), category })
+      p.feed(customerBox(this))
     })
     this.ensurePart("entries-manual").then((p) => {
       p.clear()

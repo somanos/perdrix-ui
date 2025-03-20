@@ -1,0 +1,48 @@
+@use "mixins/drumee";
+@use "mixins/form" as *;
+
+@mixin form-content {
+  @include form-entries;
+
+  &__entrybox {
+    width: 100%;
+
+    &-content {
+      width: 100%;
+    }
+  }
+
+  &__category-item {
+    flex: 1;
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
+    justify-content: center;
+    border-radius: 3px;
+    margin: 5px;
+    cursor: pointer;
+
+    &[data-state="1"] {
+      background-color: drumee.$customer-selection-bg;
+      color: drumee.$customer-selection-fg;
+    }
+
+    &[data-state="0"] {
+      border: solid 0.5px lightgray;
+    }
+  }
+
+  @include form-entry; 
+  @include form-body;
+  @include form-address;
+  @include form-footer;
+  @include form-buttons;
+  @include form-placeholder;
+
+  &__searchbox {
+    height: 100%;
+    overflow: auto;
+
+    .smart-container {
+      min-height: 100px;
+    }
+  }
+}

@@ -1,12 +1,8 @@
 
-const { entries, category, list } = require("./entries")
+const { customerBox, radioButtons, list, headerBox } = require("../../../skeleton")
+
 module.exports = function (ui) {
   const pfx = ui.fig.family;
-  const header = Skeletons.Box.X({
-    className: `${pfx}__header ${ui.fig.group}__header`,
-    kids: [require('./topbar')(ui)],
-    sys_pn: _a.header
-  });
 
   const dialog = Skeletons.Wrapper.Y({
     className: `${ui.fig.group}__wrapper--modal dialog__wrapper--modal ${ui.fig.family}__wrapper--modal`,
@@ -22,13 +18,20 @@ module.exports = function (ui) {
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
-      category(ui),
+      radioButtons(ui, {
+        name: "category",
+        service: "select-category",
+        buttons: [
+          { label: "Personne morale", state: 1, value: "company" },
+          { label: "Personne physique", state: 0, value: "person" }
+        ],
+      }),
       selection,
       Skeletons.Box.Y({
         className: `${pfx}__entries-container`,
         sys_pn: "entries",
         kids: [
-          entries(ui),
+          customerBox(ui),
         ]
       }),
       Skeletons.Wrapper.Y({
@@ -51,7 +54,7 @@ module.exports = function (ui) {
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      header,
+      headerBox(ui, { title: "Creer un client" }),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [body, footer, dialog]

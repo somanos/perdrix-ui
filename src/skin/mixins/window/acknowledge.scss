@@ -1,0 +1,23 @@
+@use "../drumee";
+
+@mixin dialog-acknowledge {
+
+  &__acknowledge {
+    border-radius: 3px;
+    justify-items: center;
+    justify-content: center;
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 12px);
+
+    .drumee-svg {
+      color: drumee.$core-default-icon-success;
+      height: 20px;
+      padding: 2px;
+      width: 25px;
+    }
+
+    .text {
+      padding-left: 10px;
+    }
+  }
+
+}

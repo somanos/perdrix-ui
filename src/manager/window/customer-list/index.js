@@ -211,7 +211,7 @@ class __window_customer_list extends __window {
     Wm.windowsLayer.append({
       kind: 'window_customer',
       id: `customer-${custId}`,
-      customer: cmd
+      source: cmd
     });
     setTimeout(()=>{
       let w = Wm.windowsLayer.children.last();

@@ -1,12 +1,12 @@
 /** 
 Styles defined here a impotered from Drumee 
 */
-@forward 'mixins/border.scss';
-@forward 'mixins/box-shadow.scss';
-@forward 'mixins/colors/index.scss';
-@forward 'mixins/typo.scss';
-@forward 'mixins/utils.scss';
-@forward 'mixins/vendor.scss';
-@forward 'mixins/z-index.scss';
-@forward 'colors/index.scss';
-@forward 'colors/core.scss';
+@forward 'border';
+@forward 'box-shadow';
+@forward 'colors/index';
+@forward 'typo';
+@forward 'utils';
+@forward 'vendor';
+@forward 'z-index';
+@forward 'colors/index';
+@forward 'colors/core';
