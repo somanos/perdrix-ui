@@ -1,7 +1,7 @@
 function menuItems(ui, opt) {
   let pfx = ui.fig.family;
   return Skeletons.Button.Label({
-    className: `${pfx}__menu-item`,
+    className: `${pfx}__menu-item ${opt.service}`,
     uiHandler: ui,
     state: 0,
     icons: ["raw-radio-unchecked", "raw-radio-checked"],
@@ -17,6 +17,8 @@ export function selectionMenu(ui, opt) {
     className: `${pfx}__${name}-trigger`,
     ico,
     service,
+    isTrigger: true,
+    uiHandler: ui,
     label,
   })
   let content = []

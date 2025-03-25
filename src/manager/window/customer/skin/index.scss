@@ -2,8 +2,8 @@
 @use 'mixins/drumee';
 @use '../../skin/group/header/topbar' as *;
 @use 'tabs' as *;
-@use 'overview' as *;
 @use "mixins/form" as *;
+@use "mixins/window" as *;
 @use "menu" as *;
 
 .window-customer {
@@ -42,7 +42,7 @@
     align-items: center;
   }
 
-  @include overview;
+  @include customer-header;
   @include tabs;
   @include form-placeholder;
   @include selection-menu;

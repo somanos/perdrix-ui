@@ -1,7 +1,7 @@
 const { topbarBox } = require("../../../widget/skeleton")
 
 module.exports = function (ui) {
-  const { main, topbar } = require("./content/widget")
+  const { main, topbar } = require("./widget")
 
   const dialog = Skeletons.Wrapper.Y({
     className: `${ui.fig.group}__wrapper--modal dialog__wrapper--modal ${ui.fig.family}`,

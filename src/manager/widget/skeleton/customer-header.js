@@ -14,7 +14,7 @@ export function customerHeader(ui) {
   } = ui.model.toJSON();
 
   const adresse = location.join(' ');
-  let fig = ui.fig.name;
+  let fig = 'customer'
   let company = null;
   if (gender) {
     custName = `${gender} ${custName}`;
@@ -42,7 +42,7 @@ export function customerHeader(ui) {
     })
   ]
   let a = Skeletons.Box.X({
-    className: `${ui.fig.family}__overview`,
+    className: `${ui.fig.family}__customer-header`,
     debug: __filename,
     kids
   })

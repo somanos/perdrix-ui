@@ -5,6 +5,7 @@ const Resolve = require('./webpack/resolve');
 const Module = require('./webpack/module');
 const Plugins = require('./webpack/plugins');
 const args = require('./webpack.options.json');
+const { name: appName } = require('./package.json');
 /**
  * 
  * @param {*} entry 
@@ -20,7 +21,7 @@ function makeOptions(entry, opt) {
   };
 
 
-  console.log(`::::: WITH :::: `, { entry, output, opt });
+  console.log(`Start building ${appName} with`, { entry, output, opt });
 
   const res = {
     mode: opt.mode || 'development',

@@ -161,7 +161,7 @@ export function menuInput(ui, opt) {
  */
 export function footerWrapper(ui, opt) {
   return Skeletons.Wrapper.Y({
-    className: `${pfx}__footer`,
+    className: `${ui.fig.family}__footer`,
     sys_pn: _a.footer,
     kids: [list(ui)],
     state: 0,
@@ -192,9 +192,10 @@ export function dialogWrapper(ui, opt) {
 export function entryLabel(ui, opt) {
 
   let { value, name, placeholder, sys_pn, ico, label } = opt;
-  const pfx = `${ui.fig.family}_entry-label ${name}`;
+  placeholder = placeholder || label;
+  const pfx = `${ui.fig.family}__entry-label`;
   let args = {
-    className: `${pfx} entry`,
+    className: `${pfx}__textarea ${name}`,
     name,
     value,
     formItem: name,
@@ -204,21 +205,20 @@ export function entryLabel(ui, opt) {
     placeholder,
     uiHandler: [ui],
     errorHandler: [ui],
-    tpe: _a.textarea
+    type: _a.textarea
   }
   if (sys_pn) {
     args.sys_pn = sys_pn;
     args.partHandler = [ui];
   }
-  Skeletons.Entry(args)
 
   return Skeletons.Box.Y({
-    className: `${pfx}__main`,
+    className: `${pfx}__main ${name}`,
     kids: [
       Skeletons.Button.Label({
         ico,
         label,
-        className: `${formFig} icon`
+        className: `${pfx}__title ${name}`
       }),
       Skeletons.Entry(args)
     ]

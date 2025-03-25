@@ -1,19 +1,3 @@
-function showLoader() {
-  let a = document.createElement(`div`);
-  a.innerHTML = (`<div id="loader-spinner" class="spinner spinner-loader spinner__item spinner__ui spinner-loader__ui">
-    <div class="drumee-loading drumee-loading-wrapper"> 
-      <div class="loader-wrapper"> 
-        <div class="loader small"></div> 
-        <div class="loader small"></div> 
-        <div class="loader small"></div> 
-        <div class="loader small"></div> 
-        <div class="loader small"></div> 
-      </div> 
-    </div>
-  </div>`);
-  document.body.append(a);
-  return a;
-}
 
 async function preloadKinds() {
   window.DrumeeWm = await Kind.waitFor('DrumeeWm');
@@ -35,26 +19,27 @@ async function preloadKinds() {
     'work_list': import('./manager/widget/work-list'),
   });
 }
+
 /**
  * Load Drumee rendering engine (LETC)
  * Work from electron
  * @param {*} e 
  */
-async function start(e) {
-  console.log(`Loading SERP Application`);
-  let el = document.getElementById("main-loader");
-  document.removeEventListener('drumee:ready', start);
-  let base = '/-/';
-  if (el && el.dataset.instance) {
-    base = `/-/${el.dataset.instance}/`;
-  }
+async function start(parent) {
+  console.log(`Loading SERP Application`, parent);
+  // let el = document.getElementById("main-loader");
+  // let base = '/-/';
+  // if (el && el.dataset.instance) {
+  //   base = `/-/${el.dataset.instance}/`;
+  // }
 
   if (!Visitor.isOnline()) {
     return location.href = `${base}#/welcome`;
   }
 
-  let loader = showLoader();
   await preloadKinds();
+  console.log("AAA:55 PLUGIN STARTED", typeof (uiRouter))
+  // let loader = showLoader();
 
   import('./manager/index.js').then(async (m) => {
     let kind = 'perdrix_manager';
@@ -62,11 +47,17 @@ async function start(e) {
     LOCALE = { ...LOCALE, ...locale };
     Kind.register(kind, m.default);
     Kind.waitFor(kind).then((k) => {
-      loader.remove();
-      e.root.$el.addClass("perdrix-manager__root")
-      console.log("AAA:68 -- LOADING THE MANGER", e.root, kind);
-      e.root.feed({ kind });
+      console.log("AAA:68 -- LOADING THE MANGER", kind);
+      uiRouter.currentModule.feed({ kind })
     })
   })
 }
-document.addEventListener('drumee:router:ready', start);
+
+
+console.log("AAA:55 PLUGIN LOADED", document.readyState, typeof (uiRouter))
+if (document.readyState == 'complete') {
+  start()
+} else {
+  document.addEventListener('drumee:plugins:ready', start);
+}
+

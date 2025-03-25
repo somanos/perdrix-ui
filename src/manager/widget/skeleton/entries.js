@@ -1,5 +1,5 @@
 
-import entry from "./widgets"
+import {entry} from "./widgets"
 
 // /**
 //  * 

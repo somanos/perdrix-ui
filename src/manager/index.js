@@ -1,7 +1,7 @@
 
 require('./skin');
-const Leaflet = require('leaflet');
-require('leaflet/dist/leaflet.css');
+// const Leaflet = require('leaflet');
+// require('leaflet/dist/leaflet.css');
 
 function px(v){
   return `${v}px`

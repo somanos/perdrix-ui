@@ -1,4 +1,4 @@
-const { customerHeader, selectionMenu } = require("../../../../widget/skeleton")
+const { customerHeader, selectionMenu } = require("../../../widget/skeleton")
 
 /**
  * 
@@ -21,6 +21,8 @@ export function tabs(ui) {
       { label: "Travaux (2)", status: 2, state },
       { label: "Travaux (3)", status: 3, state },
       { label: "Travaux (4)", status: 4, state },
+      { label: "Creer", ico: "editbox_list-plus", 
+        icons: null, service: "create-work" },
     ]
   })
 
@@ -48,11 +50,6 @@ export function tabs(ui) {
         service: 'show-notes',
       }),
       works,
-      // Skeletons.Button.Label({
-      //   ico: 'desktop_desksettings',
-      //   label: 'Travaux',
-      //   service: 'show-work',
-      // }),
       Skeletons.Button.Label({
         ico: 'editbox_openmenu',
         label: 'Solde',

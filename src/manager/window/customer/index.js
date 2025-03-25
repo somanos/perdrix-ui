@@ -1,5 +1,5 @@
 const __window = require('..');
-const { placeholder } = require("./skeleton/content/widget")
+const { placeholder } = require("./skeleton/widget")
 
 class __window_customer extends __window {
 
@@ -53,20 +53,21 @@ class __window_customer extends __window {
   /**
    * 
    */
-  loadWorkList(cmd) {
+  async loadWorkList(cmd) {
+    let filters = await this.getSelectedItems("menu-items", _a.status);
+    if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
       service: "perdrix.work_list",
       custId: this.mget('custId'),
+      status: filters
     };
     let itemsOpt = {
       kind: 'work_item',
     }
-    this.debug("AAA:67", { api, itemsOpt })
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this));
     })
-
   }
 
 
@@ -85,7 +86,10 @@ class __window_customer extends __window {
         break;
       case 'show-notes':
         break;
-      case 'show-work':
+      case 'create-work':
+        this.loadWorkForm(cmd)
+        break;
+      case 'show-works':
         this.loadWorkList(cmd)
         break;
       case 'show-solde':

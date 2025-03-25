@@ -46,13 +46,24 @@
       min-width: 90px;
       white-space: nowrap;
       @include drumee.typo($color: #687B7F, $size: 14px, $line: 24px);
-      height: 22px;
       display: flex;
       flex-direction: row;
       align-items: center;
+      padding: 0 5px;
 
       &:hover {
-        background-color: drumee.$eblue;
+        background-color: drumee.$core-background-blue;
+        @include drumee.typo($color: white, $size: 14px, $line: 24px);
+
+        svg {
+          color: white;
+        }
+      }
+
+      &.create-work {
+        svg {
+          color: blue;
+        }
       }
 
       svg {

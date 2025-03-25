@@ -9,9 +9,12 @@ const { fromUnixtime } = require("././../../../utils")
  * @returns 
  */
 
+const STATUS = [
+  '🔧', '🔨', '🪒', '🔒', '🧰'
+]
 function work_item(ui) {
-  let { type, ctime, description, site } = ui.model.toJSON()
-  let { city, postcode, location } = site;
+  let { type, ctime, description, status, site } = ui.model.toJSON()
+  let { city, location } = site;
   let pfx = ui.fig.family;
   let overview = [
     Skeletons.Box.G({
@@ -24,7 +27,12 @@ function work_item(ui) {
         Skeletons.Note({
           className: `${pfx}__text type`,
           content: type
+        }),
+        Skeletons.Note({
+          className: `${pfx}__text status`,
+          content: STATUS[status]
         })
+
       ]
     }),
     Skeletons.Box.Y({

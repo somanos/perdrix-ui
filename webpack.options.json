@@ -1,7 +1,7 @@
 {
   "dev": {
-    "bundle_path": "/home/somanos/DrumeeLocal/local.drumee/somanos/perdrix/app",
-    "public_path": "/app/",
+    "bundle_path": "/home/somanos/build/perdrix/ui/plugins",
+    "public_path": "/-/devel/plugins/",
     "output_filename":"[name].js"
 ,    "mode": "development"
   }

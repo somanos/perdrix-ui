@@ -1,4 +1,4 @@
-module.exports = function (_ui_) {
+export function headerBox(_ui_) {
   const pfx = _ui_.fig.family;
   const header = Skeletons.Box.X({
     className: `${pfx}__header ${_ui_.fig.group}__header`,

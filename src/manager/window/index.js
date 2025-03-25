@@ -54,6 +54,26 @@ class __window_perdrix extends DrumeeInteractWindow {
   }
 
   /**
+    * 
+    */
+  loadWorkForm(cmd, hide = 0) {
+    this.debug("AAA:60", cmd, this)
+    const { custId } = cmd.model.toJSON();
+    Wm.windowsLayer.append({
+      ...this.source.data(),
+      kind: 'work_form',
+      id: `work-${custId}`,
+    });
+    setTimeout(() => {
+      let w = Wm.windowsLayer.children.last();
+      if (w && w.raise) {
+        w.raise()
+      }
+      if (hide) this.hide()
+    }, 1000)
+  }
+
+  /**
   * 
   */
   throtle(cmd) {
@@ -67,6 +87,20 @@ class __window_perdrix extends DrumeeInteractWindow {
         this._timer[cmd.cid] = null;
       }, 1000)
     })
+  }
+
+  /**
+   * 
+   */
+  async getSelectedItems(partname, attr) {
+    let roll = await this.ensurePart(partname);
+    let filters = [];
+    roll.collection.map((m) => {
+      if (m.get(_a.state)) {
+        filters.push(m.get(attr))
+      }
+    })
+    return filters;
   }
 
   /**

@@ -1,6 +1,6 @@
 
 const {
-  radioButtons, footerWrapper, actionButtons, headerBox, dialogWrapper, entryLabel
+  radioButtons, footerWrapper, customerHeader, actionButtons, headerBox, dialogWrapper, entryLabel
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -10,7 +10,6 @@ module.exports = function (ui) {
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
-      customerHeader(ui),
       radioButtons(ui, {
         name: "site",
         service: "select-site",
@@ -24,10 +23,14 @@ module.exports = function (ui) {
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
       }),
-      entryLabel(ui, {label:"Description du travail", ico:"desktop_desksettings"}),
+      entryLabel(ui, {
+        label: "Description du travail",
+        ico: "desktop_desksettings",
+        name: "description"
+      }),
       actionButtons(ui, [
-        {content:"Creer le devis", service:"create-quote"},
-        {content:"Reserver le devis", service:"reserve-quote"},
+        { content: "Creer le devis", service: "create-quote" },
+        { content: "Reserver le devis", service: "reserve-quote" },
       ])
     ]
   });
@@ -38,9 +41,14 @@ module.exports = function (ui) {
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
       headerBox(ui, { title: "Ajouter un travail" }),
+      customerHeader(ui),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
-        kids: [body, footerWrapper(ui), dialogWrapper(ui)]
+        kids: [
+          body,
+          footerWrapper(ui),
+          dialogWrapper(ui)
+        ]
       })
     ]
   });

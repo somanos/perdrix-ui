@@ -1,11 +1,9 @@
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const CspHtmlWebpackPlugin = require('csp-html-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { DuplicatesPlugin } = require("inspectpack/plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
-
+const Sync = require('./sync');
 const { readFileSync } = require('jsonfile');
 const { resolve } = require("path");
 
@@ -49,6 +47,7 @@ module.exports = function (webpack, opt) {
     }),
     cssExtract,
     new webpack.DefinePlugin(pluginsOptsion),
+    new Sync(opt)
   ];
   return a;
 }

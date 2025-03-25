@@ -1,12 +1,11 @@
 
 const __form = require('..');
-const { customerBox, placeholder} = require("../../skeleton")
+const { customerBox, placeholder } = require("../../skeleton")
 
 class __form_work extends __form {
 
   constructor(...args) {
     super(...args);
-    this.searchCustomer = this.searchCustomer.bind(this);
     this.searchLocation = this.searchLocation.bind(this);
   }
 
@@ -87,29 +86,6 @@ class __form_work extends __form {
     });
   }
 
-  /**
-   * 
-   */
-  searchCustomer(cmd) {
-    if (this._locationCompleted) return;
-    let words = cmd.getValue();
-    let api = {
-      service: "perdrix.customer_search",
-      words,
-      type: this.mget(_a.type)
-    };
-    let itemsOpt = {
-      kind: 'customer_item',
-      origin: 'searchbox',
-      service: null
-    }
-
-    return new Promise((will, wont) => {
-      if (!words || !words.length) return will();
-      this.feedList(api, itemsOpt, (data) => {
-      })
-    })
-  }
 
   /**
    * 
@@ -224,40 +200,8 @@ class __form_work extends __form {
   /**
    * 
    */
-  createCustomer() {
-    let args = this.getData();
-    let fiels = [];
-    if (this.mget(_a.type) == 'company') {
-      fiels = ['companyname', 'city', 'postcode']
-    } else {
-      fiels = [_a.lastname, 'city', 'postcode']
-    }
-    let error = 0
-    for (let name of fiels) {
-      if (!args[name]) {
-        this.changeDataset(name, _a.error, 1)
-        error = 1;
-      } else {
-        this.changeDataset(name, _a.error, 0)
-      }
-    }
-    if (error) return;
-    args.category = this.mget(_a.category)
-    args.location = [
-      args.housenumber, args.streettype, args.streetname, args.additional
-    ]
-    this.debug("AAA:323", args, this);
-    this.postService("perdrix.customer_create", { args }).then((data) => {
-      this.debug("AAA:375", data)
-    }).catch((e) => {
-      this.debug("AAA:377 FAILED", e)
-    })
-  }
-
-  /**
-   * 
-   */
   onDomRefresh() {
+    this.debug("AAA:205", this)
     this.feed(require('./skeleton')(this));
   }
 
@@ -266,47 +210,14 @@ class __form_work extends __form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    switch (service) {
-      case "select-category":
-        this.selectCategory(cmd);
-        break;
-      case "item-selected":
-        this.itemMenuSelected(cmd);
-        break;
-      case "streettype-selected":
-        this.selectStreetType(cmd);
-        break;
-      case _a.input:
-        switch (cmd.mget(_a.name)) {
-          case 'companyname':
-          case _a.lastname:
-            this.throtle(cmd).then(this.searchCustomer);
-            break;
-          case _a.location:
-            this.throtle(cmd).then(this.searchLocation);
-            break;
-          case 'streettype':
-            let { key } = args;
-            if (!key) {
-              this.getStreetType(cmd);
-            } else {
-              this.selectStreetType(cmd, key);
-            }
-            break;
-        }
-        break;
-      case 'select-address':
-        this.addressSelected(cmd);
-        break;
-      case "prompt-location":
-        this.prompLocation(cmd);
-        break;
-      case _e.create:
-        this.createCustomer(cmd);
-        break;
-      default:
-        super.onUiEvent(cmd, args)
-    }
+    // switch (service) {
+    //   case "select-category":
+    //     this.selectCategory(cmd);
+    //     break;
+
+    //   default:
+    //     super.onUiEvent(cmd, args)
+    // }
   }
 
 }

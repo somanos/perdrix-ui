@@ -3,19 +3,23 @@
 @use 'content' as *;
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
-.form-customer {
+
+.form-work {
   &__ui {
     background-color: drumee.$core-default-background;
     border-radius: drumee.$default-border-radius;
     box-shadow: drumee.$drumee-shadow-container;
     display: flex;
-    flex-direction: column;
-    height: auto;
     max-height: 95vh;
-    left: calc(50vw - 300px);
-    min-width: 300px;
     overflow: visible;
-    width: 600px;
+    width: 700px;
+    height: auto;
+    min-width: 340px;
+    min-height: 400px;
+    flex-direction: column;
+    left: calc(50vw - 350px);
+    top: 40px;
+
 
     &[data-device="mobile"] {
       height: 100vh;
@@ -38,6 +42,10 @@
   &__container {
     min-height: 200px;
     justify-content: start;
+  }
+
+  &__customer-header {
+    background-color: drumee.$cyan;
   }
 
   &__header {
@@ -66,9 +74,9 @@
     }
   }
 
+  @include customer-header;
   @include form-content;
   @include form-menu;
-
 
   &__buttons {
     align-items: center;
