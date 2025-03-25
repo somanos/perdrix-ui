@@ -121,18 +121,20 @@ export function actionButtons(ui, buttons) {
   })
 };
 
-export function placeholder(ui) {
+export function placeholder(ui, opt) {
+  let { labels, service } = opt || {};
+  labels = labels || [];
   return Skeletons.Box.Y({
     className: `${ui.fig.family}__placehoder-main`,
     kids: [
       Skeletons.Note({
         className: `${ui.fig.family}__placeholder`,
-        content: "Aucune correspondance trouvee."
+        content: labels[0] || "Aucune correspondance trouvee."
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__placeholder button`,
-        service: "prompt-location",
-        content: "Faire une saisie manuelle",
+        service: service || "prompt-location",
+        content: labels[1] || "Faire une saisie manuelle",
         uiHandler: [ui]
       }),
     ]
@@ -200,11 +202,8 @@ export function entryLabel(ui, opt) {
     value,
     formItem: name,
     innerClass: name,
-    mode: _a.interactive,
-    service: _a.input,
     placeholder,
     uiHandler: [ui],
-    errorHandler: [ui],
     type: _a.textarea
   }
   if (sys_pn) {
@@ -223,5 +222,4 @@ export function entryLabel(ui, opt) {
       Skeletons.Entry(args)
     ]
   });
-
 }

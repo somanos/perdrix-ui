@@ -1,7 +1,6 @@
-
-@import 'mixins/drumee.scss';
-@import '../window/skin/index.scss';
-@import 'topbar/topbar.scss';
+@use 'mixins/drumee.scss';
+@use '../window/skin/index.scss';
+@use 'topbar/topbar.scss';
 
 .perdrix-manager {
   &__root {
@@ -92,7 +91,7 @@
 
   &__wrapper.bug-report {
     background-color: rgba(47 47 47 / 20%); //.2);
-    border-radius: $default-border-radius; //6px;
+    border-radius: drumee.$default-border-radius; //6px;
     cursor: pointer;
     height: 35px;
     justify-content: center;
@@ -105,7 +104,7 @@
     box-shadow: 0 2px 2px 1px rgb(63 79 117 / 13%), 0 6px 16px 0 rgb(86 65 113 / 8%), 0 2px 14px 0 rgb(194 185 203 / 0%);
 
     &:hover {
-      background-color: $core-default-background-hover;
+      background-color: drumee.$core-default-background-hover;
       z-index: 200000;
     }
 
@@ -121,12 +120,12 @@
     align-items: center;
     cursor: pointer;
     text-align: center;
-    @include typo($size: 14px, $line: 15px, $color: $core-default-text-reverse); //$size: 13px,
+    @include drumee.typo($size: 14px, $line: 15px, $color: drumee.$core-default-text-reverse); //$size: 13px,
   }
 
   &__properties {
     &-container {
-      background-color: $core-default-background; // $ewhite;
+      background-color: drumee.$core-default-background; // core.$ewhite;
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -135,7 +134,7 @@
       width: 600px;
       max-width: calc(100vw - 20px);
       padding: 35px;
-      border-radius: $default-border-radius-small; //4px;
+      border-radius: drumee.$default-border-radius-small; //4px;
     }
 
     &-content {
@@ -147,7 +146,7 @@
     &-text {
       margin: 0 auto;
       white-space: pre-wrap;
-      @include typo($size: 12px, $line: 15px, $color: $core-default-text-color);
+      @include drumee.typo($size: 12px, $line: 15px, $color: drumee.$core-default-text-color);
     }
   }
 
@@ -161,8 +160,8 @@
       max-width: 100%;
       position: absolute;
       height: 380px;
-      background-color: $core-default-background ;
-      border-radius: $default-border-radius;
+      background-color: drumee.$core-default-background ;
+      border-radius: drumee.$default-border-radius;
       align-items: center;
       min-height: 345px;
       //box-shadow: $drumee-shadow-container;
@@ -201,7 +200,7 @@
       transform: rotate(45deg);
       width: 20px;
       z-index: 1;
-      background-color: $ewhite;
+      background-color: drumee.$ewhite;
       box-shadow: 0 0px 8px 0 rgba(63, 79, 117, .06), 0 -1px 16px 0 rgba(86, 65, 113, .1), 0 2px 14px 0 rgba(194, 185, 203, .04);
       border: 0.5px solid lightgrey;
     }
@@ -216,9 +215,9 @@
 
     .location-wrapper {
       padding: 10px;
-      background-color: $core-default-background ;
-      border-radius: $default-border-radius;
-      background: $ewhite;
+      background-color: drumee.$core-default-background ;
+      border-radius: drumee.$default-border-radius;
+      background: drumee.$ewhite;
       z-index: 100;
       box-shadow: 0 0px 8px 0 rgba(63, 79, 117, .06), 0 -1px 16px 0 rgba(86, 65, 113, .1), 0 2px 14px 0 rgba(194, 185, 203, .04);
 
@@ -236,7 +235,7 @@
 
     .location-line-1,
     .location-line-2 {
-      @include typo($size: 12px, $line: 18px, $color: $core-default-text-color);
+      @include drumee.typo($size: 12px, $line: 18px, $color: drumee.$core-default-text-color);
     }
   }
 }

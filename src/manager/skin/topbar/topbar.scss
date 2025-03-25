@@ -1,4 +1,5 @@
-@import 'user.scss';
+@use 'user.scss';
+@use 'mixins/drumee';
 
 .perdrix-topbar {
   &__main {
@@ -44,9 +45,9 @@
 
   &__searchbox {
     &.outer {
-      background-color: $core-default-background;
-      border-radius: $default-border-radius; //6px;
-      box-shadow: $drumee-shadow-topbar;
+      background-color: drumee.$core-default-background;
+      border-radius: drumee.$default-border-radius; //6px;
+      box-shadow: drumee.$drumee-shadow-topbar;
       overflow: hidden;
       transition: width 0.3s ease-in;
       height: 40px;
@@ -60,7 +61,7 @@
 
     &.inner {
       width: 100%;
-      background-color: $core-default-background;
+      background-color: drumee.$core-default-background;
       border-radius: 5px;
 
       &[data-device="mobile"] {
@@ -73,7 +74,7 @@
       width: 50px;
       height: 100%;
       padding: 12px;
-      color: $main-grey ;
+      color: drumee.$main-grey ;
       margin: 0 5px;
       display: flex;
       flex-wrap: wrap;
@@ -84,15 +85,15 @@
     &.entry {
       flex: 1;
       flex-direction: column;
-      @include typo($line: 19px, $size: 14px, $weight: 300, $color: $core-default-text-color);
+      @include drumee.typo($line: 19px, $size: 14px, $weight: 300, $color: drumee.$core-default-text-color);
 
-      @include placeholder-input {
-        @include typo($line: 19px, $size: 17px, $weight: 300, $color: $core-default-text-placeholder);
+      @include drumee.placeholder-input {
+        @include drumee.typo($line: 19px, $size: 17px, $weight: 300, $color: drumee.$core-default-text-placeholder);
       }
 
       @media(min-width:320px) {
         cursor: auto;
-        @include typo($line: 19px, $size: 12px, $weight: 300, $color: $core-default-text-color);
+        @include drumee.typo($line: 19px, $size: 12px, $weight: 300, $color: drumee.$core-default-text-color);
       }
 
       &:focus {
@@ -112,17 +113,17 @@
       resize: none;
       width: 100%;
       height: 100%;
-      @include typo($line: 19px, $size: 16px, $weight: 300, $color: $core-default-text-color);
+      @include drumee.typo($line: 19px, $size: 16px, $weight: 300, $color: drumee.$core-default-text-color);
 
       &::placeholder {
-        @include typo($size: 16px, $line: 19px, $weight: 300, $color: $core-default-text-placeholder);
+        @include drumee.typo($size: 16px, $line: 19px, $weight: 300, $color: drumee.$core-default-text-placeholder);
       }
 
       @media(max-width:400px) {
         cursor: text;
         margin-top: 5px;
         padding-left: 3px;
-        @include typo($line: 19px, $size: 12px, $weight: 300, $color: $core-default-text-color);
+        @include drumee.typo($line: 19px, $size: 12px, $weight: 300, $color: drumee.$core-default-text-color);
       }
     }
 

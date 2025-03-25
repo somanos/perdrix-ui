@@ -1,0 +1,16 @@
+module.exports = {
+	'customer_form': import('./manager/widget/form/customer'),
+	'customer_item': import('./manager/widget/customer-item'),
+	'location_item': import('./manager/widget/location-item'),
+	'menu_input': import('./manager/widget/menu-input'),
+	'perdrix_dock': import('./manager/dock'),
+	'radio_buttons': import('./manager/widget/radio-buttons'),
+	'search_results': import('./manager/widget/search-results'),
+	'site_item': import('./manager/widget/site-item'),
+	'window_customer_list': import('./manager/window/customer-list'),
+	'window_customer': import('./manager/window/customer'),
+	'window_finder': import('./manager/window/finder'),
+	'work_form': import('./manager/widget/form/work'),
+	'work_item': import('./manager/widget/work-item'),
+	'work_list': import('./manager/widget/work-list'),
+};

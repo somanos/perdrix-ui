@@ -3,21 +3,7 @@ async function preloadKinds() {
   window.DrumeeWm = await Kind.waitFor('DrumeeWm');
   window.DrumeeInteractWindow = await Kind.waitFor('DrumeeInteractWindow');
   window.DrumeeInteractPlayer = await Kind.waitFor('DrumeeInteractPlayer');
-  Kind.registerAddons({
-    'customer_form': import('./manager/widget/form/customer'),
-    'customer_item': import('./manager/widget/customer-item'),
-    'location_item': import('./manager/widget/location-item'),
-    'menu_input': import('./manager/widget/menu-input'),
-    'perdrix_dock': import('./manager/dock'),
-    'radio_buttons': import('./manager/widget/radio-buttons'),
-    'search_results': import('./manager/widget/search-results'),
-    'window_customer_list': import('./manager/window/customer-list'),
-    'window_customer': import('./manager/window/customer'),
-    'window_finder': import('./manager/window/finder'),
-    'work_form': import('./manager/widget/form/work'),
-    'work_item': import('./manager/widget/work-item/index.js'),
-    'work_list': import('./manager/widget/work-list'),
-  });
+  Kind.registerAddons(require("./seeds"));
 }
 
 /**
@@ -53,8 +39,6 @@ async function start(parent) {
   })
 }
 
-
-console.log("AAA:55 PLUGIN LOADED", document.readyState, typeof (uiRouter))
 if (document.readyState == 'complete') {
   start()
 } else {

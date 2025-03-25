@@ -1,8 +1,9 @@
 
-const __form = require('..');
-const { customerBox, placeholder } = require("../../skeleton")
+const Core = require('../../../core');
+require('../skin');
+const { workSite, placeholder } = require("../../skeleton")
 
-class __form_work extends __form {
+class __form_work extends Core {
 
   constructor(...args) {
     super(...args);
@@ -50,41 +51,63 @@ class __form_work extends __form {
   /**
    * 
    */
-  async feedList(api, itemsOpt, onEmpty) {
-    let list = await this.ensurePart(_a.list);
-    if (list.isWaiting()) {
-      if (this._waitTimer) {
-        clearTimeout(this._waitTimer)
-      }
-      this._waitTimer = setTimeout(() => {
-        this.feedList(api, itemsOpt, onEmpty);
-        this._waitTimer = null;
-      }, 2000)
-      return;
+  async loadSitesList(cmd) {
+    let api = {
+      service: "perdrix.site_list",
+      custId: this.mget('custId'),
+    };
+    let itemsOpt = {
+      kind: 'site_item',
+      service: 'set-site'
     }
-    list.model.unset(_a.itemsOpt)
-    list.mset({ api, itemsOpt });
-    list.restart();
-    let p = await this.ensurePart(_a.footer);
+    let p = await this.ensurePart("entries-manual");
     p.el.dataset.state = 1;
 
-    p = await this.ensurePart("entries-manual");
-    p.clear();
-
-    list.once(_e.data, async (data) => {
-      if (_.isEmpty(data)) {
-        return onEmpty(list);
-      }
+    this.feedList(api, itemsOpt, (list) => {
+      this.debug("AAA:65", api, list)
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this));
     })
-    list.once(_e.eod, async (e) => {
-      if (list.isNaturalyEmpty()) {
-        onEmpty(list);
-      }
-    });
-    list.once(_e.error, async () => {
-      onEmpty(list);
-    });
   }
+
+  // /**
+  //  * 
+  //  */
+  // async feedList(api, itemsOpt, onEmpty) {
+  //   let list = await this.ensurePart(_a.list);
+  //   if (list.isWaiting()) {
+  //     if (this._waitTimer) {
+  //       clearTimeout(this._waitTimer)
+  //     }
+  //     this._waitTimer = setTimeout(() => {
+  //       this.feedList(api, itemsOpt, onEmpty);
+  //       this._waitTimer = null;
+  //     }, 2000)
+  //     return;
+  //   }
+  //   list.model.unset(_a.itemsOpt)
+  //   list.mset({ api, itemsOpt });
+  //   list.restart();
+  //   let p = await this.ensurePart(_a.footer);
+  //   p.el.dataset.state = 1;
+
+  //   p = await this.ensurePart("entries-manual");
+  //   p.clear();
+
+  //   list.once(_e.data, async (data) => {
+  //     if (_.isEmpty(data)) {
+  //       return onEmpty(list);
+  //     }
+  //   })
+  //   list.once(_e.eod, async (e) => {
+  //     if (list.isNaturalyEmpty()) {
+  //       onEmpty(list);
+  //     }
+  //   });
+  //   list.once(_e.error, async () => {
+  //     onEmpty(list);
+  //   });
+  // }
 
 
   /**
@@ -131,27 +154,17 @@ class __form_work extends __form {
   /**
   * 
   */
-  selectCategory(cmd) {
+  selectSite(cmd) {
     this._locationCompleted = 0;
-    this.ensurePart("entries").then((p) => {
-      let category = cmd.mget(_a.type) == 'company' ? 0 : 1;
-      this.mset({ type: cmd.mget(_a.type), category })
-      p.feed(customerBox(this))
+    this.ensurePart("site-address").then((p) => {
+      p.feed(workSite(this, cmd))
     })
     this.ensurePart("entries-manual").then((p) => {
       p.clear()
     })
   }
 
-  /**
-  * 
-  */
-  itemMenuSelected(cmd) {
-    this.ensurePart("menu-trigger").then((p) => {
-      p.setLabel(cmd.mget(_a.label));
-      this._data[cmd.mget(_a.name)] = cmd.mget(_a.value)
-    })
-  }
+
 
   /**
    * 
@@ -210,14 +223,27 @@ class __form_work extends __form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    // switch (service) {
-    //   case "select-category":
-    //     this.selectCategory(cmd);
-    //     break;
-
-    //   default:
-    //     super.onUiEvent(cmd, args)
-    // }
+    this.debug("AAA:213", service, cmd, this)
+    switch (service) {
+      case "select-site":
+        let { choice } = cmd.getData();
+        this.debug("AAA:238", choice, service, cmd)
+        switch (choice) {
+          case "same-address":
+            break;
+          case "list-sites":
+            this.loadSitesList(cmd)
+            break;
+          case "add-site":
+            break;
+        }
+        break;
+      case "set-site":
+        this.selectSite(cmd);
+        break;
+      default:
+        super.onUiEvent(cmd, args)
+    }
   }
 
 }

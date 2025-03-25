@@ -7,5 +7,7 @@ class __form_core extends DrumeeInteractWindow {
     super.initialize(opt);
     this.declareHandlers();
   }
+
+  
 }
 module.exports = __form_core

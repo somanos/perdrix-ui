@@ -30,7 +30,7 @@
     }
   }
 
-  @include form-entry; 
+  @include form-entry;
   @include form-body;
   @include form-address;
   @include form-footer;
@@ -40,9 +40,24 @@
   &__searchbox {
     height: 100%;
     overflow: auto;
+    background-color: drumee.$ewhite;
 
     .smart-container {
       min-height: 100px;
     }
+
+    box-shadow: drumee.$drumee-shadow-container;
+  }
+
+  &__entries {
+
+    &-main,
+    &-content {
+      width: 100%;
+    }
+  }
+
+  &__entries-manual {
+    z-index: 1 !important;
   }
 }

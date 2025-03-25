@@ -1,5 +1,6 @@
 //const __webinar_socket = require('./socket');
-class __window_perdrix extends DrumeeInteractWindow {
+const Utils = require("../core");
+class __window_perdrix extends Utils {
   constructor(...args) {
     super(...args);
     this.getCurrentApi = this.getCurrentApi.bind(this);
@@ -57,12 +58,11 @@ class __window_perdrix extends DrumeeInteractWindow {
     * 
     */
   loadWorkForm(cmd, hide = 0) {
-    this.debug("AAA:60", cmd, this)
-    const { custId } = cmd.model.toJSON();
+    const { custId } = this.model.toJSON();
     Wm.windowsLayer.append({
       ...this.source.data(),
       kind: 'work_form',
-      id: `work-${custId}`,
+      id: `work-form-${custId}`,
     });
     setTimeout(() => {
       let w = Wm.windowsLayer.children.last();

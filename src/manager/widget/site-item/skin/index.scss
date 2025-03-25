@@ -1,0 +1,60 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+
+.site-item {
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(148, 226, 203, 0.1);
+    }
+
+    box-shadow: drumee.$drumee-shadow-box;
+    padding:5px 15px;
+    margin-bottom:8px;
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+  }
+
+
+  &__content {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+    grid-template-columns: 3fr 1fr 80px;
+    grid-gap: 0.5rem;
+  }
+
+  &__text {
+    align-content: flex-end;
+    flex-wrap: wrap;
+    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+
+    &.type {
+      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
+
+      .inner {
+        border: solid 0.5px lightgray;
+        padding: 1px 10px;
+        border-radius: 3px;
+        background-color: drumee.$core-background-blue;
+      }
+    }
+
+    &.status {
+      border: solid 0.5px drumee.$core-background-blue;
+      border-radius: 50%;
+    }
+  }
+}

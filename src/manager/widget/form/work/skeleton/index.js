@@ -1,6 +1,6 @@
 
 const {
-  radioButtons, footerWrapper, customerHeader, actionButtons, headerBox, dialogWrapper, entryLabel
+  radioButtons, list, customerHeader, actionButtons, headerBox, dialogWrapper, entryLabel
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -11,7 +11,7 @@ module.exports = function (ui) {
     sys_pn: _a.content,
     kids: [
       radioButtons(ui, {
-        name: "site",
+        name: "choice",
         service: "select-site",
         buttons: [
           { label: "Meme addresse", state: 1, value: "same-address" },
@@ -22,6 +22,13 @@ module.exports = function (ui) {
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
+        kids: [list(ui)],
+        state: 0,
+      }),
+      Skeletons.Wrapper.Y({
+        className: `${pfx}__site-address`,
+        sys_pn: "site-address",
+        state: 0,
       }),
       entryLabel(ui, {
         label: "Description du travail",
@@ -36,7 +43,7 @@ module.exports = function (ui) {
   });
 
 
-  const a = Skeletons.Box.Y({
+  return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
@@ -46,12 +53,9 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          footerWrapper(ui),
           dialogWrapper(ui)
         ]
       })
     ]
   });
-
-  return a;
 };

@@ -1,89 +1,5 @@
 
-import {entry} from "./widgets"
-
-// /**
-//  * 
-//  * @param {*} ui 
-//  * @returns 
-//  */
-// function _entries(ui) {
-//   let type = ui.mget(_a.type);
-//   let kids = [];
-//   const pfx = ui.fig.family;
-//   switch (type) {
-//     case 'company':
-//       kids = [
-//         Skeletons.Box.G({
-//           className: `${pfx}__entries-${type}`,
-//           kids: [
-//             entry(ui, {
-//               placeholder: "Nom de la societe",
-//               name: 'companyname',
-//               sys_pn: "companyname"
-//             }),
-//             menu_input(ui, {
-//               items: Env.get('companyClass'),
-//               name: 'companyclass',
-//               placeholder: "Type de societe",
-//               refAttribute: 'label',
-//               value: "",
-//             }),
-//           ]
-//         }),
-//         entry(ui, {
-//           placeholder: "Adresse",
-//           name: _a.location,
-//           sys_pn: "address-entry"
-//         }),
-//       ]
-//       break;
-//     case 'person':
-//       kids = [
-//         Skeletons.Box.G({
-//           className: `${pfx}__entries-${type}`,
-//           kids: [
-//             menu_input(ui, {
-//               items: Env.get('genderList'),
-//               name: 'gender',
-//               placeholder: LOCALE.GENDER,
-//               refAttribute: 'longTag',
-//               value: "",
-//             }),
-//             entry(ui, {
-//               placeholder: "Nom",
-//               name: _a.lastname,
-//               sys_pn: _a.lastname,
-//             }),
-//             entry(ui, { placeholder: "Prenom", name: _a.firstname }),
-//           ]
-//         }),
-//         entry(ui, {
-//           placeholder: "Adresse",
-//           name: _a.location,
-//           sys_pn: "address-entry"
-//         }),
-//       ]
-//       break;
-//   }
-//   return Skeletons.Box.Y({
-//     className: `${pfx}__entries-content`,
-//     kids
-//   })
-// };
-
-// /**
-//  * 
-//  * @param {*} ui 
-//  * @returns 
-//  */
-// export function entries(ui) {
-//   return Skeletons.Box.X({
-//     debug: __filename,
-//     className: `${ui.fig.family}__entries-main`,
-//     kids: _entries(ui)
-//   })
-// };
-
+import { entry, menuInput, buttons } from "./widgets"
 
 /**
  * 
@@ -96,7 +12,7 @@ export function address(ui, opt) {
   let type = "";
   if (street) type = street.split(/ +/)[0];
 
-  let streetType = menu_input(ui, {
+  let streetType = menuInput(ui, {
     items: Env.get('streetType'),
     name: 'streettype',
     placeholder: "Type de voie",
@@ -104,7 +20,7 @@ export function address(ui, opt) {
     value: type,
   })
 
-  let country = menu_input(ui, {
+  let country = menuInput(ui, {
     items: Env.get('countryCode'),
     name: 'countrycode',
     refAttribute: 'countrycode',

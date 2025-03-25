@@ -1,13 +1,14 @@
-@import 'mixins/drumee';
-.window-perdrix{
-  @import 'topbar';
-  @import 'command';
-  @import 'acknowledge';
-  @import 'form.scss';
-}
-
+@use "sass:meta";
+@use 'mixins/drumee';
+@use 'topbar' as *;
+@use 'command' as *;
+@use 'acknowledge';
+@use 'form.scss' as *;
 
 .window-perdrix{
+  @include perdrix-commands;
+  @include perdrix-header;
+
   &__ui{
     background-color:$core-default-background;  
     width:626px;

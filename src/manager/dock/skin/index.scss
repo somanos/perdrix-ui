@@ -1,12 +1,8 @@
-/** ================================================================== *
-#   Copyright Xialia.com  2011-2021
-#   FILE : /src/drumee/modules/desk/dock/js/skin/index.scss
-#   TYPE : Component style
-# ===================================================================**/
-@import 'mixins/drumee';
+@use 'mixins/drumee';
+@use 'forbiden' as *;
 
 .perdrix-dock {
-  @import 'forbiden';
+  @include dock-forbiden;
 
   &__ui {
     bottom: 0px;
@@ -22,12 +18,10 @@
 
   &__main {
     background-color: rgba(47, 47, 47, 0.2);
-    border-radius: $default-border-radius-top;
+    border-radius: drumee.$default-border-radius-top;
     justify-content: center;
     max-width: 100vw;
     padding: 10px 5px;
-
-
 
     &::before {
       backdrop-filter: blur(27px);
@@ -49,8 +43,8 @@
       position: absolute;
       cursor: pointer;
       top: -40px;
-      background-color: $core-background-tooltips; //$default-background-tooltips;
-      border-radius: $default-border-radius-tiny;
+      background-color: drumee.$core-background-tooltips; //$default-background-tooltips;
+      border-radius: drumee.$default-border-radius-tiny;
       height: 30px;
       align-items: center;
       padding: 0 10px;
@@ -60,7 +54,7 @@
       }
 
       &::before {
-        background: $core-background-tooltips; //$default-background-tooltips;
+        background: drumee.$core-background-tooltips; //$default-background-tooltips;
         bottom: -4px;
         content: " ";
         height: 10px;
@@ -97,18 +91,11 @@
 
     &-text {
       white-space: nowrap;
-      @include typo($line: 15px, $size: 12px, $color: $core-default-text-color);
+      @include drumee.typo($line: 15px, $size: 12px, $color: drumee.$core-default-text-color);
     }
   }
 
   &__container.application {
-
-    // &::after {
-    //   background-color: $core-default-background; //$ewhite;
-    //   content: " ";
-    //   height: 90%;
-    //   width: 1px;
-    // }
 
     &.launcher {
       &[data-device="desktop"] {
@@ -149,14 +136,9 @@
 
     svg {
       background-clip: padding-box;
-      color: $core-default-icon-reverse; //$default-icon-reverse;
+      color: drumee.$core-default-icon-reverse; //$default-icon-reverse;
       height: 43px;
       width: 43px;
-
-      // &[data-device="mobile"] {
-      //   height: 25px;
-      //   width: 25px;
-      // }
     }
 
     &.launcher {
@@ -171,51 +153,31 @@
 
 
     .label {
-      // &[data-device="mobile"] {
-      //   line-height: 14px;
-      // }
       overflow: hidden;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
-      @include typo($line: 15px, $size: 12px, $color: $core-default-text-reverse); //$ewhite
+      @include drumee.typo($line: 15px, $size: 12px, $color: drumee.$core-default-text-reverse); //$ewhite
     }
 
     &:hover {
       opacity: 1;
 
       * {
-        color: $core-default-icon-hover; //$eviolet;
+        color: drumee.$core-default-icon-hover; //$eviolet;
       }
 
       .desk-dock__tooltips {
-        color: $core-default-text-color; //$default-text-color;
+        color: drumee.$core-default-text-color; //$default-text-color;
       }
 
       & .bigchat__btn-counter {
-        color: $ewhite;
+        color: drumee.$ewhite;
       }
     }
 
     &.maker {
-      // &.folder {
-      //   svg {
-      //     color: $folder-main;
-      //   }
-      // }
-
-      // &.team {
-      //   svg {
-      //     color: $teamroom-main;
-      //   }
-      // }
-
-      // &.sharebox {
-      //   svg {
-      //     color: $sharebox-main;
-      //   }
-      // }
 
       &.note {
         svg {
@@ -230,10 +192,6 @@
         &:hover {
           opacity: 1;
         }
-
-        // svg {
-        //   color: $website-main;
-        // }
       }
     }
 
@@ -276,22 +234,22 @@
     & .launcher-icon {
       &[data-is-active="on"] {
         svg {
-          color: $eviolet !important;
+          color: drumee.$eviolet !important;
         }
       }
     }
 
     &.trash {
       &[data-over="yes"] {
-        border: 2px solid $eviolet;
-        border-radius: $default-border-radius;
+        border: 2px solid drumee.$eviolet;
+        border-radius: drumee.$default-border-radius;
 
         svg {
-          color: $eviolet;
+          color: drumee.$eviolet;
         }
 
         &:after {
-          border-radius: $default-border-radius;
+          border-radius: drumee.$default-border-radius;
           content: " ";
           height: 100%;
           left: 0;
@@ -312,8 +270,8 @@
   }
 
   &__tooltips {
-    background-color: $core-background-tooltips; //$default-background-tooltips;
-    border-radius: $default-border-radius-tiny;
+    background-color: drumee.$core-background-tooltips; //$default-background-tooltips;
+    border-radius: drumee.$default-border-radius-tiny;
     opacity: 1;
     padding: 8px;
     position: absolute;
@@ -321,10 +279,10 @@
     white-space: nowrap;
     z-index: 10;
     user-select: none;
-    @include typo($size: 11px, $line: 14px, $weight: 400, $color: $core-default-text-tooltips); // $default-text-color);
+    @include drumee.typo($size: 11px, $line: 14px, $weight: 400, $color: drumee.$core-default-text-tooltips); // $default-text-color);
 
     &::before {
-      background: $core-background-tooltips; //$default-background-tooltips;
+      background: drumee.$core-background-tooltips; //$default-background-tooltips;
       bottom: -4px;
       content: " ";
       height: 10px;
@@ -336,7 +294,7 @@
     }
   }
 
-  @media (max-width: $small) {
+  @media (max-width: drumee.$small) {
     .desk-dock__container.application.maker {
       display: none;
     }
@@ -348,17 +306,11 @@
     .desk-dock__container.application.launcher {
       display: none;
     }
-
-    // .launcher {
-    //   & .calendar, & .addressbook , & .schedule {
-    //     display:none;
-    //   }
-    // }
   }
 
   &__mobile-launch-wrapper {
 
-    @media (max-width: $small) {
+    @media (max-width: drumee.$small) {
       .desk-dock__container.application.maker {
         display: flex !important;
         padding-bottom: 8px;
@@ -404,6 +356,7 @@
       left: -28px;
       transform: translateX(-19%);
       margin-bottom: 13px;
+
       &[data-device="mobile"] {
         left: -28px;
       }

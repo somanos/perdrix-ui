@@ -1,5 +1,5 @@
 &-form {
-  @import './dropdown';
+  @use './dropdown';
 
   &__main {
     height: 100%;

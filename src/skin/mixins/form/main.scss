@@ -109,10 +109,16 @@
       margin: 10px 0 20px 0;
     }
 
-    &-main,
-    &-content {
-      width: 100%;
+    &-manual {
+      &[data-state="0"] {
+        display: none;
+      }
     }
+
+    // &-main,
+    // &-content {
+    //   width: 100%;
+    // }
 
     &-main__address {
       grid-template-columns: 100px 1fr 1fr;

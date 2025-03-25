@@ -1,8 +1,9 @@
 
-const __form = require('..');
+const Core = require('../../../core');
+require('../skin');
 const { customerBox, placeholder} = require("../../skeleton")
 
-class __form_customer extends __form {
+class __form_customer extends Core {
 
   constructor(...args) {
     super(...args);
@@ -180,13 +181,13 @@ class __form_customer extends __form {
   /**
    * 
    */
-  async clearList() {
-    let p = await this.ensurePart(_a.list);
-    p.clear();
+  // async clearList() {
+  //   let p = await this.ensurePart(_a.list);
+  //   p.clear();
 
-    p = await this.ensurePart(_a.footer);
-    p.el.dataset.state = 0;
-  }
+  //   p = await this.ensurePart(_a.footer);
+  //   p.el.dataset.state = 0;
+  // }
 
   /**
    * 
@@ -199,27 +200,27 @@ class __form_customer extends __form {
   /**
   * 
   */
-  async prompLocation(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    p.feed(address(this, {}));
-  }
+  // async prompLocation(cmd) {
+  //   await this.clearList();
+  //   let p = await this.ensurePart("entries-manual");
+  //   p.feed(address(this, {}));
+  // }
 
 
   /**
   * 
   */
-  async addressSelected(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    const {
-      street, city, housenumber, postcode, label
-    } = cmd.mget('properties') || {};
-    this._locationCompleted = 1;
-    p.feed(address(this, { street, city, housenumber, postcode }));
-    let addr = await this.ensurePart("address-entry");
-    addr.setValue(label)
-  }
+  // async addressSelected(cmd) {
+  //   await this.clearList();
+  //   let p = await this.ensurePart("entries-manual");
+  //   const {
+  //     street, city, housenumber, postcode, label
+  //   } = cmd.mget('properties') || {};
+  //   this._locationCompleted = 1;
+  //   p.feed(address(this, { street, city, housenumber, postcode }));
+  //   let addr = await this.ensurePart("address-entry");
+  //   addr.setValue(label)
+  // }
 
   /**
    * 
