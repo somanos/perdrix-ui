@@ -12,6 +12,7 @@
     min-width: 300px;
     overflow: visible;
     width: 500px;
+    position: absolute;
 
     &[data-device="mobile"] {
       height: 100vh;

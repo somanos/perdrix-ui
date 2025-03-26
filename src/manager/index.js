@@ -72,10 +72,6 @@ class __perdrix_manager extends DrumeeWm {
         string,
         trigger: source,
         uiHandler: [source],
-        // style: {
-        //   top: top + source.$el.height(),
-        //   left,
-        // }
       };
       this.windowsLayer.append(item);
       return

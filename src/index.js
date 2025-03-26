@@ -18,9 +18,9 @@ async function start(parent) {
   // if (el && el.dataset.instance) {
   //   base = `/-/${el.dataset.instance}/`;
   // }
-
+  const { endpoint } = bootstrap();
   if (!Visitor.isOnline()) {
-    return location.href = `${base}#/welcome`;
+    return location.href = `${endpoint}#/welcome`;
   }
 
   await preloadKinds();

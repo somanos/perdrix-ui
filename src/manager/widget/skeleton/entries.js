@@ -7,7 +7,11 @@ import { entry, menuInput, buttons } from "./widgets"
  * @returns 
  */
 export function address(ui, opt) {
-  const { street, city, housenumber, postcode, countrycode } = opt;
+  const {
+    street, city, housenumber, postcode, countrycode, extended
+  } = opt;
+
+
   const pfx = `${ui.fig.family}`;
   let type = "";
   if (street) type = street.split(/ +/)[0];
@@ -28,6 +32,17 @@ export function address(ui, opt) {
     value: countrycode || 'France',
   })
 
+  let floor;
+  if (extended) {
+    floor = Skeletons.Box.G({
+      className: `${pfx}__address street`,
+      kids: [
+        entry(ui, { placeholder: "Etage", name: "floor" }),
+        entry(ui, { placeholder: "Appartement", name: 'room' }),
+        entry(ui, { placeholder: "Autre", name: 'other' }),
+      ]
+    })
+  }
   return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__entries-main`,
@@ -48,6 +63,7 @@ export function address(ui, opt) {
           entry(ui, { placeholder: "Complenent!", name: 'additional' }),
         ]
       }),
+      floor,
       Skeletons.Box.G({
         className: `${pfx}__address city`,
         kids: [
@@ -69,5 +85,4 @@ export function address(ui, opt) {
       buttons(ui)
     ]
   })
-
 };

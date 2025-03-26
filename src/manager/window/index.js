@@ -28,49 +28,35 @@ class __window_perdrix extends Utils {
   }
 
 
-  /**
-   * 
-   */
-  async onDomRefresh() {
-    this.feed(require('./skeleton/loading')(this));
-  }
+  // /**
+  //  * 
+  //  */
+  // async onDomRefresh() {
+  //   this.feed(require('./skeleton/loading')(this));
+  // }
 
   /**
     * 
     */
   loadCustomer(cmd, hide = 0) {
-    const { custId } = cmd.model.toJSON();
-    Wm.windowsLayer.append({
+    const { custId } = cmd.mget('custId')
+    this.loadWidget({
       kind: 'window_customer',
       id: `customer-${custId}`,
       source: cmd
-    });
-    setTimeout(() => {
-      let w = Wm.windowsLayer.children.last();
-      if (w && w.raise) {
-        w.raise()
-      }
-      if (hide) this.hide()
-    }, 1000)
+    })
   }
 
   /**
     * 
     */
   loadWorkForm(cmd, hide = 0) {
-    const { custId } = this.model.toJSON();
-    Wm.windowsLayer.append({
+    const { custId } = this.mget('custId');
+    this.loadWidget({
       ...this.source.data(),
       kind: 'work_form',
       id: `work-form-${custId}`,
-    });
-    setTimeout(() => {
-      let w = Wm.windowsLayer.children.last();
-      if (w && w.raise) {
-        w.raise()
-      }
-      if (hide) this.hide()
-    }, 1000)
+    })
   }
 
   /**

@@ -98,6 +98,19 @@
 }
 
 @mixin form-entries {
+  &__site {
+    &-address {
+      &[data-state="0"] {
+        display: none;
+      }
+
+      &[data-state="1"],
+      &[data-state="open"] {
+        z-index: 1 !important;
+      }
+    }
+  }
+
   &__entries {
 
     &-container,
@@ -112,6 +125,11 @@
     &-manual {
       &[data-state="0"] {
         display: none;
+      }
+
+      &[data-state="1"],
+      &[data-state="open"] {
+        z-index: 1 !important;
       }
     }
 

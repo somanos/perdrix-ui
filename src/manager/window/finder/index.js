@@ -204,8 +204,6 @@ class __window_finder extends __window {
     list.restart();
   }
 
-
-
   /**
    * 
    * @param {*} source 
@@ -267,26 +265,6 @@ class __window_finder extends __window {
     }
   }
 
-  // /**
-  //  * 
-  //  */
-  // loadCustomer(content, type) {
-  //   let { id } = content;
-  //   Wm.windowsLayer.append({
-  //     kind: 'window_customer',
-  //     id: `clien-${id}`,
-  //     content,
-  //     type
-  //   });
-  //   setTimeout(() => {
-  //     let w = Wm.windowsLayer.children.last();
-  //     if (w && w.raise) {
-  //       w.raise()
-  //       this.hide();
-  //     }
-  //   }, 1000)
-  // }
-
   /**
    * @param {*} cmd
    * @param {*} args
@@ -307,9 +285,6 @@ class __window_finder extends __window {
           this.loadCustomer(cmd, 1);
         }
         return
-
-        //this.filterContent(cmd);
-        return;
 
       default:
         return super.onUiEvent(cmd, args);

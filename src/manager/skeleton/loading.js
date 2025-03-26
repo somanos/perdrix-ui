@@ -10,9 +10,7 @@ module.exports = function(_ui_){
     kids : [Skeletons.Window.TopbarControl(_ui_, "c")]
   });
 
-  //const a = Skeletons.Window.Main(_ui_, menu);
-
-  const a = Skeletons.Box.Y({
+  return Skeletons.Box.Y({
     className  : `${_ui_.fig.family}__main`,
     debug      : __filename,
     kids       : [
@@ -20,5 +18,4 @@ module.exports = function(_ui_){
       {kind:'spinner'}
     ]
   })
-  return a;
 }

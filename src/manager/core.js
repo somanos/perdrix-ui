@@ -3,6 +3,11 @@ const { placeholder } = require("./widget/skeleton/widgets")
 const { address } = require("./widget/skeleton/entries")
 
 class __form_core extends DrumeeInteractWindow {
+  constructor(...args) {
+    super(...args);
+    this.searchLocation = this.searchLocation.bind(this);
+  }
+
   /**
    * 
    */
@@ -11,6 +16,32 @@ class __form_core extends DrumeeInteractWindow {
     this.declareHandlers();
   }
 
+  /**
+   * 
+   */
+  onPartReady(child, pn) {
+    switch (pn) {
+      case "topbar":
+        this.raise();
+        this.setupInteract();
+        break;
+      case "wrapper-dialog":
+        this._dialogPos = child.$el.offset()
+        break;
+    }
+  }
+
+
+  /**
+   * 
+   */
+  onDomRefresh() {
+    this.feed(require('./skeleton/loading')(this));
+    let pos = this.$el.position();
+    if (this.anti_overlap(pos)) {
+      this.$el.css(pos)
+    }
+  }
 
   /**
    * 
@@ -57,6 +88,29 @@ class __form_core extends DrumeeInteractWindow {
     p.feed(address(this, {}));
   }
 
+  /**
+   * 
+   */
+  async searchLocation(cmd) {
+    let words = cmd.getValue() || "";
+    let { length } = words.split(/[ ,]+/)
+    let api = {
+      service: "perdrix.search_location",
+      words,
+    };
+    let itemsOpt = {
+      kind: 'location_item',
+      service: 'select-address'
+    }
+
+    return new Promise(async (will, wont) => {
+      if (length <= 2) return will(null);
+      this.feedList(api, itemsOpt, (list) => {
+        list.model.unset(_a.itemsOpt)
+        list.feed(placeholder(this));
+      })
+    })
+  }
 
   /**
   * 
@@ -73,6 +127,16 @@ class __form_core extends DrumeeInteractWindow {
     addr.setValue(label)
   }
 
-
+  /**
+   * 
+   */
+  loadWidget(opt, hide = 0) {
+    Wm.windowsLayer.append(opt);
+    setTimeout(() => {
+      let w = Wm.windowsLayer.children.last();
+      if (w && w.raise) w.raise();
+      if (hide) this.hide();
+    }, 500)
+  }
 }
 module.exports = __form_core

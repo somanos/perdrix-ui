@@ -41,7 +41,6 @@ export function entry(ui, opt) {
     service: _a.input,
     placeholder,
     uiHandler: [ui],
-    errorHandler: [ui],
   }
   if (sys_pn) {
     args.sys_pn = sys_pn;

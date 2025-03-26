@@ -1,5 +1,4 @@
 const __window = require('..');
-const { modelComparator, reverseSortBy } = require('../../utils')
 const CTYPE = 'ctype';
 class __window_customer_list extends __window {
   constructor(...args) {

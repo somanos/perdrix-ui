@@ -3,7 +3,7 @@ const Core = require('../../../core');
 require('../skin');
 const { workSite, placeholder } = require("../../skeleton")
 
-class __form_work extends Core {
+class __form_site extends Core {
 
   constructor(...args) {
     super(...args);
@@ -22,8 +22,7 @@ class __form_work extends Core {
       type: 'company',
       category: 0
     })
-    this._data = {}
-    this._timer = {}
+    this.source = opt.source;
   }
 
   /**
@@ -32,18 +31,14 @@ class __form_work extends Core {
   onPartReady(child, pn) {
     this.raise();
     switch (pn) {
-      case "topbar":
-        this.setupInteract();
-        break;
-      case "wrapper-dialog":
-        this._dialogPos = child.$el.offset()
-        break;
       case 'companyname':
       case _a.lastname:
         child.on(_e.blur, (e) => {
           this.clearList();
         })
         break;
+      default:
+        super.onPartReady(child, pn);
     }
   }
 
@@ -185,15 +180,6 @@ class __form_work extends Core {
     p.el.dataset[attr] = val;
   }
 
-  /**
-  * 
-  */
-  async prompLocation(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    p.feed(address(this, {}));
-  }
-
 
   /**
   * 
@@ -236,11 +222,6 @@ class __form_work extends Core {
             this.loadSitesList(cmd)
             break;
           case "add-site":
-            this.loadWidget({
-              kind:'site_form',
-              source:this,
-              id:`site-form-${this.mget('custId')}`
-            })
             break;
         }
         break;
@@ -254,4 +235,4 @@ class __form_work extends Core {
 
 }
 
-module.exports = __form_work
+module.exports = __form_site

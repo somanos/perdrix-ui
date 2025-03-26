@@ -1,14 +1,13 @@
 
 const Core = require('../../../core');
 require('../skin');
-const { customerBox, placeholder} = require("../../skeleton")
+const { customerBox } = require("../../skeleton")
 
 class __form_customer extends Core {
 
   constructor(...args) {
     super(...args);
     this.searchCustomer = this.searchCustomer.bind(this);
-    this.searchLocation = this.searchLocation.bind(this);
   }
 
 
@@ -33,21 +32,21 @@ class __form_customer extends Core {
   onPartReady(child, pn) {
     this.raise();
     switch (pn) {
-      case "topbar":
-        this.setupInteract();
-        break;
-      case "wrapper-dialog":
-        this._dialogPos = child.$el.offset()
-        break;
       case 'companyname':
       case _a.lastname:
         child.on(_e.blur, (e) => {
           this.clearList();
         })
         break;
+      case "entries":
+        child.onChildBubble = (o) => {
+          this.debug("AAAA:43", o)
+        }
+        break;
+      default:
+        super.onPartReady(child, pn);
     }
   }
-
 
   /**
    * 
@@ -112,29 +111,6 @@ class __form_customer extends Core {
     })
   }
 
-  /**
-   * 
-   */
-  async searchLocation(cmd) {
-    let words = cmd.getValue() || "";
-    let { length } = words.split(/[ ,]+/)
-    let api = {
-      service: "perdrix.search_location",
-      words,
-    };
-    let itemsOpt = {
-      kind: 'location_item',
-      service: 'select-address'
-    }
-
-    return new Promise(async (will, wont) => {
-      if (length <= 2) return will(null);
-      this.feedList(api, itemsOpt, (list) => {
-        list.model.unset(_a.itemsOpt)
-        list.feed(placeholder(this));
-      })
-    })
-  }
 
 
   /**
@@ -223,6 +199,14 @@ class __form_customer extends Core {
   // }
 
   /**
+  * 
+  * @param {*} o 
+  */
+  onChildBubble(o) {
+    this.triggerMethod('change:radio');
+  }
+
+  /**
    * 
    */
   createCustomer() {
@@ -267,6 +251,7 @@ class __form_customer extends Core {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
+    this.debug("AAA:250", service, cmd.status, cmd, this)
     switch (service) {
       case "select-category":
         this.selectCategory(cmd);
@@ -295,6 +280,7 @@ class __form_customer extends Core {
             }
             break;
         }
+        this.raise();
         break;
       case 'select-address':
         this.addressSelected(cmd);
