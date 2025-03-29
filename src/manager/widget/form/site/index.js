@@ -1,7 +1,7 @@
 
 const Core = require('../../../core');
 require('../skin');
-const { workSite, placeholder } = require("../../skeleton")
+const { workSite, placeholder, acknowledge } = require("../../skeleton")
 
 class __form_site extends Core {
 
@@ -9,7 +9,6 @@ class __form_site extends Core {
     super(...args);
     this.searchLocation = this.searchLocation.bind(this);
   }
-
 
   /**
    * 
@@ -65,86 +64,7 @@ class __form_site extends Core {
     })
   }
 
-  // /**
-  //  * 
-  //  */
-  // async feedList(api, itemsOpt, onEmpty) {
-  //   let list = await this.ensurePart(_a.list);
-  //   if (list.isWaiting()) {
-  //     if (this._waitTimer) {
-  //       clearTimeout(this._waitTimer)
-  //     }
-  //     this._waitTimer = setTimeout(() => {
-  //       this.feedList(api, itemsOpt, onEmpty);
-  //       this._waitTimer = null;
-  //     }, 2000)
-  //     return;
-  //   }
-  //   list.model.unset(_a.itemsOpt)
-  //   list.mset({ api, itemsOpt });
-  //   list.restart();
-  //   let p = await this.ensurePart(_a.footer);
-  //   p.el.dataset.state = 1;
 
-  //   p = await this.ensurePart("entries-manual");
-  //   p.clear();
-
-  //   list.once(_e.data, async (data) => {
-  //     if (_.isEmpty(data)) {
-  //       return onEmpty(list);
-  //     }
-  //   })
-  //   list.once(_e.eod, async (e) => {
-  //     if (list.isNaturalyEmpty()) {
-  //       onEmpty(list);
-  //     }
-  //   });
-  //   list.once(_e.error, async () => {
-  //     onEmpty(list);
-  //   });
-  // }
-
-
-  /**
-   * 
-   */
-  async searchLocation(cmd) {
-    let words = cmd.getValue() || "";
-    let { length } = words.split(/[ ,]+/)
-    let api = {
-      service: "perdrix.search_location",
-      words,
-    };
-    let itemsOpt = {
-      kind: 'location_item',
-      service: 'select-address'
-    }
-
-    return new Promise(async (will, wont) => {
-      if (length <= 2) return will(null);
-      this.feedList(api, itemsOpt, (list) => {
-        list.model.unset(_a.itemsOpt)
-        list.feed(placeholder(this));
-      })
-    })
-  }
-
-
-  /**
-    * 
-    */
-  throtle(cmd) {
-    return new Promise((will, wont) => {
-      if (!cmd || !cmd.getValue) return;
-      if (this._timer[cmd.cid]) {
-        clearTimeout(this._timer[cmd.cid])
-      }
-      this._timer[cmd.cid] = setTimeout(async () => {
-        await will(cmd);
-        this._timer[cmd.cid] = null;
-      }, 1000)
-    })
-  }
 
   /**
   * 
@@ -159,42 +79,43 @@ class __form_site extends Core {
     })
   }
 
-
-
-  /**
-   * 
-   */
-  async clearList() {
-    let p = await this.ensurePart(_a.list);
-    p.clear();
-
-    p = await this.ensurePart(_a.footer);
-    p.el.dataset.state = 0;
-  }
-
-  /**
-   * 
-   */
-  async changeDataset(name, attr, val) {
-    let p = await this.ensurePart(name);
-    p.el.dataset[attr] = val;
-  }
-
-
   /**
   * 
   */
-  async addressSelected(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    const {
-      street, city, housenumber, postcode, label
-    } = cmd.mget('properties') || {};
-    this._locationCompleted = 1;
-    p.feed(address(this, { street, city, housenumber, postcode }));
-    let addr = await this.ensurePart("address-entry");
-    addr.setValue(label)
+  createSite(cmd) {
+    let args = this.getData();
+    if (this._data.properties) {
+      args.lat = this._data.properties.x;
+      args.lon = this._data.properties.y;
+    }
+    args.custId = this.source.mget('custId');
+    let fields = ['city', 'postcode']
+    let error = 0
+    for (let name of fields) {
+      if (!args[name]) {
+        this.changeDataset(name, _a.error, 1)
+        error = 1;
+      } else {
+        this.changeDataset(name, _a.error, 0)
+      }
+    }
+    this.debug("AAA:87", args, cmd)
+    if (error) return;
+    this.postService("perdrix.site_create", { args }).then((data) => {
+      this.__content.feed(acknowledge(this, {
+        message: `Le chantier a bien ete cree`,
+        service: "site-created"
+      }));
+      this.mset(data)
+    }).catch((e) => {
+      this.__wrapperDialog.feed(acknowledge(this, {
+        message: LOCALE.ERROR_SERVER,
+        failed: 1,
+        service: 'close-dialog',
+      }))
+    })
   }
+
 
   /**
    * 
@@ -209,11 +130,10 @@ class __form_site extends Core {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:213", service, cmd, this)
+    this.debug("AAA:212b", service, cmd.mget(_a.name), cmd, this)
     switch (service) {
       case "select-site":
         let { choice } = cmd.getData();
-        this.debug("AAA:238", choice, service, cmd)
         switch (choice) {
           case "same-address":
             this.selectSite(this)
@@ -228,6 +148,35 @@ class __form_site extends Core {
       case "set-site":
         this.selectSite(cmd);
         break;
+      case _a.create:
+        this.createSite(cmd);
+        break;
+      case 'select-address':
+        this.addressSelected(cmd, 1);
+        break;
+      case "prompt-location":
+        this.prompLocation(1);
+        break;
+      case "site-created":
+        this.triggerHandlers({ service });
+        this.goodbye();
+        break;
+      case _a.input:
+        switch (cmd.mget(_a.name)) {
+          case _a.location:
+            this.changeDataset(_a.footer, _a.state, 1)
+            this.throtle(cmd, _a.footer).then(this.searchLocation);
+            break;
+          case 'streettype':
+            let { key } = args;
+            if (!key) {
+              this.getStreetType(cmd);
+            } else {
+              this.selectStreetType(cmd, key);
+            }
+            break;
+        }
+
       default:
         super.onUiEvent(cmd, args)
     }

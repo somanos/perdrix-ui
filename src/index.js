@@ -33,7 +33,7 @@ async function start(parent) {
     LOCALE = { ...LOCALE, ...locale };
     Kind.register(kind, m.default);
     Kind.waitFor(kind).then((k) => {
-      console.log("AAA:68 -- LOADING THE MANGER", kind);
+      console.log("AAA:01 -- LOADING THE MANGER", kind);
       uiRouter.currentModule.feed({ kind })
     })
   })

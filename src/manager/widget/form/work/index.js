@@ -47,7 +47,6 @@ class __form_work extends Core {
     }
   }
 
-
   /**
    * 
    */
@@ -70,45 +69,21 @@ class __form_work extends Core {
     })
   }
 
-  // /**
-  //  * 
-  //  */
-  // async feedList(api, itemsOpt, onEmpty) {
-  //   let list = await this.ensurePart(_a.list);
-  //   if (list.isWaiting()) {
-  //     if (this._waitTimer) {
-  //       clearTimeout(this._waitTimer)
-  //     }
-  //     this._waitTimer = setTimeout(() => {
-  //       this.feedList(api, itemsOpt, onEmpty);
-  //       this._waitTimer = null;
-  //     }, 2000)
-  //     return;
-  //   }
-  //   list.model.unset(_a.itemsOpt)
-  //   list.mset({ api, itemsOpt });
-  //   list.restart();
-  //   let p = await this.ensurePart(_a.footer);
-  //   p.el.dataset.state = 1;
-
-  //   p = await this.ensurePart("entries-manual");
-  //   p.clear();
-
-  //   list.once(_e.data, async (data) => {
-  //     if (_.isEmpty(data)) {
-  //       return onEmpty(list);
-  //     }
-  //   })
-  //   list.once(_e.eod, async (e) => {
-  //     if (list.isNaturalyEmpty()) {
-  //       onEmpty(list);
-  //     }
-  //   });
-  //   list.once(_e.error, async () => {
-  //     onEmpty(list);
-  //   });
-  // }
-
+  /**
+    * 
+    */
+  async promptSite(cmd) {
+    this.loadWidget({
+      kind: 'site_form',
+      source: this,
+      id: `site-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "site-created"
+    })
+    this.ensurePart("entries-manual").then((p) => {
+      p.el.dataset.state = 0;
+    });
+  }
 
   /**
    * 
@@ -163,8 +138,6 @@ class __form_work extends Core {
       p.clear()
     })
   }
-
-
 
   /**
    * 
@@ -225,6 +198,9 @@ class __form_work extends Core {
     let service = args.service || cmd.mget(_a.service);
     this.debug("AAA:213", service, cmd, this)
     switch (service) {
+      case "prompt-location":
+        this.promptSite(cmd);
+        break;
       case "select-site":
         let { choice } = cmd.getData();
         this.debug("AAA:238", choice, service, cmd)
@@ -236,13 +212,15 @@ class __form_work extends Core {
             this.loadSitesList(cmd)
             break;
           case "add-site":
-            this.loadWidget({
-              kind:'site_form',
-              source:this,
-              id:`site-form-${this.mget('custId')}`
-            })
+            this.promptSite(cmd);
             break;
         }
+        break;
+      case "site-created":
+        this.loadSitesList(cmd);
+        setTimeout(() => {
+          this.raise();
+        }, 1000)
         break;
       case "set-site":
         this.selectSite(cmd);

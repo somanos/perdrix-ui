@@ -2,7 +2,7 @@
   "dev": {
     "bundle_path": "/home/somanos/build/perdrix/ui/plugins",
     "public_path": "/-/devel/plugins/",
-    "output_filename":"[name].js"
+    "output_filename":"[name]-[fullhash].js"
 ,    "mode": "development"
   }
 }

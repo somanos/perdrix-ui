@@ -1,0 +1,55 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+
+.poc-item {
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(148, 226, 203, 0.1);
+    }
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+
+  }
+
+
+  &__container {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  &__cartridge {
+    grid-template-columns: 30px 3fr 1fr 2fr;
+  }
+
+  &__text {
+    border: none;
+    @include drumee.typo($color: #787B7F, $size: 12px, $line: 24px);
+
+    .inner {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    cursor: pointer;
+  }
+
+  &__cartridge {
+    width: 100%;
+  }
+
+}

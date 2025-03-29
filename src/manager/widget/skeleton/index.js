@@ -7,3 +7,4 @@ export * from './selection-menu';
 export * from './topbar';
 export * from './widgets';
 export * from './work-site';
+export * from './acknowledge';

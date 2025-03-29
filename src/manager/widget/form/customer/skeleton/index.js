@@ -49,8 +49,8 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body, 
-          //footerWrapper(ui), 
-          // dialogWrapper(ui)
+          footerWrapper(ui), 
+          dialogWrapper(ui)
         ]
       })
     ]

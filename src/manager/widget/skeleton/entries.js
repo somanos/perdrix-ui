@@ -7,15 +7,24 @@ import { entry, menuInput, buttons } from "./widgets"
  * @returns 
  */
 export function address(ui, opt) {
-  const {
+  let {
     street, city, housenumber, postcode, countrycode, extended
   } = opt;
-
-
   const pfx = `${ui.fig.family}`;
   let type = "";
-  if (street) type = street.split(/ +/)[0];
-
+  let loc = [];
+  if (street) {
+    loc = street.split(/ +/);
+    type = loc[0];
+  }
+  let { length } = Env.get('streetType').filter(function (p) {
+    let r = new RegExp(`^${p.longTag}$`, 'i');
+    return (r.test(type))
+  })
+  if (length) {
+    loc.shift()
+    street = loc.join(' ');
+  }
   let streetType = menuInput(ui, {
     items: Env.get('streetType'),
     name: 'streettype',

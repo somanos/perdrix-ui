@@ -180,8 +180,9 @@
     justify-content: center;
   }
 
-  &__button-go {
-    width: 100px;
+  &__button-go,
+  &__button-item {
+    min-width: 100px;
     height: 45px;
     align-items: center;
     justify-content: center;

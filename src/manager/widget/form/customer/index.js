@@ -1,7 +1,7 @@
 
 const Core = require('../../../core');
 require('../skin');
-const { customerBox } = require("../../skeleton")
+const { customerBox, acknowledge } = require("../../skeleton")
 
 class __form_customer extends Core {
 
@@ -23,7 +23,6 @@ class __form_customer extends Core {
       category: 0
     })
     this._data = {}
-    this._timer = {}
   }
 
   /**
@@ -111,24 +110,6 @@ class __form_customer extends Core {
     })
   }
 
-
-
-  /**
-    * 
-    */
-  throtle(cmd) {
-    return new Promise((will, wont) => {
-      if (!cmd || !cmd.getValue) return;
-      if (this._timer[cmd.cid]) {
-        clearTimeout(this._timer[cmd.cid])
-      }
-      this._timer[cmd.cid] = setTimeout(async () => {
-        await will(cmd);
-        this._timer[cmd.cid] = null;
-      }, 1000)
-    })
-  }
-
   /**
   * 
   */
@@ -144,59 +125,6 @@ class __form_customer extends Core {
     })
   }
 
-  /**
-  * 
-  */
-  itemMenuSelected(cmd) {
-    this.ensurePart("menu-trigger").then((p) => {
-      p.setLabel(cmd.mget(_a.label));
-      this._data[cmd.mget(_a.name)] = cmd.mget(_a.value)
-    })
-  }
-
-  /**
-   * 
-   */
-  // async clearList() {
-  //   let p = await this.ensurePart(_a.list);
-  //   p.clear();
-
-  //   p = await this.ensurePart(_a.footer);
-  //   p.el.dataset.state = 0;
-  // }
-
-  /**
-   * 
-   */
-  async changeDataset(name, attr, val) {
-    let p = await this.ensurePart(name);
-    p.el.dataset[attr] = val;
-  }
-
-  /**
-  * 
-  */
-  // async prompLocation(cmd) {
-  //   await this.clearList();
-  //   let p = await this.ensurePart("entries-manual");
-  //   p.feed(address(this, {}));
-  // }
-
-
-  /**
-  * 
-  */
-  // async addressSelected(cmd) {
-  //   await this.clearList();
-  //   let p = await this.ensurePart("entries-manual");
-  //   const {
-  //     street, city, housenumber, postcode, label
-  //   } = cmd.mget('properties') || {};
-  //   this._locationCompleted = 1;
-  //   p.feed(address(this, { street, city, housenumber, postcode }));
-  //   let addr = await this.ensurePart("address-entry");
-  //   addr.setValue(label)
-  // }
 
   /**
   * 
@@ -211,14 +139,14 @@ class __form_customer extends Core {
    */
   createCustomer() {
     let args = this.getData();
-    let fiels = [];
+    let fields = [];
     if (this.mget(_a.type) == 'company') {
-      fiels = ['companyname', 'city', 'postcode']
+      fields = ['companyname', 'city', 'postcode']
     } else {
-      fiels = [_a.lastname, 'city', 'postcode']
+      fields = [_a.lastname, 'city', 'postcode']
     }
     let error = 0
-    for (let name of fiels) {
+    for (let name of fields) {
       if (!args[name]) {
         this.changeDataset(name, _a.error, 1)
         error = 1;
@@ -228,13 +156,19 @@ class __form_customer extends Core {
     }
     if (error) return;
     args.category = this.mget(_a.category)
-    args.location = [
-      args.housenumber, args.streettype, args.streetname, args.additional
-    ]
+
     this.debug("AAA:323", args, this);
     this.postService("perdrix.customer_create", { args }).then((data) => {
-      this.debug("AAA:375", data)
+      const { custName } = data;
+      this.__content.feed(acknowledge(this, {
+        message: `${custName} a bien ete cree`,
+      }))
     }).catch((e) => {
+      this.__wrapperDialog.feed(acknowledge(this, {
+        message: LOCALE.ERROR_SERVER,
+        failed: 1,
+        service: 'close-dialog',
+      }))
       this.debug("AAA:377 FAILED", e)
     })
   }
@@ -251,7 +185,7 @@ class __form_customer extends Core {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:250", service, cmd.status, cmd, this)
+    this.debug("AAA:250", service, cmd.mget(_a.name), cmd.status, cmd, this)
     switch (service) {
       case "select-category":
         this.selectCategory(cmd);
@@ -291,6 +225,8 @@ class __form_customer extends Core {
       case _e.create:
         this.createCustomer(cmd);
         break;
+      case 'close-dialog':
+        this.__wrapperDialog.clear();
       default:
         super.onUiEvent(cmd, args)
     }
