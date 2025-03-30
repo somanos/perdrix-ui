@@ -12,13 +12,15 @@
 function customerview(ui) {
   let { gender, custId, custName, location } = ui.mget(_a.content);
   const adresse = location.join(' ');
-
-  if(gender){
+  let ico = 'account_contacts';
+  if (gender) {
     custName = `${gender} ${custName}`;
+  } else {
+    ico = 'company';
   }
 
   const kids = [
-    require('./header')(ui, 'account_contacts', "Client"),
+    require('./header')(ui, ico, "Client"),
     require('./cartridge')(ui, 'Nom', custName, custId),
     require('./cartridge')(ui, 'Adresse', adresse, custId),
   ]

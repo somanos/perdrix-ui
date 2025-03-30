@@ -4,11 +4,11 @@
  * @param {*} ui 
  * @returns 
  */
-export function list(ui) {
+export function list(ui, partName=_a.list) {
   return Skeletons.List.Smart({
     className: `${ui.fig.family}__searchbox`,
     innerClass: "drive-content-scroll",
-    sys_pn: _a.list,
+    sys_pn: partName,
     flow: _a.none,
     uiHandler: null,
     spinnerWait: 1500,
@@ -222,3 +222,4 @@ export function entryLabel(ui, opt) {
     ]
   });
 }
+

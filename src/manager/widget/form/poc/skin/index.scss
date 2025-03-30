@@ -4,7 +4,7 @@
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
 
-.form-work {
+.form-poc {
   &__ui {
     background-color: drumee.$core-default-background;
     border-radius: drumee.$default-border-radius;
@@ -12,7 +12,7 @@
     display: flex;
     max-height: 95vh;
     overflow: visible;
-    width: 800px;
+    width: 700px;
     height: auto;
     min-width: 340px;
     //min-height: 400px;
@@ -76,32 +76,6 @@
     }
   }
 
-  &__site-address {
-    align-self: flex-start;
-    height: 55px;
-    justify-content: center;
-
-    &[data-state="0"] {
-      display: none;
-    }
-  }
-
-  &__work-site {
-    margin: 0 5px;
-    @include drumee.typo($size: 12px, $line: 16px, $weight: 300);
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: 12px 3fr 2fr 80px;
-    grid-gap: 0.5rem;
-
-    .work-site {
-      &-geoloc {
-        height: 20px;
-        width: 20px;
-        color: drumee.$sharebox-main
-      }
-    }
-  }
 
 
   @include customer-header;
@@ -119,6 +93,10 @@
 
   @include dialog-acknowledge;
   @include dialog-overlay;
+
+  &__entry {
+    margin: 0 5px;
+  }
 }
 
 .form {

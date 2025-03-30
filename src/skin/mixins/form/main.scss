@@ -171,6 +171,7 @@
   &__buttons-container {
     width: 100%;
     height: 60px;
+    padding: 12px 0;
   }
 
   &__buttons-main {
@@ -183,7 +184,8 @@
   &__button-go,
   &__button-item {
     min-width: 100px;
-    height: 45px;
+    min-height: 25px;
+    height: 100%;
     align-items: center;
     justify-content: center;
     color: drumee.$white;

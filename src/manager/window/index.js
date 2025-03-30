@@ -35,16 +35,32 @@ class __window_perdrix extends Utils {
   //   this.feed(require('./skeleton/loading')(this));
   // }
 
+  // /**
+  //   * 
+  //   */
+  // loadCustomer(cmd, hide = 0) {
+  //   const { custId } = cmd.mget('custId')
+  //   this.loadWidget({
+  //     kind: 'window_customer',
+  //     id: `customer-${custId}`,
+  //     source: cmd
+  //   })
+  // }
+
   /**
-    * 
-    */
-  loadCustomer(cmd, hide = 0) {
-    const { custId } = cmd.mget('custId')
-    this.loadWidget({
+   * 
+   */
+  loadCustomer(cmd, type) {
+    const { custId } = cmd.model.toJSON();
+    Wm.windowsLayer.append({
       kind: 'window_customer',
       id: `customer-${custId}`,
       source: cmd
-    })
+    });
+    setTimeout(()=>{
+      let w = Wm.windowsLayer.children.last();
+      if(w && w.raise) w.raise()
+    }, 1000)
   }
 
   /**

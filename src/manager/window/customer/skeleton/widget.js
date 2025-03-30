@@ -37,7 +37,7 @@ export function tabs(ui) {
       Skeletons.Button.Label({
         ico: 'desktop_mysharing',
         label: 'Contacs',
-        service: 'show-contacts',
+        service: 'show-pocs',
       }),
       Skeletons.Button.Label({
         ico: 'desktop_picture',

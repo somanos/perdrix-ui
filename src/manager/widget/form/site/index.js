@@ -18,7 +18,7 @@ class __form_site extends Core {
     super.initialize(opt);
     this.declareHandlers();
     this.model.atLeast({
-      type: 'company',
+      type: 'site',
       category: 0
     })
     this.source = opt.source;
@@ -58,7 +58,6 @@ class __form_site extends Core {
     p.el.dataset.state = 1;
 
     this.feedList(api, itemsOpt, (list) => {
-      this.debug("AAA:65", api, list)
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this));
     })
@@ -99,7 +98,6 @@ class __form_site extends Core {
         this.changeDataset(name, _a.error, 0)
       }
     }
-    this.debug("AAA:87", args, cmd)
     if (error) return;
     this.postService("perdrix.site_create", { args }).then((data) => {
       this.__content.feed(acknowledge(this, {
@@ -121,7 +119,6 @@ class __form_site extends Core {
    * 
    */
   onDomRefresh() {
-    this.debug("AAA:205", this)
     this.feed(require('./skeleton')(this));
   }
 

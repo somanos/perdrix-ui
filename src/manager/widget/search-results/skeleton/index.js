@@ -11,7 +11,7 @@
 
 function found_item(ui) {
   let kids = [];
-  switch (ui.mget('ctype')) {
+  switch ( ui.mget(_a.type)) {
     case 'site':
       kids = require('./site')(ui);
       break;
@@ -25,7 +25,7 @@ function found_item(ui) {
       kids = require('./work')(ui);
       break;
     default:
-      kids = require('./header')(ui, 'account_contacts', "Type se donnees inconnues")
+      kids = require('./header')(ui, 'account_contacts', "Type de donnees inconnues")
   }
   const skeleton = Skeletons.Box.Y({
     className: `${ui.fig.family}__main ${ui.mget('ctype')}`,

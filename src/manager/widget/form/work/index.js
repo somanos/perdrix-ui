@@ -5,10 +5,10 @@ const { workSite, placeholder } = require("../../skeleton")
 
 class __form_work extends Core {
 
-  constructor(...args) {
-    super(...args);
-    this.searchLocation = this.searchLocation.bind(this);
-  }
+  // constructor(...args) {
+  //   super(...args);
+  //   this.searchLocation = this.searchLocation.bind(this);
+  // }
 
 
   /**
@@ -19,7 +19,7 @@ class __form_work extends Core {
     super.initialize(opt);
     this.declareHandlers();
     this.model.atLeast({
-      type: 'company',
+      type: 'work',
       category: 0
     })
     this._data = {}
@@ -88,43 +88,43 @@ class __form_work extends Core {
   /**
    * 
    */
-  async searchLocation(cmd) {
-    let words = cmd.getValue() || "";
-    let { length } = words.split(/[ ,]+/)
-    let api = {
-      service: "perdrix.search_location",
-      words,
-    };
-    let itemsOpt = {
-      kind: 'location_item',
-      service: 'select-address'
-    }
+  // async searchLocation(cmd) {
+  //   let words = cmd.getValue() || "";
+  //   let { length } = words.split(/[ ,]+/)
+  //   let api = {
+  //     service: "perdrix.search_location",
+  //     words,
+  //   };
+  //   let itemsOpt = {
+  //     kind: 'location_item',
+  //     service: 'select-address'
+  //   }
 
-    return new Promise(async (will, wont) => {
-      if (length <= 2) return will(null);
-      this.feedList(api, itemsOpt, (list) => {
-        list.model.unset(_a.itemsOpt)
-        list.feed(placeholder(this));
-      })
-    })
-  }
+  //   return new Promise(async (will, wont) => {
+  //     if (length <= 2) return will(null);
+  //     this.feedList(api, itemsOpt, (list) => {
+  //       list.model.unset(_a.itemsOpt)
+  //       list.feed(placeholder(this));
+  //     })
+  //   })
+  // }
 
 
   /**
     * 
     */
-  throtle(cmd) {
-    return new Promise((will, wont) => {
-      if (!cmd || !cmd.getValue) return;
-      if (this._timer[cmd.cid]) {
-        clearTimeout(this._timer[cmd.cid])
-      }
-      this._timer[cmd.cid] = setTimeout(async () => {
-        await will(cmd);
-        this._timer[cmd.cid] = null;
-      }, 1000)
-    })
-  }
+  // throtle(cmd) {
+  //   return new Promise((will, wont) => {
+  //     if (!cmd || !cmd.getValue) return;
+  //     if (this._timer[cmd.cid]) {
+  //       clearTimeout(this._timer[cmd.cid])
+  //     }
+  //     this._timer[cmd.cid] = setTimeout(async () => {
+  //       await will(cmd);
+  //       this._timer[cmd.cid] = null;
+  //     }, 1000)
+  //   })
+  // }
 
   /**
   * 
@@ -142,13 +142,13 @@ class __form_work extends Core {
   /**
    * 
    */
-  async clearList() {
-    let p = await this.ensurePart(_a.list);
-    p.clear();
+  // async clearList() {
+  //   let p = await this.ensurePart(_a.list);
+  //   p.clear();
 
-    p = await this.ensurePart(_a.footer);
-    p.el.dataset.state = 0;
-  }
+  //   p = await this.ensurePart(_a.footer);
+  //   p.el.dataset.state = 0;
+  // }
 
   /**
    * 

@@ -4,13 +4,13 @@
   &__customer-header {
     width: 100%;
     padding: 5px 5px 8px 5px;
-
     .customer-text {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: flex-end;
       align-content: flex-end;
+      white-space: nowrap;
     }
 
     .customer-custname {

@@ -37,11 +37,6 @@ class __form_customer extends Core {
           this.clearList();
         })
         break;
-      case "entries":
-        child.onChildBubble = (o) => {
-          this.debug("AAAA:43", o)
-        }
-        break;
       default:
         super.onPartReady(child, pn);
     }
@@ -50,41 +45,41 @@ class __form_customer extends Core {
   /**
    * 
    */
-  async feedList(api, itemsOpt, onEmpty) {
-    let list = await this.ensurePart(_a.list);
-    if (list.isWaiting()) {
-      if (this._waitTimer) {
-        clearTimeout(this._waitTimer)
-      }
-      this._waitTimer = setTimeout(() => {
-        this.feedList(api, itemsOpt, onEmpty);
-        this._waitTimer = null;
-      }, 2000)
-      return;
-    }
-    list.model.unset(_a.itemsOpt)
-    list.mset({ api, itemsOpt });
-    list.restart();
-    let p = await this.ensurePart(_a.footer);
-    p.el.dataset.state = 1;
+  // async feedList(api, itemsOpt, onEmpty) {
+  //   let list = await this.ensurePart(_a.list);
+  //   if (list.isWaiting()) {
+  //     if (this._waitTimer) {
+  //       clearTimeout(this._waitTimer)
+  //     }
+  //     this._waitTimer = setTimeout(() => {
+  //       this.feedList(api, itemsOpt, onEmpty);
+  //       this._waitTimer = null;
+  //     }, 2000)
+  //     return;
+  //   }
+  //   list.model.unset(_a.itemsOpt)
+  //   list.mset({ api, itemsOpt });
+  //   list.restart();
+  //   let p = await this.ensurePart(_a.footer);
+  //   p.el.dataset.state = 1;
 
-    p = await this.ensurePart("entries-manual");
-    p.clear();
+  //   p = await this.ensurePart("entries-manual");
+  //   p.clear();
 
-    list.once(_e.data, async (data) => {
-      if (_.isEmpty(data)) {
-        return onEmpty(list);
-      }
-    })
-    list.once(_e.eod, async (e) => {
-      if (list.isNaturalyEmpty()) {
-        onEmpty(list);
-      }
-    });
-    list.once(_e.error, async () => {
-      onEmpty(list);
-    });
-  }
+  //   list.once(_e.data, async (data) => {
+  //     if (_.isEmpty(data)) {
+  //       return onEmpty(list);
+  //     }
+  //   })
+  //   list.once(_e.eod, async (e) => {
+  //     if (list.isNaturalyEmpty()) {
+  //       onEmpty(list);
+  //     }
+  //   });
+  //   list.once(_e.error, async () => {
+  //     onEmpty(list);
+  //   });
+  // }
 
   /**
    * 

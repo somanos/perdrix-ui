@@ -1,5 +1,6 @@
 const __window = require('..');
-const { placeholder } = require("./skeleton/widget")
+// const { placeholder } = require("./skeleton/widget")
+const { placeholder } = require("../../widget/skeleton")
 
 class __window_customer extends __window {
 
@@ -15,44 +16,15 @@ class __window_customer extends __window {
    */
   onDomRefresh() {
     super.onDomRefresh();
-    this.debug("AAA:10", this.source.data())
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    let pos = this.$el.position();
-    if (this.anti_overlap(pos)) {
-      this.$el.css(pos)
-    }
   }
 
 
   /**
-   * 
-   */
-  // async feedList(api, itemsOpt, onEmpty) {
-  //   let list = await this.ensurePart(_a.list);
-  //   list.model.unset(_a.itemsOpt)
-  //   list.mset({ api, itemsOpt });
-  //   list.restart();
-
-  //   list.once(_e.data, async (data) => {
-  //     if (_.isEmpty(data)) {
-  //       return onEmpty(list);
-  //     }
-  //   })
-  //   list.once(_e.eod, async (e) => {
-  //     if (list.isNaturalyEmpty()) {
-  //       onEmpty(list);
-  //     }
-  //   });
-  //   list.once(_e.error, async () => {
-  //     onEmpty(list);
-  //   });
-  // }
-
-  /**
-   * 
-   */
+  * 
+  */
   async loadWorkList(cmd) {
     let filters = await this.getSelectedItems("menu-items", _a.status);
     if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
@@ -66,10 +38,47 @@ class __window_customer extends __window {
     }
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this));
+      list.feed(placeholder(this, {
+        labels: ["Aucun travail encours.", "Saisir un devis"],
+        service: "create-quote"
+      }
+      ));
     })
   }
 
+  /**
+  * 
+  */
+  async loadPocList(cmd) {
+    if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
+    let api = {
+      service: "perdrix.poc_list",
+      custId: this.mget('custId'),
+    };
+    let itemsOpt = {
+      kind: 'poc_item',
+    }
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucun contact trouve", "Creer un contact"],
+        service: "add-poc"
+      }));
+    })
+  }
+
+  /**
+    * 
+    */
+  async promptPoc(cmd) {
+    this.loadWidget({
+      kind: 'poc_form',
+      source: this,
+      id: `poc-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "poc-created"
+    })
+  }
 
   /**
    * 
@@ -91,6 +100,12 @@ class __window_customer extends __window {
         break;
       case 'show-works':
         this.loadWorkList(cmd)
+        break;
+      case 'show-pocs':
+        this.loadPocList(cmd)
+        break;
+      case 'add-poc':
+        this.promptPoc(cmd)
         break;
       case 'show-solde':
         break;

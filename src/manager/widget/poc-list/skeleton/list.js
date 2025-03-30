@@ -10,7 +10,7 @@ module.exports = function (ui) {
       role: _a.container,
     },
     itemsOpt: {
-      kind: 'work_item',
+      kind: 'poc_item',
       flow: _a.x,
       service: ui.mget('itemService') || 'open-node',
       role: ui.mget(_a.role) || '',

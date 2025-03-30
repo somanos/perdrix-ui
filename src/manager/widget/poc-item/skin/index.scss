@@ -1,0 +1,71 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+@use "mixins/form" as *;
+
+.poc-item {
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(148, 226, 203, 0.1);
+    }
+
+    box-shadow: drumee.$drumee-shadow-box;
+    padding:5px 15px;
+    margin-bottom:8px;
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+  }
+
+  @include form-footer;
+  @include form-buttons;
+
+  // &__buttons-container {
+  //   height: 36px;
+  //   margin-top: 10px;
+  // }
+
+  &__button-item {
+    // height: 30px;
+    margin: 0 10px;
+    padding: 10px;
+    @include drumee.typo($color: drumee.$ewhite, $size: 12px, $line: 20px);
+  }
+
+  &__content {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+    grid-template-columns: 1fr 1fr 3fr;
+    grid-gap: 0.5rem;
+  }
+
+  &__text {
+    align-content: center;
+    flex-wrap: wrap;
+    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+
+    &.number {
+      margin-left: 10px;
+
+      .inner {
+        border: solid 0.5px lightgray;
+        padding: 1px 10px;
+        border-radius: 3px;
+        @include drumee.typo($color: drumee.$ewhite, $size: 12px, $line: 20px);
+        background-color: drumee.$core-background-blue;
+      }
+    }
+  }
+}

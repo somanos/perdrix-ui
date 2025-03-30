@@ -34,6 +34,7 @@ module.exports = function (ui) {
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
+        state: 0,
       })
     ]
   });
