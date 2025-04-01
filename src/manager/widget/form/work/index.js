@@ -1,14 +1,8 @@
 
-const Core = require('../../../core');
+const Form = require('..');
 require('../skin');
-const { workSite, placeholder } = require("../../skeleton")
 
-class __form_work extends Core {
-
-  // constructor(...args) {
-  //   super(...args);
-  //   this.searchLocation = this.searchLocation.bind(this);
-  // }
+class __form_work extends Form {
 
 
   /**
@@ -47,27 +41,6 @@ class __form_work extends Core {
     }
   }
 
-  /**
-   * 
-   */
-  async loadSitesList(cmd) {
-    let api = {
-      service: "perdrix.site_list",
-      custId: this.mget('custId'),
-    };
-    let itemsOpt = {
-      kind: 'site_item',
-      service: 'set-site'
-    }
-    let p = await this.ensurePart("entries-manual");
-    p.el.dataset.state = 1;
-
-    this.feedList(api, itemsOpt, (list) => {
-      this.debug("AAA:65", api, list)
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this));
-    })
-  }
 
   /**
     * 
@@ -85,109 +58,11 @@ class __form_work extends Core {
     });
   }
 
-  /**
-   * 
-   */
-  // async searchLocation(cmd) {
-  //   let words = cmd.getValue() || "";
-  //   let { length } = words.split(/[ ,]+/)
-  //   let api = {
-  //     service: "perdrix.search_location",
-  //     words,
-  //   };
-  //   let itemsOpt = {
-  //     kind: 'location_item',
-  //     service: 'select-address'
-  //   }
-
-  //   return new Promise(async (will, wont) => {
-  //     if (length <= 2) return will(null);
-  //     this.feedList(api, itemsOpt, (list) => {
-  //       list.model.unset(_a.itemsOpt)
-  //       list.feed(placeholder(this));
-  //     })
-  //   })
-  // }
-
-
-  /**
-    * 
-    */
-  // throtle(cmd) {
-  //   return new Promise((will, wont) => {
-  //     if (!cmd || !cmd.getValue) return;
-  //     if (this._timer[cmd.cid]) {
-  //       clearTimeout(this._timer[cmd.cid])
-  //     }
-  //     this._timer[cmd.cid] = setTimeout(async () => {
-  //       await will(cmd);
-  //       this._timer[cmd.cid] = null;
-  //     }, 1000)
-  //   })
-  // }
-
-  /**
-  * 
-  */
-  selectSite(cmd) {
-    this._locationCompleted = 0;
-    this.ensurePart("site-address").then((p) => {
-      p.feed(workSite(this, cmd))
-    })
-    this.ensurePart("entries-manual").then((p) => {
-      p.clear()
-    })
-  }
-
-  /**
-   * 
-   */
-  // async clearList() {
-  //   let p = await this.ensurePart(_a.list);
-  //   p.clear();
-
-  //   p = await this.ensurePart(_a.footer);
-  //   p.el.dataset.state = 0;
-  // }
-
-  /**
-   * 
-   */
-  async changeDataset(name, attr, val) {
-    let p = await this.ensurePart(name);
-    p.el.dataset[attr] = val;
-  }
-
-  /**
-  * 
-  */
-  async prompLocation(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    p.feed(address(this, {}));
-  }
-
-
-  /**
-  * 
-  */
-  async addressSelected(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    const {
-      street, city, housenumber, postcode, label
-    } = cmd.mget('properties') || {};
-    this._locationCompleted = 1;
-    p.feed(address(this, { street, city, housenumber, postcode }));
-    let addr = await this.ensurePart("address-entry");
-    addr.setValue(label)
-  }
 
   /**
    * 
    */
   onDomRefresh() {
-    this.debug("AAA:205", this)
     this.feed(require('./skeleton')(this));
   }
 

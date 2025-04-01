@@ -1,6 +1,6 @@
 
 const {
-  entry, customerHeader, headerBox, dialogWrapper, actionButtons
+  entry, customerHeader, headerBox, dialogWrapper, actionButtons, radioButtons
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -14,28 +14,42 @@ module.exports = function (ui) {
         className: `${pfx}__entries-container`,
         sys_pn: "entries",
         kids: [
+          radioButtons(ui, {
+            name: "choice",
+            service: "select-site",
+            buttons: [
+              { label: "Meme addresse", state: 1, value: "same-address" },
+              { label: "Choisir un chantier", state: 0, value: "list-sites" },
+              { label: "Ajouter un chantier", state: 0, value: "add-site" },
+            ],
+          }),
           Skeletons.Box.X({
             kids: [entry(ui, {
               placeholder: "Email",
               name: _a.email,
+              sys_pn: _a.email
             })]
           }),
           Skeletons.Box.X({
             kids: [entry(ui, {
               placeholder: "Bureau",
               name: "office",
+              sys_pn: "office",
             }),
             entry(ui, {
               placeholder: "Domicile",
               name: _a.home,
+              sys_pn: _a.home,
             }),
             entry(ui, {
               placeholder: "Portable",
               name: _a.mobile,
+              sys_pn: _a.mobile,
             }),
             entry(ui, {
               placeholder: "Fax",
               name: "fax",
+              sys_pn: "fax",
             }),
             ]
           })

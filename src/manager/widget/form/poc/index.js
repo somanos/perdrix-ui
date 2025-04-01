@@ -1,9 +1,8 @@
 
-const Core = require('../../../core');
-require('../skin');
-const { acknowledge } = require("../../skeleton")
+require('./skin');
+const Form = require('..');
 
-class __form_poc extends Core {
+class __form_poc extends Form {
 
   constructor(...args) {
     super(...args);
@@ -45,32 +44,53 @@ class __form_poc extends Core {
    */
   createPoc() {
     let args = this.getData();
-    let fields = [_a.mobile, 'city', 'postcode']
+    this.debug('AAA:48', args, this)
+    let fields = [_a.email, _a.mobile, 'office', _a.home, 'fax'];
+    let error = 0;
     for (let name of fields) {
-      if (!args[name]) {
-        this.changeDataset(name, _a.error, 1)
-        error = 1;
+      this.debug('AAA:52', name, args[name])
+      if (args[name]) {
+        switch (name) {
+          case _a.email:
+            if (!args[name].isEmail()) {
+              this.changeDataset(name, _a.error, 1)
+              error = 1;
+            } else {
+              this.changeDataset(name, _a.error, 0)
+            }
+            break;
+          case _a.mobile:
+          case _a.home:
+          case 'office':
+          case 'fax':
+            if (!args[name].isPhoneNumber()) {
+              this.changeDataset(name, _a.error, 1)
+              error = 1;
+            } else {
+              this.changeDataset(name, _a.error, 0)
+            }
+            break;
+        }
       } else {
         this.changeDataset(name, _a.error, 0)
       }
     }
     if (error) return;
-    args.category = this.mget(_a.category)
 
     this.debug("AAA:323", args, this);
-    this.postService("perdrix.post_create", { args }).then((data) => {
-      const { custName } = data;
-      this.__content.feed(acknowledge(this, {
-        message: `${custName} a bien ete cree`,
-      }))
-    }).catch((e) => {
-      this.__wrapperDialog.feed(acknowledge(this, {
-        message: LOCALE.ERROR_SERVER,
-        failed: 1,
-        service: 'close-dialog',
-      }))
-      this.debug("AAA:377 FAILED", e)
-    })
+    // this.postService("perdrix.post_create", { args }).then((data) => {
+    //   const { custName } = data;
+    //   this.__content.feed(acknowledge(this, {
+    //     message: `${custName} a bien ete cree`,
+    //   }))
+    // }).catch((e) => {
+    //   this.__wrapperDialog.feed(acknowledge(this, {
+    //     message: LOCALE.ERROR_SERVER,
+    //     failed: 1,
+    //     service: 'close-dialog',
+    //   }))
+    //   this.debug("AAA:377 FAILED", e)
+    // })
   }
 
 
@@ -86,10 +106,25 @@ class __form_poc extends Core {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:212b", service, cmd.mget(_a.name), cmd, this)
+    this.debug("AAA:107", service, cmd.mget(_a.name), cmd, this)
     switch (service) {
       case _a.create:
-        this.createSite(cmd);
+        this.createPoc(cmd);
+        break;
+      case "select-site":
+        let { choice } = cmd.getData();
+        this.debug("AAA:238", choice, service, cmd)
+        switch (choice) {
+          case "same-address":
+            this.selectSite(this)
+            break;
+          case "list-sites":
+            this.loadSitesList(cmd)
+            break;
+          case "add-site":
+            this.promptSite(cmd);
+            break;
+        }
         break;
 
       default:
