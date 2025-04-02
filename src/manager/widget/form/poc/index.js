@@ -1,6 +1,7 @@
 
 require('./skin');
 const Form = require('..');
+const { acknowledge } = require("../../skeleton")
 
 class __form_poc extends Form {
 
@@ -27,29 +28,14 @@ class __form_poc extends Form {
   /**
    * 
    */
-  // onPartReady(child, pn) {
-  //   this.raise();
-  //   switch (pn) {
-  //     case 'entries':
-  //     case _a.lastname:
-  //       child.on(_e.blur, (e) => {
-  //         this.clearList();
-  //       })
-  //       break;
-  //     default:
-  //       super.onPartReady(child, pn);
-  //   }
-  // }
-  /**
-   * 
-   */
   createPoc() {
     let args = this.getData();
     this.debug('AAA:48', args, this)
-    let fields = [_a.email, _a.mobile, 'office', _a.home, 'fax'];
+    let fields = [
+      _a.email, 'office', _a.home, _a.mobile, 'fax', _a.lastname, _a.firstname
+    ];
     let error = 0;
     for (let name of fields) {
-      this.debug('AAA:52', name, args[name])
       if (args[name]) {
         switch (name) {
           case _a.email:
@@ -75,25 +61,45 @@ class __form_poc extends Form {
       } else {
         this.changeDataset(name, _a.error, 0)
       }
+      switch (name) {
+        case _a.lastname:
+          if (!args[name]) {
+            this.changeDataset(name, _a.error, 1)
+            error = 1;
+          } else {
+            this.changeDataset(name, _a.error, 0)
+          }
+          break;
+      }
     }
+    args.siteId = this.mget('siteId');
+    args.siteType = this.mget('siteType');
+    args.custId = this.mget('custId');
+    this.debug("AAA:323", args, this);
     if (error) return;
 
-    this.debug("AAA:323", args, this);
-    // this.postService("perdrix.post_create", { args }).then((data) => {
-    //   const { custName } = data;
-    //   this.__content.feed(acknowledge(this, {
-    //     message: `${custName} a bien ete cree`,
-    //   }))
-    // }).catch((e) => {
-    //   this.__wrapperDialog.feed(acknowledge(this, {
-    //     message: LOCALE.ERROR_SERVER,
-    //     failed: 1,
-    //     service: 'close-dialog',
-    //   }))
-    //   this.debug("AAA:377 FAILED", e)
-    // })
+    this.postService("poc.create", { args }).then((data) => {
+      const { custName } = data;
+      this.__content.feed(acknowledge(this, {
+        message: `${custName} a bien ete cree`,
+      }))
+      this.triggerHandlers({ service: 'poc-created', data })
+    }).catch((e) => {
+      this.__wrapperDialog.feed(acknowledge(this, {
+        message: LOCALE.ERROR_SERVER,
+        failed: 1,
+        service: 'close-dialog',
+      }))
+      this.debug("AAA:377 FAILED", e)
+    })
   }
 
+  /**
+   * 
+   */
+  data() {
+    return this.source.data()
+  }
 
   /**
    * 
@@ -117,6 +123,7 @@ class __form_poc extends Form {
         this.debug("AAA:238", choice, service, cmd)
         switch (choice) {
           case "same-address":
+            this.mset({ siteId: this.mget('custId'), siteType: 'customer' })
             this.selectSite(this)
             break;
           case "list-sites":
@@ -128,9 +135,12 @@ class __form_poc extends Form {
         }
         break;
       case "set-site":
+        this.mset({ siteId: cmd.mget(_a.id), siteType: 'site' })
         this.selectSite(cmd);
         break;
-
+      case 'close-dialog':
+        this.__wrapperDialog.clear();
+        break;
       default:
         super.onUiEvent(cmd, args)
     }

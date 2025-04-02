@@ -1,6 +1,9 @@
 
 const {
-  list, entry, customerHeader, headerBox, dialogWrapper, actionButtons, radioButtons
+  list, entry, person,
+  customerHeader, headerBox,
+  dialogWrapper, actionButtons,
+  radioButtons, menuInput
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -34,12 +37,21 @@ module.exports = function (ui) {
             sys_pn: "site-address",
             state: 0,
           }),
+          person(ui, 'poc'),
           Skeletons.Box.X({
-            kids: [entry(ui, {
-              placeholder: "Email",
-              name: _a.email,
-              sys_pn: _a.email
-            })]
+            kids: [
+              menuInput(ui, {
+                items: Env.get('pocRoles'),
+                name: 'role',
+                placeholder: 'Role',
+                refAttribute: 'role',
+                value: "",
+              }),
+              entry(ui, {
+                placeholder: "Email",
+                name: _a.email,
+                sys_pn: _a.email
+              })]
           }),
           Skeletons.Box.X({
             kids: [entry(ui, {

@@ -1,4 +1,4 @@
-import { entry, menuInput} from "./widgets"
+import { entry, company, person } from "./widgets"
 /**
  * 
  * @param {*} ui 
@@ -11,23 +11,7 @@ function _entries(ui) {
   switch (type) {
     case 'company':
       kids = [
-        Skeletons.Box.G({
-          className: `${pfx}__entries-${type}`,
-          kids: [
-            entry(ui, {
-              placeholder: "Nom de la societe",
-              name: 'companyname',
-              sys_pn: "companyname"
-            }),
-            menuInput(ui, {
-              items: Env.get('companyClass'),
-              name: 'companyclass',
-              placeholder: "Type de societe",
-              refAttribute: 'label',
-              value: "",
-            }),
-          ]
-        }),
+        company(ui),
         entry(ui, {
           placeholder: "Adresse",
           name: _a.location,
@@ -37,24 +21,7 @@ function _entries(ui) {
       break;
     case 'person':
       kids = [
-        Skeletons.Box.G({
-          className: `${pfx}__entries-${type}`,
-          kids: [
-            menuInput(ui, {
-              items: Env.get('genderList'),
-              name: 'gender',
-              placeholder: LOCALE.GENDER,
-              refAttribute: 'longTag',
-              value: "",
-            }),
-            entry(ui, {
-              placeholder: "Nom",
-              name: _a.lastname,
-              sys_pn: _a.lastname,
-            }),
-            entry(ui, { placeholder: "Prenom", name: _a.firstname }),
-          ]
-        }),
+        person(ui),
         entry(ui, {
           placeholder: "Adresse",
           name: _a.location,

@@ -98,7 +98,6 @@ class __window_customer_list extends __window {
         order: "desc"
       }
     }
-    this.debug("AAA:100", this._api)
     return this._api;
   }
   /**

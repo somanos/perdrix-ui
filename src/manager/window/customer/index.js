@@ -52,7 +52,7 @@ class __window_customer extends __window {
   async loadPocList(cmd) {
     if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
-      service: "perdrix.poc_list",
+      service: "poc.list",
       custId: this.mget('custId'),
     };
     let itemsOpt = {
@@ -102,6 +102,7 @@ class __window_customer extends __window {
         this.loadWorkList(cmd)
         break;
       case 'show-pocs':
+      case 'poc-created':
         this.loadPocList(cmd)
         break;
       case 'add-poc':

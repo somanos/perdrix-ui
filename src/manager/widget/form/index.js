@@ -43,7 +43,6 @@ class __form_core extends Core {
           ...cmd.data(),
           kind:'location_view',
         })
-      // p.feed(workSite(this, cmd))
     })
     this.ensurePart("entries-manual").then((p) => {
       p.el.hide()

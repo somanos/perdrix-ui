@@ -4,7 +4,7 @@
  * @param {*} ui 
  * @returns 
  */
-export function list(ui, partName=_a.list) {
+export function list(ui, partName = _a.list) {
   return Skeletons.List.Smart({
     className: `${ui.fig.family}__searchbox`,
     innerClass: "drive-content-scroll",
@@ -223,3 +223,57 @@ export function entryLabel(ui, opt) {
   });
 }
 
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function person(ui, type) {
+  type = type || ui.mget(_a.type);
+  const pfx = ui.fig.family;
+  return Skeletons.Box.G({
+    className: `${pfx}__entries-${type}`,
+    kids: [
+      menuInput(ui, {
+        items: Env.get('genderList'),
+        name: 'gender',
+        placeholder: LOCALE.GENDER,
+        refAttribute: 'longTag',
+        value: "",
+      }),
+      entry(ui, {
+        placeholder: LOCALE.LASTNAME,
+        name: _a.lastname,
+        sys_pn: _a.lastname,
+      }),
+      entry(ui, { placeholder: LOCALE.FIRSTNAME, name: _a.firstname }),
+    ]
+  })
+}
+
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function company(ui) {
+  let type = ui.mget(_a.type);
+  const pfx = ui.fig.family;
+  return Skeletons.Box.G({
+    className: `${pfx}__entries-${type}`,
+    kids: [
+      entry(ui, {
+        placeholder: "Nom de la societe",
+        name: 'companyname',
+        sys_pn: "companyname"
+      }),
+      menuInput(ui, {
+        items: Env.get('companyClass'),
+        name: 'companyclass',
+        placeholder: "Type de societe",
+        refAttribute: 'label',
+        value: "",
+      }),
+    ]
+  })
+}

@@ -151,7 +151,8 @@
       grid-gap: 0.5rem;
     }
 
-    &-person {
+    &-person,
+    &-poc {
       width: 100%;
       height: 45px;
       align-content: center;
@@ -200,7 +201,7 @@
   }
 }
 
-@mixin work-site{
+@mixin work-site {
   &__work-site {
     margin: 0 5px;
     @include drumee.typo($size: 12px, $line: 16px, $weight: 300);

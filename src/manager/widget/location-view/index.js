@@ -58,7 +58,9 @@ class __locaion_view extends LetcBox {
    * Ask backend to update geomery when empty
    */
   checkGeo() {
-    let { location, geometry = {}, postcode, type, siteId } = this.model.toJSON();
+    let {
+      location, geometry = {}, postcode, type, siteId, custId
+    } = this.model.toJSON();
     let { coordinates = [] } = geometry;
     if (!postcode || !location) return;
     let i = 0;
@@ -72,10 +74,20 @@ class __locaion_view extends LetcBox {
       return this.showMap()
     }
     if (!loc.length) return;
-
-    let args = { location: loc, postcode, type, id: siteId }
+    let id;
+    if (type == 'site') {
+      id = siteId;
+    } else if (type == 'customer') {
+      id = custId;
+    }
+    if (!id) {
+      this.warn("Got no site id", { type, siteId, custId })
+    }
+    let args = { location: loc, postcode, type, id }
     this.postService('pdx_utils.get_geoloc', args)
       .then((data) => {
+        this.debug("AAA:89", data)
+        this.mset(data);
         this.showMap()
       })
   }

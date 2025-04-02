@@ -225,7 +225,7 @@ class __window_finder extends __window {
       this.hide();
     }
     this.feed(require("./skeleton")(this));
-    this.fetchService("perdrix.get_env").then((data) => {
+    this.fetchService("pdx_utils.get_env").then((data) => {
       Env.set(data)
     })
   }

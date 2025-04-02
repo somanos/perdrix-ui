@@ -4,6 +4,7 @@
 
 @mixin form-content {
   @include form-entries;
+
   &__category-main {
     width: 100%;
     padding: 0 10px;
@@ -36,8 +37,9 @@
       border: solid 0.5px lightgray;
     }
   }
-  @include entry-label; 
-  @include form-entry; 
+
+  @include entry-label;
+  @include form-entry;
   @include form-body;
   @include form-address;
   @include form-footer;
@@ -52,4 +54,17 @@
       min-height: 100px;
     }
   }
+
+  &__entry {
+    &.email {
+      width: 70%;
+    }
+  }
+
+  &__menu-input {
+    &.email {
+      width: 30%;
+    }
+  }
+
 }

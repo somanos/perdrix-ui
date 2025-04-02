@@ -15,29 +15,33 @@ export class Customer extends LetcBox {
  */
   data() {
     const {
+      category,
+      city,
+      companyclass,
+      ctime,
       custId,
       custName,
-      ctime,
-      category,
-      companyclass,
       gender,
+      geometry,
       location,
+      postcode,
       street,
-      city,
-      postcode
+      type,
     } = this.model.toJSON();
 
     return {
+      category,
+      city,
+      companyclass,
+      ctime,
       custId,
       custName,
-      ctime,
-      category,
-      companyclass,
       gender,
+      geometry,
       location,
+      postcode,
       street,
-      city,
-      postcode
+      type,
     }
   }
 
