@@ -45,18 +45,18 @@ class __form_work extends Form {
   /**
     * 
     */
-  async promptSite(cmd) {
-    this.loadWidget({
-      kind: 'site_form',
-      source: this,
-      id: `site-form-${this.mget('custId')}`,
-      uiHandler: [this],
-      service: "site-created"
-    })
-    this.ensurePart("entries-manual").then((p) => {
-      p.el.dataset.state = 0;
-    });
-  }
+  // async promptSite(cmd) {
+  //   this.loadWidget({
+  //     kind: 'site_form',
+  //     source: this,
+  //     id: `site-form-${this.mget('custId')}`,
+  //     uiHandler: [this],
+  //     service: "site-created"
+  //   })
+  //   this.ensurePart("entries-manual").then((p) => {
+  //     p.el.dataset.state = 0;
+  //   });
+  // }
 
 
   /**

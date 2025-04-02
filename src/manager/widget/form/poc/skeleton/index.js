@@ -1,6 +1,6 @@
 
 const {
-  entry, customerHeader, headerBox, dialogWrapper, actionButtons, radioButtons
+  list, entry, customerHeader, headerBox, dialogWrapper, actionButtons, radioButtons
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -22,6 +22,17 @@ module.exports = function (ui) {
               { label: "Choisir un chantier", state: 0, value: "list-sites" },
               { label: "Ajouter un chantier", state: 0, value: "add-site" },
             ],
+          }),
+          Skeletons.Wrapper.Y({
+            className: `${pfx}__entries-manual`,
+            sys_pn: "entries-manual",
+            kids: [list(ui)],
+            state: 0,
+          }),
+          Skeletons.Wrapper.Y({
+            className: `${pfx}__site-address`,
+            sys_pn: "site-address",
+            state: 0,
           }),
           Skeletons.Box.X({
             kids: [entry(ui, {
@@ -55,11 +66,6 @@ module.exports = function (ui) {
           })
         ]
       }),
-      Skeletons.Wrapper.Y({
-        className: `${pfx}__entries-manual`,
-        sys_pn: "entries-manual",
-        state: 0,
-      }),
     ]
   });
 
@@ -69,7 +75,7 @@ module.exports = function (ui) {
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
       headerBox(ui, { title: "Ajouter contact chantier" }),
-      customerHeader(ui.source),
+      customerHeader(ui),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [

@@ -34,7 +34,7 @@ module.exports = function (ui) {
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      headerBox(ui, { title: "Ajouter chantier" }),
+      headerBox(ui, { title: "Create a construction site" }),
       customerHeader(ui.source),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,

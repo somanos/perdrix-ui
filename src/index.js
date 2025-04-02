@@ -1,4 +1,6 @@
-
+/** 
+ * Use Winwow Manager from Drumee SDK 
+ */
 async function preloadKinds() {
   window.DrumeeWm = await Kind.waitFor('DrumeeWm');
   window.DrumeeInteractWindow = await Kind.waitFor('DrumeeInteractWindow');
@@ -7,25 +9,18 @@ async function preloadKinds() {
 }
 
 /**
- * Load Drumee rendering engine (LETC)
- * Work from electron
+ * Drumee UI Plugin start here
  * @param {*} e 
  */
 async function start(parent) {
-  console.log(`Loading SERP Application`, parent);
-  // let el = document.getElementById("main-loader");
-  // let base = '/-/';
-  // if (el && el.dataset.instance) {
-  //   base = `/-/${el.dataset.instance}/`;
-  // }
+  console.log(`Loading PERDRIX Application`, parent);
   const { endpoint } = bootstrap();
   if (!Visitor.isOnline()) {
     return location.href = `${endpoint}#/welcome`;
   }
 
   await preloadKinds();
-  console.log("AAA:55 PLUGIN STARTED", typeof (uiRouter))
-  // let loader = showLoader();
+  console.log("Loading Plugins Application");
 
   import('./manager/index.js').then(async (m) => {
     let kind = 'perdrix_manager';
@@ -33,7 +28,7 @@ async function start(parent) {
     LOCALE = { ...LOCALE, ...locale };
     Kind.register(kind, m.default);
     Kind.waitFor(kind).then((k) => {
-      console.log("AAA:01 -- LOADING THE MANGER", kind);
+      console.log("Loading Plugin Entry", kind);
       uiRouter.currentModule.feed({ kind })
     })
   })

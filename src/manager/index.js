@@ -1,11 +1,5 @@
 
 require('./skin');
-// const Leaflet = require('leaflet');
-// require('leaflet/dist/leaflet.css');
-
-function px(v){
-  return `${v}px`
-}
 
 class __perdrix_manager extends DrumeeWm {
   constructor(...args) {
@@ -100,104 +94,6 @@ class __perdrix_manager extends DrumeeWm {
     return this._target = t.seek_insertion(m);
   }
 
-  /**
-   * 
-   */
-  // showLocationTooltips(media) {
-  //   let c = this.__movingTooltips;
-  //   this.clearTimer();
-  //   if (this._currentSource) {
-  //     if (this._currentSource.cid !== media.cid) {
-  //       this.closeTooltips();
-  //       this._sameSource = 0;
-  //     } else if (c.el.dataset.state == 1) {
-  //       //this.debug("AAA:150 RETURN");
-  //       this._sameSource = 1;
-  //       return;
-  //     }
-  //   }
-  //   this._currentSource = media;
-
-  //   let loc = media.mget(_a.location);
-  //   if (!loc) return;
-
-  //   for (let k in loc) {
-  //     if (loc[k] == null) {
-  //       loc[k] = '';
-  //     }
-  //   }
-
-  //   let {
-  //     street_type,
-  //     street_name,
-  //     district,
-  //     postal_code,
-  //     lon,
-  //     lat
-  //   } = loc;
-  //   let line1 = `${street_type} ${street_name}`;
-  //   let mode = '';
-  //   if (/^ +$/.test(line1)) {
-  //     mode = 'single-line';
-  //   } else {
-  //     mode = 'double-line';
-  //   }
-  //   if (lon && lat) {
-  //     mode = 'map';
-  //   }
-
-  //   this.ensurePart("moving-tooltips").then((c) => {
-  //     let html = require("./thumbnail/template/location")(loc);
-  //     //this.debug("AAA:147", loc, html, c);
-  //     let { left, top } = media.$el.offset();
-  //     c.el.style.left = px(left);
-  //     if (!lon || !lat) {
-  //       if (mode == 'single-line') {
-  //         c.el.style.top = px(top - 53);
-  //       } else {
-  //         c.el.style.top = px(top - 70);
-  //       }
-  //     } else {
-  //       c.el.style.top = px(top - 214);
-  //     }
-  //     c.el.dataset.state = "1";
-  //     c.el.dataset.mode = mode;
-  //     c.el.innerHTML = html;
-  //     // return;
-  //     if (lon && lat) {
-  //       let center = Leaflet.latLng(lon, lat);
-  //       let id = "map-container";
-  //       let map = Leaflet.map(id, {
-  //         center,
-  //         zoom: 14,
-  //       });
-  //       let el = document.getElementById(id);
-  //       el.onmouseenter = (e) => {
-  //         this.debug("AAA:203");
-  //         if (e.buttons) return;
-  //         this._isOverTips = true;
-  //       };
-  //       el.onmouseleave = (e) => {
-  //         this._isOverTips = false;
-  //       };
-  //       const key = 'e6dFgeNUbz8btxLlm3ng';
-  //       Leaflet.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${key}`, { //style URL
-  //         tileSize: 512,
-  //         zoomOffset: -1,
-  //         minZoom: 1,
-  //         attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-  //         crossOrigin: true
-  //       }).addTo(map);
-  //       let content = `${district} ${postal_code}`;
-  //       if (street_type || street_name) {
-  //         content = `${street_type} ${street_name}<br />${content}`;
-  //       }
-  //       content = content.replace(/ +\<br *\/\>/, '');
-  //       //this.debug("AAA:197", content);
-  //       Leaflet.tooltip(center, { content, permanent: true }).addTo(map);
-  //     }
-  //   })
-  // }
 
   /**
    * 
@@ -229,17 +125,12 @@ class __perdrix_manager extends DrumeeWm {
    * @returns 
    */
   onPartReady(child, pn) {
-    //this.debug("SOOOOOOOOOOOO 55AAAAAAAAAREADY ", pn, this);
-    //const hub_id = this.model.get(_a.hub_id) || this.model.get(_a.holder_id);
     switch (pn) {
       case "browser-wraper":
         return this._content = child;
 
       case _a.list:
         this.iconsList = child;
-        // let {type, version} = license();
-        // child.el.dataset.type = type;
-        // child.el.dataset.version = version;
         break;
 
       case "logo-block":
@@ -265,9 +156,9 @@ class __perdrix_manager extends DrumeeWm {
           child.append({ kind: 'window_finder' });
           this.trigger("content:ready", child);
         });
+
       case "moving-tooltips":
         child.el.onmouseenter = (e) => {
-          this.debug("AAA:306");
           if (e.buttons) return;
           this._isOverTips = true;
         };

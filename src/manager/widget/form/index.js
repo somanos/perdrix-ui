@@ -28,7 +28,6 @@ class __form_core extends Core {
     p.el.dataset.state = 1;
 
     this.feedList(api, itemsOpt, (list) => {
-      this.debug("AAA:65", api, list)
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this));
     })
@@ -40,10 +39,14 @@ class __form_core extends Core {
   selectSite(cmd) {
     this._locationCompleted = 0;
     this.ensurePart("site-address").then((p) => {
-      p.feed(workSite(this, cmd))
+        p.feed({
+          ...cmd.data(),
+          kind:'location_view',
+        })
+      // p.feed(workSite(this, cmd))
     })
     this.ensurePart("entries-manual").then((p) => {
-      p.clear()
+      p.el.hide()
     })
   }
 

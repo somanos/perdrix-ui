@@ -11,6 +11,34 @@ class __site_item extends LetcBox {
   }
 
   /**
+  * 
+  */
+  data() {
+    const {
+      city,
+      citycode,
+      countrycode,
+      custId,
+      geometry,
+      id,
+      location,
+      postcode,
+    } = this.model.toJSON();
+
+    return {
+      city,
+      citycode,
+      countrycode,
+      custId,
+      geometry,
+      location,
+      postcode,
+      siteId:id,
+      type:'site'
+    }
+  }
+
+  /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {

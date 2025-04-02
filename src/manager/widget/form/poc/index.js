@@ -21,6 +21,7 @@ class __form_poc extends Form {
       category: 0
     })
     this.source = opt.source;
+    this.mset(this.source.data());
   }
 
   /**
@@ -125,6 +126,9 @@ class __form_poc extends Form {
             this.promptSite(cmd);
             break;
         }
+        break;
+      case "set-site":
+        this.selectSite(cmd);
         break;
 
       default:

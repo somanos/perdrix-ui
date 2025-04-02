@@ -152,7 +152,6 @@ export async function searchLocation(cmd, wrapper) {
     kind: 'location_item',
     service: 'select-address'
   }
-  this.debug("AAA:126", { words, length }, cmd, this)
 
   return new Promise(async (will, wont) => {
     if (length <= 2 && words.length < 5) return will(null);

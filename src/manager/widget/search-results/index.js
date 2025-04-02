@@ -20,12 +20,6 @@ class __search_result extends LetcBox {
   * 
   */
   data() {
-    // let content;
-    // switch(this.mget(_a.type)){
-    //   case "customer":
-    //     content = this.mget(_a.content)
-    //     break;
-    // }
     let content = this.mget(_a.content)
     const {
       custId,

@@ -73,7 +73,7 @@ class __window_customer extends __window {
   async promptPoc(cmd) {
     this.loadWidget({
       kind: 'poc_form',
-      source: this,
+      source: this.source,
       id: `poc-form-${this.mget('custId')}`,
       uiHandler: [this],
       service: "poc-created"
