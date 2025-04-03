@@ -1,5 +1,5 @@
 const {
-  phoneNumbers, actionButtons, footerWrapper
+  phoneNumbers
 } = require("../../../skeleton")
 
 /**

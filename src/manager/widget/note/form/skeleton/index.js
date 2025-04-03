@@ -1,6 +1,7 @@
 
 const {
-  entry, customerHeader, headerBox, dialogWrapper, footerWrapper
+  list, customerHeader, siteSelector,
+  headerBox, dialogWrapper, entryLabel
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -10,22 +11,26 @@ module.exports = function (ui) {
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
-      Skeletons.Box.Y({
-        className: `${pfx}__entries-container`,
-        sys_pn: "entries",
-        kids: [
-          entry(ui, {
-            placeholder: "Adresse du chantier",
-            name: _a.location,
-            sys_pn: "address-entry"
-          }),
-        ]
+      Skeletons.FileSelector({
+        partHandler: ui,
       }),
+      siteSelector(ui),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
+        kids: [list(ui)],
         state: 0,
       }),
+      Skeletons.Wrapper.Y({
+        className: `${pfx}__site-address`,
+        sys_pn: "site-address",
+        state: 0,
+      }),
+      entryLabel(ui, {
+        label: "Description",
+        ico: "desktop_desksettings",
+        name: "description"
+      })
     ]
   });
 
@@ -34,13 +39,12 @@ module.exports = function (ui) {
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      headerBox(ui, { title: "Creer un chantier" }),
-      customerHeader(ui.source),
+      headerBox(ui, { title: "Creer une note" }),
+      customerHeader(ui),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          footerWrapper(ui),
           dialogWrapper(ui)
         ]
       })

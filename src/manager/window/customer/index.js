@@ -46,6 +46,28 @@ class __window_customer extends __window {
     })
   }
 
+  
+  /**
+  * 
+  */
+  async loadNotesList(cmd) {
+    if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
+    let api = {
+      service: "note.list",
+      custId: this.mget('custId'),
+    };
+    let itemsOpt = {
+      kind: 'note_item',
+    }
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucun contact trouve", "Creer un contact"],
+        service: "add-note"
+      }));
+    })
+  }
+
   /**
   * 
   */
@@ -94,6 +116,7 @@ class __window_customer extends __window {
       case 'show-photos':
         break;
       case 'show-notes':
+        this.loadNotesList(cmd)
         break;
       case 'create-work':
         this.loadWorkForm(cmd)

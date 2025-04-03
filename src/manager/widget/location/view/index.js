@@ -94,7 +94,6 @@ class __locaion_view extends LetcBox {
     this.postService('pdx_utils.get_geoloc', args)
       .then((data) => {
         delete data.type;
-        this.debug("AAA:89", data)
         this.mset(data);
         this.showMap()
       })

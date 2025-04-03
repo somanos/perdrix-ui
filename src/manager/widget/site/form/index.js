@@ -1,5 +1,5 @@
 
-const { workSite, placeholder, acknowledge } = require("../../skeleton")
+const { placeholder, acknowledge } = require("../../skeleton")
 const Form = require('../../form');
 class __form_site extends Form {
 
@@ -22,34 +22,34 @@ class __form_site extends Form {
     this.source = opt.source;
   }
 
-    /**
-  * 
-  */
-    data() {
-      const {
-        city,
-        citycode,
-        countrycode,
-        custId,
-        geometry,
-        id,
-        location,
-        postcode,
-      } = this.model.toJSON();
-  
-      return {
-        city,
-        citycode,
-        countrycode,
-        custId,
-        geometry,
-        location,
-        postcode,
-        siteId:id,
-        type:'site'
-      }
+  /**
+* 
+*/
+  data() {
+    const {
+      city,
+      citycode,
+      countrycode,
+      custId,
+      geometry,
+      id,
+      location,
+      postcode,
+    } = this.model.toJSON();
+
+    return {
+      city,
+      citycode,
+      countrycode,
+      custId,
+      geometry,
+      location,
+      postcode,
+      siteId: id,
+      type: 'site'
     }
-  
+  }
+
   /**
    * 
    */
@@ -88,21 +88,6 @@ class __form_site extends Form {
       list.feed(placeholder(this));
     })
   }
-
-
-
-  /**
-  * 
-  */
-  // selectSite(cmd) {
-  //   this._locationCompleted = 0;
-  //   this.ensurePart("site-address").then((p) => {
-  //     p.feed(workSite(this, cmd))
-  //   })
-  //   this.ensurePart("entries-manual").then((p) => {
-  //     p.clear()
-  //   })
-  // }
 
   /**
   * 

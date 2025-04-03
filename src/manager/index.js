@@ -37,6 +37,14 @@ class __perdrix_manager extends DrumeeWm {
     this.offsetHeight = 230;
     this.isApplication = true;
     this._launchOptions = { explicit: 1, singleton: 1 };
+    this.contextmenuItems = [
+      _a.newFolder,
+      _a.paste,
+      _a.upload,
+      _a.fullscreen,
+      _a.separator,
+      _a.preferences,
+    ];
   }
 
 

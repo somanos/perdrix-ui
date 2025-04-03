@@ -39,26 +39,21 @@
 
   &__text {
     border: none;
-    @include drumee.typo($color: #787B7F, $size: 14px, $line: 24px);
-    &.searchbox{
-      @include drumee.typo($color: #787B7F, $size: 12px, $line: 14px);
-    }
+    @include drumee.typo($color: drumee.$egrey-89, $size: 14px, $line: 24px);
 
     &.type {
-      @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
-      &.searchbox{
-        @include drumee.typo($color: #787B7F, $size: 12px, $line: 14px);
-      }
+      @include drumee.typo($color: drumee.$egrey-b7, $size: 16px, $line: 24px);
       display: flex;
-      width: 100%;
       flex-wrap: wrap;
       align-content: center;
+      margin-right: 10px;
+    }
 
-      .inner {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
+    &.id {
+      @include drumee.typo($color: drumee.$eviolet, $size: 15px, $line: 24px);
+      display: flex;
+      flex-wrap: wrap;
+      align-content: center;
     }
 
     &.see-details {
@@ -68,7 +63,7 @@
 
   &__label {
     border: none;
-    @include drumee.typo($color: #687B7F, $size: 14px, $line: 24px);
+    @include drumee.typo($color: drumee.$egrey-b7, $size: 14px, $line: 24px);
   }
 
   &__cartridge {
@@ -83,10 +78,10 @@
 
   &__icon-header {
     width: 30px;
-    height: 100%;
+    height: 30px;
     padding: 0;
     margin-right: 8px;
-    color: rgb(8, 216, 70);
+    color: drumee.$eviolet;
     padding: 5px;
   }
 }

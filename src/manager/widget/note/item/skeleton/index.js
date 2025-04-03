@@ -3,49 +3,54 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { fromUnixtime } = require("../../../../utils")
+const {
+  placeView
+} = require("../../../skeleton")
+
 /**
  * 
  * @param {*} ui 
  * @returns 
  */
 
-const STATUS = [
-  '🔧', '🔨', '🪒', '🔒', '🧰'
-]
-function work_item(ui) {
-  let { type, ctime, description, status, site } = ui.model.toJSON()
-  let { city, location } = site;
+function note_item(ui) {
+  let { workType, ctime, description, workId, folderId, site } = ui.model.toJSON()
   let pfx = ui.fig.family;
+  let desc = [
+    Skeletons.Note({
+      className: `${pfx}__text`,
+      content: description
+    }),
+  ]
+  if (folderId) {
+    desc.push(Skeletons.Note({
+      className: `${pfx}__text`,
+      content: `Photo ${folderId}`
+    }))
+  }
+  console.log("AAA:39", site)
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
-      kids: [
+      kids:  [
         Skeletons.Note({
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
         Skeletons.Note({
           className: `${pfx}__text type`,
-          content: type
+          content: workType
         }),
         Skeletons.Note({
-          className: `${pfx}__text status`,
-          content: STATUS[status]
-        })
+          className: `${pfx}__text`,
+          content: `Numero de travail ${workId}`
+        }),
       ]
     }),
-    Skeletons.Box.Y({
-      className: `${pfx}__details`,
-      kids: [
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: description
-        }),
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: location.join(' ') + ' ' + city
-        })
-      ]
+    placeView(ui, site),
+    Skeletons.Box.G({
+      className: `${pfx}__description`,
+      kids: desc
     })
   ]
 
@@ -58,12 +63,12 @@ function work_item(ui) {
         className: `${pfx}__summary`,
         kids: overview,
       }),
-      Skeletons.Box.Y({
-        className: `${pfx}__quote`,
-        kids: require("./quote")(ui),
-      }),
+      // Skeletons.Box.Y({
+      //   className: `${pfx}__quote`,
+      //   kids: require("./media")(ui),
+      // }),
     ]
   })
 
 }
-module.exports = work_item;
+module.exports = note_item;

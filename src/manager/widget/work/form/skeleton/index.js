@@ -1,6 +1,6 @@
 
 const {
-  radioButtons, list, customerHeader, actionButtons, 
+  siteSelector, list, customerHeader, actionButtons, 
   headerBox, dialogWrapper, entryLabel
 } = require("../../../skeleton")
 
@@ -11,15 +11,16 @@ module.exports = function (ui) {
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
-      radioButtons(ui, {
-        name: "choice",
-        service: "select-site",
-        buttons: [
-          { label: "Meme addresse", state: 1, value: "same-address" },
-          { label: "Choisir un chantier", state: 0, value: "list-sites" },
-          { label: "Ajouter un chantier", state: 0, value: "add-site" },
-        ],
-      }),
+      siteSelector(ui),
+      // radioButtons(ui, {
+      //   name: "choice",
+      //   service: "select-site",
+      //   buttons: [
+      //     { label: "Meme addresse", state: 1, value: "same-address" },
+      //     { label: "Choisir un chantier", state: 0, value: "list-sites" },
+      //     { label: "Ajouter un chantier", state: 0, value: "add-site" },
+      //   ],
+      // }),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",

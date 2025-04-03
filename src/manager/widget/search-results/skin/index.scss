@@ -40,12 +40,19 @@
 
   &__text {
     border: none;
-    @include drumee.typo($color: #787B7F, $size: 14px, $line: 24px);
+    @include drumee.typo($color: drumee.$egrey-89, $size: 14px, $line: 24px);
 
     &.type {
-      @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
+      @include drumee.typo($color: drumee.$egrey-b7, $size: 16px, $line: 24px);
       display: flex;
-      width: 100%;
+      flex-wrap: wrap;
+      align-content: center;
+      margin-right: 10px;
+    }
+
+    &.id {
+      @include drumee.typo($color: drumee.$eviolet, $size: 14px, $line: 24px);
+      display: flex;
       flex-wrap: wrap;
       align-content: center;
     }
@@ -57,7 +64,7 @@
 
   &__label {
     border: none;
-    @include drumee.typo($color: #687B7F, $size: 14px, $line: 24px);
+    @include drumee.typo($color: drumee.$egrey-b7, $size: 14px, $line: 24px);
   }
 
   &__cartridge {
@@ -89,6 +96,7 @@
     &.poc {
       color: rgb(112, 135, 238);
     }
+
     &.work {
       color: rgba(218, 155, 40, 0.932);
       padding: 5px;

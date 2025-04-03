@@ -5,6 +5,8 @@ module.exports = {
 	'location_view': import('./manager/widget/location/view'),
 	'menu_input': import('./manager/widget/menu-input'),
 	'perdrix_dock': import('./manager/dock'),
+	'note_item': import('./manager/widget/note/item'),
+	'note_form': import('./manager/widget/note/form'),
 	'poc_item': import('./manager/widget/poc/item'),
 	'poc_form': import('./manager/widget/poc/form'),
 	'radio_buttons': import('./manager/widget/radio-buttons'),

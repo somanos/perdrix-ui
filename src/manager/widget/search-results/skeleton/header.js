@@ -23,6 +23,10 @@ function header(ui, ico, content) {
         className: `${ui.fig.family}__text type`,
         content
       }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__text id`,
+        content: ui.mget('itemId')
+      }),
     ]
   })
 
