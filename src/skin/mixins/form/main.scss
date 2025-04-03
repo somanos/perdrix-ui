@@ -218,4 +218,16 @@
       }
     }
   }
+
+  &__site-address {
+    align-self: flex-start;
+    height: auto;
+    max-height: 300px;
+    width: 100%;
+    justify-content: center;
+
+    &[data-state="0"] {
+      display: none;
+    }
+  }
 }

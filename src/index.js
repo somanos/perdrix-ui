@@ -13,10 +13,23 @@ async function preloadKinds() {
  * @param {*} e 
  */
 async function start(parent) {
-  console.log(`Loading PERDRIX Application`, parent);
+  console.log(`Loading PERDRIX Application`, uiRouter, parent);
   const { endpoint } = bootstrap();
   if (!Visitor.isOnline()) {
     return location.href = `${endpoint}#/welcome`;
+  }
+
+  let data = await uiRouter.fetchService("pdx_utils.get_env");
+  if (!data || !data.app_home) {
+    console.error("Could not get application env", data);
+    Drumee.failover({ status: 403 })
+    return
+  }
+  Env.set(data)
+
+  if (location.host != data.app_home) {
+    location.host = data.app_home;
+    return;
   }
 
   await preloadKinds();
