@@ -24,7 +24,7 @@ function dockLaunchers(_ui_, ismobile) {
         className: `${button_class} company launcher-icon`,
         innerClass: 'company',
         sys_pn: 'new-customer-launcher',
-        respawn: 'customer_form',
+        respawn: 'form_customer',
         service: _e.launch,
         helperName: 'company'
       }, "Ajouter un client"),

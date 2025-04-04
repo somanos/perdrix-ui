@@ -2,7 +2,10 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime, devise, vat } =  require("../../../../utils")
+const { devise, vat } = require("../../../../utils")
+const {
+  actionButtons
+} = require("../../../skeleton")
 
 /**
  * 
@@ -48,8 +51,8 @@ function qote(ui) {
   });
 
   let quote;
-  if(chrono){
-    quote= [
+  if (chrono) {
+    quote = [
       Skeletons.Box.X({
         className: `${pfx}-header`,
         kids: Skeletons.Note({
@@ -58,17 +61,16 @@ function qote(ui) {
         })
       }),
       body,
-    ]  
-  }else{
-    quote= [
+    ]
+  } else {
+    quote = [
       Skeletons.Box.X({
         className: `${pfx}-header`,
-        kids: Skeletons.Note({
-          className: `label`,
-          content: `Pas de devis`
-        })
+        kids: actionButtons(ui, [
+          { content: "Creer un devis", service: "reserve-quote" }
+        ])
       }),
-    ]  
+    ]
   }
   return quote;
 }

@@ -12,31 +12,6 @@ const { placeView } = require("../../../skeleton")
 
 function locaion_view(ui) {
   let body = [
-    // Skeletons.Box.G({
-    //   className: `${ui.fig.family}__address`,
-    //   debug: __filename,
-    //   service: _a.toggle,
-    //   state: 0,
-    //   kids: [
-    //     Skeletons.Button.Svg({
-    //       className: `icon`,
-    //       ico: "geolocation"
-    //     }),
-    //     Skeletons.Note({
-    //       className: `text`,
-    //       content: location.join(' '),
-    //     }),
-    //     Skeletons.Note({
-    //       className: `text`,
-    //       content: city,
-    //     }),
-    //     Skeletons.Note({
-    //       className: `text`,
-    //       content: postcode
-    //     }),
-    //   ]
-    // }), 
-
     placeView(ui, ui.model.toJSON()),
     Skeletons.Box.Y({
       className: `${ui.fig.family}__photo`,

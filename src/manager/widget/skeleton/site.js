@@ -5,7 +5,6 @@ const { radioButtons } = require(".")
  * @param {*} ui 
  * @returns 
  */
-
 export function placeView(ui, site) {
   let {
     location,
@@ -13,11 +12,14 @@ export function placeView(ui, site) {
     city,
   } = site;
 
-  Skeletons.Box.G({
+  return Skeletons.Box.G({
     className: `${ui.fig.family}__address`,
     debug: __filename,
     service: _a.toggle,
-    state: 0,
+    state: 1,
+    kidsOpt: {
+      active: 0
+    },
     kids: [
       Skeletons.Button.Svg({
         className: `icon`,

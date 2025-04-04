@@ -54,6 +54,15 @@
     justify-content: start;
     padding: 0 15px;
     top: 0px;
+
+    &[data-state="0"] {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+
+  &__message {
+    @include drumee.typo($size: 14px, $line: 30px, $weight: 400, $color: drumee.$core-default-text-color);
   }
 }
 

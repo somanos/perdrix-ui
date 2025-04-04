@@ -4,7 +4,7 @@
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
 
-.from-note {
+.form-note {
   &__ui {
     background-color: drumee.$core-default-background;
     border-radius: drumee.$default-border-radius;
@@ -63,8 +63,18 @@
     padding: 20px 9px 0px 10px;
   }
 
-  &__entry-label__main {
-    padding: 0 5px;
+  &__entry-label {
+    &__main {
+      padding: 0 5px;
+    }
+
+    &__textarea {
+      &[data-error="1"] {
+        textarea {
+          border: solid 1px red;
+        }
+      }
+    }
   }
 
   &__container {

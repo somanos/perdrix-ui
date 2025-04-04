@@ -1,5 +1,6 @@
 
 const Form = require('../../form');
+const { acknowledge } = require("../../skeleton")
 
 class __form_work extends Form {
 
@@ -63,11 +64,39 @@ class __form_work extends Form {
       geometry,
       location,
       postcode,
-      siteId:id,
-      type:'work'
+      siteId: id,
+      type: 'work'
     }
   }
 
+  /**
+   * 
+   */
+  createWork() {
+    let args = this.getData();
+    let error = 0;
+    if (!args.description) {
+      error = 1
+    }
+    this.changeDataset('description', _a.error, error)
+    args.custId = this.mget('custId');
+
+    if (error) return;
+
+    this.postService("work.create", { args }).then((data) => {
+      let { id } = data;
+      this.message(`Le travail a bien ete cree sous le numero ${id}`)
+      this.ensurePart("button-work").then((p) => {
+        p.setState(0)
+        this.raise();
+      })
+      if (id) this.mset({ siteId: id })
+      this.triggerHandlers({ service: 'work-created', data });
+    }).catch((e) => {
+      this.message(LOCALE.ERROR_SERVER);
+      this.debug("AAA:377 FAILED", e)
+    })
+  }
 
   /**
    * 
@@ -109,6 +138,9 @@ class __form_work extends Form {
         break;
       case "set-site":
         this.selectSite(cmd);
+        break;
+      case "create-work":
+        this.createWork(cmd);
         break;
       default:
         super.onUiEvent(cmd, args)

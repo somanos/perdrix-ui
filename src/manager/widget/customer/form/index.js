@@ -49,7 +49,7 @@ class __form_customer extends Form {
     if (this._locationCompleted) return;
     let words = cmd.getValue();
     let api = {
-      service: "perdrix.customer_search",
+      service: "customer.search",
       words,
       type: this.mget(_a.type)
     };
@@ -113,7 +113,7 @@ class __form_customer extends Form {
     if (error) return;
     args.category = this.mget(_a.category)
 
-    this.postService("perdrix.customer_create", { args }).then((data) => {
+    this.postService("customer.create", { args }).then((data) => {
       const { custName } = data;
       this.__content.feed(acknowledge(this, {
         message: `${custName} a bien ete cree`,

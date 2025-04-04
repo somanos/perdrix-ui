@@ -1,5 +1,5 @@
 
-const { Customer } = require("../../customer");
+const { Customer } = require("..");
 class __customer_item extends Customer {
 
   /**

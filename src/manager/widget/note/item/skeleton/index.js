@@ -28,7 +28,6 @@ function note_item(ui) {
       content: `Photo ${folderId}`
     }))
   }
-  console.log("AAA:39", site)
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,

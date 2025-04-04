@@ -73,7 +73,7 @@ class __form_site extends Form {
    */
   async loadSitesList(cmd) {
     let api = {
-      service: "perdrix.site_list",
+      service: "site.list",
       custId: this.mget('custId'),
     };
     let itemsOpt = {
@@ -110,12 +110,13 @@ class __form_site extends Form {
       }
     }
     if (error) return;
-    this.postService("perdrix.site_create", { args }).then((data) => {
+    this.postService("site.create", { args }).then((data) => {
       this.__content.feed(acknowledge(this, {
         message: `Le chantier a bien ete cree`,
         service: "site-created"
       }));
-      this.mset(data)
+      this.mset(data);
+      this.raise();
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
         message: LOCALE.ERROR_SERVER,

@@ -97,7 +97,7 @@ class __window_finder extends __window {
 
   getCurrentApi() {
     return {
-      service: 'perdrix.search',
+      service: 'pdx_utils.search',
       words: this.getValue()
     }
   }
@@ -186,7 +186,7 @@ class __window_finder extends __window {
     if (list.isWaiting()) return;
 
     let api = {
-      service: "perdrix.search",
+      service: "pdx_utils.search",
       words
     }
     if (!api.words) return;

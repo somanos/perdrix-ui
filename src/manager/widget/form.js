@@ -17,7 +17,7 @@ class __form_core extends Core {
  */
   async loadSitesList(cmd) {
     let api = {
-      service: "perdrix.site_list",
+      service: "site.list",
       custId: this.mget('custId'),
     };
     let itemsOpt = {
@@ -36,13 +36,20 @@ class __form_core extends Core {
   /**
   * 
   */
-  selectSite(cmd) {
+  async selectSite(cmd) {
     this._locationCompleted = 0;
+    if (!cmd.mget('siteId')) {
+      let { siteId } = await this.postService("site.create", cmd.data())
+      cmd.mset({ siteId })
+      this.debug("AAA:44", siteId, cmd, cmd.mget('siteId'))
+    }
+    this.debug("AAA:46", cmd, cmd.mget('siteId'))
     this.ensurePart("site-address").then((p) => {
-        p.feed({
-          ...cmd.data(),
-          kind:'location_view',
-        })
+      p.feed({
+        ...cmd.data(),
+        kind: 'location_view',
+        state: 1
+      })
     })
     this.ensurePart("entries-manual").then((p) => {
       p.el.hide()
@@ -54,7 +61,7 @@ class __form_core extends Core {
      */
   async promptSite(cmd) {
     this.loadWidget({
-      kind: 'site_form',
+      kind: 'form_site',
       source: this,
       id: `site-form-${this.mget('custId')}`,
       uiHandler: [this],
@@ -80,7 +87,17 @@ class __form_core extends Core {
     addr.setValue(label)
   }
 
+  /**
+   * 
+   */
+  message(m, timeout = 3000) {
+    this.ensurePart("message").then((p) => {
+      p.feed(Skeletons.Note(m))
+      setTimeout(() => {
+        p.clear()
+      }, timeout)
+    })
 
-
+  }
 }
 module.exports = __form_core

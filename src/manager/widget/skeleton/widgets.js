@@ -190,7 +190,7 @@ export function dialogWrapper(ui, opt) {
  * @param {*} opt 
  * @returns 
  */
-export function entryLabel(ui, opt) {
+export function descriptionEntry(ui, opt, extra) {
 
   let { value, name, placeholder, sys_pn, ico, label } = opt;
   placeholder = placeholder || label;
@@ -209,15 +209,21 @@ export function entryLabel(ui, opt) {
     args.sys_pn = sys_pn;
     args.partHandler = [ui];
   }
-
-  return Skeletons.Box.Y({
-    className: `${pfx}__main ${name}`,
-    kids: [
+  let head = Skeletons.Box.G({
+    className: `${pfx}__description-head ${name}`,
+    kids:[
       Skeletons.Button.Label({
         ico,
         label,
         className: `${pfx}__title ${name}`
-      }),
+      }),  
+    ]
+  });
+  if(extra) head.kids.push(extra);
+  return Skeletons.Box.Y({
+    className: `${pfx}__main ${name}`,
+    kids: [
+      head,
       Skeletons.Entry(args)
     ]
   });
@@ -275,5 +281,13 @@ export function company(ui) {
         value: "",
       }),
     ]
+  })
+}
+
+export function messageBock(ui){
+  return Skeletons.Wrapper.Y({
+    className: `${ ui.fig.family}__message`,
+    sys_pn: "message",
+    state: 0,
   })
 }

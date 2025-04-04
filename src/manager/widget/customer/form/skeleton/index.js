@@ -1,6 +1,6 @@
 
 const {
-  customerBox, radioButtons, headerBox, dialogWrapper, footerWrapper
+  customerBox, radioButtons, headerBox, messageBock, footerWrapper
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -31,6 +31,7 @@ module.exports = function (ui) {
           customerBox(ui),
         ]
       }),
+      messageBock(ui),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
@@ -51,7 +52,6 @@ module.exports = function (ui) {
         kids: [
           body, 
           footerWrapper(ui), 
-          dialogWrapper(ui)
         ]
       })
     ]

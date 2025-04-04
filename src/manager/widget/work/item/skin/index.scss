@@ -4,6 +4,7 @@
 * ==================================================================== */
 @use 'mixins/drumee';
 @use 'quote' as *;
+@use "mixins/form" as *;
 
 .work-item {
   &__ui {
@@ -74,6 +75,16 @@
 
   &__cartridge {
     width: 100%;
+  }
+
+  @include form-buttons;
+
+  &__buttons-container {
+    height: 64px;
+  }
+
+  &__button-item {
+    min-width: 180px;
   }
 
   @include quote;

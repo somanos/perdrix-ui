@@ -2,7 +2,7 @@
 const {
   list, entry, person,
   customerHeader, headerBox,
-  dialogWrapper, actionButtons,
+  messageBock, actionButtons,
   siteSelector, menuInput
 } = require("../../../skeleton")
 
@@ -18,15 +18,6 @@ module.exports = function (ui) {
         sys_pn: "entries",
         kids: [
           siteSelector(ui),
-          // radioButtons(ui, {
-          //   name: "choice",
-          //   service: "select-site",
-          //   buttons: [
-          //     { label: "Meme addresse", state: 1, value: "same-address" },
-          //     { label: "Choisir un chantier", state: 0, value: "list-sites" },
-          //     { label: "Ajouter un chantier", state: 0, value: "add-site" },
-          //   ],
-          // }),
           Skeletons.Wrapper.Y({
             className: `${pfx}__entries-manual`,
             sys_pn: "entries-manual",
@@ -79,6 +70,7 @@ module.exports = function (ui) {
           })
         ]
       }),
+      messageBock(ui),
     ]
   });
 
@@ -94,7 +86,6 @@ module.exports = function (ui) {
         kids: [
           body,
           actionButtons(ui, [{ service: _a.create, content: LOCALE.CREATE }]),
-          dialogWrapper(ui)
         ]
       })
     ]

@@ -1,7 +1,7 @@
 
 const {
-  siteSelector, list, customerHeader, actionButtons, 
-  headerBox, dialogWrapper, entryLabel
+  siteSelector, list, customerHeader, actionButtons,
+  headerBox, messageBock, descriptionEntry, menuInput
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -12,15 +12,6 @@ module.exports = function (ui) {
     sys_pn: _a.content,
     kids: [
       siteSelector(ui),
-      // radioButtons(ui, {
-      //   name: "choice",
-      //   service: "select-site",
-      //   buttons: [
-      //     { label: "Meme addresse", state: 1, value: "same-address" },
-      //     { label: "Choisir un chantier", state: 0, value: "list-sites" },
-      //     { label: "Ajouter un chantier", state: 0, value: "add-site" },
-      //   ],
-      // }),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
@@ -32,15 +23,22 @@ module.exports = function (ui) {
         sys_pn: "site-address",
         state: 0,
       }),
-      entryLabel(ui, {
-        label: "Description du travail",
-        ico: "desktop_desksettings",
-        name: "description"
-      }),
-      actionButtons(ui, [
-        { content: "Creer le devis", service: "create-quote" },
-        { content: "Reserver le devis", service: "reserve-quote" },
-      ])
+      descriptionEntry(ui,
+        {
+          label: "Description du travail",
+          ico: "desktop_desksettings",
+          name: "description",
+          sys_pn: "description",
+        },
+        menuInput(ui, {
+          items: Env.get('workType'),
+          name: 'category',
+          placeholder: 'Type de travail',
+          refAttribute: 'label',
+          value: "",
+        })
+      ),
+      messageBock(ui),
     ]
   });
 
@@ -55,7 +53,11 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          dialogWrapper(ui)
+          actionButtons(ui, [
+            { content: "Creer le travail", service: "create-work", sys_pn: "button-work" },
+            { content: "Creer le devis", service: "create-quote" },
+            { content: "Reserver le devis", service: "reserve-quote" },
+          ])
         ]
       })
     ]

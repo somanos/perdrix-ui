@@ -46,7 +46,7 @@ class __locaion_view extends LetcBox {
       tileSize: 512,
       zoomOffset: -1,
       minZoom: 1,
-      attribution,
+      attribution: "",
       crossOrigin: true
     }).addTo(map);
     let content = '';
@@ -115,7 +115,13 @@ class __locaion_view extends LetcBox {
    */
   onUiEvent(cmd, args = {}) {
     const service = cmd.mget(_a.service) || "open-viewer";
-    this.debug("AAA:119", service, cmd.mget(_a.state))
+    this.debug("AAA:119", service, cmd.mget(_a.state), this.mget(_a.state))
+    if (!cmd.mget(_a.state)) {
+
+    }
+    this.ensurePart("map-container").then((p) => {
+      p.el.dataset.state = cmd.mget(_a.state);
+    })
   }
 
 

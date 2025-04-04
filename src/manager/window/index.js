@@ -27,26 +27,6 @@ class __window_perdrix extends Utils {
     return this._api
   }
 
-
-  // /**
-  //  * 
-  //  */
-  // async onDomRefresh() {
-  //   this.feed(require('./skeleton/loading')(this));
-  // }
-
-  // /**
-  //   * 
-  //   */
-  // loadCustomer(cmd, hide = 0) {
-  //   const { custId } = cmd.mget('custId')
-  //   this.loadWidget({
-  //     kind: 'window_customer',
-  //     id: `customer-${custId}`,
-  //     source: cmd
-  //   })
-  // }
-
   /**
    * 
    */
@@ -57,9 +37,9 @@ class __window_perdrix extends Utils {
       id: `customer-${custId}`,
       source: cmd
     });
-    setTimeout(()=>{
+    setTimeout(() => {
       let w = Wm.windowsLayer.children.last();
-      if(w && w.raise) w.raise()
+      if (w && w.raise) w.raise()
     }, 1000)
   }
 
@@ -70,8 +50,9 @@ class __window_perdrix extends Utils {
     const { custId } = this.mget('custId');
     this.loadWidget({
       ...this.source.data(),
-      kind: 'work_form',
+      kind: 'form_work',
       id: `work-form-${custId}`,
+      uiHandler: [this]
     })
   }
 

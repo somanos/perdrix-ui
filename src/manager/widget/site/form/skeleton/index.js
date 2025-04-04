@@ -1,6 +1,6 @@
 
 const {
-  entry, customerHeader, headerBox, dialogWrapper, footerWrapper
+  entry, customerHeader, headerBox, messageBock, footerWrapper
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -26,6 +26,7 @@ module.exports = function (ui) {
         sys_pn: "entries-manual",
         state: 0,
       }),
+      messageBock(ui),
     ]
   });
 
@@ -41,7 +42,6 @@ module.exports = function (ui) {
         kids: [
           body,
           footerWrapper(ui),
-          dialogWrapper(ui)
         ]
       })
     ]

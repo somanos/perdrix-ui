@@ -93,7 +93,7 @@ class __window_customer_list extends __window {
   getCurrentApi() {
     if (!this._api) {
       this._api = {
-        service: 'perdrix.customer_list',
+        service: 'customer.list',
         sort_by: _a.ctime,
         order: "desc"
       }

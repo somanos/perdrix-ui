@@ -12,11 +12,12 @@
     }
 
     &__title {
-      height: 25px;
-      width: 100%;
+      height: 35px;
       display: flex;
       flex-direction: row;
       @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
+      justify-content: flex-start;
+      width: 100%;
 
       .note-content {
         display: flex;
@@ -48,9 +49,16 @@
       width: 100%;
       margin-top: 10px;
 
+      &[data-error="1"] {
+        textarea {
+          border: solid 1px red;
+        }
+      }
+
       textarea {
         height: 100%;
         width: 100%;
+        min-width: 100%;
       }
     }
 

@@ -39,7 +39,7 @@ function work_item(ui) {
       kids: [
         Skeletons.Note({
           className: `${pfx}__text`,
-          content: description
+          content: description.replace(/\n/g, '<br>')
         }),
         Skeletons.Note({
           className: `${pfx}__text`,

@@ -145,7 +145,7 @@ export async function searchLocation(cmd, wrapper) {
   let words = cmd.getValue() || "";
   let { length } = words.split(/[ ,]+/)
   let api = {
-    service: "perdrix.search_location",
+    service: "pdx_utils.search_location",
     words,
   };
   let itemsOpt = {

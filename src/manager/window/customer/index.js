@@ -29,7 +29,7 @@ class __window_customer extends __window {
     let filters = await this.getSelectedItems("menu-items", _a.status);
     if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
-      service: "perdrix.work_list",
+      service: "work.list",
       custId: this.mget('custId'),
       status: filters
     };
@@ -39,14 +39,14 @@ class __window_customer extends __window {
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucun travail encours.", "Saisir un devis"],
-        service: "create-quote"
+        labels: ["Aucun travail en cours.", "Creer un travail"],
+        service: 'create-work',
       }
       ));
     })
   }
 
-  
+
   /**
   * 
   */
@@ -62,7 +62,7 @@ class __window_customer extends __window {
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucun contact trouve", "Creer un contact"],
+        labels: ["Aucune note trouve", "Creer une note"],
         service: "add-note"
       }));
     })
@@ -94,13 +94,40 @@ class __window_customer extends __window {
     */
   async promptPoc(cmd) {
     this.loadWidget({
-      kind: 'poc_form',
+      kind: 'form_poc',
       source: this.source,
       id: `poc-form-${this.mget('custId')}`,
       uiHandler: [this],
       service: "poc-created"
     })
   }
+
+  /**
+    * 
+    */
+  async promptNote(cmd) {
+    this.loadWidget({
+      kind: 'form_note',
+      source: this.source,
+      id: `note-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "note-created"
+    })
+  }
+
+  /**
+    * 
+    */
+  async promptWork(cmd) {
+    this.loadWidget({
+      kind: 'form_site',
+      source: this.source,
+      id: `site-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "site-created"
+    })
+  }
+
 
   /**
    * 
@@ -122,6 +149,7 @@ class __window_customer extends __window {
         this.loadWorkForm(cmd)
         break;
       case 'show-works':
+      case 'work-created':
         this.loadWorkList(cmd)
         break;
       case 'show-pocs':
@@ -130,6 +158,12 @@ class __window_customer extends __window {
         break;
       case 'add-poc':
         this.promptPoc(cmd)
+        break;
+      case 'add-note':
+        this.promptNote(cmd)
+        break;
+      case 'note-created':
+        this.loadNotesList(cmd)
         break;
       case 'show-solde':
         break;

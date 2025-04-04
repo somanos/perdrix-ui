@@ -84,6 +84,15 @@
       margin-right: 5px;
       padding: 3px;
     }
+  }
 
+  &__menu-input {
+    height: 35px;
+    align-content: center;
+    flex-wrap: wrap;
+    display: flex;
+    max-width: 235px;
+    white-space: nowrap;
+    margin-left: 11px;
   }
 }

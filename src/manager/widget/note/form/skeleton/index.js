@@ -1,7 +1,7 @@
 
 const {
-  list, customerHeader, siteSelector,
-  headerBox, dialogWrapper, entryLabel
+  list, customerHeader, siteSelector, actionButtons,
+  headerBox, messageBock, descriptionEntry
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -26,11 +26,13 @@ module.exports = function (ui) {
         sys_pn: "site-address",
         state: 0,
       }),
-      entryLabel(ui, {
+      descriptionEntry(ui, {
         label: "Description",
         ico: "desktop_desksettings",
-        name: "description"
-      })
+        name: "description",
+        sys_pn: "description",
+      }),
+      messageBock(ui)
     ]
   });
 
@@ -45,7 +47,7 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          dialogWrapper(ui)
+          actionButtons(ui, [{ service: _a.create, content: LOCALE.CREATE }]),
         ]
       })
     ]

@@ -7,6 +7,7 @@
 @mixin quote {
 
   &__quote {
+    height: 100%;
 
     &-main {
       width: 100%;
@@ -14,6 +15,10 @@
 
     &-header {
       width: 100%;
+      height: 100%;
+      align-content: center;
+      flex-wrap: wrap;
+      justify-content: center;
 
       .label {
         @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);

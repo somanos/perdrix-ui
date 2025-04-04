@@ -30,7 +30,6 @@ class __form_poc extends Form {
    */
   createPoc() {
     let args = this.getData();
-    this.debug('AAA:48', args, this)
     let fields = [
       _a.email, 'office', _a.home, _a.mobile, 'fax', _a.lastname, _a.firstname
     ];
@@ -72,8 +71,8 @@ class __form_poc extends Form {
           break;
       }
     }
-    args.siteId = this.mget('siteId');
-    args.siteType = this.mget('siteType');
+    args.siteId = this.mget('siteId') || this.mget('custId');
+    args.siteType = this.mget('siteType') || 'customer';
     args.custId = this.mget('custId');
     this.debug("AAA:323", args, this);
     if (error) return;

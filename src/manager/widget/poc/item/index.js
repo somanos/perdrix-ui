@@ -24,7 +24,7 @@ class __poc_item extends LetcBox {
   */
   async loadSites(cmd) {
     let api = {
-      service: "perdrix.poc_sites",
+      service: "poc.sites",
       id: this.mget(_a.id),
       custId: this.mget('custId')
     }
@@ -44,9 +44,9 @@ class __poc_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:17", this)
     this.feed(require('./skeleton')(this));
   }
+
   /**
    * 
    * @param {LetcBox}  cmd 
@@ -62,7 +62,7 @@ class __poc_item extends LetcBox {
         break;
       case "add-site":
         this.loadWidget({
-          kind: 'site_form',
+          kind: 'form_site',
           source: this,
           id: `site-form-${this.mget('custId')}`,
           uiHandler: [this],
