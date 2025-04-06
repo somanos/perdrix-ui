@@ -15,6 +15,7 @@ export function tabs(ui) {
     label: 'Travaux',
     ico: 'desktop_desksettings',
     service,
+    state,
     buttons: [
       { label: "Travaux (0)", status: 0, state },
       { label: "Travaux (1)", status: 1, state },
@@ -59,29 +60,6 @@ export function tabs(ui) {
   });
 };
 
-
-/**
- * 
- * @param {*} ui 
- * @returns 
- */
-// export function placeholder(ui) {
-//   return Skeletons.Box.Y({
-//     className: `${ui.fig.family}__placehoder-main`,
-//     kids: [
-//       Skeletons.Note({
-//         className: `${ui.fig.family}__placeholder`,
-//         content: "Aucun travail encours."
-//       }),
-//       Skeletons.Note({
-//         className: `${ui.fig.family}__placeholder button`,
-//         service: "create-quote",
-//         content: "Saisir un devis",
-//         uiHandler: [ui]
-//       }),
-//     ]
-//   })
-// }
 
 
 /**

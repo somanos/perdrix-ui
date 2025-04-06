@@ -82,7 +82,6 @@ class __form_work extends Form {
     args.custId = this.mget('custId');
 
     if (error) return;
-
     this.postService("work.create", { args }).then((data) => {
       let { id } = data;
       this.message(`Le travail a bien ete cree sous le numero ${id}`)

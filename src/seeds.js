@@ -2,6 +2,7 @@ module.exports = {
 	'customer_item': import('./manager/widget/customer/item'),
 	'form_customer': import('./manager/widget/customer/form'),
 	'form_note': import('./manager/widget/note/form'),
+	'form_quote': import('./manager/widget/quote/form'),
 	'form_poc': import('./manager/widget/poc/form'),
 	'form_site': import('./manager/widget/site/form'),
 	'form_work': import('./manager/widget/work/form'),

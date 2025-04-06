@@ -13,6 +13,17 @@ class __form_core extends Core {
   }
 
   /**
+   * 
+   */
+  static initClass() {
+    this.prototype.events = {
+      drop: '_upload',
+      dragenter: 'fileDragEnter',
+      dragover: 'fileDragOver'
+    };
+  }
+
+  /**
  * 
  */
   async loadSitesList(cmd) {
@@ -97,7 +108,8 @@ class __form_core extends Core {
         p.clear()
       }, timeout)
     })
-
   }
 }
+
+__form_core.initClass();
 module.exports = __form_core

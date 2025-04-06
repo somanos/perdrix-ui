@@ -67,7 +67,7 @@ function qote(ui) {
       Skeletons.Box.X({
         className: `${pfx}-header`,
         kids: actionButtons(ui, [
-          { content: "Creer un devis", service: "reserve-quote" }
+          { content: "Creer un devis", service: "create-quote" }
         ])
       }),
     ]

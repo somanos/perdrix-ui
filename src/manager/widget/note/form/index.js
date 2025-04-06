@@ -3,13 +3,6 @@ const Form = require('../../form');
 
 class __form_note extends Form {
 
-  static initClass() {
-    this.prototype.events = {
-      drop: '_upload',
-      dragenter: 'fileDragEnter',
-      dragover: 'fileDragOver'
-    };
-  }
 
   /**
    * 
@@ -177,7 +170,5 @@ class __form_note extends Form {
   }
 
 }
-
-__form_note.initClass();
 
 module.exports = __form_note

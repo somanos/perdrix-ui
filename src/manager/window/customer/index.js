@@ -19,6 +19,9 @@ class __window_customer extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
+    setTimeout(() => {
+      this.loadWorkList()
+    }, 500)
   }
 
 
@@ -27,7 +30,7 @@ class __window_customer extends __window {
   */
   async loadWorkList(cmd) {
     let filters = await this.getSelectedItems("menu-items", _a.status);
-    if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
+    if (cmd && cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
       service: "work.list",
       custId: this.mget('custId'),
@@ -35,6 +38,7 @@ class __window_customer extends __window {
     };
     let itemsOpt = {
       kind: 'work_item',
+      uiHandler: [this]
     }
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
@@ -128,6 +132,21 @@ class __window_customer extends __window {
     })
   }
 
+  /**
+    * 
+    */
+  async promptQuote(cmd) {
+    this.loadWidget({
+      kind: 'form_quote',
+      source:this.source,
+      work: cmd,
+      id: `quote-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "site-created"
+    })
+  }
+
+
 
   /**
    * 
@@ -167,6 +186,10 @@ class __window_customer extends __window {
         break;
       case 'show-solde':
         break;
+      case 'create-quote':
+        this.promptQuote(cmd)
+        break;
+
 
       default:
         super.onUiEvent(cmd, args);

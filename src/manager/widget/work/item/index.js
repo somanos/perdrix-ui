@@ -8,13 +8,36 @@ class __work_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
+    this.mset({ workId: opt.id })
+  }
+
+  /**
+  * 
+  */
+  data() {
+    const {
+      custId,
+      siteId,
+      workId,
+      description,
+      site,
+      status,
+    } = this.model.toJSON();
+
+    return {
+      custId,
+      siteId,
+      workId,
+      description,
+      site,
+      status,
+    }
   }
 
   /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:35", this)
     this.feed(require('./skeleton')(this));
   }
 
@@ -23,13 +46,13 @@ class __work_item extends LetcBox {
    * @param {View} trigger
    * @param {Object} args
    */
-  onUiEvent(trigger, args = {}) {
-    const service = this.mget(_a.service) || "open-viewer";
+  onUiEvent(cmd, args = {}) {
+    const service = args.service || cmd.mget(_a.service);
+    this.debug("AAA:27", service, this, cmd)
     this.triggerHandlers({
       service,
     })
   }
-
 
 }
 
