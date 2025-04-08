@@ -1,7 +1,12 @@
-const { resolve } = require("path");
+const { resolve, join } = require("path");
 const { exec } = require('shelljs');
+const {template} = require('lodash');
 const { readFileSync, writeFileSync } = require('jsonfile');
-
+const {
+  existsSync,
+  writeFileSync: fsWriteFile,
+  readFileSync: fsReadFile
+} = require('fs');
 class DrumeeSyncer {
   constructor(opt) {
     this.options = opt || {};
@@ -15,7 +20,25 @@ class DrumeeSyncer {
       this.target = this.options.target;
       this.bundle_path = this.options.bundle_path;
       let data = this.get_hash(stats);
-      console.log("Building  with HASH=[hash]", data, this.options)
+      const { entry_page, src_path, bundle_base } = this.options;
+      console.log("Building with options:", this.options);
+      if(entry_page){
+        let tpl = join(src_path, entry_page);
+        console.log("Building entry page:", src_path, tpl);
+        if (existsSync(tpl)) {
+          let html = fsReadFile(tpl);
+          html = String(html).trim().toString();
+          let { hash } = stats;
+          let dest = join(bundle_base, entry_page);
+          let data = template(html)({ hash });
+          console.log({dest, })
+          fsWriteFile(dest, data)
+        } else{
+          console.warn(`Could not find entry page ${tpl}`)
+        }
+      }
+      //h()
+      this.get_hash(stats);
     });
   }
 

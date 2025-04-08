@@ -42,14 +42,27 @@ async function start(parent) {
     Kind.register(kind, m.default);
     Kind.waitFor(kind).then((k) => {
       console.log("Loading Plugin Entry", kind);
-      uiRouter.currentModule.feed({ kind })
+      if(location.hash){
+        uiRouter.currentModule.feed({ kind })
+      }else{
+        uiRouter.ensurePart(_a.body).then((p)=>{
+          p.feed({ kind });
+        })
+      }    
     })
   })
 }
 
+// }
+document.addEventListener('drumee:router:ready', start);
+
 if (document.readyState == 'complete') {
   start()
 } else {
-  document.addEventListener('drumee:plugins:ready', start);
+  if(location.hash){
+    document.addEventListener('drumee:plugins:ready', start);
+  }else{
+    document.addEventListener('drumee:router:ready', start);
+  }
 }
 

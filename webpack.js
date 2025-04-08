@@ -6,6 +6,7 @@ const Module = require('./webpack/module');
 const Plugins = require('./webpack/plugins');
 const args = require('./webpack.options.json');
 const { name: appName } = require('./package.json');
+const { existsSync } = require('fs');
 /**
  * 
  * @param {*} entry 
@@ -76,11 +77,17 @@ function makeOptions(entry, opt) {
 function normalize() {
   let {
     bundle_path,
+    bundle_base,
     public_path,
     output_filename,
     mode,
+    entry_page,
+    src_path
   } = args.dev;
 
+  if(!src_path || !existsSync(src_path)){
+    src_path=__dirname
+  }
   output_filename = output_filename || "[name].js";
   mode = mode || 'development';
 
@@ -89,12 +96,15 @@ function normalize() {
   }
 
   public_path = public_path || '/';
-
+  if(!/.+\/$/) public_path=`${public_path}/`
   let opt = {
     bundle_path,
+    bundle_base,
     public_path,
     output_filename,
     mode,
+    entry_page,
+    src_path,
     sync_templates: 1
   };
   if (output_filename == "[name].js") {

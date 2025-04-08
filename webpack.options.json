@@ -1,8 +1,10 @@
 {
   "dev": {
-    "bundle_path": "/home/somanos/build/perdrix/ui/plugins",
-    "public_path": "/-/devel/plugins/",
-    "output_filename":"[name]-[fullhash].js"
-,    "mode": "development"
+    "bundle_path": "/Users/somanos/DrumeeLocal/thidima.org/somanos/erp/plugins/app",
+    "bundle_base": "/Users/somanos/DrumeeLocal/thidima.org/somanos/erp/plugins",
+    "public_path": "/plugins/app/",
+    "output_filename":"[name]-[fullhash].js",
+    "mode": "development",
+    "entry_page":"/index.html"
   }
 }
