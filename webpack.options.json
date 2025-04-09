@@ -1,7 +1,7 @@
 {
   "dev": {
-    "bundle_path": "/Users/somanos/DrumeeLocal/thidima.org/somanos/erp/plugins/app",
-    "bundle_base": "/Users/somanos/DrumeeLocal/thidima.org/somanos/erp/plugins",
+    "bundle_path": "/home/somanos/DrumeeLocal/thidima.org/somanos/erp/plugins/app",
+    "bundle_base": "/home/somanos/DrumeeLocal/thidima.org/somanos/erp/plugins",
     "public_path": "/plugins/app/",
     "output_filename":"[name]-[fullhash].js",
     "mode": "development",

@@ -53,8 +53,6 @@ async function start(parent) {
   })
 }
 
-// }
-document.addEventListener('drumee:router:ready', start);
 
 if (document.readyState == 'complete') {
   start()

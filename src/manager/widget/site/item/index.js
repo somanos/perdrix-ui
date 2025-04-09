@@ -8,6 +8,7 @@ class __site_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
+    this.mset({ siteId: opt.id })
   }
 
   /**
@@ -21,20 +22,22 @@ class __site_item extends LetcBox {
       custId,
       geometry,
       id,
+      siteId,
       location,
       postcode,
     } = this.model.toJSON();
 
     return {
       city,
+      id,
       citycode,
       countrycode,
       custId,
       geometry,
       location,
       postcode,
-      siteId:id,
-      type:'site'
+      siteId,
+      type: 'site'
     }
   }
 
