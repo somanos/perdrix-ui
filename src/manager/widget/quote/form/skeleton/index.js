@@ -1,7 +1,7 @@
 
 const {
   list, customerHeader, siteSelector, actionButtons,
-  headerBox, messageBock, descriptionEntry
+  headerBox, messageBock, descriptionEntry, cartridge
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -26,12 +26,46 @@ module.exports = function (ui) {
         sys_pn: "site-address",
         state: 0,
       }),
-      descriptionEntry(ui, {
-        label: "Description",
-        ico: "desktop_desksettings",
-        name: "description",
-        sys_pn: "description",
-        value:ui.work.mget(_a.description)
+      Skeletons.Box.G({
+        className: `${pfx}__description-container`,
+        kids: [
+          descriptionEntry(ui, {
+            label: "Description",
+            ico: "desktop_desksettings",
+            name: "description",
+            sys_pn: "description",
+            value: ui.work.mget(_a.description)
+          }),
+          Skeletons.Box.Y({
+            className: `${pfx}_quote-container`,
+            kids: [
+              cartridge(ui, {
+                content: "Montant HT",
+              }, {
+                value: 0,
+                name: 'ht',
+              }),
+              cartridge(ui, {
+                content: "Taux TVA",
+              }, {
+                value: 0,
+                name: 'tva',
+              }),
+              cartridge(ui, {
+                content: "Remise",
+              }, {
+                value: 0,
+                name: 'discount',
+              }),
+              cartridge(ui, {
+                content: "Montant TTC",
+              }, {
+                value: 0,
+                name: 'ht',
+              }),
+            ]
+          })
+        ]
       }),
       messageBock(ui)
     ]

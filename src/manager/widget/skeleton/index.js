@@ -9,3 +9,4 @@ export * from './selection-menu';
 export * from './topbar';
 export * from './widgets';
 export * from './site';
+export * from './cartridge';
