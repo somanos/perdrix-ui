@@ -16,6 +16,10 @@ export function tabs(ui) {
     ico: 'desktop_desksettings',
     service,
     state,
+    // dataset:{
+    //   state,
+    //   radio:_a.on
+    // },
     buttons: [
       { label: "Travaux (0)", status: 0, state },
       { label: "Travaux (1)", status: 1, state },

@@ -45,6 +45,7 @@
   @include form-footer;
   @include form-buttons;
   @include form-placeholder;
+  @include entry-cartridge;
 
   &__searchbox {
     height: 100%;

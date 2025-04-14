@@ -33,7 +33,7 @@ function row(ui, label, value) {
 
 function qote(ui) {
   let {
-    chrono, ht, ttc, tva, status, folderId
+    chrono, ht, ttc, tva, filepath
   } = ui.mget('quote') || {};
   let pfx = `${ui.fig.family}__quote`
   let body = Skeletons.Box.Y({
@@ -46,19 +46,25 @@ function qote(ui) {
       row(ui, "Montant HT", devise(ht)),
       row(ui, "TVA", vat(tva)),
       row(ui, "Montant TTC", devise(ttc)),
-      row(ui, "Document", folderId),
+      row(ui, "Document", filepath),
     ]
   });
 
   let quote;
   if (chrono) {
+    let view_quote = Skeletons.Note({
+      className: `label`,
+      content: `Devis n ${chrono}`,
+    });
+    if (filepath) {
+      view_quote.className = `label clickable`;
+      view_quote.service = 'view-quote';
+      view_quote.uiHandler = [ui];
+    }
     quote = [
       Skeletons.Box.X({
         className: `${pfx}-header`,
-        kids: Skeletons.Note({
-          className: `label`,
-          content: `Devis n ${chrono}`
-        })
+        kids: [view_quote]
       }),
       body,
     ]

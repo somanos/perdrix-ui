@@ -80,7 +80,6 @@ class __form_work extends Form {
     }
     this.changeDataset('description', _a.error, error)
     args.custId = this.mget('custId');
-
     if (error) return;
     this.postService("work.create", { args }).then((data) => {
       let { id } = data;

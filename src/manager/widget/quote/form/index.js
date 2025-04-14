@@ -85,6 +85,31 @@ class __form_quote extends Form {
     }
   }
 
+  /**
+   * 
+   */
+  onPartReady(child, pn) {
+    switch (pn) {
+      case "site-address":
+        let work = this.mget('work');
+        let site;
+        if (work) {
+          site = work.mget('site');
+          if (!site) return;
+          this.debug("AAA:72", { work, site })
+          child.feed({
+            ...site,
+            type: 'site',
+            kind: 'location_view',
+            state: 1
+          })
+        }
+        break;
+      default:
+        super.onPartReady(child, pn)
+        break;
+    }
+  }
 
   /**
    * 
@@ -99,7 +124,6 @@ class __form_quote extends Form {
    */
   createQuote() {
     let args = this.getData();
-    let error = 0;
     let fields = [
       'siteId', 'custId', 'workId', _a.description
     ];
@@ -107,15 +131,22 @@ class __form_quote extends Form {
     for (let name of fields) {
       args[name] = args[name] || this.mget(name) || this.work.mget(name);
     }
+
+    if (args.tva) args.tva = args.tva / 100;
+    args.workId = this.work.mget(_a.id);
+    args.siteId = this.work.mget('siteId');
     this.debug("AAA:323", args, this);
+    this.changeDataset("btn-create", _a.state, 0)
     this.postService("quote.create", { args }).then((data) => {
-      this.triggerHandlers({ service: 'quote-created', data })
+      this.triggerHandlers({ data, service: "quote-created" })
+      this.goodbye()
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
         message: LOCALE.ERROR_SERVER,
         failed: 1,
         service: 'close-dialog',
       }))
+      this.changeDataset("btn-create", _a.state, 1)
       this.debug("AAA:377 FAILED", e)
     })
   }
@@ -123,9 +154,25 @@ class __form_quote extends Form {
   /**
    * 
    */
+  updateAmount() {
+    let data = this.getData()
+    let ht = parseFloat(data.ht) || 0;
+    let tva = parseFloat(data.tva) || 0;
+    let discount = parseFloat(data.discount) || 0;
+    let ttc = (ht + ht / 100 * tva - discount).toFixed(2);
+    if (ttc != null) {
+      this.ensurePart('ttc').then((p) => {
+        p.setValue(ttc.toString())
+      })
+    }
+  }
+
+  /**
+   * 
+   */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:213", service, cmd, this)
+    this.debug("AAA:135", service, cmd, this)
     switch (service) {
       case _a.create:
         this.createQuote(cmd);
@@ -147,6 +194,11 @@ class __form_quote extends Form {
             this.promptSite(cmd);
             break;
         }
+        break;
+      case _a.input:
+        let { name } = cmd.getData();
+        this.debug("AAA:238", name, service, cmd)
+        this.updateAmount();
         break;
       case "site-created":
         this.loadSitesList(cmd);

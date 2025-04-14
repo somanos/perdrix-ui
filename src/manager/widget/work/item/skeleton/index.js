@@ -13,7 +13,7 @@ const STATUS = [
   '🔧', '🔨', '🪒', '🔒', '🧰'
 ]
 function work_item(ui) {
-  let { type, ctime, description, status, site } = ui.model.toJSON()
+  let { type, ctime, description, status, site, id } = ui.model.toJSON()
   let { city, location } = site;
   let pfx = ui.fig.family;
   let overview = [
@@ -23,6 +23,10 @@ function work_item(ui) {
         Skeletons.Note({
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
+        }),
+        Skeletons.Note({
+          className: `${pfx}__text`,
+          content: id.toString()
         }),
         Skeletons.Note({
           className: `${pfx}__text type`,

@@ -11,7 +11,7 @@ function menuItems(ui, opt) {
 
 export function selectionMenu(ui, opt) {
   let pfx = ui.fig.family;
-  let { buttons, ico, label, service } = opt;
+  let { buttons, ico, label, service, state } = opt;
   const name = "menu";
   const trigger = Skeletons.Button.Label({
     className: `${pfx}__${name}-trigger`,
@@ -20,6 +20,7 @@ export function selectionMenu(ui, opt) {
     isTrigger: true,
     uiHandler: ui,
     label,
+    state
   })
   let content = []
   for (let b of buttons) {
@@ -47,6 +48,7 @@ export function selectionMenu(ui, opt) {
   return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__${name}-container`,
+    state,
     kids
   });
 

@@ -37,31 +37,36 @@ module.exports = function (ui) {
             value: ui.work.mget(_a.description)
           }),
           Skeletons.Box.Y({
-            className: `${pfx}_quote-container`,
+            className: `${pfx}__cartridge-container`,
             kids: [
               cartridge(ui, {
                 content: "Montant HT",
               }, {
-                value: 0,
                 name: 'ht',
+                currency: "€",
+                placeholder: 0
               }),
               cartridge(ui, {
                 content: "Taux TVA",
               }, {
-                value: 0,
+                placeholder: 0,
+                value: 20,
+                currency: "%",
                 name: 'tva',
               }),
               cartridge(ui, {
                 content: "Remise",
               }, {
-                value: 0,
                 name: 'discount',
+                placeholder: 0,
+                currency: "€"
               }),
               cartridge(ui, {
                 content: "Montant TTC",
               }, {
-                value: 0,
-                name: 'ht',
+                placeholder: 0,
+                name: 'ttc',
+                currency: "€",
               }),
             ]
           })
@@ -82,7 +87,9 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          actionButtons(ui, [{ service: _a.create, content: LOCALE.CREATE }]),
+          actionButtons(ui, [
+            { sys_pn:"btn-create", service: _a.create, content: LOCALE.CREATE }
+          ]),
         ]
       })
     ]

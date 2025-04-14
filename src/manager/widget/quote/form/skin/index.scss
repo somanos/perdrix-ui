@@ -111,6 +111,14 @@
     padding: 20px 0px;
   }
 
+  &__button-item {
+    &[data-state="0"] {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+  }
+
   @include dialog-acknowledge;
   @include dialog-overlay;
 }

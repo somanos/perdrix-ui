@@ -29,7 +29,7 @@ export function list(ui, partName = _a.list) {
  * @returns 
  */
 export function entry(ui, opt) {
-  let { value, name, placeholder, sys_pn } = opt;
+  let { value, name, placeholder, sys_pn, currency = "" } = opt;
   const pfx = `${ui.fig.family}__entry ${name}`;
   let args = {
     className: `${pfx} entry`,
@@ -41,6 +41,7 @@ export function entry(ui, opt) {
     service: _a.input,
     placeholder,
     uiHandler: [ui],
+    dataset: { currency },
   }
   if (sys_pn) {
     args.sys_pn = sys_pn;
@@ -211,15 +212,15 @@ export function descriptionEntry(ui, opt, extra) {
   }
   let head = Skeletons.Box.G({
     className: `${pfx}__description-head ${name}`,
-    kids:[
+    kids: [
       Skeletons.Button.Label({
         ico,
         label,
         className: `${pfx}__title ${name}`
-      }),  
+      }),
     ]
   });
-  if(extra) head.kids.push(extra);
+  if (extra) head.kids.push(extra);
   return Skeletons.Box.Y({
     className: `${pfx}__main ${name}`,
     kids: [
@@ -284,9 +285,9 @@ export function company(ui) {
   })
 }
 
-export function messageBock(ui){
+export function messageBock(ui) {
   return Skeletons.Wrapper.Y({
-    className: `${ ui.fig.family}__message`,
+    className: `${ui.fig.family}__message`,
     sys_pn: "message",
     state: 0,
   })

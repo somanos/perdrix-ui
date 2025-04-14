@@ -138,11 +138,25 @@ class __window_customer extends __window {
   async promptQuote(cmd) {
     this.loadWidget({
       kind: 'form_quote',
-      source:this.source,
+      source: this.source,
       work: cmd,
       id: `quote-form-${this.mget('custId')}`,
       uiHandler: [this],
-      service: "site-created"
+    })
+  }
+
+  /**
+    * 
+    */
+  async updateWorkItem(cmd, args) {
+    this.debug("AAA:153:", cmd, args)
+    this.ensurePart(_a.list).then((p) => {
+      let { data } = args;
+      let c = p.getItemsByAttr(_a.id, data.id)[0];
+      this.debug("AAA:155:", c, args)
+      if (c) {
+        c.restart(args.data);
+      }
     })
   }
 
@@ -154,8 +168,8 @@ class __window_customer extends __window {
    * @param {object}  args 
    */
   onUiEvent(cmd, args = {}) {
-    const service = args.service || cmd.service || cmd.model.get(_a.service);
-    this.debug(`AAA:86 onUiEvent=${service}`, cmd, args, this);
+    const service = args.service || cmd.model.get(_a.service);
+    this.debug(`AAA:170 onUiEvent=${service}`, cmd, args, this);
     switch (service) {
       case "show-contacts":
         break;
@@ -166,6 +180,9 @@ class __window_customer extends __window {
         break;
       case 'create-work':
         this.loadWorkForm(cmd)
+        break;
+      case 'quote-created':
+        this.updateWorkItem(cmd, args);
         break;
       case 'show-works':
       case 'work-created':

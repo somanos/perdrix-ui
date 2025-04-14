@@ -1,5 +1,12 @@
+const {
+  loadWidget
+} = require("../../../utils")
 
 class __work_item extends LetcBox {
+  constructor(...args) {
+    super(...args);
+    this.loadWidget = loadWidget.bind(this);
+  }
 
   /**
    * 
@@ -35,10 +42,32 @@ class __work_item extends LetcBox {
   }
 
   /**
+   * 
+   */
+  restart(data) {
+    if (data) {
+      this.mset(data);
+    }
+    this.feed(require('./skeleton')(this));
+  }
+
+  /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.feed(require('./skeleton')(this));
+    this.restart()
+  }
+
+  /**
+   * 
+   */
+  async viewQuote() {
+    let quote = this.mget('quote');
+    let Media = await Kind.waitFor('media_pseudo');
+    let media = new Media(quote);
+    let args = { kind: "document_reader", media }
+    this.debug("AAA:69", args)
+    this.loadWidget(args)
   }
 
   /**
@@ -49,9 +78,16 @@ class __work_item extends LetcBox {
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
     this.debug("AAA:27", service, this, cmd)
-    this.triggerHandlers({
-      service,
-    })
+    switch (service) {
+      case 'view-quote':
+        this.viewQuote()
+        //this.promptSite(cmd);
+        break;
+      default:
+        this.triggerHandlers({
+          service,
+        })
+    }
   }
 
 }
