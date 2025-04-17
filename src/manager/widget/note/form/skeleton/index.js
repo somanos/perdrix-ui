@@ -14,7 +14,13 @@ module.exports = function (ui) {
       Skeletons.FileSelector({
         partHandler: ui,
       }),
-      siteSelector(ui),
+      //siteSelector(ui),
+      // Skeletons.Note({
+      //   className: `${pfx}__select-work`,
+      //   content: "Associer a un travail",
+      //   uiHandler: [ui],
+      //   service: 'select-work',
+      // }),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
@@ -47,7 +53,10 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          actionButtons(ui, [{ service: _a.create, content: LOCALE.CREATE }]),
+          actionButtons(ui, [
+            { service: _a.create, content: "Creer la note", state: 0, sys_pn:"go-btn" },
+            { service: 'list-works', content: "Selectionner le travail" }
+          ]),
         ]
       })
     ]

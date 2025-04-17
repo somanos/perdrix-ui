@@ -135,7 +135,6 @@ class __form_quote extends Form {
     if (args.tva) args.tva = args.tva / 100;
     args.workId = this.work.mget(_a.id);
     args.siteId = this.work.mget('siteId');
-    this.debug("AAA:323", args, this);
     this.changeDataset("btn-create", _a.state, 0)
     this.postService("quote.create", { args }).then((data) => {
       this.triggerHandlers({ data, service: "quote-created" })
@@ -180,21 +179,21 @@ class __form_quote extends Form {
       case "prompt-location":
         this.promptSite(cmd);
         break;
-      case "select-site":
-        let { choice } = cmd.getData();
-        this.debug("AAA:238", choice, service, cmd)
-        switch (choice) {
-          case "same-address":
-            this.selectSite(this)
-            break;
-          case "list-sites":
-            this.loadSitesList(cmd)
-            break;
-          case "add-site":
-            this.promptSite(cmd);
-            break;
-        }
-        break;
+      // case "select-site":
+      //   let { choice } = cmd.getData();
+      //   this.debug("AAA:238", choice, service, cmd)
+      //   switch (choice) {
+      //     case "same-address":
+      //       this.selectSite(this)
+      //       break;
+      //     case "list-sites":
+      //       this.loadSitesList(cmd)
+      //       break;
+      //     case "add-site":
+      //       this.promptSite(cmd);
+      //       break;
+      //   }
+      //   break;
       case _a.input:
         let { name } = cmd.getData();
         this.debug("AAA:238", name, service, cmd)

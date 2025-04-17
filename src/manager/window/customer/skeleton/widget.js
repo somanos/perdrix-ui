@@ -8,26 +8,6 @@ const { customerHeader, selectionMenu } = require("../../../widget/skeleton")
 export function tabs(ui) {
   let pfx = ui.fig.family;
   let item = ui.fig.name;
-  // let service = "show-works";
-  // let state = 1;
-  // let status = null;
-  // let works = selectionMenu(ui, {
-  //   label: 'Travaux',
-  //   ico: 'desktop_desksettings',
-  //   service,
-  //   state,
-  //   buttons: [
-  //     { label: "Travaux (0)", status: 0, state },
-  //     { label: "Travaux (1)", status: 1, state },
-  //     { label: "Travaux (2)", status: 2, state },
-  //     { label: "Travaux (3)", status: 3, state },
-  //     { label: "Travaux (4)", status: 4, state },
-  //     {
-  //       label: "Creer", ico: "editbox_list-plus",
-  //       icons: null, service: "create-work"
-  //     },
-  //   ]
-  // })
 
   let main = Skeletons.Box.X({
     className: `${pfx}__tabs main`,

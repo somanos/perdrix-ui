@@ -9,11 +9,10 @@
   &__ui {
     background-color: inherit;
     width: 100%;
-    cursor: pointer;
     min-height: 110px;
 
     &:hover {
-      background-color: rgba(148, 226, 203, 0.1);
+      background-color: drumee.$perdrix-hover;
     }
 
     box-shadow: drumee.$drumee-shadow-box;

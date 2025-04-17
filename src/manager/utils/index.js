@@ -77,13 +77,13 @@ export async function feedList(api, itemsOpt, onEmpty) {
   let list = await this.ensurePart(_a.list);
   list.model.unset(_a.itemsOpt)
   list.mset({ api, itemsOpt });
+  list.trigger(_e.eod); //** Flush old listeningxs */
   list.restart();
   list.once(_e.data, async (data) => {
     if (_.isEmpty(data)) {
       return onEmpty(list);
     }
   })
-  this.debug("AAA:86", list)
   list.once(_e.eod, async (e) => {
     if (list.isNaturalyEmpty()) {
       onEmpty(list);

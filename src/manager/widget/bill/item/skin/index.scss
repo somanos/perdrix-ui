@@ -1,0 +1,91 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+@use 'bill' as *;
+@use "mixins/form" as *;
+
+.bill-item {
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    min-height: 110px;
+    margin-bottom: 1px;
+
+    &:hover {
+      background-color: drumee.$perdrix-hover;
+    }
+
+    padding:5px 15px;
+    margin-bottom:8px;
+    border:.5px solid drumee.$core-default-separator;
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.5rem;
+  }
+
+  &__summary,
+  &__bill {
+    width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  &__summary.header {
+    grid-template-columns: 70px 70px 1fr 24px;
+  }
+
+  &__details {
+    justify-content: center;
+  }
+
+  &__text {
+    align-content: flex-end;
+    flex-wrap: wrap;
+    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+
+    &.type {
+      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
+
+      .inner {
+        border: solid 0.5px lightgray;
+        padding: 1px 10px;
+        border-radius: 3px;
+        background-color: drumee.$core-background-blue;
+      }
+    }
+
+    &.status {
+      border: solid 0.5px drumee.$core-background-blue;
+      border-radius: 50%;
+    }
+  }
+
+  &__cartridge {
+    width: 100%;
+  }
+
+  @include form-buttons;
+
+  &__buttons-container {
+    height: 64px;
+  }
+
+  &__button-item {
+    min-width: 180px;
+  }
+
+  @include bill;
+}

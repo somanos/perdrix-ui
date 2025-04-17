@@ -96,6 +96,13 @@
     }
   }
 
+  // &__work-details {
+  //   width: 100%;
+
+  //   .form-note__buttons-container {
+  //     width: 100px;
+  //   }
+  // }
 
   @include work-site;
   @include customer-header;
@@ -109,6 +116,12 @@
     justify-content: center;
     width: 100%;
     padding: 20px 0px;
+  }
+
+  &__select-work {
+    align-items: center;
+    height: 40px;
+    justify-content: center;
   }
 
   @include dialog-acknowledge;

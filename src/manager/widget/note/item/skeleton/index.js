@@ -14,7 +14,7 @@ const {
  */
 
 function note_item(ui) {
-  let { workType, ctime, description, workId, folderId, site } = ui.model.toJSON()
+  let { siteId, workType, ctime, description, workId, docId, site } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let desc = [
     Skeletons.Note({
@@ -22,16 +22,16 @@ function note_item(ui) {
       content: description
     }),
   ]
-  if (folderId) {
+  if (docId) {
     desc.push(Skeletons.Note({
       className: `${pfx}__text`,
-      content: `Photo ${folderId}`
+      content: `Photo ${docId}`
     }))
   }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
-      kids:  [
+      kids: [
         Skeletons.Note({
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
@@ -46,7 +46,8 @@ function note_item(ui) {
         }),
       ]
     }),
-    placeView(ui, site),
+    //placeView(ui, site),
+    { ...site, state:0, siteId, type:'site', showMap:0, kind: 'location_view' },
     Skeletons.Box.G({
       className: `${pfx}__description`,
       kids: desc

@@ -141,19 +141,19 @@ class __form_site extends Form {
     let service = args.service || cmd.mget(_a.service);
     this.debug("AAA:212b", service, cmd.mget(_a.name), cmd, this)
     switch (service) {
-      case "select-site":
-        let { choice } = cmd.getData();
-        switch (choice) {
-          case "same-address":
-            this.selectSite(this)
-            break;
-          case "list-sites":
-            this.loadSitesList(cmd)
-            break;
-          case "add-site":
-            break;
-        }
-        break;
+      // case "select-site":
+      //   let { choice } = cmd.getData();
+      //   switch (choice) {
+      //     case "same-address":
+      //       this.selectSite(this)
+      //       break;
+      //     case "list-sites":
+      //       this.loadSitesList(cmd)
+      //       break;
+      //     case "add-site":
+      //       break;
+      //   }
+      //   break;
       case "set-site":
         this.selectSite(cmd);
         break;

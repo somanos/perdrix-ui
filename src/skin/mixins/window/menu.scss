@@ -75,7 +75,7 @@
     @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 16px, $size: 14px);
 
     &:hover {
-      background-color: rgba(148, 226, 203, 0.1);
+      background-color: drumee.$perdrix-hover;
     }
 
     svg {

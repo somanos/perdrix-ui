@@ -12,7 +12,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: rgba(148, 226, 203, 0.1);
+      background-color: drumee.$perdrix-hover;
     }
 
     box-shadow: drumee.$drumee-shadow-box;
@@ -61,5 +61,9 @@
         @include drumee.typo($color: drumee.$ewhite, $size: 12px, $line: 20px);
       }
     }
+  }
+  &__phones-main {
+    grid-template-columns: 90px 1fr;
+    grid-gap: 0.5rem;
   }
 }

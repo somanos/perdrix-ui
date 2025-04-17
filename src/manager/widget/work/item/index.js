@@ -48,7 +48,12 @@ class __work_item extends LetcBox {
     if (data) {
       this.mset(data);
     }
-    this.feed(require('./skeleton')(this));
+    if(this.mget(_a.format) == _a.small){
+      this.feed(require('./skeleton/small')(this));
+      this.$el.addClass(_a.small)
+    }else{
+      this.feed(require('./skeleton')(this));
+    }
   }
 
   /**
@@ -66,7 +71,6 @@ class __work_item extends LetcBox {
     let Media = await Kind.waitFor('media_pseudo');
     let media = new Media(quote);
     let args = { kind: "document_reader", media }
-    this.debug("AAA:69", args)
     this.loadWidget(args)
   }
 

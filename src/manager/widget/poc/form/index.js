@@ -119,19 +119,12 @@ class __form_poc extends Form {
         break;
       case "select-site":
         let { choice } = cmd.getData();
-        this.debug("AAA:238", choice, service, cmd)
         switch (choice) {
           case "same-address":
             this.mset({ siteId: this.mget('custId'), siteType: 'customer' })
-            this.selectSite(this)
-            break;
-          case "list-sites":
-            this.loadSitesList(cmd)
-            break;
-          case "add-site":
-            this.promptSite(cmd);
             break;
         }
+        super.onUiEvent(cmd, args)
         break;
       case "set-site":
         this.mset({ siteId: cmd.mget(_a.id), siteType: 'site' })

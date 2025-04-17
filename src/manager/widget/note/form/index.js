@@ -1,5 +1,6 @@
 
 const Form = require('../../form');
+const { placeholder } = require("../../skeleton")
 
 class __form_note extends Form {
 
@@ -99,32 +100,56 @@ class __form_note extends Form {
   createNote() {
     let args = this.getData();
     let error = 0;
-    args.siteId = this.mget('siteId') || this.mget('custId');
-    args.siteType = this.mget('siteType') || 'customer';
+    args.workId = this.mget('workId');
+    args.siteId = this.mget('siteId');
+    args.category = this.mget('category');
     args.custId = this.mget('custId');
     this.debug("AAA:323", args, this);
-    if(!args.description){
+    if (!args.description) {
       this.changeDataset('description', _a.error, 1)
-    }else{
+    } else {
       this.changeDataset('description', _a.error, 0)
     }
     if (error) return;
 
-    // this.postService("note.create", { args }).then((data) => {
-    //   const { custName } = data;
-    //   this.__content.feed(acknowledge(this, {
-    //     message: `${custName} a bien ete cree`,
-    //   }))
-    //   this.triggerHandlers({ service: 'poc-created', data })
-    // }).catch((e) => {
-    //   this.__wrapperDialog.feed(acknowledge(this, {
-    //     message: LOCALE.ERROR_SERVER,
-    //     failed: 1,
-    //     service: 'close-dialog',
-    //   }))
-    //   this.debug("AAA:377 FAILED", e)
-    // })
+    this.postService("note.create", { args }).then((data) => {
+      this.triggerHandlers({ service: 'note-created', data })
+      this.goodbye()
+    }).catch((e) => {
+      this.__wrapperDialog.feed(acknowledge(this, {
+        message: LOCALE.ERROR_SERVER,
+        failed: 1,
+        service: 'close-dialog',
+      }))
+      this.debug("AAA:377 FAILED", e)
+    })
   }
+
+  /**
+  * 
+  */
+  async loadWorkList(cmd) {
+    let api = {
+      service: "work.list",
+      custId: this.mget('custId'),
+    };
+    let itemsOpt = {
+      kind: 'work_item',
+      uiHandler: [this],
+      format: _a.small,
+      service: "select-work"
+    }
+    this.changeDataset("entries-manual", _a.state, 1)
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucun travail en cours.", "Creer un travail"],
+        service: 'create-work',
+      }
+      ));
+    })
+  }
+
 
   /**
    * 
@@ -139,26 +164,41 @@ class __form_note extends Form {
       case "prompt-location":
         this.promptSite(cmd);
         break;
-      case "select-site":
-        let { choice } = cmd.getData();
-        this.debug("AAA:238", choice, service, cmd)
-        switch (choice) {
-          case "same-address":
-            this.selectSite(this)
-            break;
-          case "list-sites":
-            this.loadSitesList(cmd)
-            break;
-          case "add-site":
-            this.promptSite(cmd);
-            break;
-        }
-        break;
+      // case "select-site":
+      //   let { choice } = cmd.getData();
+      //   this.debug("AAA:238", choice, service, cmd)
+      //   switch (choice) {
+      //     case "same-address":
+      //       this.selectSite(this)
+      //       break;
+      //     case "list-sites":
+      //       this.loadSitesList(cmd)
+      //       break;
+      //     case "add-site":
+      //       this.promptSite(cmd);
+      //       break;
+      //   }
+      //   break;
       case "site-created":
         this.loadSitesList(cmd);
         setTimeout(() => {
           this.raise();
         }, 1000)
+        break;
+      case "list-works":
+        this.loadWorkList(cmd);
+        setTimeout(() => {
+          this.raise();
+        }, 1000)
+        break;
+      case "select-work":
+        this.mset({
+          siteId: cmd.mget('siteId'),
+          category: cmd.mget(_a.type),
+          workId: cmd.mget(_a.id),
+        })
+        this.changeDataset("entries-manual", _a.state, 0)
+        this.changeDataset("go-btn", _a.state, 1)
         break;
       case "set-site":
         this.mset({ siteId: cmd.mget(_a.id), siteType: 'site' })

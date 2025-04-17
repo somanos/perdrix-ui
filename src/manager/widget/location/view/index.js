@@ -11,6 +11,7 @@ class __locaion_view extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
+    this.model.atLeast({ showMap: 1 })
   }
 
   /**
@@ -67,7 +68,7 @@ class __locaion_view extends LetcBox {
    */
   checkGeo() {
     let {
-      location, postcode, type, siteId, custId
+      location, postcode, type, siteId, custId, id
     } = this.model.toJSON();
     if (!postcode || !location) return;
     let i = 0;
@@ -81,14 +82,13 @@ class __locaion_view extends LetcBox {
       return this.showMap()
     }
     if (!loc.length) return;
-    let id;
     if (type == 'site') {
       id = siteId;
     } else if (type == 'customer') {
       id = custId;
     }
     if (!id) {
-      this.warn("Got no site id", { type, siteId, custId })
+      this.warn("Got no site id", { id, type, siteId, custId })
     }
     let args = { location: loc, postcode, type, id }
     this.postService('pdx_utils.get_geoloc', args)
@@ -103,9 +103,10 @@ class __locaion_view extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:17", this)
     this.feed(require('./skeleton')(this));
-    this.checkGeo()
+    if (this.mget('showMap')) {
+      this.checkGeo()
+    }
   }
 
   /**
@@ -117,7 +118,10 @@ class __locaion_view extends LetcBox {
     const service = cmd.mget(_a.service) || "open-viewer";
     this.debug("AAA:119", service, cmd.mget(_a.state), this.mget(_a.state))
     if (!cmd.mget(_a.state)) {
-
+      if (!this.mget('showMap')) {
+        this.mset({ showMap: 1 })
+        this.checkGeo();
+      }
     }
     this.ensurePart("map-container").then((p) => {
       p.el.dataset.state = cmd.mget(_a.state);

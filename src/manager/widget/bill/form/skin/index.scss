@@ -1,0 +1,115 @@
+@use "sass:meta";
+@use 'mixins/drumee';
+@use 'content' as *;
+@use 'mixins/form' as *;
+@use 'mixins/window' as *;
+
+.form-work {
+  &__ui {
+    background-color: drumee.$core-default-background;
+    border-radius: drumee.$default-border-radius;
+    box-shadow: drumee.$drumee-shadow-container;
+    display: flex;
+    max-height: 95vh;
+    overflow: visible;
+    width: 800px;
+    height: auto;
+    min-width: 340px;
+    //min-height: 400px;
+    flex-direction: column;
+    left: calc(50vw - 350px);
+    top: 40px;
+
+
+    &[data-device="mobile"] {
+      height: 100vh;
+      left: 0;
+      top: 0;
+      width: 100vw;
+    }
+  }
+
+  &-topbar {
+    @include form-topbar;
+  }
+
+  &__main {
+    align-items: center;
+    //height: 100%;
+    width: 100%;
+  }
+
+  &__container {
+    min-height: 200px;
+    justify-content: start;
+  }
+
+  &__customer-header {
+    background-color: drumee.$cyan;
+  }
+
+  &__header {
+    background-color: drumee.$sharebox-main;
+    border-bottom: none;
+    border-radius: drumee.$default-border-radius-top;
+    height: 44px;
+    min-height: 44px;
+    width: 100%;
+  }
+
+  &__title {
+    @include drumee.typo($size: 16px, $line: 30px, $weight: 400, $color: drumee.$sharebox-main);
+    justify-content: center;
+    padding: 20px 9px 0px 10px;
+  }
+
+  &__entry-label {
+    &__main {
+      padding: 0 5px;
+    }
+
+    &__description-head {
+      align-content: center;
+      justify-content: center;
+      grid-template-columns: 235px 1fr;
+      margin-top: 5px;
+    }
+  }
+
+  &__container {
+    margin-top: 12px;
+    width: 100%;
+
+    &.description {
+      min-height: auto;
+    }
+  }
+
+  &__site-address {
+    align-self: flex-start;
+    height: 55px;
+    justify-content: center;
+
+    &[data-state="0"] {
+      display: none;
+    }
+  }
+
+  @include work-site;
+  @include customer-header;
+  @include form-content;
+  @include form-menu;
+  @include form-button;
+
+  &__buttons {
+    align-items: center;
+    height: 60px;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 0px;
+  }
+
+  @include dialog-acknowledge;
+  @include dialog-overlay;
+
+}

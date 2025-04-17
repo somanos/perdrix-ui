@@ -14,7 +14,8 @@ const STATUS = [
 ]
 function work_item(ui) {
   let { type, ctime, description, status, site, id } = ui.model.toJSON()
-  let { city, location = [] } = site;
+  let { city, location } = site;
+  if (!location) location = []
   let pfx = ui.fig.family;
   let overview = [
     Skeletons.Box.G({

@@ -30,8 +30,6 @@ class __window_customer extends __window {
   */
   async loadWorkList(cmd) {
     let filters = await this.getSelectedItems("works-selectors", _a.status);
-    this.debug("AAA:33", filters)
-    // if (cmd && cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
       service: "work.list",
       custId: this.mget('custId'),
@@ -56,7 +54,6 @@ class __window_customer extends __window {
   * 
   */
   async loadNotesList(cmd) {
-    if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
       service: "note.list",
       custId: this.mget('custId'),
@@ -69,6 +66,28 @@ class __window_customer extends __window {
       list.feed(placeholder(this, {
         labels: ["Aucune note trouvee", "Creer une note"],
         service: "add-note"
+      }));
+    })
+  }
+
+  /**
+   * 
+   */
+  async loadBillsList(cmd) {
+    let status = await this.getSelectedItems("works-selectors", _a.status);
+    this.debug("AAA:33", status)
+    let api = {
+      service: "bill.list",
+      custId: this.mget('custId'),
+      status
+    };
+    let itemsOpt = {
+      kind: 'bill_item',
+    }
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucune facture trouvee"],
       }));
     })
   }
@@ -104,15 +123,17 @@ class __window_customer extends __window {
       name = cmd.mget(_a.name);
     }
     let buttons;
+    let state = 1;
+    let service;
     switch (name) {
       case "works":
-        let state = 1;
+        service = 'filter-work';
         buttons = [
-          menuItem(this, { label: "Travaux (0)", status: 0, state }),
-          menuItem(this, { label: "Travaux (1)", status: 1, state }),
-          menuItem(this, { label: "Travaux (2)", status: 2, state }),
-          menuItem(this, { label: "Travaux (3)", status: 3, state }),
-          menuItem(this, { label: "Travaux (4)", status: 4, state }),
+          menuItem(this, { label: "Travaux (0)", status: 0, state, service }),
+          menuItem(this, { label: "Travaux (1)", status: 1, state, service }),
+          menuItem(this, { label: "Travaux (2)", status: 2, state, service }),
+          menuItem(this, { label: "Travaux (3)", status: 3, state, service }),
+          menuItem(this, { label: "Travaux (4)", status: 4, state, service }),
           Skeletons.Button.Label({
             className: `${this.fig.family}__button-action`,
             label: "Nouveau travail",
@@ -146,6 +167,21 @@ class __window_customer extends __window {
         ]
         context.feed(contextBar(this, buttons));
         this.loadNotesList(cmd)
+        break;
+      case "solde":
+        service = 'filter-bill';
+        buttons = [
+          menuItem(this, { label: "Facture (0)", status: 0, state, service }),
+          menuItem(this, { label: "Facture (1)", status: 1, state, service }),
+          Skeletons.Button.Label({
+            className: `${this.fig.family}__button-action`,
+            label: "Nouvelle facture",
+            ico: "editbox_list-plus",
+            icons: null, service: "add-bill"
+          })
+        ]
+        context.feed(contextBar(this, buttons));
+        this.loadBillsList(cmd)
         break;
     }
 
@@ -218,8 +254,6 @@ class __window_customer extends __window {
     })
   }
 
-
-
   /**
    * 
    * @param {LetcBox}  cmd 
@@ -265,7 +299,12 @@ class __window_customer extends __window {
       case 'create-quote':
         this.promptQuote(cmd)
         break;
-
+      case 'filter-work':
+        this.loadWorkList();
+        break;
+      case 'filter-bill':
+        this.loadBillsList()
+        break;
 
       default:
         super.onUiEvent(cmd, args);

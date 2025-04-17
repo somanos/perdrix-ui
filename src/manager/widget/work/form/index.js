@@ -113,21 +113,21 @@ class __form_work extends Form {
       case "prompt-location":
         this.promptSite(cmd);
         break;
-      case "select-site":
-        let { choice } = cmd.getData();
-        this.debug("AAA:238", choice, service, cmd)
-        switch (choice) {
-          case "same-address":
-            this.selectSite(this)
-            break;
-          case "list-sites":
-            this.loadSitesList(cmd)
-            break;
-          case "add-site":
-            this.promptSite(cmd);
-            break;
-        }
-        break;
+      // case "select-site":
+      //   let { choice } = cmd.getData();
+      //   this.debug("AAA:238", choice, service, cmd)
+      //   switch (choice) {
+      //     case "same-address":
+      //       this.selectSite(this)
+      //       break;
+      //     case "list-sites":
+      //       this.loadSitesList(cmd)
+      //       break;
+      //     case "add-site":
+      //       this.promptSite(cmd);
+      //       break;
+      //   }
+      //   break;
       case "site-created":
         this.loadSitesList(cmd);
         setTimeout(() => {

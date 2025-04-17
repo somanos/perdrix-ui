@@ -13,8 +13,13 @@
     min-height: 110px;
     margin-bottom: 1px;
 
+    &.small {
+      min-height: unset;
+      cursor: pointer;
+    }
+
     &:hover {
-      background-color: rgba(190, 226, 203, 0.1);
+      background-color: drumee.$perdrix-hover;
     }
 
     // box-shadow: drumee.$drumee-shadow-box;
@@ -28,6 +33,10 @@
     width: 100%;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0.5rem;
+
+    &.small {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__summary,
@@ -44,12 +53,38 @@
     border-bottom: 1px solid lightgrey;
   }
 
+  &__conten-small {
+    width: 100%;
+  }
+
   &__summary.header {
     grid-template-columns: 70px 70px 1fr 24px;
+
+    &.small {
+      grid-template-columns: 70px 70px 1fr;
+    }
+  }
+
+  &__summary {
+    &.small {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 
   &__details {
     justify-content: center;
+    grid-template-columns: 1fr;
+
+    &.small {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__description {
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
   }
 
   &__text {

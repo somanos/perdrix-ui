@@ -50,9 +50,8 @@ class __form_core extends Core {
   async selectSite(cmd) {
     this._locationCompleted = 0;
     if (!cmd.mget('siteId')) {
-      let { siteId } = await this.postService("site.create", cmd.data())
+      let { siteId } = await this.postService("site.create", { args: cmd.data() })
       cmd.mset({ siteId })
-      this.debug("AAA:44", siteId, cmd, cmd.mget('siteId'))
     }
     this.debug("AAA:46", cmd, cmd.mget('siteId'))
     this.ensurePart("site-address").then((p) => {
@@ -109,6 +108,34 @@ class __form_core extends Core {
       }, timeout)
     })
   }
+
+
+  /**
+  * 
+  */
+  onUiEvent(cmd, args = {}) {
+    let service = args.service || cmd.mget(_a.service);
+    this.debug("AAA:119", service, cmd, this)
+    switch (service) {
+      case "select-site":
+        let { choice } = cmd.getData();
+        switch (choice) {
+          case "same-address":
+            this.selectSite(this)
+            break;
+          case "list-sites":
+            this.loadSitesList(cmd)
+            break;
+          case "add-site":
+            this.promptSite(cmd);
+            break;
+        }
+        break;
+      default:
+        super.onUiEvent(cmd, args)
+    }
+  }
+
 }
 
 __form_core.initClass();

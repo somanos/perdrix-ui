@@ -131,12 +131,12 @@ export function placeholder(ui, opt) {
         className: `${ui.fig.family}__placeholder`,
         content: labels[0] || "Aucune correspondance trouvee."
       }),
-      Skeletons.Note({
+      service ? Skeletons.Note({
         className: `${ui.fig.family}__placeholder button`,
         service: service || "prompt-location",
         content: labels[1] || "Faire une saisie manuelle",
         uiHandler: [ui]
-      }),
+      }) : Skeletons.Element()
     ]
   })
 }
