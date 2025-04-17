@@ -31,9 +31,9 @@
   }
 
   &__title {
-    @include drumee.typo($size: 16px, $line: 30px, $weight: 400, $color: drumee.$sharebox-main);
     justify-content: center;
     padding: 20px 9px 0px 10px;
+    @include drumee.typo($size: 16px, $line: 30px, $weight: 400, $color: drumee.$sharebox-main);
   }
 
   @include form-content;

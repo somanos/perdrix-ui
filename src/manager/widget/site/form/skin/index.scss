@@ -58,9 +58,9 @@
   }
 
   &__title {
-    @include drumee.typo($size: 16px, $line: 30px, $weight: 400, $color: drumee.$sharebox-main);
     justify-content: center;
     padding: 20px 9px 0px 10px;
+    @include drumee.typo($size: 16px, $line: 30px, $weight: 400, $color: drumee.$sharebox-main);
   }
 
   &__entry-label__main {
@@ -75,23 +75,6 @@
       min-height: auto;
     }
   }
-
-  // &__work-site {
-  //   margin: 0 5px;
-  //   @include drumee.typo($size: 12px, $line: 16px, $weight: 300);
-  //   justify-content: center;
-  //   align-items: center;
-  //   grid-template-columns: 12px 3fr 2fr 80px;
-  //   grid-gap: 0.5rem;
-
-  //   .work-site {
-  //     &-geoloc {
-  //       height: 20px;
-  //       width: 20px;
-  //       color: drumee.$sharebox-main
-  //     }
-  //   }
-  // }
 
   @include work-site;
   @include customer-header;

@@ -72,12 +72,12 @@
 
       .name {
         align-items: flex-start;
-        @include drumee.overflow-text;
-        margin-left: -30px; //-54px;
-        @include drumee.typo($size: 18px, $line: 24px, $weight: 400, $color: drumee.$core-default-text-reverse);
         width: 316px;
         margin-right: 18px;
         justify-content: center;
+        margin-left: -30px;
+        @include drumee.overflow-text;
+        @include drumee.typo($size: 18px, $line: 24px, $weight: 400, $color: drumee.$core-default-text-reverse);
 
         .inner {
           overflow: hidden;

@@ -15,9 +15,9 @@
       height: 35px;
       display: flex;
       flex-direction: row;
-      @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
       justify-content: flex-start;
       width: 100%;
+      @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
 
       .note-content {
         display: flex;
@@ -93,8 +93,8 @@
 
     &-main {
       grid-template-columns: 90px 1fr;
-      @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 13px);
       padding: 1px;
+      @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 13px);
     }
   }
 

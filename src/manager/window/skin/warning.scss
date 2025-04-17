@@ -10,7 +10,6 @@
     justify-items: center;
     justify-content:center;
     align-content:center;
-    //background-color:$default-background-wrapper;//rgba(137, 146, 158, 0.4); rgba(0,0,0,0.6);
     .dialog__button--close{      
       top: 3px;
       right: 3px;
@@ -32,23 +31,18 @@
     justify-items: center;
     align-content: center;    
     min-height: 60%;
-    border-radius: drumee.$default-border-radius; //4px; //2px;
-  //  border: 1px solid $default-background-tooltips;  // #DDE2E8;
-    background: drumee.$core-default-background; //$default-background-popup; //rgba(255,255,255, 0.7);
+    border-radius: drumee.$default-border-radius;
+    background: drumee.$core-default-background;
     min-width: 350px;
     .drumee-text{
       justify-content: center;
       align-items: center;
       padding: 10px;
       text-align: center;
-      @include drumee.typo($weight:300, $size:16px, $line:26px, $color:drumee.$core-default-text-color); //$ewhite); //$size:14px, $weight:400,
+      @include drumee.typo($weight:300, $size:16px, $line:26px, $color:drumee.$core-default-text-color); 
     }
   }
-  // &__header{
-  //   height: 24px;
-  //   font-family: Roboto;
-  //   @include typo($weight:300, $size:20px, $line:24px, $color:#EA4D44);
-  // }
+
   &__commands{
     width: 100%;
     height: 52px;
@@ -62,12 +56,10 @@
     background-color: drumee.$btn-commit-background; //$egreen;
     padding: 0 12px;
     margin: 0px auto;//auto;
-    //border: 1px solid #DDE2E8;
     border-radius: drumee.$default-border-radius;// 6px; //2px;
     justify-content: center;
     cursor: pointer;
     @include drumee.typo($size:15px, $line:26px, $color:drumee.$ewhite);
-   // @include typo($weight:300, $size:16px, $line:26px, $color:#494949);
     &:hover{
       background-color:drumee.$btn-commit-background-hover;  
     }

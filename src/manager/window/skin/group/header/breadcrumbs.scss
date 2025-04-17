@@ -76,13 +76,13 @@
       }
 
       &--filename {
-        @include drumee.overflow-text;
-        @include drumee.typo($size: 14px, $line: 22px, $weight: 300, $color: drumee.$core-default-text-color);
         align-content: center;
         align-items: center;
         margin-left: 8px;
         top: -2px;
         width: calc(100% - 30px);
+        @include drumee.overflow-text;
+        @include drumee.typo($size: 14px, $line: 22px, $weight: 300, $color: drumee.$core-default-text-color);
       }
 
       .inner {

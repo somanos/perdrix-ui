@@ -1,6 +1,6 @@
 const __window = require('..');
-// const { placeholder } = require("./skeleton/widget")
-const { placeholder } = require("../../widget/skeleton")
+const { placeholder, menuItem } = require("../../widget/skeleton")
+const { contextBar } = require("./skeleton/widget")
 
 class __window_customer extends __window {
 
@@ -20,7 +20,7 @@ class __window_customer extends __window {
     this.setupInteract();
     this.raise();
     setTimeout(() => {
-      this.loadWorkList()
+      this.loadContextBar()
     }, 500)
   }
 
@@ -29,8 +29,9 @@ class __window_customer extends __window {
   * 
   */
   async loadWorkList(cmd) {
-    let filters = await this.getSelectedItems("menu-items", _a.status);
-    if (cmd && cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
+    let filters = await this.getSelectedItems("works-selectors", _a.status);
+    this.debug("AAA:33", filters)
+    // if (cmd && cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
     let api = {
       service: "work.list",
       custId: this.mget('custId'),
@@ -66,7 +67,7 @@ class __window_customer extends __window {
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucune note trouve", "Creer une note"],
+        labels: ["Aucune note trouvee", "Creer une note"],
         service: "add-note"
       }));
     })
@@ -91,6 +92,63 @@ class __window_customer extends __window {
         service: "add-poc"
       }));
     })
+  }
+
+  /**
+  * 
+  */
+  async loadContextBar(cmd) {
+    let context = await this.ensurePart("context-bar");
+    let name = "works";
+    if (cmd) {
+      name = cmd.mget(_a.name);
+    }
+    let buttons;
+    switch (name) {
+      case "works":
+        let state = 1;
+        buttons = [
+          menuItem(this, { label: "Travaux (0)", status: 0, state }),
+          menuItem(this, { label: "Travaux (1)", status: 1, state }),
+          menuItem(this, { label: "Travaux (2)", status: 2, state }),
+          menuItem(this, { label: "Travaux (3)", status: 3, state }),
+          menuItem(this, { label: "Travaux (4)", status: 4, state }),
+          Skeletons.Button.Label({
+            className: `${this.fig.family}__button-action`,
+            label: "Nouveau travail",
+            ico: "editbox_list-plus",
+            icons: null, service: "create-work"
+          })
+        ]
+        context.feed(contextBar(this, buttons));
+        this.loadWorkList(cmd)
+        break;
+      case "pocs":
+        buttons = [
+          Skeletons.Button.Label({
+            className: `${this.fig.family}__button-action`,
+            label: "Nouveau contact",
+            ico: "editbox_list-plus",
+            icons: null, service: "add-poc"
+          })
+        ]
+        context.feed(contextBar(this, buttons));
+        this.loadPocList(cmd)
+        break;
+      case "notes":
+        buttons = [
+          Skeletons.Button.Label({
+            className: `${this.fig.family}__button-action`,
+            label: "Nouvelle note",
+            ico: "editbox_list-plus",
+            icons: null, service: "add-note"
+          })
+        ]
+        context.feed(contextBar(this, buttons));
+        this.loadNotesList(cmd)
+        break;
+    }
+
   }
 
   /**
@@ -184,11 +242,12 @@ class __window_customer extends __window {
       case 'quote-created':
         this.updateWorkItem(cmd, args);
         break;
-      case 'show-works':
+      case 'load-context':
+        this.loadContextBar(cmd, args);
+        break;
       case 'work-created':
         this.loadWorkList(cmd)
         break;
-      case 'show-pocs':
       case 'poc-created':
         this.loadPocList(cmd)
         break;

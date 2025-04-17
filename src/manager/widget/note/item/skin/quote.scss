@@ -16,8 +16,8 @@
       width: 100%;
 
       .label {
-        @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
         width: 100%;
+        @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
       }
     }
 

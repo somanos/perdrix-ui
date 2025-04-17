@@ -42,18 +42,18 @@
     @include drumee.typo($color: drumee.$egrey-89, $size: 14px, $line: 24px);
 
     &.type {
-      @include drumee.typo($color: drumee.$egrey-b7, $size: 16px, $line: 24px);
       display: flex;
       flex-wrap: wrap;
       align-content: center;
       margin-right: 10px;
+      @include drumee.typo($color: drumee.$egrey-b7, $size: 16px, $line: 24px);
     }
 
     &.id {
-      @include drumee.typo($color: drumee.$eviolet, $size: 15px, $line: 24px);
       display: flex;
       flex-wrap: wrap;
       align-content: center;
+      @include drumee.typo($color: drumee.$eviolet, $size: 15px, $line: 24px);
     }
 
     &.see-details {

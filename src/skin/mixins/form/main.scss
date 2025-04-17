@@ -2,18 +2,16 @@
 
 @mixin form-placeholder {
   &__placeholder {
+    justify-content: center;
+    margin: 10px auto;
+
     &-main {
       flex-wrap: wrap;
       align-content: center;
     }
 
-    justify-content: center;
-    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 22px, $size: 16px);
-    margin: 10px auto;
-
     &.button {
       background-color: drumee.$btn-commit-background;
-      @include drumee.typo($size: 16px, $line: 22px, $color: drumee.$white);
       border-radius: 5px;
       cursor: pointer;
       padding: 5px 20px;
@@ -21,7 +19,11 @@
       &:hover {
         background-color: drumee.$btn-commit-background-hover
       }
+
+      @include drumee.typo($size: 16px, $line: 22px, $color: drumee.$white);
     }
+
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 22px, $size: 16px);
   }
 }
 
@@ -200,20 +202,20 @@
     justify-content: center;
     color: drumee.$white;
     background-color: drumee.$btn-commit-background;
-    @include drumee.typo($size: 16px, $line: 22px, $color: drumee.$white);
     border-radius: 5px;
     cursor: pointer;
 
     &:hover {
       background-color: drumee.$btn-commit-background-hover
     }
+
+    @include drumee.typo($size: 16px, $line: 22px, $color: drumee.$white);
   }
 }
 
 @mixin work-site {
   &__work-site {
     margin: 0 5px;
-    @include drumee.typo($size: 12px, $line: 16px, $weight: 300);
     justify-content: center;
     align-items: center;
     grid-template-columns: 12px 3fr 2fr 80px;
@@ -226,6 +228,8 @@
         color: drumee.$sharebox-main
       }
     }
+
+    @include drumee.typo($size: 12px, $line: 16px, $weight: 300);
   }
 
   &__site-address {

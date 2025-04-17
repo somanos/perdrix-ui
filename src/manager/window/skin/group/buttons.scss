@@ -7,9 +7,9 @@
     height: 46px;
     border-radius: drumee.$default-border-radius;
     text-align: center;
-    @include drumee.typo($line: 22px, $size: 16px, $weight: 300, $color: drumee.$btn-rollback-text);
     justify-content: center;
     padding-top: 12px;
+    @include drumee.typo($line: 22px, $size: 16px, $weight: 300, $color: drumee.$btn-rollback-text);
 
     &:hover {
       border: 2px solid drumee.$btn-rollback-border-hover ;
@@ -23,9 +23,9 @@
     height: 46px;
     border-radius: drumee.$default-border-radius;
     text-align: center;
-    @include drumee.typo($line: 22px, $size: 16px, $weight: 300, $color: drumee.$btn-commit-text);
     justify-content: center;
     padding-top: 12px;
+    @include drumee.typo($line: 22px, $size: 16px, $weight: 300, $color: drumee.$btn-commit-text);
   }
 
   &__button {
@@ -39,9 +39,9 @@
     }
 
     &.action-btn {
-      @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$core-default-text-reverse);
       align-items: center;
       background: drumee.$core-background-btn-active;
+      @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$core-default-text-reverse);
 
       &:hover {
         background-color: drumee.$btn-commit-background-hover;
@@ -50,8 +50,8 @@
     }
 
     &.cancel-btn {
-      @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$btn-rollback-text);
       border: 1px solid drumee.$btn-rollback-border;
+      @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$btn-rollback-text);
 
       &:hover {
         border: 2px solid drumee.$btn-rollback-border-hover ;

@@ -34,7 +34,6 @@
       justify-content: start;
       display: flex;
       flex-direction: row;
-      @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 16px, $size: 14px);
       padding: 9px 0;
       height: 100%;
       cursor: pointer;
@@ -47,6 +46,7 @@
         margin-right: 5px;
         padding: 2px;
       }
+      @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 16px, $size: 14px);
     }
 
     .menu-topic-items__wrapper {
@@ -71,7 +71,6 @@
     flex-wrap: wrap;
     align-content: center;
     justify-content: start;
-    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 16px, $size: 14px);
     cursor: pointer;
 
     &:hover {
@@ -84,6 +83,7 @@
       margin-right: 5px;
       padding: 3px;
     }
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 16px, $size: 14px);
   }
 
   &__menu-input {

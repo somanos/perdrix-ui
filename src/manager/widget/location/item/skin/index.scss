@@ -37,6 +37,7 @@
 
   &__text {
     border: none;
+    cursor: pointer;
     @include drumee.typo($color: #787B7F, $size: 12px, $line: 24px);
 
     .inner {
@@ -45,7 +46,6 @@
       white-space: nowrap;
     }
 
-    cursor: pointer;
   }
 
   &__cartridge {

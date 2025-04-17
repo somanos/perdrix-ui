@@ -61,8 +61,8 @@
     @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
 
     &.type {
-      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
       margin-right: 10px;
+      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
 
       .inner {
         border: solid 0.5px lightgray;

@@ -92,9 +92,9 @@
     flex-wrap: wrap;
     align-content: center;
     justify-content: start;
-    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 22px, $size: 14px);
     cursor: pointer;
     white-space: nowrap;
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 22px, $size: 14px);
 
     &:hover {
       background-color: rgba(125, 230, 198, 0.267);

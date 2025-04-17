@@ -78,17 +78,18 @@ export async function feedList(api, itemsOpt, onEmpty) {
   list.model.unset(_a.itemsOpt)
   list.mset({ api, itemsOpt });
   list.restart();
-
   list.once(_e.data, async (data) => {
     if (_.isEmpty(data)) {
       return onEmpty(list);
     }
   })
+  this.debug("AAA:86", list)
   list.once(_e.eod, async (e) => {
     if (list.isNaturalyEmpty()) {
       onEmpty(list);
     }
   });
+
   list.once(_e.error, async () => {
     onEmpty(list);
   });

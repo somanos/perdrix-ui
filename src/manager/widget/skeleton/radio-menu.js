@@ -5,16 +5,17 @@
  * @param {*} innerClass 
  * @returns 
  */
-function menuItem(ui, opt, innerClass) {
+export function menuItem(ui, opt, innerClass = '') {
   let pfx = ui.fig.family;
   return Skeletons.Button.Label({
     className: `${pfx}__menu-item  ${innerClass}`,
     uiHandler: [ui],
     service: "item-selected",
     state: 0,
-    radio: "selection-menu",
-    ...opt,
+    //radio: "selection-menu",
+    radiotoggle: _a.parent,
     icons: ["raw-radio-unchecked", "raw-radio-checked"],
+    ...opt,
   });
 }
 

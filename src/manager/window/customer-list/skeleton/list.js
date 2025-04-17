@@ -15,7 +15,7 @@ module.exports = function (ui) {
       service: ui.mget('itemService') || 'open-node',
       role: ui.mget(_a.role) || '',
       logicalParent: ui,
-      uiHandler:[ui]
+      uiHandler: [ui]
     },
     vendorOpt: Preset.List.Orange_e,
     api: ui.getCurrentApi,

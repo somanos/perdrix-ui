@@ -29,13 +29,13 @@
   &__button {
     height: 100%;
     flex: 1;
-    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
     justify-content: center;
     border-radius: 3px;
     margin: 5px;
     cursor: pointer;
     align-content: center;
     flex-wrap: wrap;
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
 
     &[data-state="1"] {
       background-color: drumee.$customer-selection-bg;

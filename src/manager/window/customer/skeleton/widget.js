@@ -8,60 +8,73 @@ const { customerHeader, selectionMenu } = require("../../../widget/skeleton")
 export function tabs(ui) {
   let pfx = ui.fig.family;
   let item = ui.fig.name;
-  let service = "show-works";
-  let state = 1;
-  let status = null;
-  let works = selectionMenu(ui, {
-    label: 'Travaux',
-    ico: 'desktop_desksettings',
-    service,
-    state,
-    // dataset:{
-    //   state,
-    //   radio:_a.on
-    // },
-    buttons: [
-      { label: "Travaux (0)", status: 0, state },
-      { label: "Travaux (1)", status: 1, state },
-      { label: "Travaux (2)", status: 2, state },
-      { label: "Travaux (3)", status: 3, state },
-      { label: "Travaux (4)", status: 4, state },
-      { label: "Creer", ico: "editbox_list-plus", 
-        icons: null, service: "create-work" },
-    ]
-  })
+  // let service = "show-works";
+  // let state = 1;
+  // let status = null;
+  // let works = selectionMenu(ui, {
+  //   label: 'Travaux',
+  //   ico: 'desktop_desksettings',
+  //   service,
+  //   state,
+  //   buttons: [
+  //     { label: "Travaux (0)", status: 0, state },
+  //     { label: "Travaux (1)", status: 1, state },
+  //     { label: "Travaux (2)", status: 2, state },
+  //     { label: "Travaux (3)", status: 3, state },
+  //     { label: "Travaux (4)", status: 4, state },
+  //     {
+  //       label: "Creer", ico: "editbox_list-plus",
+  //       icons: null, service: "create-work"
+  //     },
+  //   ]
+  // })
 
-  return Skeletons.Box.X({
-    className: `${pfx}__tabs`,
+  let main = Skeletons.Box.X({
+    className: `${pfx}__tabs main`,
     kidsOpt: {
       className: `${item}__button`,
       radio: `${ui.cid}-tabs`,
       labelClass: `${item}__label contacts`,
+      service: "load-context"
     },
     kids: [
       Skeletons.Button.Label({
         ico: 'desktop_mysharing',
         label: 'Contacs',
-        service: 'show-pocs',
+        name: 'pocs',
       }),
       Skeletons.Button.Label({
         ico: 'desktop_picture',
         label: 'Photos',
-        service: 'show-photos',
+        name: 'photos',
       }),
       Skeletons.Button.Label({
         ico: 'editbox_pencil',
         label: 'Notes',
-        service: 'show-notes',
+        name: 'notes',
       }),
-      works,
+      Skeletons.Button.Label({
+        ico: 'desktop_desksettings',
+        label: 'Travaux',
+        name: 'works',
+        state: 1
+      }),
+      //works,
       Skeletons.Button.Label({
         ico: 'editbox_openmenu',
         label: 'Solde',
-        service: 'show-solde',
+        name: 'solde',
       }),
     ]
   });
+  let context = Skeletons.Wrapper.X({
+    className: `${pfx}__tabs context`,
+    sys_pn: "context-bar",
+  })
+  return Skeletons.Box.Y({
+    className: `${pfx}__tabs container`,
+    kids: [main, context]
+  })
 };
 
 
@@ -103,7 +116,7 @@ export function topbar(ui) {
     kids: [
       Skeletons.Box.X({
         className: `${group}__title ${ui.fig.family}-${figname}__title`,
-        kids: customerHeader(ui), //require("./overview")(ui)
+        kids: customerHeader(ui),
       }),
       Skeletons.Window.TopbarControl(ui, "sc")
     ]
@@ -119,4 +132,14 @@ export function topbar(ui) {
     },
     kids: [container]
   });
-};;
+};
+
+
+export function contextBar(ui, buttons) {
+  return Skeletons.Box.X({
+    debug: __filename,
+    className: `${ui.fig.family}__tabs content`,
+    sys_pn: "works-selectors",
+    kids: buttons
+  });
+}

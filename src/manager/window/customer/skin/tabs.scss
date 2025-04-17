@@ -3,24 +3,42 @@
 @mixin tabs {
   &__tabs {
     width: 100%;
-    background-color: drumee.$blue-midnight;
-    height: 40px;
-    justify-content: space-around;
+
+    &.container {
+      height: auto;
+    }
+
+    &.content {
+      height: auto;
+      padding: 2px 0;
+    }
+
+
+    &.main {
+      background-color: drumee.$blue-midnight;
+      justify-content: space-around;
+    }
+
+    &.context {
+      // background-color: drumee.$core-background-tooltips;
+      box-shadow: drumee.$drumee-shadow-container;
+      margin: 1px 0 5px 0;
+      padding: 3px 0;
+    }
 
     .customer__button {
       cursor: pointer;
-      height: 100%;
+      height: 40px;
       padding: 5px;
       display: flex;
       flex-direction: row;
-      @include drumee.typo($size: 16px, $line: 25px, $weight: 400, $color: white);
       flex-wrap: wrap;
       align-content: center;
       justify-content: center;
       flex: 1;
 
       &[data-state="1"] {
-        border: solid 0.5ps drumee.$white;
+        border: solid 0.5px drumee.$white;
         background-color: drumee.$core-background-blue;
       }
 
@@ -33,6 +51,7 @@
         height: 25px;
         padding: 4px;
       }
+      @include drumee.typo($size: 16px, $line: 25px, $weight: 400, $color: white);
     }
   }
 

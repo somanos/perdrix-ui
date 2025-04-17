@@ -3,7 +3,6 @@
 @mixin group_row {
   &__row {
     &-wrapper {
-      @include drumee.typo($color: drumee.$core-default-text-color, $size: 16px);
       background-color: drumee.$core-default-block-background;
       border-radius: 6px;
       box-sizing: border-box;
@@ -12,6 +11,7 @@
       max-height: 46px;
       width: 100%;
       padding: 0 5px;
+      @include drumee.typo($color: drumee.$core-default-text-color, $size: 16px);
     }
 
     &-container {
@@ -61,13 +61,13 @@
 
           textarea,
           input {
-            @include drumee.typo($size: 16px, $line: 20px, $color: drumee.$core-default-text-color);
             background-color: drumee.$core-default-block-background;
             border: 0;
             border-radius: 6px;
             flex: 1;
             height: 100%;
             padding-left: 10px;
+            @include drumee.typo($size: 16px, $line: 20px, $color: drumee.$core-default-text-color);
           }
 
           textarea {
@@ -158,7 +158,6 @@
           }
 
           background-color: drumee.$core-background-tooltips;
-          @include drumee.typo($size: 11px, $line: 15px, $color: drumee.$core-default-text-tooltips);
           border-radius:drumee.$default-border-radius;
           font-size: 11px;
           max-width: 300px;
@@ -171,16 +170,15 @@
           text-align: justify;
           text-overflow: ellipsis;
           z-index: 200000;
-          // overflow: hidden;
-          // white-space: nowrap;
+          @include drumee.typo($size: 11px, $line: 15px, $color: drumee.$core-default-text-tooltips);
         }
       }
     }
 
     &-label {
-      @include drumee.typo($size: 16px, $line: 16px, $color: drumee.$core-default-text-title);
       width: 100%;
       align-items: center;
+      @include drumee.typo($size: 16px, $line: 16px, $color: drumee.$core-default-text-title);
 
       &.acknowledge {
         width: auto;
@@ -189,17 +187,17 @@
 
     &-note {
       &.label {
-        @include drumee.typo($size: 13px, $line: 16px, $color: drumee.$core-default-text-title);
         max-width: 150px;
         padding-left: 5px;
         width: 100%;
+        @include drumee.typo($size: 13px, $line: 16px, $color: drumee.$core-default-text-title);
       }
 
       &.tips {
-        @include drumee.typo($size: 12px, $line: 1.5, $weight: 300, $color: drumee.$core-default-text-title);
         align-items: center;
         margin-bottom: 18px;
         width: 40%;
+        @include drumee.typo($size: 12px, $line: 1.5, $weight: 300, $color: drumee.$core-default-text-title);
       }
     }
 
@@ -221,9 +219,9 @@
       }
 
       &.action-btn {
-        @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$core-default-text-reverse);
         align-items: center;
         background: drumee.$core-background-btn-active;
+        @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$core-default-text-reverse);
 
         &:hover {
           background-color: drumee.$btn-commit-background-hover;
@@ -232,8 +230,8 @@
       }
 
       &.cancel-btn {
-        @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$btn-rollback-text);
         border: 1px solid drumee.$btn-rollback-border;
+        @include drumee.typo($size: 18px, $line: 28px, $color: drumee.$btn-rollback-text);
 
         &:hover {
           border: 2px solid drumee.$btn-rollback-border-hover ;
@@ -243,7 +241,6 @@
     }
 
     &-switch {
-      //padding: 10px 0px 0px 0px; //10px 0px 0px 50px;
       width: 100%;
       justify-content: center;
       border: 1px solid lightgrey;
@@ -254,9 +251,9 @@
 
           &.on,
           &.off {
-            @include drumee.typo($size: 16px, $line: 44px);
             text-align: left;
             width: auto;
+            @include drumee.typo($size: 16px, $line: 44px);
           }
 
           &.on {

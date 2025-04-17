@@ -21,13 +21,13 @@
       justify-content: center;
 
       .label {
-        @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
         width: 100%;
+        @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
 
         &.clickable:hover {
           .drumee-text {
-            @include drumee.typo($color: drumee.$white, $size: 16px, $line: 24px);
             background-color: drumee.$core-background-blue;
+            @include drumee.typo($color: drumee.$white, $size: 16px, $line: 24px);
           }
         }
       }

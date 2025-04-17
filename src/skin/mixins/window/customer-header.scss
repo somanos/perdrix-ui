@@ -14,26 +14,25 @@
     }
 
     .customer-custname {
-      @include drumee.typo($size: 25px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
-
       &::after {
         content: ">";
         margin: 0 0.5rem;
       }
+      @include drumee.typo($size: 25px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
     }
 
     .customer-city {
-      @include drumee.typo($size: 20px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
 
       &::after {
         content: ",";
         margin-right: 0.5rem;
       }
+      @include drumee.typo($size: 20px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
     }
 
     .customer-adress {
-      @include drumee.typo($size: 15px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
       margin-bottom: 2px;
+      @include drumee.typo($size: 15px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
     }
   }
 

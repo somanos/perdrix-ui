@@ -17,13 +17,13 @@
 
   &__address {
     margin: 0 5px;
-    @include drumee.typo($size: 12px, $line: 16px, $weight: 300);
     justify-content: center;
     align-items: center;
     grid-template-columns: 12px 3fr 2fr 80px;
     grid-gap: 0.5rem;
     height: 35px;
     cursor: pointer;
+    @include drumee.typo($size: 12px, $line: 16px, $weight: 300);
 
     .text {
       width: 100%;

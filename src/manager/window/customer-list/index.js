@@ -189,6 +189,7 @@ class __window_customer_list extends __window {
       case _a.list:
         child.on(_e.data, this._onDataReceived);
         this.list = child;
+        this.debug("AAA:192", child)
         break;
       case _a.filter:
         this._updateFilter();
@@ -211,9 +212,9 @@ class __window_customer_list extends __window {
       id: `customer-${custId}`,
       source: cmd
     });
-    setTimeout(()=>{
+    setTimeout(() => {
       let w = Wm.windowsLayer.children.last();
-      if(w && w.raise) w.raise()
+      if (w && w.raise) w.raise()
     }, 1000)
   }
 
