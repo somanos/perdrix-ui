@@ -29,6 +29,7 @@ class __work_item extends LetcBox {
       description,
       site,
       status,
+      type
     } = this.model.toJSON();
 
     return {
@@ -38,6 +39,8 @@ class __work_item extends LetcBox {
       description,
       site,
       status,
+      id: workId,
+      type
     }
   }
 
@@ -48,10 +51,10 @@ class __work_item extends LetcBox {
     if (data) {
       this.mset(data);
     }
-    if(this.mget(_a.format) == _a.small){
+    if (this.mget(_a.format) == _a.small) {
       this.feed(require('./skeleton/small')(this));
       this.$el.addClass(_a.small)
-    }else{
+    } else {
       this.feed(require('./skeleton')(this));
     }
   }

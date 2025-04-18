@@ -205,3 +205,69 @@ export function itemMenuSelected(cmd) {
     this._data[cmd.mget(_a.name)] = cmd.mget(_a.value)
   })
 }
+
+/**
+ * 
+ * @param {*} opt 
+ */
+export async function loadWorkList(opt) {
+  let api = {
+    service: "work.list",
+    custId: this.mget('custId'),
+  };
+  let itemsOpt = {
+    ...opt,
+    kind: 'work_item',
+    uiHandler: [this],
+  }
+  this.changeDataset("entries-manual", _a.state, 1)
+  this.feedList(api, itemsOpt, (list) => {
+    list.model.unset(_a.itemsOpt)
+    list.feed(placeholder(this, {
+      labels: ["Aucun travail en cours.", "Creer un travail"],
+      service: 'create-work',
+    }
+    ));
+  })
+}
+
+/**
+ * 
+ * @param {*} opt 
+ */
+export async function selectWork(cmd) {
+  this.mset({
+    siteId: cmd.mget('siteId'),
+    category: cmd.mget(_a.type),
+    workId: cmd.mget(_a.id),
+  })
+
+  this.ensurePart("entries-manual").then((p) => {
+    let args = {
+      ...cmd.data(),
+      format: _a.small,
+      kind: 'work_item',
+      uiHandler: [this],
+    }
+    p.feed(args)
+  })
+  this.changeDataset("go-btn", _a.state, 1)
+}
+
+
+/**
+  * 
+  */
+export function updateAmount() {
+  let data = this.getData()
+  let ht = parseFloat(data.ht) || 0;
+  let tva = parseFloat(data.tva) || 0;
+  let discount = parseFloat(data.discount) || 0;
+  let ttc = (ht + ht / 100 * tva - discount).toFixed(2);
+  if (ttc != null) {
+    this.ensurePart('ttc').then((p) => {
+      p.setValue(ttc.toString())
+    })
+  }
+}
+

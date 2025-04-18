@@ -83,6 +83,7 @@ class __window_customer extends __window {
     };
     let itemsOpt = {
       kind: 'bill_item',
+      uiHandler: [this]
     }
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
@@ -229,6 +230,19 @@ class __window_customer extends __window {
   /**
     * 
     */
+  async promptBill(cmd) {
+    this.loadWidget({
+      kind: 'form_bill',
+      source: this.source,
+      id: `bill-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "bill-created"
+    })
+  }
+
+  /**
+    * 
+    */
   async promptQuote(cmd) {
     this.loadWidget({
       kind: 'form_quote',
@@ -274,6 +288,7 @@ class __window_customer extends __window {
         this.loadWorkForm(cmd)
         break;
       case 'quote-created':
+      case 'bill-created':
         this.updateWorkItem(cmd, args);
         break;
       case 'load-context':
@@ -304,6 +319,9 @@ class __window_customer extends __window {
         break;
       case 'filter-bill':
         this.loadBillsList()
+        break;
+      case 'add-bill':
+        this.promptBill()
         break;
 
       default:

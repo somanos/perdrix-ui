@@ -29,7 +29,17 @@ class __bill_item extends LetcBox {
       description,
       site,
       status,
+      workId,
+      workType,
     } = this.model.toJSON();
+    let {
+      city,
+      citycode,
+      countrycode,
+      geometry,
+      location,
+      postcode,
+    } = this.mget('site') || {};
 
     return {
       custId,
@@ -38,6 +48,14 @@ class __bill_item extends LetcBox {
       description,
       site,
       status,
+      workId,
+      workType,
+      city,
+      citycode,
+      countrycode,
+      geometry,
+      location,
+      postcode,
     }
   }
 
@@ -61,7 +79,7 @@ class __bill_item extends LetcBox {
   /**
    * 
    */
-  async viewbill() {
+  async viewBill() {
     let bill = this.mget('bill');
     let Media = await Kind.waitFor('media_pseudo');
     let media = new Media(bill);
@@ -69,6 +87,20 @@ class __bill_item extends LetcBox {
     this.debug("AAA:69", args)
     this.loadWidget(args)
   }
+
+  /**
+   * 
+   */
+  async promptBill() {
+    this.loadWidget({
+      kind: 'form_bill',
+      source: this,
+      id: `bill-form-${this.mget('custId')}`,
+      uiHandler: [this],
+      service: "bill-created"
+    })
+  }
+
 
   /**
    * User Interaction Evant Handler
@@ -80,8 +112,10 @@ class __bill_item extends LetcBox {
     this.debug("AAA:27", service, this, cmd)
     switch (service) {
       case 'view-bill':
-        this.viewbill()
-        //this.promptSite(cmd);
+        this.viewBill()
+        break;
+      case 'add-bill':
+        this.promptBill()
         break;
       default:
         this.triggerHandlers({

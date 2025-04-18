@@ -13,11 +13,11 @@ export function list(ui, partName = _a.list) {
     uiHandler: null,
     spinnerWait: 1500,
     spinner: true,
-    itemsOpt: {
-      kind: 'customer_item',
-      flow: _a.x,
-      uiHandler: [ui]
-    },
+    // itemsOpt: {
+    //   kind: 'customer_item',
+    //   flow: _a.x,
+    //   uiHandler: [ui]
+    // },
     vendorOpt: Preset.List.Orange_e,
   });
 };

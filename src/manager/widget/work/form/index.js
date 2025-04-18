@@ -1,6 +1,5 @@
 
 const Form = require('../../form');
-const { acknowledge } = require("../../skeleton")
 
 class __form_work extends Form {
 

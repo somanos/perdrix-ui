@@ -17,6 +17,10 @@ class __form_bill extends Form {
     })
     this._data = {}
     this._timer = {}
+    if (opt.source && opt.source.data) {
+      this.mset(opt.source.data())
+    }
+    this.debug("AAA:23", this)
   }
 
   /**
@@ -28,43 +32,62 @@ class __form_bill extends Form {
       case "topbar":
         this.setupInteract();
         break;
-      case "wrapper-dialog":
-        this._dialogPos = child.$el.offset()
+      case "entries-manual":
+        if (this.mget('workId') && this.mget('site')) {
+          this.changeDataset(pn, _a.state, 1);
+        }
         break;
-      case 'companyname':
-      case _a.lastname:
-        child.on(_e.blur, (e) => {
-          this.clearList();
-        })
+      case _a.list:
+        if (this.mget('workId') && this.mget('site')) {
+          let args = {
+            ...this.data(),
+            kind: 'work_item',
+            format: _a.small,
+          }
+          this.debug("AAA:47", args)
+          setTimeout(() => {
+            child.feed(args)
+          }, 500)
+        }
         break;
+
     }
   }
+
 
   /**
   * 
   */
   data() {
-    const {
+    let {
       city,
       citycode,
       countrycode,
       custId,
+      workId,
       geometry,
-      id,
+      siteId,
       location,
       postcode,
+      description,
+      workType,
+      site
     } = this.model.toJSON();
 
     return {
       city,
       citycode,
       countrycode,
+      workId,
       custId,
       geometry,
       location,
       postcode,
-      siteId: id,
-      type: 'bill'
+      siteId,
+      workType,
+      description,
+      site,
+      id: workId
     }
   }
 
@@ -73,22 +96,31 @@ class __form_bill extends Form {
    */
   createBill() {
     let args = this.getData();
+    let { custId, siteId, workId } = this.data();
+    args = { ...args, custId, siteId, workId }
     let error = 0;
     if (!args.description) {
       error = 1
+      this.changeDataset('description', _a.error, 1)
+    }else{
+      this.changeDataset('description', _a.error, 0)
     }
-    this.changeDataset('description', _a.error, error)
-    args.custId = this.mget('custId');
-    if (error) return;
+    if (!args.category) {
+      error = 1
+      this.changeDataset('category', _a.error, 1)
+    }else{
+      this.changeDataset('category', _a.error, 0)
+    }
+
+    this.debug("AAA:105", args)
+    if (error) {
+      this.changeDataset("go-btn", _a.state, 1);
+      return;
+    }
     this.postService("bill.create", { args }).then((data) => {
       let { id } = data;
-      this.message(`Le travail a bien ete cree sous le numero ${id}`)
-      this.ensurePart("button-bill").then((p) => {
-        p.setState(0)
-        this.raise();
-      })
-      if (id) this.mset({ siteId: id })
       this.triggerHandlers({ service: 'bill-created', data });
+      this.goodbye()
     }).catch((e) => {
       this.message(LOCALE.ERROR_SERVER);
       this.debug("AAA:377 FAILED", e)
@@ -101,7 +133,6 @@ class __form_bill extends Form {
   onDomRefresh() {
     this.feed(require('./skeleton')(this));
   }
-
   /**
    * 
    */
@@ -112,20 +143,6 @@ class __form_bill extends Form {
       case "prompt-location":
         this.promptSite(cmd);
         break;
-      // case "select-site":
-      //   let { choice } = cmd.getData();
-      //   switch (choice) {
-      //     case "same-address":
-      //       this.selectSite(this)
-      //       break;
-      //     case "list-sites":
-      //       this.loadSitesList(cmd)
-      //       break;
-      //     case "add-site":
-      //       this.promptSite(cmd);
-      //       break;
-      //   }
-      //   break;
       case "site-created":
         this.loadSitesList(cmd);
         setTimeout(() => {
@@ -138,6 +155,24 @@ class __form_bill extends Form {
       case "create-bill":
         this.createBill(cmd);
         break;
+      case "list-works":
+        this.loadWorkList({
+          format: _a.small,
+          service: "select-work"
+        });
+        setTimeout(() => {
+          this.raise();
+        }, 1000)
+        break;
+      case "select-work":
+        this.selectWork(cmd);
+        break;
+      case _a.input:
+        let { name } = cmd.getData();
+        this.debug("AAA:238", name, service, cmd)
+        this.updateAmount();
+        break;
+
       default:
         super.onUiEvent(cmd, args)
     }

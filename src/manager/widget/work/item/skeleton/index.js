@@ -13,7 +13,7 @@ const STATUS = [
   '🔧', '🔨', '🪒', '🔒', '🧰'
 ]
 function work_item(ui) {
-  let { type, ctime, description, status, site, id } = ui.model.toJSON()
+  let { type, workType, ctime, description, status, site, id } = ui.model.toJSON()
   let { city, location } = site;
   if (!location) location = []
   let pfx = ui.fig.family;
@@ -31,7 +31,7 @@ function work_item(ui) {
         }),
         Skeletons.Note({
           className: `${pfx}__text type`,
-          content: type
+          content: workType || type
         }),
         Skeletons.Note({
           className: `${pfx}__text status`,

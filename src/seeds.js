@@ -1,7 +1,7 @@
 module.exports = {
 	'bill_item': import('./manager/widget/bill/item'),
 	'customer_item': import('./manager/widget/customer/item'),
-	'form_bill': import('./manager/widget/customer/form'),
+	'form_bill': import('./manager/widget/bill/form'),
 	'form_customer': import('./manager/widget/customer/form'),
 	'form_note': import('./manager/widget/note/form'),
 	'form_quote': import('./manager/widget/quote/form'),

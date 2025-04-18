@@ -73,7 +73,7 @@ function qote(ui) {
       Skeletons.Box.X({
         className: `${pfx}-header`,
         kids: actionButtons(ui, [
-          { content: "Editer une facture", service: "create-bill" }
+          { content: "Editer une facture", service: "add-bill" }
         ])
       }),
     ]
