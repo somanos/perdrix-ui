@@ -1,17 +1,20 @@
+const { normalizelLocation } = require("../../utils")
+
 /**
  * 
  * @param {*} ui 
  * @returns 
  */
-
-export function customerHeader(ui) {
+export function customerHeader(ui, customer) {
+  let source = customer || ui;
   let {
     custName,
     companyclass,
     gender,
     location,
     city,
-  } = ui.model.toJSON();
+  } = ui.mget('customer') || source.model.toJSON();
+
 
   const adresse = location.join(' ');
   let fig = 'customer'
@@ -38,7 +41,7 @@ export function customerHeader(ui) {
     }),
     Skeletons.Note({
       className: `${fig}-adress ${fig}-text`,
-      content: adresse,
+      content: normalizelLocation(location),
     })
   ]
   let a = Skeletons.Box.X({

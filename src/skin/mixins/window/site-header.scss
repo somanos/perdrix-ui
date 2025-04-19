@@ -1,0 +1,61 @@
+@use "mixins/drumee";
+
+@mixin site-header {
+  &__site-header {
+    width: 100%;
+    padding: 5px 5px 8px 5px;
+    box-shadow: drumee.$drumee-shadow-container;
+
+    .site-text {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-content: flex-end;
+      white-space: nowrap;
+    }
+
+    .site-icon {
+      height: auto;
+      width: auto;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-content: flex-end;
+      white-space: nowrap;
+      margin: 0 0.5rem;
+
+      svg {
+        width: 24px;
+        height: 24px;
+        color: orangered;
+      }
+    }
+
+    // .site-name {
+    //   &::after {
+    //     content: ">";
+    //     margin: 0 0.5rem;
+    //     @include drumee.typo($size: 20px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
+    //   }
+
+    //   @include drumee.typo($size: 25px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
+    // }
+
+    .site-city {
+      &::after {
+        content: ",";
+        margin-right: 0.5rem;
+      }
+
+      @include drumee.typo($size: 20px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
+    }
+
+    .site-adress {
+      margin-bottom: 2px;
+      @include drumee.typo($size: 15px, $line: 1, $weight: 400, $color: drumee.$blue-midnight);
+    }
+  }
+
+}

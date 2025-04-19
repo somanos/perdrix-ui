@@ -104,3 +104,14 @@
     @include drumee.typo($size: 18px, $line: 45px); //
   }
 }
+
+@mixin list-content {
+  &__list-content {
+    width: 100%;
+    align-items: center;
+    max-height: calc(100% - 40px);
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

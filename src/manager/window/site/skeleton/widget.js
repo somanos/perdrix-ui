@@ -1,4 +1,4 @@
-const { customerHeader, selectionMenu } = require("../../../widget/skeleton")
+const { customerHeader, siteHeader } = require("../../../widget/skeleton")
 
 /**
  * 
@@ -9,44 +9,7 @@ export function tabs(ui) {
   let pfx = ui.fig.family;
   let item = ui.fig.name;
 
-  let main = Skeletons.Box.X({
-    className: `${pfx}__tabs main`,
-    kidsOpt: {
-      className: `${item}__button`,
-      radio: `${ui.cid}-tabs`,
-      labelClass: `${item}__label contacts`,
-      service: "load-context"
-    },
-    kids: [
-      // Skeletons.Button.Label({
-      //   ico: 'desktop_mysharing',
-      //   label: 'Contacs',
-      //   name: 'pocs',
-      // }),
-      // Skeletons.Button.Label({
-      //   ico: 'desktop_picture',
-      //   label: 'Photos',
-      //   name: 'photos',
-      // }),
-      Skeletons.Button.Label({
-        ico: 'icon-company',
-        label: 'Chantiers',
-        name: 'sites',
-      }),
-      Skeletons.Button.Label({
-        ico: 'desktop_desksettings',
-        label: 'Travaux',
-        name: 'works',
-        state: 1
-      }),
-      //works,
-      Skeletons.Button.Label({
-        ico: 'editbox_openmenu',
-        label: 'Solde',
-        name: 'solde',
-      }),
-    ]
-  });
+  let main = siteHeader(ui)
   let context = Skeletons.Wrapper.X({
     className: `${pfx}__tabs context`,
     sys_pn: "context-bar",

@@ -45,8 +45,11 @@ class __site_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:17", this)
-    this.feed(require('./skeleton')(this));
+    try{
+      this.feed(require('./skeleton')(this));
+    }catch(e){
+      this.warn(e, this)
+    }
   }
 
   /**
@@ -56,6 +59,7 @@ class __site_item extends LetcBox {
    */
   onUiEvent(trigger, args = {}) {
     const service = this.mget(_a.service) || "open-viewer";
+    this.debug("AAA:63", service, trigger.mget(_a.service))
     this.triggerHandlers({
       service,
     })

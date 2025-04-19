@@ -1,3 +1,4 @@
+const { normalizelLocation } = require("../../utils")
 
 const { radioButtons } = require(".")
 /**
@@ -27,7 +28,7 @@ export function placeView(ui, site) {
       }),
       Skeletons.Note({
         className: `text`,
-        content: location.join(' '),
+        content: normalizelLocation(location)
       }),
       Skeletons.Note({
         className: `text`,

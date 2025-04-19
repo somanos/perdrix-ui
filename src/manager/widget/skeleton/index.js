@@ -10,3 +10,4 @@ export * from './topbar';
 export * from './widgets';
 export * from './site';
 export * from './cartridge';
+export * from './site-header';

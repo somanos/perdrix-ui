@@ -11,7 +11,7 @@ export function list(ui, partName = _a.list) {
     sys_pn: partName,
     flow: _a.none,
     uiHandler: null,
-    spinnerWait: 1500,
+    spinnerWait: 1000,
     spinner: true,
     // itemsOpt: {
     //   kind: 'customer_item',

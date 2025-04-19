@@ -30,7 +30,10 @@ module.exports = function (basedir, mode) {
             sassOptions: {
               sourceMap: true,
               sourceMapEmbed: true,
-              loadPaths: [Path.resolve(basedir, 'src', 'skin')]
+              loadPaths: [
+                Path.resolve(basedir, 'src', 'skin'),
+                Path.resolve(basedir, 'src', 'manager', 'window','skin'),
+              ]
             }
           }
         }

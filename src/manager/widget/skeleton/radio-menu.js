@@ -14,7 +14,8 @@ export function menuItem(ui, opt, innerClass = '') {
     state: 0,
     //radio: "selection-menu",
     radiotoggle: _a.parent,
-    icons: ["raw-radio-unchecked", "raw-radio-checked"],
+    //icons: ["raw-radio-unchecked", "raw-radio-checked"],
+    icons: ["arrow-down", "arrow-up"],
     ...opt,
   });
 }

@@ -1,0 +1,80 @@
+@use "mixins/drumee";
+
+@mixin selection-menu-2 {
+  &__menu {
+    &-main {
+      width: 100%;
+      height: 100%;
+      background-color: inherit;
+      display: flex;
+      flex-direction: row;
+
+      .menu-trigger {
+        width: 100%;
+        height: 100%;
+      }
+
+      .menu-topic-items__wrapper {
+        color: white;
+        background: white;
+        margin-top: 5px;
+        overflow: hidden;
+        box-shadow: drumee.$drumee-shadow-main;
+        padding: 0 15px 15px 15px;
+        border-radius: 3px;
+        left: -5px;
+      }
+    }
+
+    &-trigger {
+      width: 100%;
+      height: 100%;
+      background-color: inherit;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+    }
+
+    &-items {
+      width: 100%;
+    }
+
+    &-item {
+      min-width: 90px;
+      white-space: nowrap;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 0 5px;
+      margin-top:5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: drumee.$core-background-blue;
+        @include drumee.typo($color: white, $size: 14px, $line: 24px);
+
+        svg {
+          color: white;
+        }
+      }
+
+      &.create-work {
+        svg {
+          color: blue;
+        }
+      }
+
+      svg {
+        height: 22px;
+        width: 22px;
+        margin-right: 3px;
+        padding: 2px;
+      }
+
+      @include drumee.typo($color: #687B7F, $size: 14px, $line: 24px);
+    }
+  }
+}

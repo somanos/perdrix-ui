@@ -3,14 +3,12 @@
 @use 'group' as *;
 @use "mixins/form" as *;
 @use "mixins/window" as *;
-//@use 'tabs' as *;
-// @use "menu" as *;
 
-.window-customer {
+.window-site {
   @include window-topbar;
 }
 
-.window-customer {
+.window-site {
   &__ui {
     background-color: drumee.$core-default-background;
     width: 800px;
@@ -43,6 +41,7 @@
   }
 
   @include customer-header;
+  @include site-header;
   @include tabs;
   @include form-placeholder;
   @include selection-menu;
@@ -95,4 +94,5 @@
   // &__buttons-main {
   //   justify-content: flex-start;
   // }
+
 }

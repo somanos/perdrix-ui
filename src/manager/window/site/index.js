@@ -2,13 +2,11 @@ const __window = require('..');
 const { placeholder, menuItem } = require("../../widget/skeleton")
 const { contextBar } = require("./skeleton/widget")
 
-class __window_customer extends __window {
+class __window_site extends __window {
 
   async initialize(opt) {
     require('./skin');
     super.initialize(opt);
-    this.source = opt.source;
-    this.mset(opt.source.data())
   }
 
   /**
@@ -19,8 +17,9 @@ class __window_customer extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
+    this.debug("AAA:22", this)
     setTimeout(() => {
-      this.loadContextBar()
+      this.loadWorksList()
     }, 500)
   }
 
@@ -28,12 +27,11 @@ class __window_customer extends __window {
   /**
   * 
   */
-  async loadWorkList(cmd) {
-    let filters = await this.getSelectedItems("works-selectors", _a.status);
+  loadWorksList(cmd) {
     let api = {
       service: "work.list",
       custId: this.mget('custId'),
-      status: filters
+      siteId: this.mget('siteId'),
     };
     let itemsOpt = {
       kind: 'work_item',
@@ -49,48 +47,6 @@ class __window_customer extends __window {
     })
   }
 
-
-  /**
-  * 
-  */
-  async loadNotesList(cmd) {
-    let api = {
-      service: "note.list",
-      custId: this.mget('custId'),
-    };
-    let itemsOpt = {
-      kind: 'note_item',
-    }
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucune note trouvee", "Creer une note"],
-        service: "add-note"
-      }));
-    })
-  }
-
-  /**
-  * 
-  */
-  async loadSitesList() {
-    let api = {
-      service: "site.list",
-      custId: this.mget('custId'),
-    };
-    let itemsOpt = {
-      kind: 'site_item',
-      service: 'show-works',
-      uiHandler: [this]
-    }
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucun chantier", "Creer un chantier"],
-        service: "add-site"
-      }));
-    })
-  }
 
   /**
    * 
@@ -163,7 +119,7 @@ class __window_customer extends __window {
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadWorkList(cmd)
+        this.loadWorksList(cmd)
         break;
       case "pocs":
         buttons = [
@@ -290,20 +246,6 @@ class __window_customer extends __window {
   }
 
   /**
-     * 
-     */
-  async loadSiteWorks(site) {
-    this.debug("AAA:294", this, site)
-    this.loadWidget({
-      kind: 'window_site',
-      ...site.data(),
-      customer: this.source.data(),
-      id: `site-${site.mget(_a.id)}`,
-    })
-  }
-
-
-  /**
     * 
     */
   async updateWorkItem(cmd, args) {
@@ -329,8 +271,7 @@ class __window_customer extends __window {
     switch (service) {
       case "show-contacts":
         break;
-      case 'show-works':
-        this.loadSiteWorks(cmd)
+      case 'show-photos':
         break;
       case 'show-notes':
         this.loadNotesList(cmd)
@@ -365,7 +306,7 @@ class __window_customer extends __window {
         break;
       case 'work-created':
       case 'filter-works':
-        this.loadWorkList();
+        this.loadWorksList();
         break;
       case 'filter-bill':
         this.loadBillsList()
@@ -395,7 +336,7 @@ class __window_customer extends __window {
 
 }
 
-__window_customer.initClass();
+__window_site.initClass();
 
-module.exports = __window_customer;
+module.exports = __window_site;
 

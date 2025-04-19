@@ -10,6 +10,18 @@ export function px(v) {
   return `${v}px`
 }
 
+export function normalizelLocation(location) {
+  let place = '';
+  if (_.isArray(location)) {
+    if (location[1]) {
+      location[1] = location[1].ucFirst()
+    }
+    place = location.join(' ');
+  } else if (_.isString(location)) {
+    place = location;
+  }
+  return place;
+}
 /**
  * 
  * @param {*} v 
@@ -76,7 +88,12 @@ export function reverseSortBy(sortByFunction) {
 export async function feedList(api, itemsOpt, onEmpty) {
   let list = await this.ensurePart(_a.list);
   list.model.unset(_a.itemsOpt)
-  list.mset({ api, itemsOpt });
+  list.mset({
+    api,
+    itemsOpt,
+    spinnerWait: 1000,
+    spinner: true,
+  });
   list.trigger(_e.eod); //** Flush old listeningxs */
   list.restart();
   list.once(_e.data, async (data) => {
@@ -151,7 +168,8 @@ export async function searchLocation(cmd, wrapper) {
   };
   let itemsOpt = {
     kind: 'location_item',
-    service: 'select-address'
+    service: 'select-address',
+    uiHandler: [this]
   }
 
   return new Promise(async (will, wont) => {

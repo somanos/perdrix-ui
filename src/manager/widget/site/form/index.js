@@ -3,10 +3,6 @@ const { placeholder, acknowledge } = require("../../skeleton")
 const Form = require('../../form');
 class __form_site extends Form {
 
-  constructor(...args) {
-    super(...args);
-    this.searchLocation = this.searchLocation.bind(this);
-  }
 
   /**
    * 
@@ -109,14 +105,13 @@ class __form_site extends Form {
         this.changeDataset(name, _a.error, 0)
       }
     }
+
+    delete args.location /** Shall be built by backend */
+
     if (error) return;
     this.postService("site.create", { args }).then((data) => {
-      this.__content.feed(acknowledge(this, {
-        message: `Le chantier a bien ete cree`,
-        service: "site-created"
-      }));
-      this.mset(data);
-      this.raise();
+      this.triggerHandlers({ service: 'site-created', data })
+      this.goodbye()
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
         message: LOCALE.ERROR_SERVER,

@@ -20,6 +20,7 @@ module.exports = {
 	'window_customer_list': import('./manager/window/customer-list'),
 	'window_customer': import('./manager/window/customer'),
 	'window_finder': import('./manager/window/finder'),
+	'window_site': import('./manager/window/site'),
 	'work_item': import('./manager/widget/work/item'),
 	'work_list': import('./manager/widget/work/list'),
 };

@@ -10,6 +10,12 @@
 
 function site_item(ui) {
   let { postcode, city, location } = ui.model.toJSON();
+  let place;
+  if(_.isArray(location)){
+    place = location.join(' ')
+  }else{
+    place = location
+  }
   let pfx = ui.fig.family;
   return Skeletons.Box.X({
     className: `${pfx}__main`,
@@ -21,7 +27,7 @@ function site_item(ui) {
         kids: [
           Skeletons.Note({
             className: `${pfx}__text`,
-            content: location.join(' ')
+            content: place
           }),
           Skeletons.Note({
             className: `${pfx}__text`,
