@@ -10,12 +10,8 @@
   &__ui {
     background-color: inherit;
     width: 100%;
-    min-height: 110px;
     margin-bottom: 1px;
     cursor: pointer;
-    &.small {
-      min-height: unset;
-    }
 
     &:hover {
       background-color: drumee.$perdrix-hover;
@@ -30,12 +26,8 @@
   &__main {
     background-color: inherit;
     width: 100%;
-    grid-template-columns: 1fr 1fr;
     grid-gap: 0.5rem;
-
-    &.small {
-      grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr;
   }
 
   &__summary,
@@ -52,37 +44,25 @@
     border-bottom: 1px solid lightgrey;
   }
 
-  &__conten-small {
-    width: 100%;
-  }
-
   &__summary.header {
-    grid-template-columns: 70px 70px 1fr 24px;
-
-    &.small {
-      grid-template-columns: 70px 70px 1fr;
-    }
+    grid-template-columns: 70px 1fr 80px;
   }
 
   &__summary {
-    &.small {
-      grid-template-columns: 1fr 1fr;
-    }
+    grid-template-columns: 1fr 1fr;
   }
 
   &__details {
     justify-content: center;
-    grid-template-columns: 1fr;
 
-    &.small {
-      grid-template-columns: 1fr 1fr;
-    }
+    grid-template-columns: 1fr 1fr;
   }
 
   &__description {
     align-content: flex-start;
     flex-wrap: wrap;
     width: 100%;
+    padding-top: 4px;
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
   }
 
@@ -92,13 +72,17 @@
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
     &.type {
+      width: 50%;
+      min-width:120px;
       @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
-
       .inner {
         border: solid 0.5px lightgray;
         padding: 1px 10px;
         border-radius: 3px;
-        background-color: drumee.$core-background-blue;
+        width: 100%;
+        background-color: drumee.$blue-light;
+        justify-content: center;
+        display: flex
       }
     }
 

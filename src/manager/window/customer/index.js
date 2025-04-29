@@ -9,6 +9,11 @@ class __window_customer extends __window {
     super.initialize(opt);
     this.source = opt.source;
     this.mset(opt.source.data())
+    this._filter = {
+      date: 0,
+      city: 1,
+      site: 1
+    }
   }
 
   /**
@@ -77,16 +82,18 @@ class __window_customer extends __window {
   /**
   * 
   */
-  async loadSitesList() {
+  async loadSitesList(filter) {
     let api = {
       service: "site.list",
       custId: this.mget('custId'),
     };
+    if (filter) api.filter = filter;
     let itemsOpt = {
       kind: 'site_item',
       service: 'show-works',
       uiHandler: [this]
     }
+    this.debug("AAA:96", api)
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
@@ -101,7 +108,6 @@ class __window_customer extends __window {
    */
   async loadBillsList(cmd) {
     let status = await this.getSelectedItems("works-selectors", _a.status);
-    this.debug("AAA:33", status)
     let api = {
       service: "bill.list",
       custId: this.mget('custId'),
@@ -152,14 +158,14 @@ class __window_customer extends __window {
     let buttons;
     let state = 1;
     let service;
-    this.debug("AAA:151", name)
+    this.debug("AAA:161", name)
     switch (name) {
       case "works":
         service = 'filter-works';
         buttons = [
-          menuItem(this, { label: "Par date", filter: 'date', state: 0, service }),
-          menuItem(this, { label: "Par ville", filter: 'city', state: 1, service }),
-          menuItem(this, { label: "Par Chantier", filter: 'site', state: 1, service }),
+          menuItem(this, { sys_pn: "fdate", label: "Par date", name: 'ctime', state: 0, service }),
+          menuItem(this, { sys_pn: "fcity", label: "Par ville", name: 'city', state: 1, service }),
+          menuItem(this, { sys_pn: "fsite", label: "Par Chantier", name: 'siteId', state: 1, service }),
           Skeletons.Button.Label({
             className: `${this.fig.family}__button-action`,
             label: "Nouvelle mission",
@@ -168,7 +174,7 @@ class __window_customer extends __window {
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadWorkList()
+        this.loadWorkList(null, await this.getSortOptions(null, ["fdate", "fcity", "fsite"]));
         break;
       case "pocs":
         buttons = [
@@ -185,8 +191,8 @@ class __window_customer extends __window {
       case "sites":
         service = 'filter-sites';
         buttons = [
-          menuItem(this, { label: "Par ville", state, service }),
-          menuItem(this, { label: "Par date", state, service }),
+          menuItem(this, { sys_pn: "fdate", label: "Par date", name: 'ctime', state, service }),
+          menuItem(this, { sys_pn: "fcity", label: "Par ville", name: 'city', state, service }),
           Skeletons.Button.Label({
             className: `${this.fig.family}__button-action`,
             label: "Nouveau chantier",
@@ -195,7 +201,7 @@ class __window_customer extends __window {
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadSitesList();
+        this.loadSitesList(await this.getSortOptions(null, ["fdate", "fcity"]));
         break;
       case "solde":
         service = 'filter-bill';
@@ -227,6 +233,30 @@ class __window_customer extends __window {
       uiHandler: [this],
       service: "poc-created"
     })
+  }
+  /**
+    * 
+    */
+  async getSortOptions(cmd, parts) {
+    if (!parts) return null;
+    let source = []
+    for (let p of parts) {
+      source.push(await this.ensurePart(p));
+    }
+    let filers = [];
+    if (cmd) filers = [cmd];
+    for (let w of source) {
+      if (w === cmd) {
+        continue
+      }
+      filers.push(w)
+    }
+    let f = []
+    for (let el of filers) {
+      let p = {};
+      f.push({ name: el.mget(_a.name), value: el.getState() ? "asc" : "desc" })
+    }
+    return f
   }
 
   /**
@@ -328,7 +358,7 @@ class __window_customer extends __window {
    * @param {LetcBox}  cmd 
    * @param {object}  args 
    */
-  onUiEvent(cmd, args = {}) {
+  async onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
     this.debug(`AAA:170 onUiEvent=${service}`, cmd, args, this);
     switch (service) {
@@ -372,8 +402,13 @@ class __window_customer extends __window {
         this.promptQuote(cmd)
         break;
       case 'work-created':
-      case 'filter-works':
         this.loadWorkList();
+        break;
+      case 'filter-works':
+        this.loadWorkList(null, await this.getSortOptions(cmd, ["fdate", "fcity", "fsite"]));
+        break;
+      case 'filter-sites':
+        this.loadSitesList(await this.getSortOptions(cmd, ["fdate", "fcity"]));
         break;
       case 'filter-bill':
         this.loadBillsList()

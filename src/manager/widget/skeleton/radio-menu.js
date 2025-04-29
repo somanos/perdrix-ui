@@ -7,14 +7,15 @@
  */
 export function menuItem(ui, opt, innerClass = '') {
   let pfx = ui.fig.family;
+  if(opt.sys_pn){
+    opt.partHandler = [ui];
+  }
   return Skeletons.Button.Label({
     className: `${pfx}__menu-item  ${innerClass}`,
     uiHandler: [ui],
     service: "item-selected",
     state: 0,
-    //radio: "selection-menu",
     radiotoggle: _a.parent,
-    //icons: ["raw-radio-unchecked", "raw-radio-checked"],
     icons: ["arrow-down", "arrow-up"],
     ...opt,
   });

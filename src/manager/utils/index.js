@@ -228,18 +228,20 @@ export function itemMenuSelected(cmd) {
  * 
  * @param {*} opt 
  */
-export async function loadWorkList(opt) {
+export async function loadWorkList(opt, filter) {
   let api = {
     service: "work.list",
     custId: this.mget('custId'),
     siteId: this.mget('siteId')
   };
+  if (filter) api.filter = filter;
   let itemsOpt = {
     ...opt,
     service: "mission-hitsory",
     kind: 'work_item',
     uiHandler: [this],
   }
+  this.debug("AAA:244", filter)
   this.changeDataset("entries-manual", _a.state, 1)
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
