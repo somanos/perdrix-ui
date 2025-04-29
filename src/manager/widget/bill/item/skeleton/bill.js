@@ -31,7 +31,7 @@ function row(ui, label, value) {
  * @returns 
  */
 
-function qote(ui) {
+function bill(ui) {
   let {
     chrono, ht, ttc, tva, filepath
   } = ui.mget('bill') || {};
@@ -80,4 +80,4 @@ function qote(ui) {
   }
   return bill;
 }
-module.exports = qote;
+module.exports = bill;

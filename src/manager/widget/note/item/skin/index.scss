@@ -9,7 +9,7 @@
   &__ui {
     background-color: inherit;
     width: 100%;
-    min-height: 110px;
+    min-height: 75px;
 
     &:hover {
       background-color: drumee.$perdrix-hover;
@@ -50,31 +50,30 @@
   }
 
   &__description {
-    margin-top: 10px;
     grid-template-columns: 4fr 3fr;
   }
 
   &__text {
     align-content: flex-end;
     flex-wrap: wrap;
-    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
-    &.type {
-      margin-right: 10px;
-      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
+    // &.type {
+    //   margin-right: 10px;
+    //   @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
 
-      .inner {
-        border: solid 0.5px lightgray;
-        padding: 1px 10px;
-        border-radius: 3px;
-        background-color: drumee.$core-background-blue;
-      }
-    }
+    //   .inner {
+    //     border: solid 0.5px lightgray;
+    //     padding: 1px 10px;
+    //     border-radius: 3px;
+    //     background-color: drumee.$core-background-blue;
+    //   }
+    // }
 
-    &.status {
-      border: solid 0.5px drumee.$core-background-blue;
-      border-radius: 50%;
-    }
+    // &.status {
+    //   border: solid 0.5px drumee.$core-background-blue;
+    //   border-radius: 50%;
+    // }
   }
 
   &__cartridge {

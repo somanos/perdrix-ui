@@ -12,6 +12,35 @@ class __window_customer extends __window {
   }
 
   /**
+* 
+*/
+  data() {
+    const {
+      city,
+      citycode,
+      countrycode,
+      custId,
+      geometry,
+      id,
+      location,
+      postcode,
+      custName
+    } = this.model.toJSON();
+
+    return {
+      city,
+      id,
+      citycode,
+      countrycode,
+      custId,
+      geometry,
+      location,
+      postcode,
+      custName,
+      type: 'customer'
+    }
+  }
+  /**
    * 
    */
   onDomRefresh() {
@@ -19,36 +48,11 @@ class __window_customer extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
+    this.mset({ customer: this.data() })
     setTimeout(() => {
       this.loadContextBar()
     }, 500)
   }
-
-
-  /**
-  * 
-  */
-  async loadWorkList(cmd) {
-    let filters = await this.getSelectedItems("works-selectors", _a.status);
-    let api = {
-      service: "work.list",
-      custId: this.mget('custId'),
-      status: filters
-    };
-    let itemsOpt = {
-      kind: 'work_item',
-      uiHandler: [this]
-    }
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucun travail en cours.", "Creer un travail"],
-        service: 'create-work',
-      }
-      ));
-    })
-  }
-
 
   /**
   * 
@@ -148,6 +152,7 @@ class __window_customer extends __window {
     let buttons;
     let state = 1;
     let service;
+    this.debug("AAA:151", name)
     switch (name) {
       case "works":
         service = 'filter-works';
@@ -157,13 +162,13 @@ class __window_customer extends __window {
           menuItem(this, { label: "Par Chantier", filter: 'site', state: 1, service }),
           Skeletons.Button.Label({
             className: `${this.fig.family}__button-action`,
-            label: "Nouveau travail",
+            label: "Nouvelle mission",
             ico: "editbox_list-plus",
             icons: null, service: "create-work"
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadWorkList(cmd)
+        this.loadWorkList()
         break;
       case "pocs":
         buttons = [
@@ -331,6 +336,9 @@ class __window_customer extends __window {
         break;
       case 'show-works':
         this.loadSiteWorks(cmd)
+        break;
+      case "mission-hitsory":
+        this.loadMissionWindow(cmd);
         break;
       case 'show-notes':
         this.loadNotesList(cmd)

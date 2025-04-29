@@ -28,10 +28,10 @@ function row(ui, label, value) {
  * @returns 
  */
 
-function qote(ui) {
+function quote(ui) {
   let {
-    chrono, ht, ttc, tva, status, folderId
-  } = ui.mget('quote') || {};
+    chrono, ht, ttc, tva, folderId
+  } = ui.model.toJSON() || {};
   let pfx = `${ui.fig.family}__quote`
   let body = Skeletons.Box.Y({
     className: `${pfx}-body`,
@@ -46,10 +46,9 @@ function qote(ui) {
       row(ui, "Document", folderId),
     ]
   });
-
-  let quote;
-  if(chrono){
-    quote= [
+  return Skeletons.Box.Y({
+    className: `${pfx}-main`,
+    kids:[
       Skeletons.Box.X({
         className: `${pfx}-header`,
         kids: Skeletons.Note({
@@ -57,19 +56,8 @@ function qote(ui) {
           content: `Devis n ${chrono}`
         })
       }),
-      body,
-    ]  
-  }else{
-    quote= [
-      Skeletons.Box.X({
-        className: `${pfx}-header`,
-        kids: Skeletons.Note({
-          className: `label`,
-          content: `Pas de devis`
-        })
-      }),
-    ]  
-  }
-  return quote;
+      body,    
+    ]
+  })
 }
-module.exports = qote;
+module.exports = quote;

@@ -1,22 +1,21 @@
-const { customerHeader, siteHeader } = require("../../../widget/skeleton")
+const { customerHeader, siteHeader } = require(".")
 
 /**
  * 
  * @param {*} ui 
  * @returns 
  */
-export function tabs(ui) {
+export function windowTabs(ui) {
   let pfx = ui.fig.family;
-  let item = ui.fig.name;
 
-  let main = siteHeader(ui)
+  let site = siteHeader(ui)
   let context = Skeletons.Wrapper.X({
     className: `${pfx}__tabs context`,
     sys_pn: "context-bar",
   })
   return Skeletons.Box.Y({
     className: `${pfx}__tabs container`,
-    kids: [main, context]
+    kids: [site, context]
   })
 };
 
@@ -27,7 +26,7 @@ export function tabs(ui) {
  * @param {*} ui 
  * @returns 
  */
-export function main(ui) {
+export function windowMain(ui) {
   let list = Skeletons.List.Smart({
     className: `${ui.fig.family}__list-content`,
     innerClass: "drive-content-scroll",
@@ -39,7 +38,7 @@ export function main(ui) {
     className: `${ui.fig.family}__main ${ui.fig.group}__main`,
     radio: _a.parent,
     debug: __filename,
-    kids: [tabs(ui), list]
+    kids: [windowTabs(ui), list]
   });
 
 };
@@ -49,7 +48,7 @@ export function main(ui) {
  * @param {*} ui 
  * @returns 
  */
-export function topbar(ui) {
+export function windowTopbar(ui) {
   const figname = "topbar";
   const group = `${ui.fig.group}-${figname}`;
   let container = Skeletons.Box.X({

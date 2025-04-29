@@ -12,7 +12,6 @@ const { fromUnixtime } = require("../../../../utils")
 function work_item_small(ui) {
   let { type, workType, ctime, description, site, id } = ui.model.toJSON()
   let { city, location } = site;
-  console.log("AAA:15", { type, workType })
   if (!location) location = []
   let pfx = ui.fig.family;
   let overview = [

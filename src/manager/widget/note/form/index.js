@@ -129,25 +129,29 @@ class __form_note extends Form {
   * 
   */
   async loadWorkList(cmd) {
-    let api = {
-      service: "work.list",
-      custId: this.mget('custId'),
-    };
-    let itemsOpt = {
-      kind: 'work_item',
-      uiHandler: [this],
+    super.loadWorkList({
       format: _a.small,
       service: "select-work"
-    }
-    this.changeDataset("entries-manual", _a.state, 1)
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucun travail en cours.", "Creer un travail"],
-        service: 'create-work',
-      }
-      ));
     })
+    // let api = {
+    //   service: "work.list",
+    //   custId: this.mget('custId'),
+    // };
+    // let itemsOpt = {
+    //   kind: 'work_item',
+    //   uiHandler: [this],
+    //   format: _a.small,
+    //   service: "select-work"
+    // }
+    // this.changeDataset("entries-manual", _a.state, 1)
+    // this.feedList(api, itemsOpt, (list) => {
+    //   list.model.unset(_a.itemsOpt)
+    //   list.feed(placeholder(this, {
+    //     labels: ["Aucun travail en cours.", "Creer un travail"],
+    //     service: 'create-work',
+    //   }
+    //   ));
+    // })
   }
 
 

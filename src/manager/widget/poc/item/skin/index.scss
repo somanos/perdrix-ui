@@ -48,7 +48,7 @@
   &__text {
     align-content: center;
     flex-wrap: wrap;
-    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
     &.number {
       margin-left: 10px;

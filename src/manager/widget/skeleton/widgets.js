@@ -4,8 +4,8 @@
  * @param {*} ui 
  * @returns 
  */
-export function list(ui, partName = _a.list) {
-  return Skeletons.List.Smart({
+export function list(ui, partName = _a.list, args) {
+  let opt = {
     className: `${ui.fig.family}__searchbox`,
     innerClass: "drive-content-scroll",
     sys_pn: partName,
@@ -13,13 +13,10 @@ export function list(ui, partName = _a.list) {
     uiHandler: null,
     spinnerWait: 1000,
     spinner: true,
-    // itemsOpt: {
-    //   kind: 'customer_item',
-    //   flow: _a.x,
-    //   uiHandler: [ui]
-    // },
     vendorOpt: Preset.List.Orange_e,
-  });
+    ...args,
+  }
+  return Skeletons.List.Smart(opt);
 };
 
 /**

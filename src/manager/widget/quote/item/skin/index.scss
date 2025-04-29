@@ -5,20 +5,21 @@
 @use 'mixins/drumee';
 @use 'quote' as *;
 
-.note-item {
+.quote-item {
   &__ui {
     background-color: inherit;
     width: 100%;
     cursor: pointer;
-    min-height: 110px;
+    box-shadow: drumee.$drumee-shadow-box;
+    padding:5px 15px;
+    margin-bottom:8px;
+    min-height: 75px;
 
     &:hover {
       background-color: drumee.$perdrix-hover;
     }
 
-    box-shadow: drumee.$drumee-shadow-box;
-    padding:5px 15px;
-    margin-bottom:8px;
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
   }
 
   &__main {
@@ -43,7 +44,7 @@
   }
 
   &__summary.header {
-    grid-template-columns: 70px 1fr 1fr;
+    grid-template-columns: 70px 1fr;
   }
 
   &__details {
@@ -51,31 +52,29 @@
   }
 
   &__description {
-    margin-top: 10px;
     grid-template-columns: 4fr 3fr;
   }
 
   &__text {
     align-content: flex-end;
     flex-wrap: wrap;
-    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
 
-    &.type {
-      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
-      margin-right: 10px;
+    // &.type {
+    //   @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
+    //   margin-right: 10px;
 
-      .inner {
-        border: solid 0.5px lightgray;
-        padding: 1px 10px;
-        border-radius: 3px;
-        background-color: drumee.$core-background-blue;
-      }
-    }
+    //   .inner {
+    //     border: solid 0.5px lightgray;
+    //     padding: 1px 10px;
+    //     border-radius: 3px;
+    //     background-color: drumee.$core-background-blue;
+    //   }
+    // }
 
-    &.status {
-      border: solid 0.5px drumee.$core-background-blue;
-      border-radius: 50%;
-    }
+    // &.status {
+    //   border: solid 0.5px drumee.$core-background-blue;
+    //   border-radius: 50%;
+    // }
   }
 
   &__cartridge {

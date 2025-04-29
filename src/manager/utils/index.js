@@ -22,6 +22,7 @@ export function normalizelLocation(location) {
   }
   return place;
 }
+
 /**
  * 
  * @param {*} v 
@@ -94,7 +95,6 @@ export async function feedList(api, itemsOpt, onEmpty) {
     spinnerWait: 1000,
     spinner: true,
   });
-  list.trigger(_e.eod); //** Flush old listeningxs */
   list.restart();
   list.once(_e.data, async (data) => {
     if (_.isEmpty(data)) {
@@ -232,9 +232,11 @@ export async function loadWorkList(opt) {
   let api = {
     service: "work.list",
     custId: this.mget('custId'),
+    siteId: this.mget('siteId')
   };
   let itemsOpt = {
     ...opt,
+    service: "mission-hitsory",
     kind: 'work_item',
     uiHandler: [this],
   }
@@ -242,10 +244,29 @@ export async function loadWorkList(opt) {
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
-      labels: ["Aucun travail en cours.", "Creer un travail"],
+      labels: ["Aucune mission en cours.", "Creer une mission"],
       service: 'create-work',
     }
     ));
+  })
+}
+
+/**
+ * 
+ */
+export async function loadMissionWindow(cmd) {
+  let { custId, siteId, workId } = cmd.model.toJSON()
+  let { site } = cmd.data()
+  if (!site) site = cmd.data();
+  this.loadWidget({
+    kind: 'window_mission',
+    custId,
+    siteId,
+    workId,
+    site,
+    customer: this.mget('customer'),
+    id: `mission-${custId}`,
+    uiHandler: [this],
   })
 }
 
@@ -289,3 +310,15 @@ export function updateAmount() {
   }
 }
 
+/**
+  * 
+  */
+export async function promptSite(source) {
+  this.loadWidget({
+    kind: 'form_site',
+    source,
+    id: `site-form-${this.mget('custId')}`,
+    uiHandler: [this],
+    service: "site-created"
+  })
+}

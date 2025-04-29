@@ -37,7 +37,7 @@
 
   &__text {
     border: none;
-    @include drumee.typo($color: #787B7F, $size: 12px, $line: 24px);
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 24px);
 
     .inner {
       overflow: hidden;

@@ -29,7 +29,7 @@ function filterSelector(ui) {
       menuItems(ui, "Client", "customer"),
       menuItems(ui, "Chantier", "site"),
       menuItems(ui, "Contact Chantier", "poc"),
-      menuItems(ui, "Travaux", "work"),
+      menuItems(ui, "Missions", "work"),
     ]
   });
 

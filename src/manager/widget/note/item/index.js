@@ -14,6 +14,7 @@ class __note_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
+    this.debug("AAA:17", this)
     this.feed(require('./skeleton')(this));
   }
 

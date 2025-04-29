@@ -1,8 +1,8 @@
 require('./skin');
 const {
   feedList, clearList, loadWidget, changeDataset, loadWorkList,
-  prompLocation, searchLocation, throtle, addressSelected,
-  itemMenuSelected, selectWork, updateAmount
+  prompLocation, searchLocation, throtle, addressSelected, promptSite,
+  itemMenuSelected, selectWork, updateAmount, loadMissionWindow
 } = require("./utils")
 
 class __form_core extends DrumeeInteractWindow {
@@ -20,6 +20,8 @@ class __form_core extends DrumeeInteractWindow {
     this.loadWorkList = loadWorkList.bind(this);
     this.selectWork = selectWork.bind(this);
     this.updateAmount = updateAmount.bind(this);
+    this.promptSite = promptSite.bind(this);
+    this.loadMissionWindow = loadMissionWindow.bind(this);
   }
 
   /**

@@ -15,7 +15,7 @@ function workSkl(ui) {
     type, ttc, ht, taux_tva, val_tva,  description
   } = ui.mget(_a.content);
 
-  let title = `Travaux`;
+  let title = `Missions`;
 
   if(type){
     title = `${title} (${type})`;

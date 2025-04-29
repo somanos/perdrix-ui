@@ -16,15 +16,15 @@
       width: 100%;
 
       .label {
-        @include drumee.typo($color: #787B7F, $size: 16px, $line: 24px);
         width: 100%;
+        @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
       }
     }
 
     &-row {
       width: 100%;
       grid-template-columns: 150px 1fr;
-      @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+      @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
       .value {
         flex-direction: row;

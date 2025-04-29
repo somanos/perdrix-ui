@@ -21,6 +21,7 @@
     display: flex;
     left: calc(50vw - 400px);
     top: 40px;
+    cursor: pointer;
 
     &[data-device="mobile"] {
       width: 100vw;

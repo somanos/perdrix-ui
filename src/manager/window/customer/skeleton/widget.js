@@ -35,7 +35,7 @@ export function tabs(ui) {
       }),
       Skeletons.Button.Label({
         ico: 'desktop_desksettings',
-        label: 'Travaux',
+        label: 'Missions',
         name: 'works',
         state: 1
       }),

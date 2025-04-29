@@ -1,0 +1,129 @@
+@use "sass:meta";
+@use 'mixins/drumee';
+@use 'group' as *;
+@use "mixins/form" as *;
+@use "mixins/window" as *;
+
+.window-mission {
+  @include window-topbar;
+}
+
+.window-mission {
+  &__ui {
+    background-color: drumee.$core-default-background;
+    width: 800px;
+    height: 600px;
+    box-shadow: drumee.$drumee-shadow-container;
+    overflow: visible;
+    min-width: 340px; //300px;
+    min-height: 200px;
+    flex-direction: column;
+    display: flex;
+    left: calc(50vw - 400px);
+    top: 40px;
+
+    &[data-device="mobile"] {
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+    }
+
+    &[data-tmp="1"] {
+      z-index: 9000 !important;
+    }
+  }
+
+  &__main {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
+  @include customer-header;
+  @include site-header;
+  @include tabs;
+  @include form-placeholder;
+  @include selection-menu;
+  @include list-content;
+  @include button-action;
+
+  &__button-action {
+    height: 28px;
+  }
+
+  &__list-content {
+    height: calc(100% - 40px);
+
+    .list-smart__container {
+      height: 100%;
+    }
+  }
+
+  &__summary {
+    &.header {
+      grid-template-columns: 80px 70px 120px;
+    }
+
+    &.main {
+      height: 100%;
+    }
+  }
+
+  &__text {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+
+    &.type {
+      @include drumee.typo($color: drumee.$white, $size: 12x, $line: 20px);
+
+      .inner {
+        border: solid 0.5px lightgray;
+        padding: 1px 10px;
+        border-radius: 3px;
+        background-color: drumee.$core-background-blue;
+      }
+    }
+  }
+
+  &__description {
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0 13px;
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+  }
+
+  &__history {
+    &-main {
+      width: 100%;
+      grid-template-columns: 1fr 1fr;
+      height: calc(100% - 60px);
+      border-top: 1px solid lavenderblush;
+      margin-top: 5px;
+    }
+
+    &-column {
+      width: 100%;
+      height: 100%;
+      border-left: 1px solid lavenderblush;
+    }
+
+    &-container {
+      width: 100%;
+      flex: 1;
+    }
+
+    &-header {
+      width: 100%;
+    }
+
+    &-content {
+      height: calc(100% - 28px);
+      overflow-y: auto;
+    }
+  }
+}

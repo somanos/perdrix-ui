@@ -1,5 +1,5 @@
 
-class __note_item extends LetcBox {
+class __quote_item extends LetcBox {
 
   /**
    * 
@@ -14,7 +14,7 @@ class __note_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:35", this)
+    this.debug("AAAA:17", this)
     this.feed(require('./skeleton')(this));
   }
 
@@ -33,4 +33,4 @@ class __note_item extends LetcBox {
 
 }
 
-module.exports = __note_item
+module.exports = __quote_item

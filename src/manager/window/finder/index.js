@@ -268,7 +268,7 @@ class __window_finder extends __window {
   */
   onUiEvent(cmd, args = {}) {
     const { service, type, content } = args
-    this.debug(`onUiEvent service=${service}`, cmd, args, this);
+    this.debug(`AAA:273 onUiEvent service=${service}`, cmd, args, this);
 
     switch (service) {
       case _e.close:

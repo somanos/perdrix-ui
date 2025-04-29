@@ -15,7 +15,7 @@ class __window_perdrix extends Utils {
     this.raise();
     switch (pn) {
       case _a.content:
-        child.feed(require("./skeleton/content/grid")(this));
+        //child.feed(require("./skeleton/content/grid")(this));
         break;
     }
   }

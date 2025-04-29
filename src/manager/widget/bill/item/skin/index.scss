@@ -54,7 +54,7 @@
   &__text {
     align-content: flex-end;
     flex-wrap: wrap;
-    @include drumee.typo($color: #787B7F, $size: 12px, $line: 20px);
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
     &.type {
       @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);

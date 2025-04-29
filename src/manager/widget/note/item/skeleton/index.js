@@ -36,18 +36,18 @@ function note_item(ui) {
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
-        Skeletons.Note({
-          className: `${pfx}__text type`,
-          content: workType
-        }),
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: `Numero de travail ${workId}`
-        }),
+        // Skeletons.Note({
+        //   className: `${pfx}__text type`,
+        //   content: workType
+        // }),
+        // Skeletons.Note({
+        //   className: `${pfx}__text`,
+        //   content: `Numero de travail ${workId}`
+        // }),
       ]
     }),
     //placeView(ui, site),
-    { ...site, state:0, siteId, type:'site', showMap:0, kind: 'location_view' },
+    // { ...site, state:0, siteId, type:'site', showMap:0, kind: 'location_view' },
     Skeletons.Box.G({
       className: `${pfx}__description`,
       kids: desc

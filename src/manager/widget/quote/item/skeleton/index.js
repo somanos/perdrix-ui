@@ -13,8 +13,8 @@ const {
  * @returns 
  */
 
-function note_item(ui) {
-  let { workType, ctime, description, workId, folderId, site } = ui.model.toJSON()
+function quote_item(ui) {
+  let { ctime, description, chrono } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let desc = [
     Skeletons.Note({
@@ -22,37 +22,24 @@ function note_item(ui) {
       content: description
     }),
   ]
-  if (folderId) {
-    desc.push(Skeletons.Note({
-      className: `${pfx}__text`,
-      content: `Photo ${folderId}`
-    }))
-  }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
-      kids:  [
+      kids: [
         Skeletons.Note({
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
-        Skeletons.Note({
-          className: `${pfx}__text type`,
-          content: workType
-        }),
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: `Numero de travail ${workId}`
-        }),
       ]
     }),
-    placeView(ui, site),
     Skeletons.Box.G({
       className: `${pfx}__description`,
       kids: desc
-    })
+    }),
   ]
-
+  if (chrono) {
+    overview.push(require('./quote')(ui))
+  }
   return Skeletons.Box.G({
     className: `${pfx}__main`,
     debug: __filename,
@@ -62,12 +49,8 @@ function note_item(ui) {
         className: `${pfx}__summary`,
         kids: overview,
       }),
-      // Skeletons.Box.Y({
-      //   className: `${pfx}__quote`,
-      //   kids: require("./media")(ui),
-      // }),
     ]
   })
 
 }
-module.exports = note_item;
+module.exports = quote_item;
