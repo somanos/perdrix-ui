@@ -11,9 +11,10 @@
 function site_item(ui) {
   let { postcode, city, location } = ui.model.toJSON();
   let place;
-  if(_.isArray(location)){
+  if (location && location[1]) location[1] = location[1].ucFirst();
+  if (_.isArray(location)) {
     place = location.join(' ')
-  }else{
+  } else {
     place = location
   }
   let pfx = ui.fig.family;

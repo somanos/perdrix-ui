@@ -50,6 +50,18 @@
 
   &__button-action {
     height: 28px;
+    margin: 0;
+    max-width: 50%;
+    width: 160px;
+  }
+
+  &__buttons {
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  &__tabs.content {
+    justify-content: space-around;
   }
 
   &__list-content {

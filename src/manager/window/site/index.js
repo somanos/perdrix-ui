@@ -1,5 +1,5 @@
 const __window = require('..');
-
+const { workTab, pocTab } = require("./skeleton/widget")
 class __window_site extends __window {
 
   async initialize(opt) {
@@ -44,10 +44,8 @@ class __window_site extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    this.debug("AAA:22", this)
-    setTimeout(() => {
-      this.loadWorkList({ service: "mission-hitsory" })
-    }, 500)
+    this.loadContextBar();
+    //this.loadWorkList({ service: "mission-hitsory", format: _a.small })
   }
 
 
@@ -61,15 +59,22 @@ class __window_site extends __window {
     if (cmd) {
       name = cmd.mget(_a.name);
     }
-    let buttons;
-    let state = 1;
-    let service;
+    this.debug("AAA:161", this, name)
     switch (name) {
+      case "works":
+        context.feed(workTab(this));
+        this.loadWorkList(
+          { service: "mission-hitsory", format: _a.small },
+          await this.getSortOptions(null, ["fdate"])
+        );
+        break;
+      case "pocs":
+        context.feed(pocTab(this));
+        this.loadPocList(cmd)
+        break;
     }
-
   }
 
- 
   /**
    * 
    * @param {LetcBox}  cmd 
@@ -82,6 +87,8 @@ class __window_site extends __window {
       case "mission-hitsory":
         this.loadMissionWindow(cmd);
         break;
+      case 'load-context':
+        this.loadContextBar(cmd, args);
       default:
         super.onUiEvent(cmd, args);
     }

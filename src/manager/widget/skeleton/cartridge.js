@@ -27,3 +27,25 @@ export function cartridge(ui, note, input) {
     kids
   })
 }
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} label 
+ * @param {*} value 
+ * @returns 
+ */
+export function labelValue(ui, label, value) {
+  return Skeletons.Box.G({
+    kids: [
+      Skeletons.Note({
+        className: `label`,
+        content: label,
+      }),
+      Skeletons.Note({
+        className: `value`,
+        content: value,
+      }),
+    ]
+  })
+}

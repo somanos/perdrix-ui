@@ -4,41 +4,33 @@
 * ==================================================================== */
 const { fromUnixtime } = require("../../../utils")
 
-function history(ui, { partName, kind, service, label, api }) {
+function history(ui, { partName, kind, api }) {
+  let opt = {
+    className: `${ui.fig.family}__history-content`,
+    sys_pn: partName,
+    flow: _a.y,
+    spinnerWait: 1000,
+    spinner: true,
+    partHandler: [ui],
+    vendorOpt: Preset.List.Orange_e,
+    itemsOpt: {
+      kind,
+    }
+  }
+  if (api) {
+    opt.api = { service: api, workId: ui.mget('workId') }
+  }
+  if (kind) {
+    opt.itemsOpt = { kind }
+  }
   return Skeletons.Box.Y({
     className: `${ui.fig.family}__history-container`,
     kids: [
-      Skeletons.Box.X({
-        className: `${ui.fig.family}__history-header`,
-        kids: [
-          Skeletons.Button.Label({
-            className: `${ui.fig.family}__button-action`,
-            label,
-            ico: "editbox_list-plus",
-            icons: null,
-            service,
-          })
-        ]
-      }),
-      Skeletons.List.Smart({
-        className: `${ui.fig.family}__history-content`,
-        sys_pn: partName,
-        flow: _a.y,
-        spinnerWait: 1000,
-        spinner: true,
-        partHandler: [ui],
-        vendorOpt: Preset.List.Orange_e,
-        itemsOpt: {
-          kind,
-        },
-        api: {
-          service: api,
-          workId: ui.mget('workId')
-        }
-      })
+      Skeletons.List.Smart(opt)
     ]
   })
 }
+
 /**
  * 
  * @param {*} ui 
@@ -75,32 +67,80 @@ function work_summary(ui, data) {
       Skeletons.Box.G({
         className: `${pfx}__history-main`,
         kids: [
-          history(ui, {
-            partName: "notes",
-            kind: "note_item",
-            api: "work.notes",
-            label: "Nouvelle note",
-            service: "create-bill"
-          }),
           Skeletons.Box.Y({
-            className: `${pfx}__history-column`,
+            className: `${ui.fig.family}__history-container`,
             kids: [
-              history(ui, {
-                partName: "quotes",
-                kind: "quote_item",
-                api: "work.quotations",
-                label: "Nouveau devis",
-                service: "create-quote"
+              Skeletons.Box.X({
+                className: `${ui.fig.family}__buttons`,
+                kids: [
+                  Skeletons.Button.Label({
+                    className: `${ui.fig.family}__button-action add`,
+                    label: "Nouvelle note",
+                    ico: "editbox_list-plus",
+                    icons: null,
+                    service: "create-note"
+                  })]
               }),
               history(ui, {
-                partName: "bills",
-                kind: "bill_item",
-                api: "work.bills",
-                label: "Nouvelle facture",
-                service: "create-bill"
+                partName: "notes",
+                kind: "note_item",
+                api: "work.notes",
               }),
             ]
+          }),
+
+          Skeletons.Box.Y({
+            className: `${ui.fig.family}__history-container`,
+            kids: [
+              Skeletons.Box.X({
+                className: `${ui.fig.family}__buttons`,
+                kids: [
+                  Skeletons.Button.Label({
+                    className: `${ui.fig.family}__button-action add`,
+                    label: "Nouveau devis",
+                    ico: "editbox_list-plus",
+                    icons: null,
+                    service: "create-quote"
+                  }),
+                  Skeletons.Button.Label({
+                    className: `${ui.fig.family}__button-action add`,
+                    label: "Nouvelle facture",
+                    ico: "editbox_list-plus",
+                    icons: null,
+                    service: "create-bill"
+                  }),
+
+                ]
+              }),
+              Skeletons.Box.Y({
+                className: `${ui.fig.family}__history-content`,
+                partHandler: [ui],
+                sys_pn: "sales",
+              })
+            ]
           })
+          // history(ui, {
+          //   partName: "sales",
+          // }),
+          // Skeletons.Box.Y({
+          //   className: `${pfx}__history-column`,
+          //   kids: [
+          //     history(ui, {
+          //       partName: "quotes",
+          //       kind: "quote_item",
+          //       api: "work.quotations",
+          //       label: "Nouveau devis",
+          //       service: "create-quote"
+          //     }),
+          //     history(ui, {
+          //       partName: "bills",
+          //       kind: "bill_item",
+          //       api: "work.bills",
+          //       label: "Nouvelle facture",
+          //       service: "create-bill"
+          //     }),
+          //   ]
+          // })
         ]
       })
     ]

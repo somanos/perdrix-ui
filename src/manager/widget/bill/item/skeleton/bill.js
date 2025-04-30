@@ -3,27 +3,8 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { devise, vat } = require("../../../../utils")
-const {
-  actionButtons
-} = require("../../../skeleton")
+const { labelValue } = require("../../../skeleton")
 
-/**
- * 
- */
-function row(ui, label, value) {
-  return Skeletons.Box.G({
-    kids: [
-      Skeletons.Note({
-        className: `label`,
-        content: label,
-      }),
-      Skeletons.Note({
-        className: `value`,
-        content: value,
-      }),
-    ]
-  })
-}
 
 /**
  * 
@@ -33,9 +14,9 @@ function row(ui, label, value) {
 
 function bill(ui) {
   let {
-    chrono, ht, ttc, tva, filepath
-  } = ui.mget('bill') || {};
-  let pfx = `${ui.fig.family}__bill`
+    chrono, ht, ttc, tva, docId
+  } = ui.model.toJSON() || {};
+  let pfx = `${ui.fig.family}__cartridge`
   let body = Skeletons.Box.Y({
     className: `${pfx}-body`,
     debug: __filename,
@@ -43,41 +24,26 @@ function bill(ui) {
       className: `${pfx}-row`,
     },
     kids: [
-      row(ui, "Montant HT", devise(ht)),
-      row(ui, "TVA", vat(tva)),
-      row(ui, "Montant TTC", devise(ttc)),
-      row(ui, "Document", filepath),
+      labelValue(ui, "Montant HT", devise(ht)),
+      labelValue(ui, "TVA", vat(tva)),
+      labelValue(ui, "Montant TTC", devise(ttc)),
+      labelValue(ui, "Document", docId),
     ]
   });
-
-  let bill;
-  if (chrono) {
-    let view_bill = Skeletons.Note({
-      className: `label`,
-      content: `Facture n ${chrono}`,
-    });
-    if (filepath) {
-      view_bill.className = `label clickable`;
-      view_bill.service = 'view-bill';
-      view_bill.uiHandler = [ui];
-    }
-    bill = [
-      Skeletons.Box.X({
-        className: `${pfx}-header`,
-        kids: [view_bill]
-      }),
+  return Skeletons.Box.Y({
+    className: `${pfx}-main`,
+    kids: [
+      // Skeletons.Box.X({
+      //   className: `${pfx}-header`,
+      //   kids: Skeletons.Note({
+      //     className: `label`,
+      //     content: `Facture n ${chrono}`
+      //   })
+      // }),
       body,
     ]
-  } else {
-    bill = [
-      Skeletons.Box.X({
-        className: `${pfx}-header`,
-        kids: actionButtons(ui, [
-          { content: "Editer une facture", service: "add-bill" }
-        ])
-      }),
-    ]
-  }
-  return bill;
+  })
 }
+
+
 module.exports = bill;

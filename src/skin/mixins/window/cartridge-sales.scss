@@ -1,0 +1,83 @@
+@use "../drumee";
+
+@mixin cartridge-sales {
+  background-color: inherit;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: drumee.$drumee-shadow-box;
+  padding: 5px 15px;
+  margin-bottom: 8px;
+  min-height: 75px;
+
+  &:hover {
+    background-color: drumee.$perdrix-hover;
+  }
+
+  @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-gap: 0.5rem;
+  }
+
+  &__summary {
+    width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+  }
+
+  &__summary.header {
+    grid-template-columns: 70px 1fr;
+  }
+
+  &__details {
+    justify-content: center;
+  }
+
+  &__description {
+    grid-template-columns: 4fr 3fr;
+  }
+
+  &__text {
+    align-content: flex-end;
+    flex-wrap: wrap;
+
+  }
+
+  &__cartridge {
+    width: 100%;
+    &-main {
+      width: 100%;
+    }
+
+    &-header {
+      width: 100%;
+
+      .label {
+        width: 100%;
+        @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+      }
+    }
+
+    &-row {
+      width: 100%;
+      grid-template-columns: 150px 1fr;
+      @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+
+      .value {
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

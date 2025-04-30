@@ -2,25 +2,9 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime, devise, vat } =  require("../../../../utils")
+const {  devise, vat } =  require("../../../../utils")
+const { labelValue } = require("../../../skeleton")
 
-/**
- * 
- */
-function row(ui, label, value) {
-  return Skeletons.Box.G({
-    kids: [
-      Skeletons.Note({
-        className: `label`,
-        content: label,
-      }),
-      Skeletons.Note({
-        className: `value`,
-        content: value,
-      }),
-    ]
-  })
-}
 
 /**
  * 
@@ -30,9 +14,9 @@ function row(ui, label, value) {
 
 function quote(ui) {
   let {
-    chrono, ht, ttc, tva, folderId
+    chrono, ht, ttc, tva, docId, discount
   } = ui.model.toJSON() || {};
-  let pfx = `${ui.fig.family}__quote`
+  let pfx = `${ui.fig.family}__cartridge`
   let body = Skeletons.Box.Y({
     className: `${pfx}-body`,
     debug: __filename,
@@ -40,22 +24,23 @@ function quote(ui) {
       className: `${pfx}-row`,
     },
     kids: [
-      row(ui, "Montant HT", devise(ht)),
-      row(ui, "TVA", vat(tva)),
-      row(ui, "Montant TTC", devise(ttc)),
-      row(ui, "Document", folderId),
+      labelValue(ui, "Montant HT", devise(ht)),
+      labelValue(ui, "TVA", vat(tva)),
+      labelValue(ui, "Remise", devise(discount)),
+      labelValue(ui, "Montant TTC", devise(ttc)),
+      labelValue(ui, "Document", docId),
     ]
   });
   return Skeletons.Box.Y({
     className: `${pfx}-main`,
     kids:[
-      Skeletons.Box.X({
-        className: `${pfx}-header`,
-        kids: Skeletons.Note({
-          className: `label`,
-          content: `Devis n ${chrono}`
-        })
-      }),
+      // Skeletons.Box.X({
+      //   className: `${pfx}-header`,
+      //   kids: Skeletons.Note({
+      //     className: `label`,
+      //     content: `Devis n ${chrono}`
+      //   })
+      // }),
       body,    
     ]
   })

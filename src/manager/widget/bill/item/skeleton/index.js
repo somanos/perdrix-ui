@@ -3,6 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { fromUnixtime } = require("../../../../utils")
+
 /**
  * 
  * @param {*} ui 
@@ -13,10 +14,14 @@ const STATUS = [
   '🔒', '🧰'
 ]
 function bill_item(ui) {
-  let { type, ctime, description, status, site, id } = ui.model.toJSON()
-  let { city, location } = site;
-  if (!location) location = []
+  let { chrono, ctime, description, workId } = ui.model.toJSON()
   let pfx = ui.fig.family;
+  if (!workId) {
+    return Skeletons.Note({
+      className: `${pfx}__text`,
+      content: "Numéro de mission manquant"
+    })
+  }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -26,34 +31,24 @@ function bill_item(ui) {
           content: fromUnixtime(ctime)
         }),
         Skeletons.Note({
-          className: `${pfx}__text`,
-          content: id.toString()
-        }),
-        Skeletons.Note({
-          className: `${pfx}__text type`,
-          content: type
-        }),
-        Skeletons.Note({
-          className: `${pfx}__text status`,
-          content: STATUS[status]
+          className: `label`,
+          content: `Facture n ${chrono}`
         })
       ]
     }),
-    Skeletons.Box.Y({
-      className: `${pfx}__details`,
+    Skeletons.Box.G({
+      className: `${pfx}__description`,
       kids: [
         Skeletons.Note({
           className: `${pfx}__text`,
           content: description.replace(/\n/g, '<br>')
         }),
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: location.join(' ') + ' ' + city
-        })
       ]
-    })
+    }),
   ]
-
+  if (chrono) {
+    overview.push(require('./bill')(ui))
+  }
   return Skeletons.Box.G({
     className: `${pfx}__main`,
     debug: __filename,
@@ -62,10 +57,6 @@ function bill_item(ui) {
       Skeletons.Box.Y({
         className: `${pfx}__summary`,
         kids: overview,
-      }),
-      Skeletons.Box.Y({
-        className: `${pfx}__bill`,
-        kids: require("./bill")(ui),
       }),
     ]
   })

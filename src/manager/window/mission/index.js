@@ -1,4 +1,5 @@
 const __window = require('..');
+const { tab } = require("./skeleton/widget")
 
 class __window_mission extends __window {
 
@@ -7,83 +8,69 @@ class __window_mission extends __window {
     super.initialize(opt);
   }
 
-  // /**
-  //  * 
-  //  * @param {*} child 
-  //  * @param {*} pn 
-  //  */
-  // onPartReady(child, pn) {
-  //   switch (pn) {
-  //     case "notes":
-  //       //child.feed(require("./skeleton/content/grid")(this));
-  //       break;
-  //     case "bills":
-  //       //child.feed(require("./skeleton/content/grid")(this));
-  //       break;
-  //     default:
-  //       super.onPartReady(child, pn)
-  //   }
-  // }
-
   /**
    * 
    */
   onDomRefresh() {
     super.onDomRefresh();
-    this.debug("AAA:15", this)
+    this.debug("AAA:16", this)
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    this.fetchService("work.summary", { workId: this.mget('workId') }).then((data) => {
-      this.debug("AAA:20", data);
-      setTimeout(() => {
-        this.loadMissionHistory(data);
-      }, 500)
+    //this.loadContextBar();
+    this.loadMissionHistory();
+    this.loadSales()
+  }
+
+  /**
+  * 
+  */
+  // async loadContextBar() {
+  //   let context = await this.ensurePart("context-bar");
+  //   context.feed(tab(this));
+  // }
+
+  /**
+   * 
+   */
+  loadMissionHistory() {
+    this.fetchService("work.summary", { workId: this.mget('workId') }).then(async (data) => {
+      let list = await this.ensurePart(_a.list)
+      if (!data.id) return;
+      list.feed(require("./skeleton/summary")(this, data))
     })
   }
 
   /**
    * 
    */
-  async loadMissionHistory(data) {
-    this.debug("AAA:48", data);
-    let list = await this.ensurePart(_a.list)
-    if(!data.id) return;
-    list.feed(require("./skeleton/summary")(this, data))
-    let notesList = await this.ensurePart('notes');
-    let billsList = await this.ensurePart('bills');
-    let quotesList = await this.ensurePart('quotes');
-    this.debug("AAA:69", list, this, notesList, billsList, quotesList);
-  //   notesList.feed(note)
-  //   bill.map((e) => {
-  //     e.kind = "bill_item"
-  //   })
-  //   quote.map((e) => {
-  //     e.kind = "quote_item"
-  //   })
-  //   let sales = quote.concat(bill).filter(function name(e) {
-  //     return (e && e.ttc)
-  //  })
-   
-    // billsList.feed(sales)
+  async loadSales(data) {
+    let quotes = [];
+    try {
+      quotes = await this.fetchService("work.quotations", { workId: this.mget('workId') })
+    } catch (e) {
+      this.warn("Failed to fetch quotes", e)
+      quotes = []
+    }
+    let bills = [];
+    try {
+      bills = await this.fetchService("work.bills", { workId: this.mget('workId') })
+    } catch (e) {
+      this.warn("Failed to fetch quotes", e)
+      bills = []
+    }
+    quotes.map((e) => {
+      e.kind = "quote_item"
+    })
+    bills.map((e) => {
+      e.kind = "bill_item"
+    })
+    let s = quotes.concat(bills);
+    let sales = await this.ensurePart("sales")
+    this.debug("AAA:70", s, sales)
+    sales.feed(s)
   }
 
-  /**
-  * 
-  */
-  async loadContextBar(cmd) {
-    let context = await this.ensurePart("context-bar");
-    let name = "works";
-    if (cmd) {
-      name = cmd.mget(_a.name);
-    }
-    let buttons;
-    let state = 1;
-    let service;
-    switch (name) {
-    }
-
-  }
 
   /**
    * 

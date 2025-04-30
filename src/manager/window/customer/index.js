@@ -1,6 +1,5 @@
 const __window = require('..');
-const { placeholder, menuItem } = require("../../widget/skeleton")
-const { contextBar } = require("./skeleton/widget")
+const { placeholder, menuItem, contextBar} = require("../../widget/skeleton")
 
 class __window_customer extends __window {
 
@@ -93,7 +92,6 @@ class __window_customer extends __window {
       service: 'show-works',
       uiHandler: [this]
     }
-    this.debug("AAA:96", api)
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
@@ -128,27 +126,6 @@ class __window_customer extends __window {
   /**
   * 
   */
-  async loadPocList(cmd) {
-    if (cmd.mget('isTrigger') && !cmd.mget(_a.state)) return;
-    let api = {
-      service: "poc.list",
-      custId: this.mget('custId'),
-    };
-    let itemsOpt = {
-      kind: 'poc_item',
-    }
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucun contact trouve", "Creer un contact"],
-        service: "add-poc"
-      }));
-    })
-  }
-
-  /**
-  * 
-  */
   async loadContextBar(cmd) {
     let context = await this.ensurePart("context-bar");
     let name = "works";
@@ -158,7 +135,6 @@ class __window_customer extends __window {
     let buttons;
     let state = 1;
     let service;
-    this.debug("AAA:161", name)
     switch (name) {
       case "works":
         service = 'filter-works';
@@ -233,30 +209,6 @@ class __window_customer extends __window {
       uiHandler: [this],
       service: "poc-created"
     })
-  }
-  /**
-    * 
-    */
-  async getSortOptions(cmd, parts) {
-    if (!parts) return null;
-    let source = []
-    for (let p of parts) {
-      source.push(await this.ensurePart(p));
-    }
-    let filers = [];
-    if (cmd) filers = [cmd];
-    for (let w of source) {
-      if (w === cmd) {
-        continue
-      }
-      filers.push(w)
-    }
-    let f = []
-    for (let el of filers) {
-      let p = {};
-      f.push({ name: el.mget(_a.name), value: el.getState() ? "asc" : "desc" })
-    }
-    return f
   }
 
   /**

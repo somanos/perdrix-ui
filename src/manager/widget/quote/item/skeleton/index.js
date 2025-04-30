@@ -14,14 +14,8 @@ const {
  */
 
 function quote_item(ui) {
-  let { ctime, description, chrono } = ui.model.toJSON()
+  let { ctime, description = "", chrono="" } = ui.model.toJSON()
   let pfx = ui.fig.family;
-  let desc = [
-    Skeletons.Note({
-      className: `${pfx}__text`,
-      content: description
-    }),
-  ]
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -30,11 +24,20 @@ function quote_item(ui) {
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
+        Skeletons.Note({
+          className: `label`,
+          content: `Devis n ${chrono}`
+        })
       ]
     }),
     Skeletons.Box.G({
       className: `${pfx}__description`,
-      kids: desc
+      kids: [
+        Skeletons.Note({
+          className: `${pfx}__text`,
+          content: description.replace(/\n/g, '<br>')
+        }),
+      ]
     }),
   ]
   if (chrono) {

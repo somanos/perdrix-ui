@@ -55,7 +55,6 @@ function dockLaunchers(_ui_, ismobile) {
       }, "Annexes"),
     ]
   });
-
 };
 
 module.exports = dockLaunchers;

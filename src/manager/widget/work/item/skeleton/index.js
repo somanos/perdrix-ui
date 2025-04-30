@@ -21,6 +21,21 @@ function work_item(ui) {
   if (!location) location = []
   if (location[1]) location[1] = location[1].ucFirst();
   let pfx = ui.fig.family;
+  let place;
+  if (ui.mget(_a.format) == _a.small) {
+    place = null
+  } else {
+    place = Skeletons.Box.G({
+      className: `${pfx}__details`,
+      kids: [
+        Skeletons.Note({
+          className: `${pfx}__text`,
+          content: location.join(' ') + ' ' + city
+        })
+      ]
+    })
+  }
+
   let overview = [
     Skeletons.Box.Y({
       className: `${pfx}__conten`,
@@ -42,22 +57,13 @@ function work_item(ui) {
             }),
           ]
         }),
-        Skeletons.Box.G({
-          className: `${pfx}__details`,
-          kids: [
-            Skeletons.Note({
-              className: `${pfx}__text`,
-              content: location.join(' ') + ' ' + city
-            })
-          ]
-        })
+        place,
       ]
     }),
     Skeletons.Note({
       className: `${pfx}__description`,
       content: description.replace(/\n/g, '<br>')
     }),
-
   ]
 
   return Skeletons.Box.G({

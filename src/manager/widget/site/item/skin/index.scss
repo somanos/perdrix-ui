@@ -9,14 +9,15 @@
     background-color: inherit;
     width: 100%;
     cursor: pointer;
+    border-bottom: 1px solid lightgrey;
 
     &:hover {
       background-color: drumee.$perdrix-hover;
     }
 
-    box-shadow: drumee.$drumee-shadow-box;
-    padding:5px 15px;
-    margin-bottom:8px;
+    //box-shadow: drumee.$drumee-shadow-box;
+    //padding:5px 15px;
+    //margin-bottom:8px;
   }
 
   &__main {
@@ -31,7 +32,6 @@
     background-color: inherit;
     justify-content: start;
     align-items: start;
-    border-bottom: 1px solid lightgrey;
     grid-template-columns: 3fr 1fr 80px;
     grid-gap: 0.5rem;
   }

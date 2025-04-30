@@ -130,7 +130,7 @@ export async function clearList() {
  * 
  */
 export function loadWidget(opt, hide = 0) {
-  Wm.windowsLayer.append(opt);
+  Wm.addWindow(opt);
   let w = Wm.windowsLayer.children.last();
   setTimeout(() => {
     if (w && w.raise) w.raise();
@@ -267,7 +267,7 @@ export async function loadMissionWindow(cmd) {
     workId,
     site,
     customer: this.mget('customer'),
-    id: `mission-${custId}`,
+    id: `mission-${workId}`,
     uiHandler: [this],
   })
 }
@@ -324,3 +324,51 @@ export async function promptSite(source) {
     service: "site-created"
   })
 }
+
+
+/**
+* 
+*/
+export async function getSortOptions(cmd, parts) {
+  if (!parts) return null;
+  let source = []
+  for (let p of parts) {
+    source.push(await this.ensurePart(p));
+  }
+  let filers = [];
+  if (cmd) filers = [cmd];
+  for (let w of source) {
+    if (w === cmd) {
+      continue
+    }
+    filers.push(w)
+  }
+  let f = []
+  for (let el of filers) {
+    let p = {};
+    f.push({ name: el.mget(_a.name), value: el.getState() ? "asc" : "desc" })
+  }
+  return f
+}
+
+
+/**
+* 
+*/
+export async function loadPocList(cmd) {
+  let api = {
+    service: "poc.list",
+    custId: this.mget('custId'),
+    siteId: this.mget('siteId'),
+  };
+  let itemsOpt = {
+    kind: 'poc_item',
+  }
+  this.feedList(api, itemsOpt, (list) => {
+    list.model.unset(_a.itemsOpt)
+    list.feed(placeholder(this, {
+      labels: ["Aucun contact pour le moment"],
+    }));
+  })
+}
+

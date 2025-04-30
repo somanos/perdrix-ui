@@ -114,12 +114,3 @@ export function topbar(ui) {
   });
 };
 
-
-export function contextBar(ui, buttons) {
-  return Skeletons.Box.X({
-    debug: __filename,
-    className: `${ui.fig.family}__tabs content`,
-    sys_pn: "works-selectors",
-    kids: buttons
-  });
-}
