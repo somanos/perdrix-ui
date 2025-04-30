@@ -23,37 +23,6 @@ class __form_bill extends Form {
     this.debug("AAA:23", this)
   }
 
-  /**
-   * 
-   */
-  onPartReady(child, pn) {
-    this.raise();
-    switch (pn) {
-      case "topbar":
-        this.setupInteract();
-        break;
-      case "entries-manual":
-        if (this.mget('workId') && this.mget('site')) {
-          this.changeDataset(pn, _a.state, 1);
-        }
-        break;
-      case _a.list:
-        if (this.mget('workId') && this.mget('site')) {
-          let args = {
-            ...this.data(),
-            kind: 'work_item',
-            format: _a.small,
-          }
-          this.debug("AAA:47", args)
-          setTimeout(() => {
-            child.feed(args)
-          }, 500)
-        }
-        break;
-
-    }
-  }
-
 
   /**
   * 
@@ -102,14 +71,8 @@ class __form_bill extends Form {
     if (!args.description) {
       error = 1
       this.changeDataset('description', _a.error, 1)
-    }else{
+    } else {
       this.changeDataset('description', _a.error, 0)
-    }
-    if (!args.category) {
-      error = 1
-      this.changeDataset('category', _a.error, 1)
-    }else{
-      this.changeDataset('category', _a.error, 0)
     }
 
     this.debug("AAA:105", args)
@@ -117,11 +80,13 @@ class __form_bill extends Form {
       this.changeDataset("go-btn", _a.state, 1);
       return;
     }
+    this.changeDataset("btn-create", _a.state, 0)
     this.postService("bill.create", { args }).then((data) => {
-      let { id } = data;
-      this.triggerHandlers({ service: 'bill-created', data });
+      let service = this.mget("callbackService") || 'bill-created'
+      this.triggerHandlers({ service, data });
       this.goodbye()
     }).catch((e) => {
+      this.changeDataset("btn-create", _a.state, 1)
       this.message(LOCALE.ERROR_SERVER);
       this.debug("AAA:377 FAILED", e)
     })

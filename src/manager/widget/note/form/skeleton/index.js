@@ -6,6 +6,17 @@ const {
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
+  let site = ui.mget('site');
+  this.debug("AAA:10", site)
+  let siteView;
+  if(site){
+    siteView = {
+      ...site,
+      type: 'site',
+      kind: 'location_view',
+      state: 1
+    }
+  }
 
   const body = Skeletons.Box.Y({
     className: `${pfx}__body`,
@@ -14,13 +25,6 @@ module.exports = function (ui) {
       Skeletons.FileSelector({
         partHandler: ui,
       }),
-      //siteSelector(ui),
-      // Skeletons.Note({
-      //   className: `${pfx}__select-work`,
-      //   content: "Associer a un travail",
-      //   uiHandler: [ui],
-      //   service: 'select-work',
-      // }),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
@@ -30,7 +34,9 @@ module.exports = function (ui) {
       Skeletons.Wrapper.Y({
         className: `${pfx}__site-address`,
         sys_pn: "site-address",
-        state: 0,
+        kids:[
+          siteView
+        ]
       }),
       descriptionEntry(ui, {
         label: "Description",
@@ -47,15 +53,14 @@ module.exports = function (ui) {
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      headerBox(ui, { title: "Creer une note" }),
+      headerBox(ui, { title: "Créer une note" }),
       customerHeader(ui),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
           actionButtons(ui, [
-            { service: _a.create, content: "Creer la note", state: 0, sys_pn:"go-btn" },
-            { service: 'list-works', content: "Selectionner le travail" }
+            { service: _a.create, content: "Créer la note", sys_pn:"go-btn" },
           ]),
         ]
       })

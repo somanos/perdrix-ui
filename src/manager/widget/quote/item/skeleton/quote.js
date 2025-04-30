@@ -14,34 +14,26 @@ const { labelValue } = require("../../../skeleton")
 
 function quote(ui) {
   let {
-    chrono, ht, ttc, tva, docId, discount
+    ht, ttc, tva, docId, discount, filepath
   } = ui.model.toJSON() || {};
   let pfx = `${ui.fig.family}__cartridge`
-  let body = Skeletons.Box.Y({
-    className: `${pfx}-body`,
-    debug: __filename,
-    kidsOpt: {
-      className: `${pfx}-row`,
-    },
-    kids: [
-      labelValue(ui, "Montant HT", devise(ht)),
-      labelValue(ui, "TVA", vat(tva)),
-      labelValue(ui, "Remise", devise(discount)),
-      labelValue(ui, "Montant TTC", devise(ttc)),
-      labelValue(ui, "Document", docId),
-    ]
-  });
   return Skeletons.Box.Y({
     className: `${pfx}-main`,
     kids:[
-      // Skeletons.Box.X({
-      //   className: `${pfx}-header`,
-      //   kids: Skeletons.Note({
-      //     className: `label`,
-      //     content: `Devis n ${chrono}`
-      //   })
-      // }),
-      body,    
+      Skeletons.Box.Y({
+        className: `${pfx}-body`,
+        debug: __filename,
+        kidsOpt: {
+          className: `${pfx}-row`,
+        },
+        kids: [
+          labelValue(ui, "Montant HT", devise(ht)),
+          labelValue(ui, "TVA", vat(tva)),
+          labelValue(ui, "Remise", devise(discount)),
+          labelValue(ui, "Montant TTC", devise(ttc)),
+          labelValue(ui, "Document", filepath, "show-doc"),
+        ]
+      }),    
     ]
   })
 }

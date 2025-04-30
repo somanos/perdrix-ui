@@ -78,7 +78,8 @@ function work_summary(ui, data) {
                     label: "Nouvelle note",
                     ico: "editbox_list-plus",
                     icons: null,
-                    service: "create-note"
+                    uiHandler: ui,
+                    service: "add-note"
                   })]
               }),
               history(ui, {
@@ -100,14 +101,16 @@ function work_summary(ui, data) {
                     label: "Nouveau devis",
                     ico: "editbox_list-plus",
                     icons: null,
-                    service: "create-quote"
+                    service: "add-quote",
+                    uiHandler: ui,
                   }),
                   Skeletons.Button.Label({
                     className: `${ui.fig.family}__button-action add`,
                     label: "Nouvelle facture",
                     ico: "editbox_list-plus",
                     icons: null,
-                    service: "create-bill"
+                    service: "add-bill",
+                    uiHandler: ui,
                   }),
 
                 ]
@@ -119,28 +122,6 @@ function work_summary(ui, data) {
               })
             ]
           })
-          // history(ui, {
-          //   partName: "sales",
-          // }),
-          // Skeletons.Box.Y({
-          //   className: `${pfx}__history-column`,
-          //   kids: [
-          //     history(ui, {
-          //       partName: "quotes",
-          //       kind: "quote_item",
-          //       api: "work.quotations",
-          //       label: "Nouveau devis",
-          //       service: "create-quote"
-          //     }),
-          //     history(ui, {
-          //       partName: "bills",
-          //       kind: "bill_item",
-          //       api: "work.bills",
-          //       label: "Nouvelle facture",
-          //       service: "create-bill"
-          //     }),
-          //   ]
-          // })
         ]
       })
     ]

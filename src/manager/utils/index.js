@@ -246,10 +246,8 @@ export async function loadWorkList(opt, filter) {
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
-      labels: ["Aucune mission en cours.", "Creer une mission"],
-      service: 'create-work',
-    }
-    ));
+      labels: ["Aucune mission trouvée"],
+    }));
   })
 }
 
@@ -372,3 +370,36 @@ export async function loadPocList(cmd) {
   })
 }
 
+/**
+ * 
+ */
+export function showMessage(m, timeout = 3000) {
+  this.ensurePart("message-block").then((p) => {
+    p.feed(Skeletons.Note(m))
+    setTimeout(() => {
+      p.clear()
+    }, timeout)
+  })
+}
+
+/**
+ * 
+ */
+export async function viewDoc(data) {
+  this.debug("AAA:389", data)
+  let Media = await Kind.waitFor('media_pseudo');
+  if (!data.filename && data.filepath) {
+    let a = data.filepath.split(/\/+/);
+    let fname = a.pop();
+    let n = fname.split('.');
+    if (n.length > 1) {
+      data.ext = n.pop();
+      data.filename = n.join('') + '.' + data.ext;
+    }else{
+      data.filename = n.join('');
+    }
+  }
+  let media = new Media(data);
+  let args = { kind: "document_reader", media }
+  this.loadWidget(args)
+}

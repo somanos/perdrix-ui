@@ -15,7 +15,6 @@ class __bill_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.mset({ billId: opt.id })
   }
 
   /**
@@ -76,17 +75,6 @@ class __bill_item extends LetcBox {
     this.restart()
   }
 
-  /**
-   * 
-   */
-  async viewBill() {
-    let bill = this.mget('bill');
-    let Media = await Kind.waitFor('media_pseudo');
-    let media = new Media(bill);
-    let args = { kind: "document_reader", media }
-    this.debug("AAA:69", args)
-    this.loadWidget(args)
-  }
 
   /**
    * 
@@ -101,28 +89,31 @@ class __bill_item extends LetcBox {
     })
   }
 
+  onUiEvent(trigger, args = {}) {
+    const service = trigger.mget(_a.service) || "open-viewer";
+    this.triggerHandlers({
+      service,
+    })
+  }
 
   /**
    * User Interaction Evant Handler
    * @param {View} trigger
    * @param {Object} args
    */
-  onUiEvent(cmd, args = {}) {
-    const service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:27", service, this, cmd)
-    switch (service) {
-      case 'view-bill':
-        this.viewBill()
-        break;
-      case 'add-bill':
-        this.promptBill()
-        break;
-      default:
-        this.triggerHandlers({
-          service,
-        })
-    }
-  }
+  // onUiEvent(cmd, args = {}) {
+  //   const service = args.service || cmd.mget(_a.service);
+  //   this.debug("AAA:27", service, this, cmd)
+  //   switch (service) {
+  //     case 'add-bill':
+  //       this.promptBill()
+  //       break;
+  //     default:
+  //       this.triggerHandlers({
+  //         service,
+  //       })
+  //   }
+  // }
 
 }
 

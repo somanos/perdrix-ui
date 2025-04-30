@@ -7,7 +7,6 @@
   box-shadow: drumee.$drumee-shadow-box;
   padding: 5px 15px;
   margin-bottom: 8px;
-  min-height: 75px;
 
   &:hover {
     background-color: drumee.$perdrix-hover;
@@ -45,7 +44,7 @@
   }
 
   &__description {
-    grid-template-columns: 4fr 3fr;
+    width: 100%;
   }
 
   &__text {
@@ -56,6 +55,7 @@
 
   &__cartridge {
     width: 100%;
+
     &-main {
       width: 100%;
     }

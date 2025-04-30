@@ -285,7 +285,7 @@ export function company(ui) {
 export function messageBock(ui) {
   return Skeletons.Wrapper.Y({
     className: `${ui.fig.family}__message`,
-    sys_pn: "message",
+    sys_pn: "message-block",
     state: 0,
   })
 }

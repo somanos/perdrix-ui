@@ -97,18 +97,6 @@ class __form_core extends Core {
     addr.setValue(label)
   }
 
-  /**
-   * 
-   */
-  message(m, timeout = 3000) {
-    this.ensurePart("message").then((p) => {
-      p.feed(Skeletons.Note(m))
-      setTimeout(() => {
-        p.clear()
-      }, timeout)
-    })
-  }
-
 
   /**
   * 

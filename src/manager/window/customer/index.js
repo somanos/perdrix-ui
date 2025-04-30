@@ -214,19 +214,6 @@ class __window_customer extends __window {
   /**
     * 
     */
-  async promptNote(cmd) {
-    this.loadWidget({
-      kind: 'form_note',
-      source: this.source,
-      id: `note-form-${this.mget('custId')}`,
-      uiHandler: [this],
-      service: "note-created"
-    })
-  }
-
-  /**
-    * 
-    */
   async promptWork(cmd) {
     this.loadWidget({
       kind: 'form_site',

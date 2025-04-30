@@ -6,12 +6,22 @@ const {
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
+  let { workId, site, description } = ui.model.toJSON()
+
+  let siteView;
+  if (site) {
+    siteView = {
+      ...site,
+      type: 'site',
+      kind: 'location_view',
+      state: 1
+    }
+  }
 
   const body = Skeletons.Box.Y({
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
-      //siteSelector(ui),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
@@ -21,7 +31,9 @@ module.exports = function (ui) {
       Skeletons.Wrapper.Y({
         className: `${pfx}__site-address`,
         sys_pn: "site-address",
-        state: 0,
+        kids: [
+          siteView
+        ]
       }),
       Skeletons.Box.G({
         className: `${pfx}__description-container`,
@@ -32,13 +44,14 @@ module.exports = function (ui) {
               ico: "desktop_desksettings",
               name: "description",
               sys_pn: "description",
+              value: description
             },
             menuInput(ui, {
               items: Env.get('billType'),
               name: 'category',
               placeholder: 'Type de facture',
               refAttribute: 'label',
-              sys_pn:"category",
+              sys_pn: "category",
               value: "",
             })
           ),
@@ -75,7 +88,6 @@ module.exports = function (ui) {
     ]
   });
 
-  let { workId, site } = ui.model.toJSON()
 
   let buttons;
   if (workId && site) {

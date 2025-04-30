@@ -1,5 +1,4 @@
 const __window = require('..');
-const { tab } = require("./skeleton/widget")
 
 class __window_mission extends __window {
 
@@ -22,21 +21,83 @@ class __window_mission extends __window {
     this.loadSales()
   }
 
+
+  /**
+    * 
+    */
+  async promptNote(cmd) {
+    const { custId, category, siteId, workId, site, workType, customer } = this.model.toJSON();
+    this.loadWidget({
+      kind: 'form_note',
+      id: `note-form-${this.mget('workId')}`,
+      custId,
+      siteId,
+      workId,
+      site,
+      category,
+      workType,
+      category,
+      customer,
+      uiHandler: [this],
+      callbackService: "note-created"
+    })
+  }
+
   /**
   * 
   */
-  // async loadContextBar() {
-  //   let context = await this.ensurePart("context-bar");
-  //   context.feed(tab(this));
-  // }
+  async promptQuote(cmd) {
+    const { custId, category, siteId, workId, site, workType, customer, description } = this.model.toJSON();
+    this.loadWidget({
+      kind: 'form_quote',
+      custId,
+      siteId,
+      workId,
+      site,
+      category,
+      workType,
+      category,
+      customer,
+      description,
+      id: `quote-form-${workId}`,
+      uiHandler: [this],
+      callbackService: "quote-created"
+    })
+  }
+
+  /**
+  * 
+  */
+  async promptBill(cmd) {
+    const { custId, category, siteId, workId, site, workType, customer, description } = this.model.toJSON();
+    this.loadWidget({
+      kind: 'form_bill',
+      custId,
+      siteId,
+      workId,
+      site,
+      category,
+      workType,
+      category,
+      customer,
+      description,
+      id: `bill-form-${workId}`,
+      uiHandler: [this],
+      callbackService: "bill-created"
+    })
+  }
+
+
 
   /**
    * 
    */
   loadMissionHistory() {
     this.fetchService("work.summary", { workId: this.mget('workId') }).then(async (data) => {
+      this.debug("AAA:57", data)
       let list = await this.ensurePart(_a.list)
       if (!data.id) return;
+      this.mset(data);
       list.feed(require("./skeleton/summary")(this, data))
     })
   }
@@ -44,7 +105,7 @@ class __window_mission extends __window {
   /**
    * 
    */
-  async loadSales(data) {
+  async loadSales() {
     let quotes = [];
     try {
       quotes = await this.fetchService("work.quotations", { workId: this.mget('workId') })
@@ -60,17 +121,18 @@ class __window_mission extends __window {
       bills = []
     }
     quotes.map((e) => {
-      e.kind = "quote_item"
+      e.kind = "quote_item";
+      e.uiHandler = this;
     })
     bills.map((e) => {
-      e.kind = "bill_item"
+      e.kind = "bill_item";
+      e.uiHandler = this;
     })
     let s = quotes.concat(bills);
     let sales = await this.ensurePart("sales")
     this.debug("AAA:70", s, sales)
     sales.feed(s)
   }
-
 
   /**
    * 
@@ -81,6 +143,26 @@ class __window_mission extends __window {
     const service = args.service || cmd.model.get(_a.service);
     this.debug(`AAA:170 onUiEvent=${service}`, cmd, args, this);
     switch (service) {
+      case "add-note":
+        this.promptNote(cmd);
+        break;
+      case "add-quote":
+        this.promptQuote(cmd);
+        break;
+      case "add-bill":
+        this.promptBill(cmd);
+        break;
+      case "note-created":
+        this.ensurePart('notes').then((p) => { p.restart() })
+        break;
+      case "bill-created":
+      case "quote-created":
+        this.loadSales();
+        break;
+      case "show-doc":
+        let { nid, hub_id, filepath, filename } = cmd.model.toJSON()
+        this.viewDoc({ nid, hub_id, filepath, filename });
+        break;
       default:
         super.onUiEvent(cmd, args);
     }

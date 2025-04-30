@@ -30,7 +30,7 @@ function quote_item(ui) {
         })
       ]
     }),
-    Skeletons.Box.G({
+    Skeletons.Box.X({
       className: `${pfx}__description`,
       kids: [
         Skeletons.Note({
