@@ -12,11 +12,9 @@ class __window_mission extends __window {
    */
   onDomRefresh() {
     super.onDomRefresh();
-    this.debug("AAA:16", this)
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    //this.loadContextBar();
     this.loadMissionHistory();
     this.loadSales()
   }
@@ -94,7 +92,6 @@ class __window_mission extends __window {
    */
   loadMissionHistory() {
     this.fetchService("work.summary", { workId: this.mget('workId') }).then(async (data) => {
-      this.debug("AAA:57", data)
       let list = await this.ensurePart(_a.list)
       if (!data.id) return;
       this.mset(data);
@@ -128,9 +125,9 @@ class __window_mission extends __window {
       e.kind = "bill_item";
       e.uiHandler = this;
     })
-    let s = quotes.concat(bills);
+    let s = _.sortBy(quotes.concat(bills), ['ctime']);
+    s = s.reverse();
     let sales = await this.ensurePart("sales")
-    this.debug("AAA:70", s, sales)
     sales.feed(s)
   }
 
@@ -160,8 +157,8 @@ class __window_mission extends __window {
         this.loadSales();
         break;
       case "show-doc":
-        let { nid, hub_id, filepath, filename } = cmd.model.toJSON()
-        this.viewDoc({ nid, hub_id, filepath, filename });
+        let { nid, hub_id, filepath, filename, privilege } = cmd.model.toJSON()
+        this.viewDoc({ nid, hub_id, filepath, filename, privilege });
         break;
       default:
         super.onUiEvent(cmd, args);
