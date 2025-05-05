@@ -386,7 +386,6 @@ export function showMessage(m, timeout = 3000) {
  * 
  */
 export async function viewDoc(data) {
-  this.debug("AAA:389", data)
   let Media = await Kind.waitFor('media_pseudo');
   if (!data.filename && data.filepath) {
     let a = data.filepath.split(/\/+/);
@@ -402,4 +401,61 @@ export async function viewDoc(data) {
   let media = new Media(data);
   let args = { kind: "document_reader", media }
   this.loadWidget(args)
+}
+
+
+/**
+ * Duplicated from Drumee/core/utils
+ * @param {*} e 
+ * @returns 
+ */
+export function dataTransfer(e) {
+  let item;
+  let res = { folders: [], files: [] };
+  switch (e.type) {
+    case _e.drop:
+      var dt = e.originalEvent.dataTransfer;
+      if (dt == null) {
+        return res;
+      }
+      var items = dt.items || dt.files || [];
+
+      var folders = [];
+      var entries = [];
+      var files = [];
+
+      for (item of Array.from(items)) {
+        if (_.isFunction(item.getAsEntry)) {
+          entries.push(item.getAsEntry());
+        } else if (_.isFunction(item.webkitGetAsEntry)) {
+          entries.push(item.webkitGetAsEntry());
+        }
+      }
+
+      for (let entry of Array.from(entries)) {
+        if (entry && entry.isDirectory) {
+          folders.push(entry);
+        } else if (entry && entry.isFile) {
+          files.push(entry);
+        }
+      }
+      res = { folders, files };
+      break;
+    case _e.change:
+      items = e.target.items || [];
+      files = e.target.files || [];
+      folders = [];
+      for (item of Array.from(items)) {
+        if (_.isFunction(item.getAsEntry)) {
+          folders.push(item.getAsEntry());
+        } else if (_.isFunction(item.webkitGetAsEntry)) {
+          folders.push(item.webkitGetAsEntry());
+        }
+      }
+      res = { folders, files };
+      break;
+    default:
+      console.warn("Got wrong type", e);
+  }
+  return res;
 }

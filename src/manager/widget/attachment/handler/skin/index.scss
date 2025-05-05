@@ -1,0 +1,27 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+
+.attachment-handler {
+  &__ui {
+    width: 100%;
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+
+    .smart-container {
+      display: grid;
+      width: 100%;
+      grid-template-columns: repeat(auto-fill, 94px) minmax(94px, 94px);
+    }
+
+    &[data-state="0"] {
+      display: none;
+    }
+  }
+
+}

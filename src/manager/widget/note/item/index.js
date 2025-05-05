@@ -1,13 +1,14 @@
+const ItemCore = require('../../item');
 
-class __note_item extends LetcBox {
-
+class __note_item extends ItemCore {
   /**
    * 
    */
   initialize(opt = {}) {
     require('./skin');
     super.initialize(opt);
-    this.declareHandlers();
+    let { custId, siteId, workId, id } = opt;
+    this.mset({ parentDir: `/.attachment/${custId}/${siteId}/${workId}/${id}` })
   }
 
   /**
@@ -32,5 +33,6 @@ class __note_item extends LetcBox {
 
 
 }
+__note_item.initClass();
 
 module.exports = __note_item

@@ -14,20 +14,8 @@ const {
  */
 
 function note_item(ui) {
-  let { siteId, workType, ctime, description, workId, docId, site } = ui.model.toJSON()
+  let { hub_id, home_id, ctime, description } = ui.model.toJSON()
   let pfx = ui.fig.family;
-  let desc = [
-    Skeletons.Note({
-      className: `${pfx}__text`,
-      content: description
-    }),
-  ]
-  if (docId) {
-    desc.push(Skeletons.Note({
-      className: `${pfx}__text`,
-      content: `Photo ${docId}`
-    }))
-  }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -36,22 +24,25 @@ function note_item(ui) {
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
-        // Skeletons.Note({
-        //   className: `${pfx}__text type`,
-        //   content: workType
-        // }),
-        // Skeletons.Note({
-        //   className: `${pfx}__text`,
-        //   content: `Numero de travail ${workId}`
-        // }),
       ]
     }),
-    //placeView(ui, site),
-    // { ...site, state:0, siteId, type:'site', showMap:0, kind: 'location_view' },
     Skeletons.Box.G({
       className: `${pfx}__description`,
-      kids: desc
-    })
+      kids: Skeletons.Note({
+        className: `${pfx}__text`,
+        content: description
+      })
+    }),
+    Skeletons.Box.Y({
+      className: `${pfx}__attachment`,
+      kids: [{
+        kind: "attachment_handler",
+        sys_pn: "attachment",
+        partHandler: ui,
+        hub_id,
+        home_id,
+      }]
+    }),
   ]
 
   return Skeletons.Box.G({
@@ -63,10 +54,6 @@ function note_item(ui) {
         className: `${pfx}__summary`,
         kids: overview,
       }),
-      // Skeletons.Box.Y({
-      //   className: `${pfx}__quote`,
-      //   kids: require("./media")(ui),
-      // }),
     ]
   })
 

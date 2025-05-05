@@ -1,4 +1,5 @@
 module.exports = {
+	'attachment_handler': import('./manager/widget/attachment/handler'),
 	'bill_item': import('./manager/widget/bill/item'),
 	'customer_item': import('./manager/widget/customer/item'),
 	'form_bill': import('./manager/widget/bill/form'),
