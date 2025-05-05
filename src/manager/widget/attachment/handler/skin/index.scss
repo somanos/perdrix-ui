@@ -13,10 +13,14 @@
     background-color: inherit;
     width: 100%;
 
-    .smart-container {
+    .list-smart__container {
       display: grid;
       width: 100%;
       grid-template-columns: repeat(auto-fill, 94px) minmax(94px, 94px);
+      grid-gap: 0.5em;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 2px 0;
     }
 
     &[data-state="0"] {

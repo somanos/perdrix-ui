@@ -14,7 +14,7 @@ const {
  */
 
 function note_item(ui) {
-  let { hub_id, home_id, ctime, description } = ui.model.toJSON()
+  let { hub_id, home_id, ctime, description, pid } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let overview = [
     Skeletons.Box.G({
@@ -41,6 +41,7 @@ function note_item(ui) {
         partHandler: ui,
         hub_id,
         home_id,
+        pid
       }]
     }),
   ]

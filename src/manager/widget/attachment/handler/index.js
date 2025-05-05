@@ -9,7 +9,7 @@ class __attachment_handler extends LetcBox {
   initialize(opt = {}) {
     require('./skin');
     super.initialize(opt);
-    this.mset({ flow: "g" })
+    this.mset({ flow: _a.x })
   }
 
 
@@ -18,7 +18,7 @@ class __attachment_handler extends LetcBox {
   */
   onPartReady(child, pn) {
     this.debug("AAA:20", this, child, pn)
-    switch(pn){
+    switch (pn) {
       case "main":
         break;
     }
@@ -93,10 +93,9 @@ class __attachment_handler extends LetcBox {
    * @param {Object} args
    */
   onUiEvent(trigger, args = {}) {
-    const service = this.mget(_a.service) || "open-viewer";
-    this.triggerHandlers({
-      service,
-    })
+    const service = trigger.mget(_a.service) || "open-viewer";
+    trigger.wait(0)
+    Wm.openContent(trigger)
   }
 
 }

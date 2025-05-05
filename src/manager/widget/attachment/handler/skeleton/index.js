@@ -22,7 +22,11 @@ module.exports = function (ui) {
       hub_id: ui.mget(_a.hub_id),
       nid: ui.mget(_a.pid)
     }
-    opt.itemsOpt = { kind: "media_grid" }
+    opt.itemsOpt = {
+      kind: "media_grid",
+      uiHandler: [ui],
+      service: "open-attachment"
+    }
   }
   return Skeletons.List.Smart(opt);
   // return Skeletons.Wrapper.X({
