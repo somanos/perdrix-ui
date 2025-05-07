@@ -1,13 +1,14 @@
 
 require('./skin');
 const Form = require('../../form');
+const { phoneNumbersObject } = require("../../../utils");
 const { acknowledge } = require("../../skeleton")
 
 class __form_poc extends Form {
 
   constructor(...args) {
     super(...args);
-    this.searchLocation = this.searchLocation.bind(this);
+    this.searchPoc = this.searchPoc.bind(this);
   }
 
   /**
@@ -20,9 +21,36 @@ class __form_poc extends Form {
     this.model.atLeast({
       type: 'poc',
       category: 0
+    });
+    let p = phoneNumbersObject(opt.phones)
+    this.debug("AAA:26", p, opt)
+    this.mset(p)
+  }
+
+  /**
+ * 
+ */
+  searchPoc(cmd) {
+    let words = cmd.getValue();
+    let key = cmd.mget(_a.name);
+    this.debug("AAA:32", name)
+    let api = {
+      service: "poc.search",
+      words,
+      key
+    };
+    let itemsOpt = {
+      kind: 'poc_item',
+      origin: 'searchbox',
+      service: "select-poc",
+      uiHandler: [this]
+    }
+
+    return new Promise((will, wont) => {
+      if (!words || !words.length) return will();
+      this.feedList(api, itemsOpt, (data) => {
+      })
     })
-    this.source = opt.source;
-    this.mset(this.source.data());
   }
 
   /**
@@ -38,7 +66,7 @@ class __form_poc extends Form {
       if (args[name]) {
         switch (name) {
           case _a.email:
-            if (!args[name].isEmail()) {
+            if (!args[name] || !args[name].isEmail()) {
               this.changeDataset(name, _a.error, 1)
               error = 1;
             } else {
@@ -49,7 +77,9 @@ class __form_poc extends Form {
           case _a.home:
           case 'office':
           case 'fax':
-            if (!args[name].isPhoneNumber()) {
+            let val = args[name] || "";
+            val = val.toString();
+            if (!val.isPhoneNumber()) {
               this.changeDataset(name, _a.error, 1)
               error = 1;
             } else {
@@ -71,18 +101,14 @@ class __form_poc extends Form {
           break;
       }
     }
-    args.siteId = this.mget('siteId') || this.mget('custId');
-    args.siteType = this.mget('siteType') || 'customer';
+    args.pocId = this.mget('pocId');
+    args.siteId = this.mget('siteId');
     args.custId = this.mget('custId');
-    this.debug("AAA:323", args, this);
     if (error) return;
 
-    this.postService("poc.create", { args }).then((data) => {
-      const { custName } = data;
-      this.__content.feed(acknowledge(this, {
-        message: `${custName} a bien ete cree`,
-      }))
+    this.postService("site.add_poc", { args }).then((data) => {
       this.triggerHandlers({ service: 'poc-created', data })
+      this.goodbye()
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
         message: LOCALE.ERROR_SERVER,
@@ -108,6 +134,31 @@ class __form_poc extends Form {
   }
 
   /**
+  * 
+  */
+  async selectPoc(cmd) {
+    await this.clearList();
+    for (let part of [_a.gender, _a.role, _a.firstname, _a.lastname, _a.email]) {
+      let p = await this.ensurePart(part);
+      if (cmd.mget(part)) {
+        if (p.setValue) {
+          p.setValue(cmd.mget(part))
+        }
+      }
+    }
+    let phones = phoneNumbersObject(cmd.mget('phones'));
+    for (let key in phones) {
+      let p = await this.ensurePart(key);
+      if (phones[key]) {
+        if (p.setValue) p.setValue(phones[key])
+      }
+    }
+    const { pocId } = cmd.model.toJSON();
+    this.mset({ pocId })
+  }
+
+
+  /**
    * 
    */
   onUiEvent(cmd, args = {}) {
@@ -117,22 +168,22 @@ class __form_poc extends Form {
       case _a.create:
         this.createPoc(cmd);
         break;
-      case "select-site":
-        let { choice } = cmd.getData();
-        switch (choice) {
-          case "same-address":
-            this.mset({ siteId: this.mget('custId'), siteType: 'customer' })
+      case 'select-poc':
+        this.selectPoc(cmd);
+        break;
+      case _a.input:
+        switch (cmd.mget(_a.name)) {
+          case _a.mobile:
+          case _a.home:
+          case _a.email:
+          case 'office':
+          case 'fax':
+          case _a.lastname:
+            this.throtle(cmd).then(this.searchPoc);
             break;
         }
-        super.onUiEvent(cmd, args)
-        break;
-      case "set-site":
-        this.mset({ siteId: cmd.mget(_a.id), siteType: 'site' })
-        this.selectSite(cmd);
-        break;
-      case 'close-dialog':
-        this.__wrapperDialog.clear();
-        break;
+        this.raise();
+
       default:
         super.onUiEvent(cmd, args)
     }

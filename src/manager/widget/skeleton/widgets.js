@@ -240,17 +240,24 @@ export function person(ui, type) {
     kids: [
       menuInput(ui, {
         items: Env.get('genderList'),
-        name: 'gender',
+        name: _a.gender,
         placeholder: LOCALE.GENDER,
         refAttribute: 'longTag',
-        value: "",
+        sys_pn: _a.gender,
+        value: ui.mget(_a.gender) || "",
       }),
       entry(ui, {
         placeholder: LOCALE.LASTNAME,
         name: _a.lastname,
         sys_pn: _a.lastname,
+        value: ui.mget(_a.lastname) || "",
       }),
-      entry(ui, { placeholder: LOCALE.FIRSTNAME, name: _a.firstname }),
+      entry(ui, {
+        placeholder: LOCALE.FIRSTNAME,
+        name: _a.firstname,
+        sys_pn: _a.firstname,
+        value: ui.mget(_a.firstname) || "",
+      }),
     ]
   })
 }

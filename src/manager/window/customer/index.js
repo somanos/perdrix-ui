@@ -16,8 +16,8 @@ class __window_customer extends __window {
   }
 
   /**
-* 
-*/
+  * 
+  */
   data() {
     const {
       city,
@@ -162,7 +162,7 @@ class __window_customer extends __window {
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadPocList(cmd)
+        this.loadSitePocs(cmd)
         break;
       case "sites":
         service = 'filter-sites';
@@ -198,18 +198,6 @@ class __window_customer extends __window {
 
   }
 
-  /**
-    * 
-    */
-  async promptPoc(cmd) {
-    this.loadWidget({
-      kind: 'form_poc',
-      source: this.source,
-      id: `poc-form-${this.mget('custId')}`,
-      uiHandler: [this],
-      service: "poc-created"
-    })
-  }
 
   /**
     * 
@@ -323,22 +311,10 @@ class __window_customer extends __window {
         this.loadContextBar(cmd, args);
         break;
         break;
-      case 'poc-created':
-        this.loadPocList(cmd)
-        break;
-      case 'add-poc':
-        this.promptPoc(cmd)
-        break;
-      case 'add-note':
-        this.promptNote(cmd)
-        break;
       case 'note-created':
         this.loadNotesList(cmd)
         break;
       case 'show-solde':
-        break;
-      case 'create-quote':
-        this.promptQuote(cmd)
         break;
       case 'work-created':
         this.loadWorkList();

@@ -52,6 +52,22 @@ export function vat(v) {
 
 /**
  * 
+ * @param {*} v 
+ * @returns 
+ */
+export function phoneNumbersObject(phones) {
+  let i = 0;
+  let r = {};
+  if (!phones || !phones.length) return r;
+  for (let key of ['office', _a.home, _a.mobile, 'fax']) {
+    r[key] = phones[i];
+    i++;
+  }
+  return r;
+}
+
+/**
+ * 
  * @param {*} name 
  * @returns 
  */
@@ -353,14 +369,14 @@ export async function getSortOptions(cmd, parts) {
 /**
 * 
 */
-export async function loadPocList(cmd) {
+export async function loadSitePocs(cmd) {
   let api = {
-    service: "poc.list",
-    custId: this.mget('custId'),
+    service: "site.list_poc",
     siteId: this.mget('siteId'),
   };
   let itemsOpt = {
     kind: 'poc_item',
+    uiHandler: [this]
   }
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
@@ -394,7 +410,7 @@ export async function viewDoc(data) {
     if (n.length > 1) {
       data.ext = n.pop();
       data.filename = n.join('') + '.' + data.ext;
-    }else{
+    } else {
       data.filename = n.join('');
     }
   }

@@ -41,6 +41,31 @@ class __poc_item extends LetcBox {
   }
 
   /**
+    * 
+    */
+  async promptPoc(cmd) {
+    let {
+      siteId, custId, pocId, phones, email, customer, role, gender, firstname, lastname
+    } = this.model.toJSON();
+    this.loadWidget({
+      kind: 'form_poc',
+      customer,
+      id: `poc-form-${this.mget(_a.id)}`,
+      uiHandler: [this],
+      pocId,
+      custId,
+      siteId,
+      phones,
+      role,
+      gender,
+      email,
+      firstname,
+      lastname,
+      service: "poc-created"
+    })
+  }
+
+  /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
@@ -68,6 +93,9 @@ class __poc_item extends LetcBox {
           uiHandler: [this],
           service: "site-created"
         })
+        break;
+      case _a.change:
+        this.promptPoc()
         break;
       default:
         this.triggerHandlers({

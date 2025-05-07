@@ -48,6 +48,21 @@ class __window_site extends __window {
     //this.loadWorkList({ service: "mission-hitsory", format: _a.small })
   }
 
+  /**
+    * 
+    */
+  async promptPoc(cmd) {
+    let { siteId, custId } = this.model.toJSON();
+    this.loadWidget({
+      kind: 'form_poc',
+      customer: this.mget('customer'),
+      id: `poc-form-${this.mget(_a.id)}`,
+      uiHandler: [this],
+      custId,
+      siteId,
+      service: "poc-created"
+    })
+  }
 
 
   /**
@@ -59,7 +74,6 @@ class __window_site extends __window {
     if (cmd) {
       name = cmd.mget(_a.name);
     }
-    this.debug("AAA:161", this, name)
     switch (name) {
       case "works":
         context.feed(workTab(this));
@@ -70,7 +84,7 @@ class __window_site extends __window {
         break;
       case "pocs":
         context.feed(pocTab(this));
-        this.loadPocList(cmd)
+        this.loadSitePocs(cmd)
         break;
     }
   }
@@ -89,6 +103,13 @@ class __window_site extends __window {
         break;
       case 'load-context':
         this.loadContextBar(cmd, args);
+        break;
+      case 'create-poc':
+        this.promptPoc(cmd);
+        break;
+      case 'poc-created':
+        this.loadSitePocs(cmd)
+        break;
       default:
         super.onUiEvent(cmd, args);
     }

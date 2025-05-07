@@ -1,13 +1,12 @@
 
 const {
-  list, customerHeader, siteSelector, actionButtons,
+  list, customerHeader, actionButtons,
   headerBox, messageBock, descriptionEntry
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
   let site = ui.mget('site');
-  this.debug("AAA:10", site)
   let siteView;
   if(site){
     siteView = {

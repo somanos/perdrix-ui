@@ -19,7 +19,8 @@ export function phoneNumbers(ui, numbers) {
   for (let label of LABELS) {
     if (numbers[i]) {
       kids.push(
-        Skeletons.Box.X({
+        Skeletons.Box.G({
+          className: `${pfx}__phone-number`,
           kids: [
             Skeletons.Note({
               className: `${pfx}__text label`,

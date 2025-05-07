@@ -21,7 +21,7 @@ function poc_item(ui) {
     className: `${pfx}__text email`,
     content: email
   })
-  if(email){
+  if (email) {
     message.href = `mailto:${email}`
   }
   return Skeletons.Box.Y({
@@ -37,23 +37,16 @@ function poc_item(ui) {
             content: name
           }),
           message,
-          phoneNumbers(ui, phones)
+          phoneNumbers(ui, phones),
+          Skeletons.Button.Svg({
+            className: `${pfx}__icon`,
+            ico: 'desktop_edit',
+            service: _a.change
+          })
         ]
       }),
-      // actionButtons(ui, [
-      //   { content: "Ses chantiers", service:"show-sites" },
-      //   { content: "Ajouter un chantiers", service:"add-site" },
-      // ]),
-      // footerWrapper(ui)
     ]
   })
 
 }
 module.exports = poc_item;
-/*
-| gender    | int(10) unsigned | YES  |     | NULL    |                |
-| lastname  | varchar(200)     | YES  |     | NULL    |                |
-| firstname | varchar(200)     | YES  |     | NULL    |                |
-| email     | varchar(200)     | YES  |     | NULL    |                |
-| phones    | longtext         | YES  |     | NULL    |                |
-*/

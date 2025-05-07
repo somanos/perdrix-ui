@@ -4,7 +4,7 @@ const { contextBar, menuItem } = require("../../../widget/skeleton")
  * 
  * @param {*} ui 
  */
-function tabs(ui) {
+function tabs(ui, states = [0, 1]) {
   return Skeletons.Box.X({
     className: `${ui.fig.family}__buttons`,
     kidsOpt: {
@@ -18,6 +18,7 @@ function tabs(ui) {
         label: 'Contacs',
         service: "load-context",
         name: 'pocs',
+        state: states[0]
       }),
       Skeletons.Button.Label({
         className: `${ui.fig.family}__button-action regular`,
@@ -25,7 +26,7 @@ function tabs(ui) {
         label: 'Missions',
         name: 'works',
         service: "load-context",
-        state: 1
+        state: states[1]
       }),
     ]
   })
@@ -59,7 +60,7 @@ export function workTab(ui) {
  */
 export function pocTab(ui) {
   let buttons = [
-    tabs(ui),
+    tabs(ui, [1, 0]),
     Skeletons.Button.Label({
       className: `${ui.fig.family}__button-action add`,
       label: "Nouveau contact",

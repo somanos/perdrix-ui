@@ -146,8 +146,16 @@ class __menu_input extends LetcBox {
   }
 
   /**
- * 
- */
+  * 
+  * @param {*} v 
+  */
+  setValue(v) {
+    this.ensurePart(_a.entry).then((p) => { p.setValue(v) })
+  }
+
+  /**
+  * 
+  */
   async selectItem(cmd, key) {
     if (!key) {
       return this.commitSelection(cmd)
