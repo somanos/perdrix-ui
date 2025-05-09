@@ -1,5 +1,5 @@
 
-const { topbarBox, filterMenu, searchbox} = require("../../../widget/skeleton")
+const { topbarBox, filterMenu, searchbox, menuItems } = require("../../../widget/skeleton")
 /**
  * 
  * @param {*} ui 
@@ -8,16 +8,19 @@ const { topbarBox, filterMenu, searchbox} = require("../../../widget/skeleton")
 function topbar(ui) {
   const figname = "topbar";
   const group = `${ui.fig.family}-${figname}`;
-
+  let filters = [
+    menuItems(ui, "Nom", _a.lastname),
+    menuItems(ui, "Date", _a.ctime),
+  ]
   return Skeletons.Box.G({
     className: `${group}__container`,
     sys_pn: "window-header",
     service: _e.raise,
     debug: __filename,
     kids: [
-      filterMenu(ui),
+      filterMenu(ui, filters),
       searchbox(ui),
-      topbarBox(ui, { title: "Liste des clients", mode: "sc" })
+      topbarBox(ui, { title: "Liste des contacts chantier", mode: "sc" })
     ]
   });
 };

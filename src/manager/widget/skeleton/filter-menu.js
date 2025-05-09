@@ -5,14 +5,16 @@
  * @param {*} name 
  * @returns 
  */
-function menuItems(ui, label, name) {
+export function menuItems(ui, label, name) {
   return Skeletons.Button.Label({
     className: `menu-item`,
     label,
-    uiHandler: ui,
+    uiHandler: [ui],
     service: _e.sort,
     name,
     state: 1,
+    sys_pn: name,
+    partHandler: [ui],
     icons: ["arrow-up", "arrow-down"]
   });
 }

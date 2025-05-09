@@ -75,8 +75,9 @@
     grid-template-columns: 90px 1fr;
     grid-gap: 0.5rem;
   }
+
   &__phone-number {
-    grid-template-columns: 35px 1fr;
+    grid-template-columns: 35px 120px;
     grid-gap: 0.5rem;
   }
 }

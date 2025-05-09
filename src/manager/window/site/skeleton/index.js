@@ -1,4 +1,3 @@
-const { topbarBox } = require("../../../widget/skeleton")
 const { windowMain, windowTopbar } = require("../../../widget/skeleton")
 
 module.exports = function (ui) {

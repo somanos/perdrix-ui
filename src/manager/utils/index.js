@@ -365,6 +365,31 @@ export async function getSortOptions(cmd, parts) {
   return f
 }
 
+/**
+* 
+*/
+export function searchPoc(cmd, k) {
+  let words = cmd.getValue();
+  let key = cmd.mget(_a.name) || k;
+  this.debug("AAA:32", key)
+  let api = {
+    service: "poc.search",
+    words,
+    key
+  };
+  let itemsOpt = {
+    kind: 'poc_item',
+    origin: 'searchbox',
+    service: "select-poc",
+    uiHandler: [this]
+  }
+
+  return new Promise((will, wont) => {
+    if (!words || !words.length) return will();
+    this.feedList(api, itemsOpt, (data) => {
+    })
+  })
+}
 
 /**
 * 

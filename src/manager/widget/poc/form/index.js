@@ -1,14 +1,14 @@
 
 require('./skin');
 const Form = require('../../form');
-const { phoneNumbersObject } = require("../../../utils");
+const { phoneNumbersObject, searchPoc} = require("../../../utils");
 const { acknowledge } = require("../../skeleton")
 
 class __form_poc extends Form {
 
   constructor(...args) {
     super(...args);
-    this.searchPoc = this.searchPoc.bind(this);
+    this.searchPoc = searchPoc.bind(this);
   }
 
   /**
@@ -30,28 +30,28 @@ class __form_poc extends Form {
   /**
  * 
  */
-  searchPoc(cmd) {
-    let words = cmd.getValue();
-    let key = cmd.mget(_a.name);
-    this.debug("AAA:32", name)
-    let api = {
-      service: "poc.search",
-      words,
-      key
-    };
-    let itemsOpt = {
-      kind: 'poc_item',
-      origin: 'searchbox',
-      service: "select-poc",
-      uiHandler: [this]
-    }
+  // searchPoc(cmd) {
+  //   let words = cmd.getValue();
+  //   let key = cmd.mget(_a.name);
+  //   this.debug("AAA:32", name)
+  //   let api = {
+  //     service: "poc.search",
+  //     words,
+  //     key
+  //   };
+  //   let itemsOpt = {
+  //     kind: 'poc_item',
+  //     origin: 'searchbox',
+  //     service: "select-poc",
+  //     uiHandler: [this]
+  //   }
 
-    return new Promise((will, wont) => {
-      if (!words || !words.length) return will();
-      this.feedList(api, itemsOpt, (data) => {
-      })
-    })
-  }
+  //   return new Promise((will, wont) => {
+  //     if (!words || !words.length) return will();
+  //     this.feedList(api, itemsOpt, (data) => {
+  //     })
+  //   })
+  // }
 
   /**
    * 
