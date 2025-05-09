@@ -1,3 +1,6 @@
+
+const { topbarBox, filterMenu, searchbox} = require("../../../widget/skeleton")
+
 /**
  * 
  * @param {*} ui 
