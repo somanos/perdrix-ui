@@ -23,6 +23,7 @@ module.exports = {
 	'window_customer': import('./manager/window/customer'),
 	'window_finder': import('./manager/window/finder'),
 	'window_mission': import('./manager/window/mission'),
+	'window_poc': import('./manager/window/poc'),
 	'window_site': import('./manager/window/site'),
 	'work_item': import('./manager/widget/work/item'),
 	'work_list': import('./manager/widget/work/list'),

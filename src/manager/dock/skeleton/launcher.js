@@ -18,7 +18,7 @@ function dockLaunchers(_ui_, ismobile) {
         respawn: 'window_customer_list',
         helperName: 'customer',
         service: _e.launch
-      }, "Liste des client"),
+      }, "Liste des clients"),
       button(_ui_, {
         ico: 'desktop_contactbook',
         className: `${button_class} company launcher-icon`,
@@ -32,18 +32,18 @@ function dockLaunchers(_ui_, ismobile) {
         ico: 'book',
         className: `${button_class} perdrix launcher-icon`,
         service: _e.launch,
-        respawn: 'window_perdrix',
+        respawn: 'window_poc',
         helperName: 'perdrix',
-      }, "Reserver un devis"),
+      }, "Liste des contacts"),
       button(_ui_, {
         ico: 'book',
         className: `${button_class} schedule launcher-icon`,
         innerClass: 'addressbook',
         sys_pn: 'addressbook-launcher',
-        respawn: 'window_addressbook',
+        respawn: 'form_poc',
         helperName : 'addressbook',
         service: _e.launch
-      }, "Reserver une facture"),
+      }, "Créer un contact"),
       button(_ui_, {
         ico: 'editbox_fill',
         className: `${button_class} schedule launcher-icon`,

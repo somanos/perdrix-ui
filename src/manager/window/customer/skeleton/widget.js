@@ -18,16 +18,6 @@ export function tabs(ui) {
       service: "load-context"
     },
     kids: [
-      // Skeletons.Button.Label({
-      //   ico: 'desktop_mysharing',
-      //   label: 'Contacs',
-      //   name: 'pocs',
-      // }),
-      // Skeletons.Button.Label({
-      //   ico: 'desktop_picture',
-      //   label: 'Photos',
-      //   name: 'photos',
-      // }),
       Skeletons.Button.Label({
         ico: 'icon-company',
         label: 'Chantiers',

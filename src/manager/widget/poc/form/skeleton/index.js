@@ -82,19 +82,26 @@ module.exports = function (ui) {
     ]
   });
 
-
+  let label = LOCALE.CREATE;
+  if (ui.mget('pocId')) {
+    label = LOCALE.UPDATE;
+  }
+  let customer;
+  if(ui.mget('customer')){
+    customer = customerHeader(ui);
+  }
   return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
       headerBox(ui, { title: "Ajouter contact chantier" }),
-      customerHeader(ui),
+      customer,
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
           footerWrapper(ui),
-          actionButtons(ui, [{ service: _a.create, content: LOCALE.CREATE }]),
+          actionButtons(ui, [{ service: _a.create, content: label }]),
         ]
       })
     ]

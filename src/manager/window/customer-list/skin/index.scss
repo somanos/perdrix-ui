@@ -1,11 +1,11 @@
 @use "sass:meta";
 @use 'mixins/drumee';
 @use 'mixins/window' as *;
-@use 'header' as *;
+@use '../../skin/group/header/list' as *;
 
 
 .window-customer-list {
-  @include header;
+  @include header-list;
 
   &__ui {
     background-color: drumee.$core-default-background;

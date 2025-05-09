@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} label 
+ * @param {*} name 
+ * @returns 
+ */
 function menuItems(ui, label, name) {
   return Skeletons.Button.Label({
     className: `menu-item`,
@@ -8,10 +15,22 @@ function menuItems(ui, label, name) {
     state: 1,
     icons: ["arrow-up", "arrow-down"]
   });
-
 }
 
-function filterSelector(ui) {
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} opt 
+ * @returns 
+ */
+export function filterMenu(ui, opt) {
+  if (!opt) {
+    opt = [
+      menuItems(ui, "Nom", _a.name),
+      menuItems(ui, "Date", _a.ctime),
+    ]
+  }
   let pfx = ui.fig.family;
   const name = "topbar__filter";
   const trigger = Skeletons.Button.Icon({
@@ -25,10 +44,7 @@ function filterSelector(ui) {
   const items = Skeletons.Box.Y({
     className: `${pfx}-${name}__menu-items`,
     sys_pn: "filter-roll",
-    kids: [
-      menuItems(ui, "Nom", _a.name),
-      menuItems(ui, "Date", _a.ctime),
-    ]
+    kids: opt
   });
 
   const kids = {
@@ -49,7 +65,26 @@ function filterSelector(ui) {
     state: 0,
     kids
   });
+}
 
-
-};
-module.exports = filterSelector;
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} opt 
+ * @returns 
+ */
+export function searchbox(ui, figname = "topbar") {
+  return {
+    kind: "search",
+    flow: _a.x,
+    className: `${ui.fig.family}-${figname}__searchbox`,
+    placeholder: LOCALE.FILTER,
+    listClass: "found-box",
+    sys_pn: 'search-box',
+    mode: _a.interactive,
+    interactive: _a.service,
+    service: _e.search,
+    uiHandler: [ui],
+    showError: false
+  }
+}

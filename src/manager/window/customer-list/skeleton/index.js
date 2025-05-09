@@ -1,3 +1,24 @@
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+function topbar(ui) {
+  const figname = "topbar";
+  const group = `${ui.fig.family}-${figname}`;
+  return Skeletons.Box.G({
+    className: `${group}__container`,
+    sys_pn: "window-header",
+    service: _e.raise,
+    debug: __filename,
+    kids: [
+      filterMenu(ui),
+      searchbox(ui),
+      topbarBox(ui, { title: "Liste des clients", mode: "sc" })
+    ]
+  });
+}
+
 module.exports = function(_ui_) {
   const menu = Skeletons.Box.X({
     debug     : __filename,
@@ -7,7 +28,7 @@ module.exports = function(_ui_) {
       radio : _a.on,
       uiHandler    : _ui_
     },
-    kids : [require('./topbar')(_ui_)]
+    kids : topbar(_ui_)
   });
 
   const a = require("../../skeleton/content")(_ui_, menu);

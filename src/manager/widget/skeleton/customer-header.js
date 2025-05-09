@@ -16,7 +16,6 @@ export function customerHeader(ui, customer) {
   } = ui.mget('customer') || source.model.toJSON();
 
 
-  const adresse = location.join(' ');
   let fig = 'customer'
   let company = null;
   if (gender) {
