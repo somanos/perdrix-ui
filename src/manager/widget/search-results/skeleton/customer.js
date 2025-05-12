@@ -8,10 +8,11 @@
  * @param {*} ui 
  * @returns 
  */
+const { normalizelLocation } = require("../../../utils")
 
 function customerview(ui) {
-  let { gender, custId, custName, location } = ui.mget(_a.content);
-  const adresse = location.join(' ');
+  let { gender, custName, location, city } = ui.data();
+  const adresse = normalizelLocation(location);
   let ico = 'account_contacts';
   if (gender) {
     custName = `${gender} ${custName}`;
@@ -20,9 +21,9 @@ function customerview(ui) {
   }
 
   const kids = [
-    require('./header')(ui, ico, "Client"),
-    require('./cartridge')(ui, 'Nom', custName, custId),
-    require('./cartridge')(ui, 'Adresse', adresse, custId),
+    require('./header')(ui, ico, "Client", city),
+    require('./cartridge')(ui, 'Nom', custName),
+    require('./cartridge')(ui, 'Adresse', adresse),
   ]
   return kids;
 }

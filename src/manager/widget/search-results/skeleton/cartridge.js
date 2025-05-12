@@ -10,24 +10,23 @@
  */
 
 function cartridge(ui, label, text, itemId) {
-  let details = '';
-  if (itemId) details = 'see-details';
-  let ctype = ui.mget('ctype');
+  let details = 'see-details';
+  let type = ui.mget(_a.type);
   let service = 'see-details';
   let kids = [
     Skeletons.Note({
-      className: `${ui.fig.family}__label ${details}`,
+      className: `${ui.fig.family}__label`,
       content: label,
       service,
       itemId,
-      ctype
+      type
     }),
     Skeletons.Note({
-      className: `${ui.fig.family}__text ${details}`,
+      className: `${ui.fig.family}__text`,
       content: text,
       service,
       itemId,
-      ctype
+      type
     })
   ]
   let a = Skeletons.Box.G({

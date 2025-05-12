@@ -1,4 +1,4 @@
-const { contextBar } = require("../../../widget/skeleton")
+const { searchbox, contextBar } = require("../../../widget/skeleton")
 
 /**
  * 
@@ -28,6 +28,7 @@ export function tab(ui) {
       icons: null,
       service: "create-bill"
     }),
+    searchbox(ui),
   ]
   return contextBar(ui, buttons)
 };

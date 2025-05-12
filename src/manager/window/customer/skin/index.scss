@@ -48,4 +48,14 @@
   @include selection-menu;
   @include list-content;
   @include button-action;
+
+  &-topbar__searchbox {
+    margin-left: 10px;
+
+    .entry-reminder__main.showerror {
+      @include drumee.typo($color: drumee.$egrey-78, $size: 14px, $line: 24px);
+      padding: 0;
+      min-height: unset;
+    }
+  }
 }

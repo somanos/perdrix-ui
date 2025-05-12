@@ -1,5 +1,5 @@
 const __window = require('..');
-const { placeholder, menuItem, contextBar} = require("../../widget/skeleton")
+const { searchbox, placeholder, menuItem, contextBar } = require("../../widget/skeleton")
 
 class __window_customer extends __window {
 
@@ -124,6 +124,49 @@ class __window_customer extends __window {
   }
 
   /**
+    * 
+    */
+  searchWorks(cmd) {
+    let api = {
+      service: "work.search",
+      words: cmd.getValue(),
+      custId: this.mget('custId')
+    };
+    let itemsOpt = {
+      kind: 'work_item',
+      uiHandler: [this]
+    }
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucune mission trouvée"],
+      }));
+    })
+  }
+
+  /**
+   * 
+   * @param {*} cmd 
+   */
+  searchSites(cmd){
+    let api = {
+      service: "site.search",
+      words: cmd.getValue(),
+      custId: this.mget('custId')
+    };
+    let itemsOpt = {
+      kind: 'site_item',
+      uiHandler: [this]
+    }
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucune mission trouvée"],
+      }));
+    })
+  }
+
+  /**
   * 
   */
   async loadContextBar(cmd) {
@@ -142,6 +185,7 @@ class __window_customer extends __window {
           menuItem(this, { sys_pn: "fdate", label: "Par date", name: 'ctime', state: 0, service }),
           menuItem(this, { sys_pn: "fcity", label: "Par ville", name: 'city', state: 1, service }),
           menuItem(this, { sys_pn: "fsite", label: "Par Chantier", name: 'siteId', state: 1, service }),
+          searchbox(this, { service: "search-works" }),
           Skeletons.Button.Label({
             className: `${this.fig.family}__button-action`,
             label: "Nouvelle mission",
@@ -167,8 +211,10 @@ class __window_customer extends __window {
       case "sites":
         service = 'filter-sites';
         buttons = [
-          menuItem(this, { sys_pn: "fdate", label: "Par date", name: 'ctime', state, service }),
           menuItem(this, { sys_pn: "fcity", label: "Par ville", name: 'city', state, service }),
+          menuItem(this, { sys_pn: "fstreet", label: "Par rue", name: 'street', state, service }),
+          menuItem(this, { sys_pn: "fhouse", label: "Par numéro", name: 'housenumber', state, service }),
+          searchbox(this, { service: "search-sites" }),
           Skeletons.Button.Label({
             className: `${this.fig.family}__button-action`,
             label: "Nouveau chantier",
@@ -177,7 +223,7 @@ class __window_customer extends __window {
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadSitesList(await this.getSortOptions(null, ["fdate", "fcity"]));
+        this.loadSitesList(await this.getSortOptions(null, ["fcity", "fstreet", "fhouse"], 0));
         break;
       case "solde":
         service = 'filter-bill';
@@ -254,12 +300,10 @@ class __window_customer extends __window {
   /**
      * 
      */
-  async loadSiteWorks(site) {
-    this.debug("AAA:294", this, site)
+  async loadSiteWindow(site) {
     this.loadWidget({
       kind: 'window_site',
       ...site.data(),
-      customer: this.source.data(),
       id: `site-${site.mget(_a.id)}`,
     })
   }
@@ -292,7 +336,7 @@ class __window_customer extends __window {
       case "show-contacts":
         break;
       case 'show-works':
-        this.loadSiteWorks(cmd)
+        this.loadSiteWindow(cmd)
         break;
       case "mission-hitsory":
         this.loadMissionWindow(cmd);
@@ -323,7 +367,7 @@ class __window_customer extends __window {
         this.loadWorkList(null, await this.getSortOptions(cmd, ["fdate", "fcity", "fsite"]));
         break;
       case 'filter-sites':
-        this.loadSitesList(await this.getSortOptions(cmd, ["fdate", "fcity"]));
+        this.loadSitesList(await this.getSortOptions(cmd, ["fcity", "fstreet", "fhouse"], 0));
         break;
       case 'filter-bill':
         this.loadBillsList()
@@ -337,6 +381,12 @@ class __window_customer extends __window {
         break;
       case "site-created":
         this.loadSitesList();
+        break;
+      case "search-works":
+        this.searchWorks(cmd);
+        break;
+      case "search-sites":
+        this.searchSites(cmd);
         break;
       default:
         super.onUiEvent(cmd, args);

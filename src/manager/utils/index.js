@@ -14,7 +14,7 @@ export function normalizelLocation(location) {
   let place = '';
   if (_.isArray(location)) {
     if (location[1]) {
-      location[1] = location[1].ucFirst()
+      location[1] = location[1].toLocaleLowerCase()
     }
     place = location.join(' ');
   } else if (_.isString(location)) {
@@ -271,7 +271,7 @@ export async function loadWorkList(opt, filter) {
  * 
  */
 export async function loadMissionWindow(cmd) {
-  let { custId, siteId, workId } = cmd.model.toJSON()
+  let { custId, siteId, workId, customer } = cmd.model.toJSON()
   let { site } = cmd.data()
   if (!site) site = cmd.data();
   this.loadWidget({
@@ -280,7 +280,7 @@ export async function loadMissionWindow(cmd) {
     siteId,
     workId,
     site,
-    customer: this.mget('customer'),
+    customer: customer || this.mget('customer'),
     id: `mission-${workId}`,
     uiHandler: [this],
   })
@@ -343,12 +343,18 @@ export async function promptSite(source) {
 /**
 * 
 */
-export async function getSortOptions(cmd, parts) {
+export async function getSortOptions(cmd, parts, reorder = 1) {
   if (!parts) return null;
   let source = []
+  let f = []
   for (let p of parts) {
-    source.push(await this.ensurePart(p));
+    let el = await this.ensurePart(p);
+    source.push(el);
+    if (!reorder) {
+      f.push({ name: el.mget(_a.name), value: el.getState() ? "asc" : "desc" })
+    }
   }
+  if (f.length) return f;
   let filers = [];
   if (cmd) filers = [cmd];
   for (let w of source) {
@@ -357,9 +363,7 @@ export async function getSortOptions(cmd, parts) {
     }
     filers.push(w)
   }
-  let f = []
   for (let el of filers) {
-    let p = {};
     f.push({ name: el.mget(_a.name), value: el.getState() ? "asc" : "desc" })
   }
   return f

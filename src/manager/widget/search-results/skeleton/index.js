@@ -11,7 +11,9 @@
 
 function found_item(ui) {
   let kids = [];
-  switch ( ui.mget(_a.type)) {
+  let { siteId, custId, pocId, workId } = ui.mget(_a.content);
+
+  switch (ui.mget(_a.type)) {
     case 'site':
       kids = require('./site')(ui);
       break;
@@ -28,9 +30,13 @@ function found_item(ui) {
       kids = require('./header')(ui, 'account_contacts', "Type de donnees inconnues")
   }
   const skeleton = Skeletons.Box.Y({
-    className: `${ui.fig.family}__main ${ui.mget('ctype')}`,
+    className: `${ui.fig.family}__main ${ui.mget(_a.type)}`,
     debug: __filename,
     uiHandler: [ui],
+    custId,
+    workId,
+    siteId,
+    pocId,
     kids: [
       Skeletons.Box.Y({
         className: `${ui.fig.family}__container`,

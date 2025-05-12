@@ -1,16 +1,13 @@
+const { normalizelLocation } = require("../../../../utils")
+
 /**
  * 
  * @param {*} ui 
  * @returns 
  */
-
 function cartridge(ui) {
   let { location, postcode, city } = ui.model.toJSON();
-  let adresse = "";
-  if (location) {
-    adresse = location.join(' ');
-  }
-
+  const adresse = normalizelLocation(location);
   let origin = ui.mget(_a.origin) || "";
 
   return Skeletons.Box.Y({

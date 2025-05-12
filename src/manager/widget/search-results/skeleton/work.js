@@ -10,29 +10,26 @@
  */
 
 function workSkl(ui) {
-  let {
-    custName, folderId, custId, gender,
-    type, ttc, ht, taux_tva, val_tva,  description
-  } = ui.mget(_a.content);
+  let { custName, gender, type, description, city } = ui.data();
 
   let title = `Missions`;
 
-  if(type){
+  if (type) {
     title = `${title} (${type})`;
   }
 
-  if(gender){
+  if (gender) {
     custName = `${gender} ${custName}`;
   }
 
   const kids = [
-    require('./header')(ui, 'desktop_desksettings', title),
-    require('./cartridge')(ui, 'Nom du client', custName, custId),
+    require('./header')(ui, 'desktop_desksettings', title, city),
+    require('./cartridge')(ui, 'Nom du client', custName),
     require('./cartridge')(ui, 'Description', description),
-    require('./cartridge')(ui, 'Montant HT', ht),
-    require('./cartridge')(ui, `TVA (${taux_tva*100})`, val_tva),
-    require('./cartridge')(ui, 'Montant TTC', ttc),
-    require('./cartridge')(ui, 'Document', folderId),
+    // require('./cartridge')(ui, 'Montant HT', ht),
+    // require('./cartridge')(ui, `TVA (${taux_tva*100})`, val_tva),
+    // require('./cartridge')(ui, 'Montant TTC', ttc),
+    // require('./cartridge')(ui, 'Document', docId),
   ]
   return kids;
 }

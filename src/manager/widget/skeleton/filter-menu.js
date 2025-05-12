@@ -75,18 +75,22 @@ export function filterMenu(ui, opt) {
  * @param {*} opt 
  * @returns 
  */
-export function searchbox(ui, figname = "topbar") {
+export function searchbox(ui, opt = {}) {
+  let blockName = opt.blockName || "topbar";
+  delete opt.blockName;
+
   return {
-    kind: "search",
+    service: _e.search,
     flow: _a.x,
-    className: `${ui.fig.family}-${figname}__searchbox`,
-    placeholder: LOCALE.FILTER,
+    className: `${ui.fig.family}-${blockName}__searchbox`,
+    placeholder: LOCALE.SEARCH,
     listClass: "found-box",
     sys_pn: 'search-box',
     mode: _a.interactive,
     interactive: _a.service,
-    service: _e.search,
     uiHandler: [ui],
-    showError: false
+    showError: false,
+    ...opt,
+    kind: "search",
   }
 }

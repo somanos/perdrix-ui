@@ -2,6 +2,8 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
+const { normalizelLocation } = require("../../../../utils")
+
 /**
  * 
  * @param {*} ui 
@@ -10,13 +12,8 @@
 
 function site_item(ui) {
   let { postcode, city, location } = ui.model.toJSON();
-  let place;
-  if (location && location[1]) location[1] = location[1].ucFirst();
-  if (_.isArray(location)) {
-    place = location.join(' ')
-  } else {
-    place = location
-  }
+  const adresse = normalizelLocation(location);
+
   let pfx = ui.fig.family;
   return Skeletons.Box.X({
     className: `${pfx}__main`,
@@ -28,11 +25,11 @@ function site_item(ui) {
         kids: [
           Skeletons.Note({
             className: `${pfx}__text`,
-            content: place
+            content: city
           }),
           Skeletons.Note({
             className: `${pfx}__text`,
-            content: city
+            content: adresse
           }),
           Skeletons.Note({
             className: `${pfx}__text`,

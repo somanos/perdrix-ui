@@ -85,8 +85,6 @@ class __window_mission extends __window {
     })
   }
 
-
-
   /**
    * 
    */

@@ -30,8 +30,8 @@ function tabs(ui, states = [0, 1]) {
       }),
     ]
   })
-
 }
+
 /**
  * 
  * @param {*} ui 

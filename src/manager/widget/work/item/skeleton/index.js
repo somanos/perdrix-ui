@@ -2,7 +2,7 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime } = require("../../../../utils")
+const { fromUnixtime, normalizelLocation } = require("../../../../utils")
 /**
  * 
  * @param {*} ui 
@@ -18,52 +18,51 @@ function work_item(ui) {
       content: "Travail indéterminé"
     })
   }
-  if (!location) location = []
-  if (location[1]) location[1] = location[1].ucFirst();
+  const adresse = normalizelLocation(location)
   let pfx = ui.fig.family;
   let place;
   if (ui.mget(_a.format) == _a.small) {
     place = null
   } else {
-    place = Skeletons.Box.G({
+    place = Skeletons.Box.X({
       className: `${pfx}__details`,
       kids: [
         Skeletons.Note({
           className: `${pfx}__text`,
-          content: location.join(' ') + ' ' + city
+          content: adresse
         })
       ]
     })
   }
 
   let overview = [
-    Skeletons.Box.Y({
-      className: `${pfx}__conten`,
+    Skeletons.Box.G({
+      className: `${pfx}__summary header`,
       kids: [
-        Skeletons.Box.G({
-          className: `${pfx}__summary header`,
-          kids: [
-            Skeletons.Note({
-              className: `${pfx}__text`,
-              content: fromUnixtime(ctime)
-            }),
-            Skeletons.Note({
-              className: `${pfx}__text type`,
-              content: type || workType
-            }),
-            Skeletons.Note({
-              className: `${pfx}__text`,
-              content: id.toString()
-            }),
-          ]
+        Skeletons.Note({
+          className: `${pfx}__text`,
+          content: fromUnixtime(ctime)
+        }),
+        Skeletons.Note({
+          className: `${pfx}__text`,
+          content: city
         }),
         place,
       ]
     }),
-    Skeletons.Note({
-      className: `${pfx}__description`,
-      content: description.replace(/\n/g, '<br>')
-    }),
+    Skeletons.Box.G({
+      className: `${pfx}__summary content`,
+      kids: [
+        Skeletons.Note({
+          className: `${pfx}__text type`,
+          content: type || workType
+        }),
+        Skeletons.Note({
+          className: `${pfx}__description`,
+          content: description.replace(/\n/g, '<br>')
+        })
+      ]
+    })
   ]
 
   return Skeletons.Box.G({
@@ -71,7 +70,7 @@ function work_item(ui) {
     debug: __filename,
     uiHandler: [ui],
     kids: [
-      Skeletons.Box.G({
+      Skeletons.Box.Y({
         className: `${pfx}__summary`,
         kids: overview,
       }),

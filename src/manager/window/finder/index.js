@@ -241,6 +241,30 @@ class __window_finder extends __window {
   }
 
   /**
+   * 
+   */
+  async loadSiteWindow(site) {
+    this.loadWidget({
+      kind: 'window_site',
+      ...site.data(),
+      id: `site-${site.mget(_a.id)}`,
+    })
+  }
+
+  /**
+    * 
+    */
+  async promptPoc(cmd) {
+    this.loadWidget({
+      kind: 'form_poc',
+      ...cmd.data(),
+      id: `site-${cmd.mget(_a.id)}`,
+      uiHandler: [this],
+      service: "poc-update"
+    })
+  }
+
+  /**
    *
    */
   onPartReady(child, pn) {
@@ -255,7 +279,6 @@ class __window_finder extends __window {
         this._updateFilter();
         child.on(_e.close, this._onFilterClosed);
         break;
-
       case "window-header":
         this.setupInteract();
         break;
@@ -268,7 +291,7 @@ class __window_finder extends __window {
   */
   onUiEvent(cmd, args = {}) {
     const { service, type, content } = args
-    this.debug(`AAA:273 onUiEvent service=${service}`, cmd, args, this);
+    this.debug(`AAA:273 onUiEvent service=${service}`, cmd.mget(_a.type), cmd, args, this);
 
     switch (service) {
       case _e.close:
@@ -278,8 +301,22 @@ class __window_finder extends __window {
         this.filterContent(cmd);
         return;
       case 'open-viewer':
-        if (cmd.data) {
-          this.loadCustomer(cmd, 1);
+        switch (cmd.mget(_a.type)) {
+          case "customer":
+            this.loadCustomer(cmd, 1);
+            break;
+          case "site":
+            this.loadSiteWindow(cmd, 1);
+            break;
+          case "work":
+            this.loadMissionWindow(cmd, 1);
+            break;
+          case "work":
+            this.loadMissionWindow(cmd, 1);
+            break;
+          case "poc":
+            this.promptPoc(cmd, 1);
+            break;
         }
         return
 
