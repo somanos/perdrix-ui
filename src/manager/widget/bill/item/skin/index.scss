@@ -1,4 +1,25 @@
 @use "mixins/window" as *;
+
 .bill-item {
   @include cartridge-sales;
+
+  &__summary {
+    width: 100%;
+
+    &.header {
+      grid-template-columns: 70px 1fr 242px;
+      width: 100%;
+      justify-content: end;
+    }
+
+    &.billing {
+      width: 100%;
+      justify-content: flex-start;
+
+      .amount {
+        width: 100px;
+      }
+    }
+  }
+
 }

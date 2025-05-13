@@ -30,7 +30,7 @@ function buildMenu(ui, trigger, opt) {
   const { innerClass, itemName, itemsList, direction } = opt;
   let _items = [];
   for (let item of itemsList) {
-    item.name = itemName;
+    item.name = itemName || _a.name;
     _items.push(menuItem(ui, item, innerClass))
   }
 

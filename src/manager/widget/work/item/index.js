@@ -52,11 +52,6 @@ class __work_item extends LetcBox {
       this.mset(data);
     }
     this.feed(require('./skeleton')(this));
-    // this.$el.addClass(_a.small)
-    // if (this.mget(_a.format) == _a.small) {
-    // } else {
-    //   this.feed(require('./skeleton')(this));
-    // }
   }
 
   /**

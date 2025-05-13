@@ -4,6 +4,7 @@
 * ==================================================================== */
 const { devise, vat } = require("../../../../utils")
 const { labelValue } = require("../../../skeleton")
+const commaNumber = require('comma-number')
 
 
 /**
@@ -27,10 +28,10 @@ function bill(ui) {
           className: `${pfx}-row`,
         },
         kids: [
-          labelValue(ui, "Montant HT", devise(ht)),
+          labelValue(ui, "Montant HT", devise(commaNumber(ht, ' ', '.'))),
           labelValue(ui, "TVA", vat(tva)),
-          labelValue(ui, "Montant TTC", devise(ttc)),
-          labelValue(ui, "Document", filepath,"show-doc"),
+          labelValue(ui, "Montant TTC", devise(commaNumber(ttc, ' ', '.'))),
+          labelValue(ui, "Document", filepath, "show-doc"),
         ]
       })
     ]

@@ -18,38 +18,39 @@ function work_item(ui) {
       content: "Travail indéterminé"
     })
   }
-  const adresse = normalizelLocation(location)
   let pfx = ui.fig.family;
-  let place;
-  if (ui.mget(_a.format) == _a.small) {
-    place = null
-  } else {
-    place = Skeletons.Box.X({
-      className: `${pfx}__details`,
-      kids: [
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: adresse
-        })
-      ]
-    })
-  }
-
+  let { bill, quote, note } = ui.model.toJSON();
+  let line1 = Skeletons.Box.G({
+    className: `${pfx}__summary header`,
+    kids: [
+      Skeletons.Note({
+        className: `${pfx}__text`,
+        content: fromUnixtime(ctime)
+      }),
+      Skeletons.Box.X({
+        className: `${pfx}__summary-count`,
+        kidsOpt: {
+          className: `${pfx}__summary-count-item`,
+        },
+        kids: [
+          Skeletons.Button.Label({
+            ico: 'editbox_pencil',
+            label: `${note} notes`,
+          }),
+          Skeletons.Button.Label({
+            ico: 'account_documents',
+            label: `${quote} devis`,
+          }),
+          Skeletons.Button.Label({
+            ico: 'desktop_drumeememo',
+            label: `${bill} factures`,
+          }),
+        ]
+      }),
+    ]
+  })
   let overview = [
-    Skeletons.Box.G({
-      className: `${pfx}__summary header`,
-      kids: [
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: fromUnixtime(ctime)
-        }),
-        Skeletons.Note({
-          className: `${pfx}__text`,
-          content: city
-        }),
-        place,
-      ]
-    }),
+    line1,
     Skeletons.Box.G({
       className: `${pfx}__summary content`,
       kids: [
@@ -64,6 +65,24 @@ function work_item(ui) {
       ]
     })
   ]
+
+  if (ui.mget(_a.format) == _a.extra) {
+    const adresse = normalizelLocation(location)
+    overview.push(
+      Skeletons.Box.G({
+        className: `${pfx}__summary extra`,
+        kids: [
+          Skeletons.Note({
+            className: `${pfx}__text`,
+            content: city
+          }),
+          Skeletons.Note({
+            className: `${pfx}__text`,
+            content: adresse
+          })
+        ]
+      }))
+  }
 
   return Skeletons.Box.G({
     className: `${pfx}__main`,

@@ -1,6 +1,8 @@
-const { placeholder } = require("../widget/skeleton/widgets")
+// const { placeholder} = require("../widget/skeleton/widgets")
+const { fiscalBox, placeholder, contextBar } = require("../widget/skeleton")
 const { address } = require("../widget/skeleton/entries")
-
+const CUST_ID = 'custId';
+const commaNumber = require('comma-number')
 /**
  * 
  * @param {*} v 
@@ -257,7 +259,6 @@ export async function loadWorkList(opt, filter) {
     kind: 'work_item',
     uiHandler: [this],
   }
-  this.debug("AAA:244", filter)
   this.changeDataset("entries-manual", _a.state, 1)
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
@@ -503,4 +504,76 @@ export function dataTransfer(e) {
       console.warn("Got wrong type", e);
   }
   return res;
+}
+
+/**
+* 
+* @param {*} cmd 
+*/
+export function updateBalance(cmd) {
+  let fiscalYear = cmd.mget(_a.name);
+  let custId = this.mget(CUST_ID);
+  let opt = {}
+  if (/[0-9]{4,4}/.test(fiscalYear)) {
+    opt.fiscalYear = fiscalYear;
+  }
+  if (custId) {
+    opt.custId = custId;
+  }
+  this.postService("bill.balance", opt).then((data) => {
+    let { ht, ttc } = data || {}
+    this.ensurePart('amount_ht').then((p) => {
+      p.set({ content: commaNumber(ht, ' ', '.') })
+    })
+    this.ensurePart('amount_ttc').then((p) => {
+      p.set({ content: commaNumber(ttc, ' ', '.') })
+    })
+  })
+}
+
+/**
+ * 
+ */
+export async function loadBillsList(cmd) {
+  let fiscalYear = cmd.mget(_a.name);
+  let custId = this.mget(CUST_ID);
+  let api = {
+    service: "bill.list",
+  };
+  if (/[0-9]{4,4}/.test(fiscalYear)) {
+    api.fiscalYear = fiscalYear;
+  }
+  if (custId) {
+    api.custId = custId;
+  }
+
+  let itemsOpt = {
+    kind: 'bill_item',
+    uiHandler: [this]
+  }
+  this.feedList(api, itemsOpt, (list) => {
+    list.model.unset(_a.itemsOpt)
+    list.feed(placeholder(this, {
+      labels: ["Aucune facture trouvee"],
+    }));
+  })
+}
+
+/**
+ * 
+ * @param {*} cmd 
+ */
+export async function loadBalance(cmd, opt) {
+  let buttons = await this.fetchService("pdx_utils.fiscal_years", opt);
+  buttons.unshift({ name: _a.all, content: "Toutes les années" });
+  let bar = fiscalBox(this, buttons);
+  let context = await this.ensurePart("context-bar");
+  context.feed(contextBar(this, bar));
+  this.loadBillsList(cmd);
+  this.updateBalance(cmd);
+  const content = cmd.mget(_a.content);
+  if (!content) return;
+  this.ensurePart('current-fyear').then((p) => {
+    p.set({ content })
+  })
 }

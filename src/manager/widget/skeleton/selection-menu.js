@@ -1,3 +1,12 @@
+function simpleItems(ui, opt) {
+  let pfx = ui.fig.family;
+  return Skeletons.Note({
+    className: `${pfx}__menu-item ${opt.service}`,
+    uiHandler: ui,
+    ...opt,
+  });
+}
+
 function menuItems(ui, opt) {
   let pfx = ui.fig.family;
   return Skeletons.Button.Label({
@@ -11,23 +20,36 @@ function menuItems(ui, opt) {
 
 export function selectionMenu(ui, opt) {
   let pfx = ui.fig.family;
-  let { buttons, ico, label, service, state } = opt;
+  let { buttons, ico, label, service, state, simpleItem, persistence } = opt;
   const name = "menu";
-  const trigger = Skeletons.Button.Label({
-    className: `${pfx}__${name}-trigger`,
-    ico,
-    service,
-    isTrigger: true,
-    uiHandler: ui,
-    label,
-    state
-  })
+  let trigger;
+  if (simpleItem) {
+    trigger = Skeletons.Note({
+      className: `${pfx}__${name}-trigger`,
+      service,
+      isTrigger: true,
+      uiHandler: ui,
+      content: label,
+    })
+  } else {
+    trigger = Skeletons.Button.Label({
+      className: `${pfx}__${name}-trigger`,
+      ico,
+      service,
+      isTrigger: true,
+      uiHandler: ui,
+      label,
+      state
+    })
+  }
   let content = []
   for (let b of buttons) {
     b.service = b.service || service;
-    content.push(
-      menuItems(ui, b)
-    )
+    if (simpleItem) {
+      content.push(simpleItems(ui, b))
+    } else {
+      content.push(menuItems(ui, b))
+    }
   }
   const items = Skeletons.Box.Y({
     className: `${pfx}__${name}-items`,
@@ -41,6 +63,7 @@ export function selectionMenu(ui, opt) {
     partHandler: ui,
     sys_pn: `${name}-main`,
     trigger,
+    persistence,
     items,
     uiHandler: ui
   };

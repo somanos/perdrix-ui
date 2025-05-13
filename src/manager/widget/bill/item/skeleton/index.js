@@ -2,7 +2,8 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime } = require("../../../../utils")
+const { fromUnixtime, devise, vat } = require("../../../../utils")
+const commaNumber = require('comma-number')
 
 /**
  * 
@@ -14,7 +15,7 @@ const STATUS = [
   '🔒', '🧰'
 ]
 function bill_item(ui) {
-  let { chrono, ctime, description, workId } = ui.model.toJSON()
+  let { chrono, ctime, description, workId, ht, ttc } = ui.model.toJSON()
   let pfx = ui.fig.family;
   if (!workId) {
     return Skeletons.Note({
@@ -33,6 +34,19 @@ function bill_item(ui) {
         Skeletons.Note({
           className: `label`,
           content: `Facture n ${chrono}`
+        }),
+        Skeletons.Box.X({
+          className: `${pfx}__summary billing`,
+          kids: [
+            Skeletons.Note({
+              className: `amount`,
+              content: devise(commaNumber(ht, ' ', '.')),
+            }),
+            Skeletons.Note({
+              className: `amount`,
+              content: devise(commaNumber(ttc, ' ', '.'))
+            }),
+          ]
         })
       ]
     }),
@@ -46,9 +60,9 @@ function bill_item(ui) {
       ]
     }),
   ]
-  if (chrono) {
-    overview.push(require('./bill')(ui))
-  }
+  // if (chrono) {
+  //   overview.push(require('./bill')(ui))
+  // }
   return Skeletons.Box.G({
     className: `${pfx}__main`,
     debug: __filename,

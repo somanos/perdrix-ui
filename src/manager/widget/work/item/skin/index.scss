@@ -43,20 +43,58 @@
     border-bottom: 1px solid lightgrey;
   }
 
-  &__summary.header {
-    grid-template-columns: 70px 120px 2fr;
-  }
-  &__summary.content {
-    grid-template-columns: 190px 1fr;
-  }
-
   &__summary {
     width: 100%;
-    // grid-template-columns: 1fr 1fr;
+
+    &.header {
+      grid-template-columns: 190px 1fr;
+    }
+
+    &.content {
+      grid-template-columns: 190px 1fr;
+    }
+
+    &-count {
+      height: 24px;
+    }
+
+    &.extra {
+      grid-template-columns: 190px 1fr;
+    }
+
+
+    &-count-item {
+      display: flex;
+      flex-direction: row;
+      color: drumee.$egrey-78;
+
+      svg {
+        height: 24px;
+        width: 24px;
+        padding: 4px;
+      }
+
+      span {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+      }
+
+      .tooltips {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background-color: drumee.$core-background-blue;
+        padding: 3px;
+        border-radius: 3px;
+        z-index: 200px;
+        @include drumee.typo($color: drumee.$white, $size: 12px, $line: 20px);
+      }
+    }
   }
 
   &__details {
-    // justify-content: center;
     width: 100%;
   }
 
@@ -74,17 +112,10 @@
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
     &.type {
-      width: 50%;
-      min-width: 120px;
-      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
+      white-space: nowrap;
 
       .inner {
-        border: solid 0.5px lightgray;
-        padding: 1px 10px;
-        border-radius: 3px;
-        width: 100%;
-        //background-color: drumee.$blue-light;
-        justify-content: center;
+        justify-content: left;
         display: flex;
         color: drumee.$blue-light;
       }

@@ -1,7 +1,19 @@
 const __window = require('..');
-const { searchbox, placeholder, menuItem, contextBar } = require("../../widget/skeleton")
+const {
+  searchbox, placeholder, menuItem, fiscalBox, contextBar
+} = require("../../widget/skeleton")
+
+const { updateBalance, loadBillsList, loadBalance } = require("../../utils")
+
+const CUST_ID = 'custId';
 
 class __window_customer extends __window {
+  constructor(...args) {
+    super(...args);
+    this.loadBillsList = loadBillsList.bind(this);
+    this.updateBalance = updateBalance.bind(this);
+    this.loadBalance = loadBalance.bind(this);
+  }
 
   async initialize(opt) {
     require('./skin');
@@ -61,22 +73,22 @@ class __window_customer extends __window {
   /**
   * 
   */
-  async loadNotesList(cmd) {
-    let api = {
-      service: "note.list",
-      custId: this.mget('custId'),
-    };
-    let itemsOpt = {
-      kind: 'note_item',
-    }
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucune note trouvee", "Creer une note"],
-        service: "add-note"
-      }));
-    })
-  }
+  // async loadNotesList(cmd) {
+  //   let api = {
+  //     service: "note.list",
+  //     custId: this.mget(CUST_ID),
+  //   };
+  //   let itemsOpt = {
+  //     kind: 'note_item',
+  //   }
+  //   this.feedList(api, itemsOpt, (list) => {
+  //     list.model.unset(_a.itemsOpt)
+  //     list.feed(placeholder(this, {
+  //       labels: ["Aucune note trouvee", "Creer une note"],
+  //       service: "add-note"
+  //     }));
+  //   })
+  // }
 
   /**
   * 
@@ -84,7 +96,7 @@ class __window_customer extends __window {
   async loadSitesList(filter) {
     let api = {
       service: "site.list",
-      custId: this.mget('custId'),
+      custId: this.mget(CUST_ID),
     };
     if (filter) api.filter = filter;
     let itemsOpt = {
@@ -102,35 +114,13 @@ class __window_customer extends __window {
   }
 
   /**
-   * 
-   */
-  async loadBillsList(cmd) {
-    let status = await this.getSelectedItems("works-selectors", _a.status);
-    let api = {
-      service: "bill.list",
-      custId: this.mget('custId'),
-      status
-    };
-    let itemsOpt = {
-      kind: 'bill_item',
-      uiHandler: [this]
-    }
-    this.feedList(api, itemsOpt, (list) => {
-      list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this, {
-        labels: ["Aucune facture trouvee"],
-      }));
-    })
-  }
-
-  /**
     * 
     */
   searchWorks(cmd) {
     let api = {
       service: "work.search",
       words: cmd.getValue(),
-      custId: this.mget('custId')
+      custId: this.mget(CUST_ID)
     };
     let itemsOpt = {
       kind: 'work_item',
@@ -148,11 +138,11 @@ class __window_customer extends __window {
    * 
    * @param {*} cmd 
    */
-  searchSites(cmd){
+  searchSites(cmd) {
     let api = {
       service: "site.search",
       words: cmd.getValue(),
-      custId: this.mget('custId')
+      custId: this.mget(CUST_ID)
     };
     let itemsOpt = {
       kind: 'site_item',
@@ -178,6 +168,7 @@ class __window_customer extends __window {
     let buttons;
     let state = 1;
     let service;
+    let format = "normal";
     switch (name) {
       case "works":
         service = 'filter-works';
@@ -194,7 +185,7 @@ class __window_customer extends __window {
           })
         ]
         context.feed(contextBar(this, buttons));
-        this.loadWorkList(null, await this.getSortOptions(null, ["fdate", "fcity", "fsite"]));
+        this.loadWorkList({ format: _a.extra }, await this.getSortOptions(null, ["fdate", "fcity", "fsite"]));
         break;
       case "pocs":
         buttons = [
@@ -226,22 +217,19 @@ class __window_customer extends __window {
         this.loadSitesList(await this.getSortOptions(null, ["fcity", "fstreet", "fhouse"], 0));
         break;
       case "solde":
-        service = 'filter-bill';
-        buttons = [
-          menuItem(this, { label: "Facture (0)", status: 0, state, service }),
-          menuItem(this, { label: "Facture (1)", status: 1, state, service }),
-          Skeletons.Button.Label({
-            className: `${this.fig.family}__button-action`,
-            label: "Nouvelle facture",
-            ico: "editbox_list-plus",
-            icons: null, service: "add-bill"
-          })
-        ]
-        context.feed(contextBar(this, buttons));
-        this.loadBillsList(cmd)
+        format = "auto";
+        this.loadBalance(cmd, { custId: this.mget(CUST_ID) })
+        // buttons = await this.fetchService("pdx_utils.fiscal_years", { custId: this.mget(CUST_ID) });
+        // buttons.unshift({ name: _a.all, content: "Toutes les années" });
+        // let bar = fiscalBox(this, buttons)
+        // context.feed(contextBar(this, bar));
+        // this.loadBillsList(cmd);
+        // this.updateBalance(cmd)
         break;
     }
-
+    this.ensurePart('context-bar').then((p) => {
+      p.el.dataset.format = format;
+    })
   }
 
 
@@ -252,7 +240,7 @@ class __window_customer extends __window {
     this.loadWidget({
       kind: 'form_site',
       source: this.source,
-      id: `site-form-${this.mget('custId')}`,
+      id: `site-form-${this.mget(CUST_ID)}`,
       uiHandler: [this],
       service: "site-created"
     })
@@ -265,7 +253,7 @@ class __window_customer extends __window {
     this.loadWidget({
       kind: 'form_bill',
       source: this.source,
-      id: `bill-form-${this.mget('custId')}`,
+      id: `bill-form-${this.mget(CUST_ID)}`,
       uiHandler: [this],
       service: "bill-created"
     })
@@ -274,15 +262,15 @@ class __window_customer extends __window {
   /**
     * 
     */
-  async promptSite() {
-    this.loadWidget({
-      kind: 'form_site',
-      source: this.source,
-      id: `site-form-${this.mget('custId')}`,
-      uiHandler: [this],
-      service: "site-created"
-    })
-  }
+  // async promptSite() {
+  //   this.loadWidget({
+  //     kind: 'form_site',
+  //     source: this.source,
+  //     id: `site-form-${this.mget(CUST_ID)}`,
+  //     uiHandler: [this],
+  //     service: "site-created"
+  //   })
+  // }
 
   /**
     * 
@@ -292,7 +280,7 @@ class __window_customer extends __window {
       kind: 'form_quote',
       source: this.source,
       work: cmd,
-      id: `quote-form-${this.mget('custId')}`,
+      id: `quote-form-${this.mget(CUST_ID)}`,
       uiHandler: [this],
     })
   }
@@ -304,6 +292,7 @@ class __window_customer extends __window {
     this.loadWidget({
       kind: 'window_site',
       ...site.data(),
+      format: 'big',
       id: `site-${site.mget(_a.id)}`,
     })
   }
@@ -341,9 +330,9 @@ class __window_customer extends __window {
       case "mission-hitsory":
         this.loadMissionWindow(cmd);
         break;
-      case 'show-notes':
-        this.loadNotesList(cmd)
-        break;
+      // case 'show-notes':
+      //   this.loadNotesList(cmd)
+      //   break;
       case 'create-work':
         this.loadWorkForm(cmd)
         break;
@@ -355,16 +344,14 @@ class __window_customer extends __window {
         this.loadContextBar(cmd, args);
         break;
         break;
-      case 'note-created':
-        this.loadNotesList(cmd)
-        break;
-      case 'show-solde':
-        break;
+      // case 'note-created':
+      //   this.loadNotesList(cmd)
+      //   break;
       case 'work-created':
-        this.loadWorkList();
+        this.loadWorkList({ format: _a.extra });
         break;
       case 'filter-works':
-        this.loadWorkList(null, await this.getSortOptions(cmd, ["fdate", "fcity", "fsite"]));
+        this.loadWorkList({ format: _a.extra }, await this.getSortOptions(cmd, ["fdate", "fcity", "fsite"]));
         break;
       case 'filter-sites':
         this.loadSitesList(await this.getSortOptions(cmd, ["fcity", "fstreet", "fhouse"], 0));
@@ -372,10 +359,9 @@ class __window_customer extends __window {
       case 'filter-bill':
         this.loadBillsList()
         break;
-      case 'add-bill':
-        this.promptBill()
-        break;
-
+      // case 'add-bill':
+      //   this.promptBill()
+      //   break;
       case 'add-site':
         this.promptSite(this)
         break;
@@ -388,17 +374,19 @@ class __window_customer extends __window {
       case "search-sites":
         this.searchSites(cmd);
         break;
+      case 'fiscal-year':
+        let name = cmd.mget(_a.name);
+        if (!name) break;
+        this.loadBalance(cmd, { custId: this.mget(CUST_ID) })
+        // this.updateBalance(cmd)
+        // this.loadBillsList(cmd);
+        // this.ensurePart('current-fyear').then((p) => {
+        //   p.set({ content: cmd.mget(_a.content) })
+        // })
+        break;
       default:
         super.onUiEvent(cmd, args);
     }
-  }
-
-  /**
-   * To start the Meeting 
-   * @param {LetcBox}  media 
-   */
-  showDetails(cmd) {
-    return
   }
 
 }

@@ -13,3 +13,4 @@ export * from './cartridge';
 export * from './site-header';
 export * from './window';
 export * from './filter-menu';
+export * from './fiscal-box';

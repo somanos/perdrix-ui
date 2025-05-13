@@ -78,7 +78,7 @@ class __window_site extends __window {
       case "works":
         context.feed(workTab(this));
         this.loadWorkList(
-          { service: "mission-hitsory", format: _a.small },
+          { service: "mission-hitsory", format: 'big' },
           await this.getSortOptions(null, ["fdate"])
         );
         break;

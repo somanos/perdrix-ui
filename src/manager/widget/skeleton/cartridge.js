@@ -35,18 +35,36 @@ export function cartridge(ui, note, input) {
  * @param {*} value 
  * @returns 
  */
-export function labelValue(ui, label, value, service) {
+export function labelValue(ui, o1, o2) {
+  let label;
+  let value;
+  let pfx = `${ui.fig.family}__fields`;
+
+  if (_.isString(o1)) {
+    label = Skeletons.Note({
+      className: `${pfx} label`,
+      content: o1,
+    })
+  } else {
+    label = Skeletons.Note({
+      className: `${pfx} label`,
+      ...o1
+    })
+  }
+
+  if (_.isString(o2)) {
+    value = Skeletons.Note({
+      className: `${pfx} value`,
+      content: o2,
+    })
+  } else {
+    value = Skeletons.Note({
+      className: `${pfx} value`,
+      ...o2
+    })
+  }
   return Skeletons.Box.G({
-    kids: [
-      Skeletons.Note({
-        className: `label`,
-        content: label,
-      }),
-      Skeletons.Note({
-        className: `value`,
-        content: value,
-        service
-      }),
-    ]
+    className: `${pfx}-grid`,
+    kids: [label, value]
   })
 }

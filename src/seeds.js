@@ -19,6 +19,7 @@ module.exports = {
 	'radio_buttons': import('./manager/widget/radio-buttons'),
 	'search_results': import('./manager/widget/search-results'),
 	'site_item': import('./manager/widget/site/item'),
+	'window_balance': import('./manager/window/balance'),
 	'window_customer_list': import('./manager/window/customer-list'),
 	'window_customer': import('./manager/window/customer'),
 	'window_finder': import('./manager/window/finder'),

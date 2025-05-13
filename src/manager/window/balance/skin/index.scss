@@ -1,38 +1,35 @@
 @use "sass:meta";
 @use 'mixins/drumee';
-@use 'group' as *;
+@use 'mixins/window' as *;
 @use "mixins/form" as *;
-@use "mixins/window" as *;
-//@use 'tabs' as *;
-// @use "menu" as *;
+@use 'group' as *;
+@use 'group/header/list' as *;
 
-.window-customer {
-  @include window-topbar;
-}
 
-.window-customer {
+.window-balance {
+  @include header-list;
+  @include tabs;
+
   &__ui {
     background-color: drumee.$core-default-background;
     width: 800px;
     height: 600px;
     box-shadow: drumee.$drumee-shadow-container;
     overflow: visible;
-    min-width: 340px; //300px;
+    min-width: 340px;
     min-height: 200px;
     flex-direction: column;
     display: flex;
     left: calc(50vw - 400px);
-    top: 40px;
+    top: 60px;
+    max-width: 100vw;
+    max-height: 100vh;
 
     &[data-device="mobile"] {
       width: 100vw;
       height: 100vh;
       left: 0;
       top: 0;
-    }
-
-    &[data-tmp="1"] {
-      z-index: 9000 !important;
     }
   }
 
@@ -42,29 +39,36 @@
     align-items: center;
   }
 
-  @include customer-header;
-  @include tabs;
-  @include form-placeholder;
   @include selection-menu;
   @include list-content;
   @include button-action;
   @include fiscal-bar;
 
   &-topbar {
-    &__searchbox {
-      margin-left: 10px;
-
-      .entry-reminder__main.showerror {
-        padding: 0;
-        min-height: unset;
-        @include drumee.typo($color: drumee.$egrey-78, $size: 14px, $line: 24px);
-      }
+    &__container {
+      grid-template-columns: 1fr;
     }
 
     &__title {
-      text-overflow: ellipsis;
-      justify-content: flex-start;
-      width: calc(100% - 65px);
+      margin-right: unset;
     }
+  }
+
+  &__content-results {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__list-content {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  &__current-fyear {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 }

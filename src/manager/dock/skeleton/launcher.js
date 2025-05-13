@@ -39,7 +39,7 @@ function dockLaunchers(_ui_, ismobile) {
         ico: 'book',
         className: `${button_class} schedule launcher-icon`,
         innerClass: 'addressbook',
-        sys_pn: 'addressbook-launcher',
+        sys_pn: 'new-poc-launcher',
         respawn: 'form_poc',
         helperName : 'addressbook',
         service: _e.launch
@@ -48,11 +48,11 @@ function dockLaunchers(_ui_, ismobile) {
         ico: 'editbox_fill',
         className: `${button_class} schedule launcher-icon`,
         innerClass: 'addressbook',
-        sys_pn: 'addressbook-launcher',
-        respawn: 'window_addressbook',
+        sys_pn: 'new-balance-launcher',
+        respawn: 'window_balance',
         helperName : 'addressbook',
         service: _e.launch
-      }, "Annexes"),
+      }, "Liste des factures"),
     ]
   });
 };
