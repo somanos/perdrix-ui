@@ -46,7 +46,7 @@
       flex-wrap: wrap;
       align-content: center;
       margin-right: 10px;
-      @include drumee.typo($color: drumee.$egrey-b7, $size: 12px, $line: 24px);
+      @include drumee.typo($color: drumee.$egrey-2f, $size: 12px, $line: 24px);
     }
 
     &.id {
