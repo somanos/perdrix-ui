@@ -90,7 +90,7 @@ class __bill_item extends LetcBox {
   }
 
   onUiEvent(trigger, args = {}) {
-    const service = trigger.mget(_a.service) || "open-viewer";
+    const service = trigger.mget(_a.service) || "show-doc";
     this.triggerHandlers({
       service,
     })

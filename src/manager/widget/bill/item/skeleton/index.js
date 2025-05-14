@@ -23,6 +23,43 @@ function bill_item(ui) {
       content: "Numéro de mission manquant"
     })
   }
+  // let overview = [
+  //   Skeletons.Box.G({
+  //     className: `${pfx}__summary header`,
+  //     kids: [
+  //       Skeletons.Note({
+  //         className: `${pfx}__text`,
+  //         content: fromUnixtime(ctime)
+  //       }),
+  //       Skeletons.Note({
+  //         className: `label`,
+  //         content: `Facture n ${chrono}`
+  //       }),
+  //       Skeletons.Box.X({
+  //         className: `${pfx}__summary billing`,
+  //         kids: [
+  //           Skeletons.Note({
+  //             className: `amount`,
+  //             content: devise(commaNumber(ht, ' ', '.')),
+  //           }),
+  //           Skeletons.Note({
+  //             className: `amount`,
+  //             content: devise(commaNumber(ttc, ' ', '.'))
+  //           }),
+  //         ]
+  //       })
+  //     ]
+  //   }),
+  //   Skeletons.Box.X({
+  //     className: `${pfx}__description`,
+  //     kids: [
+  //       Skeletons.Note({
+  //         className: `${pfx}__text`,
+  //         content: description.replace(/\n/g, '<br>')
+  //       }),
+  //     ]
+  //   }),
+  // ]
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -34,19 +71,6 @@ function bill_item(ui) {
         Skeletons.Note({
           className: `label`,
           content: `Facture n ${chrono}`
-        }),
-        Skeletons.Box.X({
-          className: `${pfx}__summary billing`,
-          kids: [
-            Skeletons.Note({
-              className: `amount`,
-              content: devise(commaNumber(ht, ' ', '.')),
-            }),
-            Skeletons.Note({
-              className: `amount`,
-              content: devise(commaNumber(ttc, ' ', '.'))
-            }),
-          ]
         })
       ]
     }),
@@ -60,9 +84,10 @@ function bill_item(ui) {
       ]
     }),
   ]
-  // if (chrono) {
-  //   overview.push(require('./bill')(ui))
-  // }
+
+  if (chrono) {
+    overview.push(require('./bill')(ui))
+  }
   return Skeletons.Box.G({
     className: `${pfx}__main`,
     debug: __filename,

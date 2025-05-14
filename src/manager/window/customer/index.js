@@ -73,26 +73,6 @@ class __window_customer extends __window {
   /**
   * 
   */
-  // async loadNotesList(cmd) {
-  //   let api = {
-  //     service: "note.list",
-  //     custId: this.mget(CUST_ID),
-  //   };
-  //   let itemsOpt = {
-  //     kind: 'note_item',
-  //   }
-  //   this.feedList(api, itemsOpt, (list) => {
-  //     list.model.unset(_a.itemsOpt)
-  //     list.feed(placeholder(this, {
-  //       labels: ["Aucune note trouvee", "Creer une note"],
-  //       service: "add-note"
-  //     }));
-  //   })
-  // }
-
-  /**
-  * 
-  */
   async loadSitesList(filter) {
     let api = {
       service: "site.list",
@@ -219,12 +199,6 @@ class __window_customer extends __window {
       case "solde":
         format = "auto";
         this.loadBalance(cmd, { custId: this.mget(CUST_ID) })
-        // buttons = await this.fetchService("pdx_utils.fiscal_years", { custId: this.mget(CUST_ID) });
-        // buttons.unshift({ name: _a.all, content: "Toutes les années" });
-        // let bar = fiscalBox(this, buttons)
-        // context.feed(contextBar(this, bar));
-        // this.loadBillsList(cmd);
-        // this.updateBalance(cmd)
         break;
     }
     this.ensurePart('context-bar').then((p) => {
@@ -259,18 +233,6 @@ class __window_customer extends __window {
     })
   }
 
-  /**
-    * 
-    */
-  // async promptSite() {
-  //   this.loadWidget({
-  //     kind: 'form_site',
-  //     source: this.source,
-  //     id: `site-form-${this.mget(CUST_ID)}`,
-  //     uiHandler: [this],
-  //     service: "site-created"
-  //   })
-  // }
 
   /**
     * 
@@ -305,10 +267,10 @@ class __window_customer extends __window {
     this.debug("AAA:153:", cmd, args)
     this.ensurePart(_a.list).then((p) => {
       let { data } = args;
-      let c = p.getItemsByAttr(_a.id, data.id)[0];
-      this.debug("AAA:155:", c, args)
+      let c = p.getItemsByAttr('workId', data.workId)[0];
       if (c) {
-        c.restart(args.data);
+        this.debug("AAAA:292", c, data)
+        c.restart(data);
       }
     })
   }
@@ -330,13 +292,11 @@ class __window_customer extends __window {
       case "mission-hitsory":
         this.loadMissionWindow(cmd);
         break;
-      // case 'show-notes':
-      //   this.loadNotesList(cmd)
-      //   break;
       case 'create-work':
         this.loadWorkForm(cmd)
         break;
       case 'quote-created':
+      case 'note-created':
       case 'bill-created':
         this.updateWorkItem(cmd, args);
         break;
@@ -344,9 +304,6 @@ class __window_customer extends __window {
         this.loadContextBar(cmd, args);
         break;
         break;
-      // case 'note-created':
-      //   this.loadNotesList(cmd)
-      //   break;
       case 'work-created':
         this.loadWorkList({ format: _a.extra });
         break;
@@ -359,9 +316,6 @@ class __window_customer extends __window {
       case 'filter-bill':
         this.loadBillsList()
         break;
-      // case 'add-bill':
-      //   this.promptBill()
-      //   break;
       case 'add-site':
         this.promptSite(this)
         break;
@@ -378,11 +332,6 @@ class __window_customer extends __window {
         let name = cmd.mget(_a.name);
         if (!name) break;
         this.loadBalance(cmd, { custId: this.mget(CUST_ID) })
-        // this.updateBalance(cmd)
-        // this.loadBillsList(cmd);
-        // this.ensurePart('current-fyear').then((p) => {
-        //   p.set({ content: cmd.mget(_a.content) })
-        // })
         break;
       default:
         super.onUiEvent(cmd, args);

@@ -56,7 +56,7 @@ function work_summary(ui, data) {
           }),
           Skeletons.Note({
             className: `${pfx}__text type`,
-            content: type || workType
+            content: type
           })
         ]
       }),

@@ -54,8 +54,8 @@ module.exports = function (ui) {
         kids: [
           body,
           actionButtons(ui, [
-            { content: "Creer le travail", service: "create-work", sys_pn: "button-work" },
-            { content: "Creer le devis", service: "create-quote" },
+            { content: "Créer la mission", service: "create-work", sys_pn: "button-work" },
+            // { content: "Creer le devis", service: "create-quote" },
             // { content: "Reserver le devis", service: "reserve-quote" },
           ])
         ]

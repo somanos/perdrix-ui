@@ -3,9 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { fromUnixtime } = require("../../../../utils")
-const {
-  placeView
-} = require("../../../skeleton")
+
 
 /**
  * 

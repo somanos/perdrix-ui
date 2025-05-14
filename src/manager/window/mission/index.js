@@ -117,10 +117,12 @@ class __window_mission extends __window {
     }
     quotes.map((e) => {
       e.kind = "quote_item";
+      e.service = 'show-doc';
       e.uiHandler = this;
     })
     bills.map((e) => {
       e.kind = "bill_item";
+      e.service = 'show-doc';
       e.uiHandler = this;
     })
     let s = _.sortBy(quotes.concat(bills), ['ctime']);
@@ -149,10 +151,12 @@ class __window_mission extends __window {
         break;
       case "note-created":
         this.ensurePart('notes').then((p) => { p.restart() })
+        this.triggerHandlers(args);
         break;
       case "bill-created":
       case "quote-created":
         this.loadSales();
+        this.triggerHandlers(args);
         break;
       case "show-doc":
         let { nid, hub_id, filepath, filename, privilege } = cmd.model.toJSON()

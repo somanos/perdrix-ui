@@ -82,15 +82,15 @@ class __form_work extends Form {
     if (error) return;
     this.postService("work.create", { args }).then((data) => {
       let { id } = data;
-      this.message(`Le travail a bien ete cree sous le numero ${id}`)
+      this.showMessage(`Le travail a bien ete cree sous le numero ${id}`)
       this.ensurePart("button-work").then((p) => {
-        p.setState(0)
-        this.raise();
+        p.setState(1)
+        this.goodbye();
       })
       if (id) this.mset({ siteId: id })
       this.triggerHandlers({ service: 'work-created', data });
     }).catch((e) => {
-      this.message(LOCALE.ERROR_SERVER);
+      this.showMessage(LOCALE.ERROR_SERVER);
       this.debug("AAA:377 FAILED", e)
     })
   }

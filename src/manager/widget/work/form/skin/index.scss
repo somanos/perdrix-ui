@@ -109,6 +109,14 @@
     padding: 20px 0px;
   }
 
+  &__menu-input {
+    height: 35px;
+
+    .menu-input__entry input {
+      border: 0.5px solid lightgrey;
+    }
+  }
+
   @include dialog-acknowledge;
   @include dialog-overlay;
 
