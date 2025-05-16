@@ -17,6 +17,10 @@
   }
 
   &__main {
+    justify-content: center;
+  }
+
+  &__launcher-bar {
     background-color: rgba(47, 47, 47, 0.2);
     border-radius: drumee.$default-border-radius-top;
     justify-content: center;
@@ -36,6 +40,23 @@
 
   &__action {
     justify-content: center;
+  }
+
+  &__message-container {
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__message-content {
+    background-color: rgba(47, 47, 47, 0.2);
+    padding: 10px;
+    border-radius: drumee.$default-border-radius-tiny;
+    border: 1px solid drumee.$egrey-3c;
+  }
+
+  &__message-text {
+    white-space: nowrap;
+    @include drumee.typo($line: 15px, $size: 12px, $color: drumee.$white-f2);
   }
 
   &__helper {
@@ -203,32 +224,25 @@
         }
       }
 
-      &.calendar {
-        opacity: 0.5;
 
-        &:hover {
-          opacity: 1;
-        }
-      }
-
-      &.bigchat {
-        svg.bigchat {
-          margin-right: 0px;
-          transform: rotateY(180deg);
-        }
-      }
-
-      &.schedule {
+      &.perdrix {
         svg {
           margin-left: 3px;
         }
       }
 
-      &.conference {
+      &.perdrix.quote {
         svg {
-          margin-right: 0px;
+          color: lightcoral;
         }
       }
+
+      &.perdrix.bill {
+        svg {
+          color: rgb(56, 94, 231);
+        }
+      }
+
     }
 
     & .launcher-icon {
@@ -337,7 +351,7 @@
 
         & .calendar,
         & .addressbook,
-        & .schedule {
+        & .perdrix {
           display: flex !important;
         }
       }

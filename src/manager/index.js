@@ -1,6 +1,6 @@
 
 require('./skin');
-
+const NO_FILE_DROP = 'Veuillez ouvrir le dossier factures ou devis pour déposer un ficher'
 class __perdrix_manager extends DrumeeWm {
   constructor(...args) {
     super(...args);
@@ -17,11 +17,10 @@ class __perdrix_manager extends DrumeeWm {
   }
 
   static initClass() {
-    this.prototype.fig = 1;
     this.prototype.events = {
       drop: '_upload',
-      dragenter: 'fileDragEnter',
-      dragover: 'fileDragOver'
+      // dragenter: "fileDragEnter",
+      dragover: "fileDragOver",
     };
   }
 
@@ -37,16 +36,46 @@ class __perdrix_manager extends DrumeeWm {
     this.offsetHeight = 230;
     this.isApplication = true;
     this._launchOptions = { explicit: 1, singleton: 1 };
-    this.contextmenuItems = [
-      _a.newFolder,
-      _a.paste,
-      _a.upload,
-      _a.fullscreen,
-      _a.separator,
-      _a.preferences,
-    ];
+    this.contextmenuItems = [];
+    this.acceptMedia = 0;
   }
 
+  /**
+   * 
+   * @param {*} e 
+   * @returns 
+   */
+  _upload(e) {
+    PerdixDock.message()
+    if (this._target === this) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      this.alert(NO_FILE_DROP)
+    } else {
+      this.upload(e)
+    }
+
+    return false
+  }
+
+  /**
+   *
+   * @param {*} e
+   */
+  fileDragOver(e) {
+    super.fileDragOver(e)
+    if (this._target === this) {
+      PerdixDock.message(NO_FILE_DROP)
+    } else {
+      PerdixDock.message()
+    }
+  }
+
+  _clear_message(e) {
+    PerdixDock.message()
+    return
+  }
 
   /**
    * 
@@ -108,14 +137,6 @@ class __perdrix_manager extends DrumeeWm {
    */
   insert() { }
 
-  /**
-   * 
-   * @param {*} e 
-   * @returns 
-   */
-  _upload(e) {
-    return this.upload(e, this.mget(_a.token));
-  }
 
   /**
    * 
