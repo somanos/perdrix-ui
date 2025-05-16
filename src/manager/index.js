@@ -1,6 +1,8 @@
 
 require('./skin');
-const NO_FILE_DROP = 'Veuillez ouvrir le dossier factures ou devis pour déposer un ficher'
+const NO_FILE_DROP = 'Veuillez ouvrir le dossier factures ou devis pour déposer un ficher';
+const WS_EVENT = "ws:event";
+
 class __perdrix_manager extends DrumeeWm {
   constructor(...args) {
     super(...args);
@@ -40,6 +42,7 @@ class __perdrix_manager extends DrumeeWm {
     this.acceptMedia = 0;
   }
 
+  
   /**
    * 
    * @param {*} e 
@@ -160,6 +163,7 @@ class __perdrix_manager extends DrumeeWm {
 
       case _a.list:
         this.iconsList = child;
+        this.bindEvent(_a.live);
         break;
 
       case "logo-block":
@@ -346,6 +350,15 @@ class __perdrix_manager extends DrumeeWm {
     return this.feed(require("./skeleton").default(this, data));
   }
 
+  /**
+   * Relay socket event to manager
+   * @param {*} service 
+   * @param {*} data 
+   * @param {*} options 
+   */
+  onWsMessage(service, data, options = {}) {
+    this.trigger(WS_EVENT, { service, data, options })
+  }
 
 }
 __perdrix_manager.initClass();

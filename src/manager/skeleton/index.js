@@ -1,13 +1,13 @@
 
 /**
  * 
- * @param {*} _ui_ 
+ * @param {*} ui 
  * @returns 
  */
-const _icons_list = function (_ui_) {
+const _icons_list = function (ui) {
   const a = Skeletons.List.Smart({
-    className: `${_ui_.fig.family}__icons-list`,
-    innerClass: `${_ui_.fig.family}__icons-scroll ${_ui_.fig.group}__icons-scroll`,
+    className: `${ui.fig.family}__icons-list`,
+    innerClass: `${ui.fig.family}__icons-scroll ${ui.fig.group}__icons-scroll`,
     sys_pn: _a.list,
     flow: _a.none,
     vendorOpt: Preset.List.Orange_e,
@@ -18,13 +18,13 @@ const _icons_list = function (_ui_) {
 
 /**
  * 
- * @param {*} _ui_ 
+ * @param {*} ui 
  * @returns 
  */
-const ___window_manager = function (_ui_) {
+const ___window_manager = function (ui) {
 
-  const family = _ui_.fig.family;
-  const group = _ui_.fig.group;
+  const family = ui.fig.family;
+  const group = ui.fig.group;
   const modal = 'wrapper-modal';
   const a = Skeletons.Box.Y({
     sys_pn: "wm-container",
@@ -33,10 +33,13 @@ const ___window_manager = function (_ui_) {
     kids: [
       Skeletons.Box.Y({
         sys_pn    : "top-bar",
-        className : `${_ui_.fig.family}__topbar`,
-        kids      : [require('./topbar')(_ui_)]
+        className : `${ui.fig.family}__topbar`,
+        kids      : [require('./topbar')(ui)]
       }),
-      _icons_list(_ui_),
+      Skeletons.FileSelector({
+        partHandler: ui,
+      }),
+      _icons_list(ui),
       Skeletons.Wrapper.Y({
         sys_pn: "windows-layer",
         className: `${family}__layer ${group}__layer`,
