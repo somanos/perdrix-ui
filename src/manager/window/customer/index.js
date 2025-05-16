@@ -104,7 +104,8 @@ class __window_customer extends __window {
     };
     let itemsOpt = {
       kind: 'work_item',
-      uiHandler: [this]
+      uiHandler: [this],
+      service: "mission-hitsory"
     }
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
