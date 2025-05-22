@@ -24,7 +24,7 @@ function history(ui, { partName, kind, api }) {
     opt.itemsOpt = { kind, uiHandler: [ui] }
   }
   return Skeletons.Box.Y({
-    className: `${ui.fig.family}__history-container`,
+    className: `${ui.fig.family}__history-content`,
     kids: [
       Skeletons.List.Smart(opt)
     ]
