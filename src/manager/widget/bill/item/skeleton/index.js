@@ -2,8 +2,8 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime, devise, vat } = require("../../../../utils")
-const commaNumber = require('comma-number')
+const { fromUnixtime } = require("../../../../utils")
+const { contextButtons } = require("../../../skeleton")
 
 /**
  * 
@@ -11,9 +11,6 @@ const commaNumber = require('comma-number')
  * @returns 
  */
 
-const STATUS = [
-  '🔒', '🧰'
-]
 function bill_item(ui) {
   let { chrono, ctime, description, workId, ht, ttc } = ui.model.toJSON()
   let pfx = ui.fig.family;
@@ -23,43 +20,7 @@ function bill_item(ui) {
       content: "Numéro de mission manquant"
     })
   }
-  // let overview = [
-  //   Skeletons.Box.G({
-  //     className: `${pfx}__summary header`,
-  //     kids: [
-  //       Skeletons.Note({
-  //         className: `${pfx}__text`,
-  //         content: fromUnixtime(ctime)
-  //       }),
-  //       Skeletons.Note({
-  //         className: `label`,
-  //         content: `Facture n ${chrono}`
-  //       }),
-  //       Skeletons.Box.X({
-  //         className: `${pfx}__summary billing`,
-  //         kids: [
-  //           Skeletons.Note({
-  //             className: `amount`,
-  //             content: devise(commaNumber(ht, ' ', '.')),
-  //           }),
-  //           Skeletons.Note({
-  //             className: `amount`,
-  //             content: devise(commaNumber(ttc, ' ', '.'))
-  //           }),
-  //         ]
-  //       })
-  //     ]
-  //   }),
-  //   Skeletons.Box.X({
-  //     className: `${pfx}__description`,
-  //     kids: [
-  //       Skeletons.Note({
-  //         className: `${pfx}__text`,
-  //         content: description.replace(/\n/g, '<br>')
-  //       }),
-  //     ]
-  //   }),
-  // ]
+
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -69,9 +30,10 @@ function bill_item(ui) {
           content: fromUnixtime(ctime)
         }),
         Skeletons.Note({
-          className: `label`,
+          className: `label bill-number`,
           content: `Facture n ${chrono}`
-        })
+        }),
+        ...contextButtons(ui)
       ]
     }),
     Skeletons.Box.X({

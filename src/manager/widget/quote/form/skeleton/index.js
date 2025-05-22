@@ -1,7 +1,7 @@
 
 const {
   list, customerHeader, siteSelector, actionButtons,
-  headerBox, messageBock, descriptionEntry, cartridge
+  headerBox, messageBock, descriptionEntry, quoteForm
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -46,40 +46,41 @@ module.exports = function (ui) {
             sys_pn: "description",
             value: description
           }),
-          Skeletons.Box.Y({
-            className: `${pfx}__cartridge-container`,
-            kids: [
-              cartridge(ui, {
-                content: "Montant HT",
-              }, {
-                name: 'ht',
-                currency: "€",
-                placeholder: 0
-              }),
-              cartridge(ui, {
-                content: "Taux TVA",
-              }, {
-                placeholder: 0,
-                value: 20,
-                currency: "%",
-                name: 'tva',
-              }),
-              cartridge(ui, {
-                content: "Remise",
-              }, {
-                name: 'discount',
-                placeholder: 0,
-                currency: "€"
-              }),
-              cartridge(ui, {
-                content: "Montant TTC",
-              }, {
-                placeholder: 0,
-                name: 'ttc',
-                currency: "€",
-              }),
-            ]
-          })
+          quoteForm(ui),
+          // Skeletons.Box.Y({
+          //   className: `${pfx}__cartridge-container`,
+          //   kids: [
+          //     cartridge(ui, {
+          //       content: "Montant HT",
+          //     }, {
+          //       name: 'ht',
+          //       currency: "€",
+          //       placeholder: 0
+          //     }),
+          //     cartridge(ui, {
+          //       content: "Taux TVA",
+          //     }, {
+          //       placeholder: 0,
+          //       value: 20,
+          //       currency: "%",
+          //       name: 'tva',
+          //     }),
+          //     cartridge(ui, {
+          //       content: "Remise",
+          //     }, {
+          //       name: 'discount',
+          //       placeholder: 0,
+          //       currency: "€"
+          //     }),
+          //     cartridge(ui, {
+          //       content: "Montant TTC",
+          //     }, {
+          //       placeholder: 0,
+          //       name: 'ttc',
+          //       currency: "€",
+          //     }),
+          //   ]
+          // })
         ]
       }),
       messageBock(ui)

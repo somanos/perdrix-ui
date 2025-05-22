@@ -17,6 +17,9 @@ class __window_perdrix extends Utils {
       case _a.content:
         //child.feed(require("./skeleton/content/grid")(this));
         break;
+      case 'wrapper-dialog':
+        this.overlayWrapper = child;
+        break;
     }
   }
 

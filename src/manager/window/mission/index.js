@@ -131,6 +131,22 @@ class __window_mission extends __window {
     sales.feed(s)
   }
 
+  // /**
+  //  * 
+  //  * @param {*} cmd 
+  //  */
+  // confirmDelete(cmd) {
+  //   let msg =`Voulez-vous vraiment supprimer cette ${cmd.mget('question')} ?`;
+  //   let api = cmd.model.get(_a.api);
+  //   this.confirm(msg).then(() => {
+  //     cmd.removeItem();
+  //   }).catch((e) => {
+  //     this.warn("AAA:144", e);
+  //   });
+  // }
+  /**
+   * 
+   */
   /**
    * 
    * @param {LetcBox}  cmd 
@@ -162,6 +178,12 @@ class __window_mission extends __window {
         let { nid, hub_id, filepath, filename, privilege } = cmd.model.toJSON()
         this.viewDoc({ nid, hub_id, filepath, filename, privilege });
         break;
+      // case _a.remove:
+      //   this.confirmDelete(cmd);
+      //   break;
+      // case _a.save:
+      //   this.showDetails(cmd);
+      //   break;
       default:
         super.onUiEvent(cmd, args);
     }

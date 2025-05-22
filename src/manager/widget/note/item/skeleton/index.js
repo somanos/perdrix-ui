@@ -4,7 +4,7 @@
 * ==================================================================== */
 const { fromUnixtime } = require("../../../../utils")
 const {
-  placeView
+ contextButtons,descriptionEntry
 } = require("../../../skeleton")
 
 /**
@@ -24,14 +24,20 @@ function note_item(ui) {
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
+        ...contextButtons(ui)
       ]
     }),
     Skeletons.Box.G({
       className: `${pfx}__description`,
-      kids: Skeletons.Note({
-        className: `${pfx}__text`,
-        content: description
-      })
+      kids: [
+        Skeletons.Entry({
+          className: `${pfx}__entry`,
+          type:_a.textarea,
+          value: description,
+          formItem: "description",
+          name: "description",
+        }),
+      ],
     }),
     Skeletons.Box.Y({
       className: `${pfx}__attachment`,

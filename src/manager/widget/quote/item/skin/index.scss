@@ -1,4 +1,22 @@
 @use "mixins/window" as *;
+@use "mixins/drumee";
 .quote-item {
+  &__ui {
+    box-shadow: drumee.$drumee-shadow-box;
+  }
+
   @include cartridge-sales;
+
+  &__summary {
+    width: 100%;
+
+    &.billing {
+      width: 100%;
+      justify-content: flex-start;
+
+      .amount {
+        width: 100px;
+      }
+    }
+  }
 }

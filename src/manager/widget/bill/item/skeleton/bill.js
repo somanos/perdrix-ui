@@ -3,7 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { devise, vat } = require("../../../../utils")
-const { labelValue } = require("../../../skeleton")
+const { labelValue, entryValue } = require("../../../skeleton")
 const commaNumber = require('comma-number')
 
 
@@ -15,24 +15,21 @@ const commaNumber = require('comma-number')
 
 function bill(ui) {
   let {
-    ht, ttc, tva, filepath
+    ht, ttc, tva
   } = ui.model.toJSON() || {};
-  let pfx = `${ui.fig.family}__cartridge`
+  const pfx = `${ui.fig.family}`
   return Skeletons.Box.Y({
     className: `${pfx}-main`,
     kids: [
       Skeletons.Box.Y({
         className: `${pfx}-body`,
         debug: __filename,
-        kidsOpt: {
-          className: `${pfx}-row`,
-        },
-        kids: [
-          labelValue(ui, "Montant HT", devise(commaNumber(ht, ' ', '.'))),
-          labelValue(ui, "TVA", vat(tva)),
-          labelValue(ui, "Montant TTC", devise(commaNumber(ttc, ' ', '.'))),
-          labelValue(ui, "Document", filepath, "show-doc"),
-        ]
+        kids: [{
+          kind: "bill_cartridge",
+          ht,
+          ttc,
+          tva,
+        }]
       })
     ]
   })

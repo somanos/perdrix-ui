@@ -3,10 +3,9 @@
 @mixin cartridge-sales {
   background-color: inherit;
   width: 100%;
-  cursor: pointer;
-  box-shadow: drumee.$drumee-shadow-box;
-  padding: 5px 15px;
-  margin-bottom: 8px;
+  // box-shadow: drumee.$drumee-shadow-box;
+  // padding: 5px 15px;
+  margin: 5px 0px;
 
   &:hover {
     background-color: drumee.$perdrix-hover;
@@ -19,7 +18,11 @@
     background-color: inherit;
     width: 100%;
     grid-template-columns: 1fr;
-    grid-gap: 0.5rem;
+  }
+
+  &__cartridge-main {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
   }
 
   &__summary {
@@ -36,7 +39,37 @@
   }
 
   &__summary.header {
-    grid-template-columns: 70px 1fr;
+    grid-template-columns: 70px 1fr 20px 20px;
+    grid-gap: 0.5rem;
+    width: 100%;
+    justify-content: end;
+    overflow: visible;
+    z-index: 100;
+
+    .icon {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      padding: 2px;
+      color: drumee.$core-button-accept;
+
+      &[data-admin="0"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .tooltips {
+        position: absolute;
+        left: -50px;
+        white-space: nowrap;
+        top: 17px;
+        padding: 3px;
+        border-radius: 3px;
+        box-shadow: drumee.$drumee-shadow-box;
+        @include drumee.typo($color: drumee.$core-default-text-tooltips, $size: 12px, $line: 20px);
+      }
+    }
+
   }
 
   &__details {

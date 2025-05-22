@@ -34,7 +34,7 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        z-index:1000;
+        z-index: 1000;
         @include drumee.typo($color: drumee.$eorange, $size: 14px, $line: 20px);
       }
     }
@@ -62,7 +62,51 @@
   }
 
   &__summary.header {
-    grid-template-columns: 70px 1fr 1fr;
+    grid-template-columns: 1fr 20px 20px;
+
+    .icon {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      padding: 2px;
+      color: drumee.$core-button-accept;
+
+      &[data-admin="0"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .tooltips {
+        position: absolute;
+        left: -50px;
+        white-space: nowrap;
+        top: 17px;
+        padding: 3px;
+        border-radius: 3px;
+        box-shadow: drumee.$drumee-shadow-box;
+        z-index: 100;
+        background-color: drumee.$ewhite;
+        @include drumee.typo($color: drumee.$core-default-text-tooltips, $size: 12px, $line: 20px);
+      }
+    }
+
+  }
+
+  textarea {
+    background-color: inherit;
+    width: 100%;
+    height: 100%;
+    padding: 5px 10px;
+    border-radius: drumee.$default-border-radius;
+    border: 1px solid drumee.$egrey-78;
+    color: drumee.$egrey-78;
+    resize: vertical;
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+  }
+
+  textarea:focus {
+    outline: none;
+    border: 1px solid drumee.$core-button-accept;
   }
 
   &__details {
@@ -70,30 +114,13 @@
   }
 
   &__description {
-    grid-template-columns: 4fr 3fr;
+    grid-template-columns: 1fr;
   }
 
   &__text {
     align-content: flex-end;
     flex-wrap: wrap;
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
-
-    // &.type {
-    //   margin-right: 10px;
-    //   @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
-
-    //   .inner {
-    //     border: solid 0.5px lightgray;
-    //     padding: 1px 10px;
-    //     border-radius: 3px;
-    //     background-color: drumee.$core-background-blue;
-    //   }
-    // }
-
-    // &.status {
-    //   border: solid 0.5px drumee.$core-background-blue;
-    //   border-radius: 50%;
-    // }
   }
 
   &__cartridge {

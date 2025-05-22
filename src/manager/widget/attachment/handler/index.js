@@ -1,6 +1,4 @@
 const { dataTransfer } = require("../../../utils")
-const UPLOADER = "media_uploader";
-const ECHO_ID = "echoId";
 
 class __attachment_handler extends LetcBox {
   /**
@@ -16,20 +14,18 @@ class __attachment_handler extends LetcBox {
   /**
   * Upon DOM refresh, after element actually insterted into DOM
   */
-  onPartReady(child, pn) {
-    this.debug("AAA:20", this, child, pn)
-    switch (pn) {
-      case "main":
-        break;
-    }
-  }
+  // onPartReady(child, pn) {
+  //   switch (pn) {
+  //     case "main":
+  //       break;
+  //   }
+  // }
 
 
   /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    this.debug("AAA:32", this)
     this.feed(require('./skeleton')(this));
   }
 

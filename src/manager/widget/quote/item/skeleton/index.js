@@ -3,6 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { fromUnixtime } = require("../../../../utils")
+const { contextButtons } = require("../../../skeleton")
 
 
 /**
@@ -12,7 +13,7 @@ const { fromUnixtime } = require("../../../../utils")
  */
 
 function quote_item(ui) {
-  let { ctime, description = "", chrono="" } = ui.model.toJSON()
+  let { ctime, description = "", chrono = "" } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let overview = [
     Skeletons.Box.G({
@@ -25,7 +26,8 @@ function quote_item(ui) {
         Skeletons.Note({
           className: `label`,
           content: `Devis n ${chrono}`
-        })
+        }),
+        ...contextButtons(ui)
       ]
     }),
     Skeletons.Box.X({

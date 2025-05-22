@@ -8,6 +8,9 @@ class __quote_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
+    this.mset({
+      question: "ce devis",
+    });
   }
 
   /**
@@ -18,16 +21,57 @@ class __quote_item extends LetcBox {
   }
 
   /**
-   * User Interaction Evant Handler
-   * @param {View} trigger
-   * @param {Object} args
+   * Prompt the user to confirm the removal of the bill
    */
-  onUiEvent(trigger, args = {}) {
-    const service = trigger.mget(_a.service) || "show-doc";
-    this.triggerHandlers({
-      service,
+  removeItem() {
+    let msg = `Voulez-vous vraiment supprimer cette facture ?`;
+    this.getHandlers(_a.ui)[0].confirm(msg).then(() => {
+      this.debug("AAA:144", this, this.model.toJSON());
+      this.postService(PLUGINS.quote.remove, {
+        id: this.mget(_a.id),
+      }).then((data) => {
+        //this.parent.restart();
+        this.debug("Quote deleted", data);
+        this.goodbye();
+      })
+    });
+  }
+
+  /**
+  * 
+  */
+  saveItem() {
+    let args = this.getData()
+    this.debug("AAA:144", this.getData(), this, this.model.toJSON());
+    args.id = this.mget(_a.id);
+    this.debug("AAA:144", args);
+    this.postService(PLUGINS.quote.update, { args }).then((data) => {
+      this.debug("Quote updated", data);
     })
   }
+
+  onUiEvent(trigger, args = {}) {
+    const service = trigger.mget(_a.service) || "show-doc";
+    this.debug("AAA:27", service, this, trigger)
+    switch (service) {
+      case _a.save:
+        this.saveItem();
+        break;
+      case _a.remove:
+        this.removeItem();
+        break;
+      case "show-doc":
+        this.triggerHandlers({
+          service,
+        })
+        break;
+      default:
+        this.triggerHandlers({
+          service,
+        })
+    }
+  }
+
 }
 
 module.exports = __quote_item

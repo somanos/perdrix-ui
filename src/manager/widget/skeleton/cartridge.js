@@ -68,3 +68,116 @@ export function labelValue(ui, o1, o2) {
     kids: [label, value]
   })
 }
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} label 
+ * @param {*} value 
+ * @returns 
+ */
+export function entryValue(ui, o1, o2) {
+  let label;
+  let value;
+  let pfx = `${ui.fig.family}__fields`;
+
+  if (_.isString(o1)) {
+    label = Skeletons.Note({
+      className: `${pfx} label`,
+      content: o1,
+    })
+  } else {
+    label = Skeletons.Note({
+      className: `${pfx} label`,
+      ...o1
+    })
+  }
+
+  if (_.isString(o2)) {
+    value = Skeletons.Entry({
+      className: `${pfx} value`,
+      value: o2,
+    })
+  } else {
+    value = Skeletons.Entry({
+      className: `${pfx} value`,
+      ...o2
+    })
+  }
+  return Skeletons.Box.G({
+    className: `${pfx}-grid`,
+    kids: [label, value]
+  })
+}
+
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function contextButtons(ui) {
+  return [
+    Skeletons.Button.Svg({
+      className: `icon`,
+      ico: `drumee-trash`,
+      service: _a.remove,
+      dataset: {
+        admin: Visitor.isPdxAdmin()
+      },
+      tooltips: LOCALE.DELETE
+    }),
+    Skeletons.Button.Svg({
+      className: `icon`,
+      ico: `account_check`,
+      service: _a.save,
+      tooltips: LOCALE.SAVE_CHANGES
+    }),
+  ]
+}
+
+export function quoteForm(ui) {
+  const pfx = ui.fig.family;
+  let {
+    ht, ttc, tva, discount, filepath
+  } = ui.model.toJSON() || {};
+
+
+  return Skeletons.Box.Y({
+    className: `${pfx}__cartridge-container`,
+    kids: [
+      cartridge(ui, {
+        content: "Montant HT",
+      }, {
+        name: 'ht',
+        value: ht || 0,
+        currency: "€",
+        placeholder: 0
+      }),
+      cartridge(ui, {
+        content: "Taux TVA",
+      }, {
+        placeholder: 0,
+        value: tva || 20,
+        currency: "%",
+        name: 'tva',
+      }),
+      cartridge(ui, {
+        content: "Remise",
+      }, {
+        name: 'discount',
+        placeholder: 0,
+        currency: "€",
+        value: discount || 0
+      }),
+      cartridge(ui, {
+        content: "Montant TTC",
+      }, {
+        placeholder: 0,
+        name: 'ttc',
+        currency: "€",
+        value: ttc || 0
+      }),
+    ]
+  })
+
+}

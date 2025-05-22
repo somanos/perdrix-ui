@@ -29,11 +29,11 @@
       z-index: 10000 !important;
     }
 
-    &[data-state="0"] {
-      .window__header {
-        opacity: 0.4;
-      }
-    }
+    // &[data-state="0"] {
+    //   .window__header {
+    //     opacity: 0.4;
+    //   }
+    // }
 
     &[data-minimize="1"] {
       display: none;
@@ -42,7 +42,7 @@
     &[data-dialog="open"] {
       .window__wrapper--modal.dialog__wrapper {
         pointer-events: none;
-        opacity: 0.4;
+        // opacity: 0.4;
       }
     }
   }
@@ -58,6 +58,7 @@
     position: fixed;
     align-items: center;
     justify-content: center;
+    justify-items: center;
 
     &[data-state="open"] {
       width: 100%;
@@ -96,22 +97,130 @@
     position: absolute;
     height: auto;
 
+
+
     &[data-state="open"] {
       width: 100%;
-      height: calc(100% - 42px);
+      height: 100%;
       left: 0;
       right: 0;
       top: 44px;
       bottom: 0;
       justify-items: center;
       align-items: center;
-      border-radius: drumee.$default-border-radius-bottom;
-      background-color: drumee.$core-transparency-container-overlay;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: nowrap;
+      background-color: rgba(0, 0, 0, 0.4);
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
   }
 
   &__acknowledge {
     background-color: drumee.$ewhite;
+  }
+
+  .window-confirm {
+    &__main {
+      min-width: 300px;
+      min-height: 200px;
+      height: 200px;
+      width: 100%;
+      max-width: 500px;
+      background: drumee.$core-default-background;
+      height: 200px;
+      justify-content: center;
+      border-radius: drumee.$default-border-radius;
+      padding: 10px;
+
+    }
+
+    &__buttons {
+      align-content: center;
+      height: 110px;
+      justify-content: center; //pace-evenly;
+      padding-top: 25px;
+      width: 100%;
+
+      .button {
+        align-content: center;
+        align-items: center;
+        border-radius: drumee.$default-border-radius;
+        cursor: pointer;
+        height: 35px;
+        justify-content: center;
+        text-align: center;
+        width: 115px;
+        margin: 0 3%;
+      }
+
+      &.intro-popup .button {
+        height: 56px;
+        width: 200px;
+      }
+    }
+
+    &__button-secondary {
+      border: 1px solid drumee.$btn-rollback-border;
+      @include drumee.typo($size: 16px, $line: 18px, $color: drumee.$btn-rollback-text );
+
+      &:hover {
+        border: 2px solid drumee.$btn-rollback-border-hover;
+        color: drumee.$btn-rollback-text-hover;
+      }
+
+      &.forbiden {
+        height: 32px; //35px;
+        margin-left: 0;
+        width: 90px;
+      }
+
+    }
+
+    &__button-primary {
+      background-color: drumee.$btn-commit-background;
+      border: 0px;
+      @include drumee.typo($size: 16px, $line: 18px, $color: drumee.$btn-commit-text);
+
+      &:hover {
+        background-color: drumee.$btn-commit-background-hover;
+      }
+
+      &.large {
+        min-width: 115px;
+        padding: 0 10px;
+        width: auto;
+      }
+    }
+
+    &__button-danger {
+      background-color: drumee.$btn-caution-background;
+      border: 0px;
+      @include drumee.typo($size: 16px, $line: 18px, $color: drumee.$btn-caution-text);
+
+      &:hover {
+        background-color: drumee.$btn-caution-background-hover ;
+      }
+    }
+
+    &__message {
+      justify-content: center;
+      padding: 31px 10px 5px; //5px 10px 5px 10px;
+      margin: 0 auto;
+      @include drumee.typo($weight: 300, $size: 16px, $line: 26px, $color: drumee.$core-default-text-color);
+
+      &.trash {
+        width: 50px;
+        margin: 10px 0;
+        @include drumee.typo($weight: 300, $size: 16px, $line: 26px, $color: violet);
+      }
+
+      &.delete-team {
+        max-width: 450px;
+      }
+    }
+
   }
 
   @include header_main;

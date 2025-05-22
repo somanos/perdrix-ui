@@ -15,6 +15,9 @@ class __bill_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
+    this.mset({
+      question: "cette facture",
+    });
   }
 
   /**
@@ -76,44 +79,53 @@ class __bill_item extends LetcBox {
   }
 
 
+
   /**
-   * 
+   * Prompt the user to confirm the removal of the bill
    */
-  async promptBill() {
-    this.loadWidget({
-      kind: 'form_bill',
-      source: this,
-      id: `bill-form-${this.mget('custId')}`,
-      uiHandler: [this],
-      service: "bill-created"
+  removeItem() {
+    let msg = `Voulez-vous vraiment supprimer cette facture ?`;
+    this.getHandlers(_a.ui)[0].confirm(msg).then(() => {
+      this.debug("AAA:144", this, this.model.toJSON());
+      this.postService(PLUGINS.bill.remove, {
+        id: this.mget(_a.id),
+      }).then((data) => {
+        //this.parent.restart();
+        this.debug("Bill deleted", data);
+        this.goodbye();
+        })
+    });
+  }
+
+  /**
+  * 
+  */
+  saveItem() {
+    let args = this.getData()
+    this.debug("AAA:144", this.getData(), this, this.model.toJSON());
+    args.id = this.mget(_a.id);
+    this.debug("AAA:144", args);
+    this.postService(PLUGINS.bill.update, { args }).then((data) => {
+      this.debug("Bill updated", data);
     })
   }
 
   onUiEvent(trigger, args = {}) {
     const service = trigger.mget(_a.service) || "show-doc";
-    this.triggerHandlers({
-      service,
-    })
+    this.debug("AAA:27", service, this, trigger)
+    switch (service) {
+      case _a.save:
+        this.saveItem();
+        break;
+      case _a.remove:
+        this.removeItem();
+        break;
+      default:
+        this.triggerHandlers({
+          service,
+        })
+    }
   }
-
-  /**
-   * User Interaction Evant Handler
-   * @param {View} trigger
-   * @param {Object} args
-   */
-  // onUiEvent(cmd, args = {}) {
-  //   const service = args.service || cmd.mget(_a.service);
-  //   this.debug("AAA:27", service, this, cmd)
-  //   switch (service) {
-  //     case 'add-bill':
-  //       this.promptBill()
-  //       break;
-  //     default:
-  //       this.triggerHandlers({
-  //         service,
-  //       })
-  //   }
-  // }
 
 }
 

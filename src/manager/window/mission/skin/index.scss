@@ -142,4 +142,11 @@
       max-height: calc(100% - 30px);
     }
   }
+
+  // &.dialog__wrapper {
+  //   &[data-state="open"] {
+  //     opacity: 1;
+  //     pointer-events: auto;
+  //   }
+  // }
 }

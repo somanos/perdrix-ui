@@ -1,16 +1,15 @@
 @use "mixins/window" as *;
+@use 'mixins/drumee';
 
 .bill-item {
+  &__ui {
+    box-shadow: drumee.$drumee-shadow-box;
+  }
+
   @include cartridge-sales;
 
   &__summary {
     width: 100%;
-
-    &.header {
-      grid-template-columns: 70px 1fr;
-      width: 100%;
-      justify-content: end;
-    }
 
     &.billing {
       width: 100%;

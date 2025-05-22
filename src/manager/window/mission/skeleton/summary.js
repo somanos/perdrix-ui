@@ -21,7 +21,7 @@ function history(ui, { partName, kind, api }) {
     opt.api = { service: api, workId: ui.mget('workId') }
   }
   if (kind) {
-    opt.itemsOpt = { kind }
+    opt.itemsOpt = { kind, uiHandler: [ui] }
   }
   return Skeletons.Box.Y({
     className: `${ui.fig.family}__history-container`,

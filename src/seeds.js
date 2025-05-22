@@ -1,5 +1,6 @@
 module.exports = {
 	'attachment_handler': import('./manager/widget/attachment/handler'),
+	'bill_cartridge': import('./manager/widget/bill/cartridge'),
 	'bill_item': import('./manager/widget/bill/item'),
 	'customer_item': import('./manager/widget/customer/item'),
 	'form_bill': import('./manager/widget/bill/form'),
@@ -13,6 +14,7 @@ module.exports = {
 	'location_view': import('./manager/widget/location/view'),
 	'menu_input': import('./manager/widget/menu-input'),
 	'note_item': import('./manager/widget/note/item'),
+	'quote_cartridge': import('./manager/widget/quote/cartridge'),
 	'quote_item': import('./manager/widget/quote/item'),
 	'perdrix_dock': import('./manager/dock'),
 	'poc_item': import('./manager/widget/poc/item'),

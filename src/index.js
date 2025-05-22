@@ -1,7 +1,26 @@
+
+/**
+ * 
+ * @param {*} data 
+ */
+function setEnv(data) {
+  Env.set(data)
+  Visitor.canRead = function () {
+    return (data.privilege & _K.permission.read)? 1 : 0;
+  };
+  Visitor.canWrite = function () {
+    return (data.privilege & _K.permission.write)? 1 : 0;
+  };
+  Visitor.isPdxAdmin = function () {
+    return (data.privilege & _K.permission.admin)? 1 : 0;
+  };
+  window.PLUGINS = Platform.get('plugins');
+}
+
 /** 
  * Use Winwow Manager from Drumee SDK 
  */
-async function preloadKinds() {
+async function prepare() {
   window.DrumeeWm = await Kind.waitFor('DrumeeWm');
   window.DrumeeInteractWindow = await Kind.waitFor('DrumeeInteractWindow');
   window.DrumeeInteractPlayer = await Kind.waitFor('DrumeeInteractPlayer');
@@ -22,17 +41,24 @@ async function start(parent) {
   let data = await uiRouter.fetchService("pdx_utils.get_env");
   if (!data || !data.app_home) {
     console.error("Could not get application env", data);
+    Drumee.failover({ status: 500 })
+    return
+  }
+
+  setEnv(data);
+
+  if (!Visitor.canRead()) {
     Drumee.failover({ status: 403 })
     return
   }
-  Env.set(data)
 
   if (location.host != data.app_home) {
     location.host = data.app_home;
     return;
   }
 
-  await preloadKinds();
+  await prepare();
+
   console.log("Loading Plugins Application");
 
   import('./manager/index.js').then(async (m) => {
@@ -42,13 +68,13 @@ async function start(parent) {
     Kind.register(kind, m.default);
     Kind.waitFor(kind).then((k) => {
       console.log("Loading Plugin Entry", kind);
-      if(location.hash){
+      if (location.hash) {
         uiRouter.currentModule.feed({ kind })
-      }else{
-        uiRouter.ensurePart(_a.body).then((p)=>{
+      } else {
+        uiRouter.ensurePart(_a.body).then((p) => {
           p.feed({ kind });
         })
-      }    
+      }
     })
   })
 }
@@ -57,9 +83,9 @@ async function start(parent) {
 if (document.readyState == 'complete') {
   start()
 } else {
-  if(location.hash){
+  if (location.hash) {
     document.addEventListener('drumee:plugins:ready', start);
-  }else{
+  } else {
     document.addEventListener('drumee:router:ready', start);
   }
 }

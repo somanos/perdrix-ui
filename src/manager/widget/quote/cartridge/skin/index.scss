@@ -1,0 +1,18 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+@use "mixins/window" as *;
+
+.quote-cartridge {
+  @include cartridge-sales;
+  @include entry-cartridge;
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+
+}
