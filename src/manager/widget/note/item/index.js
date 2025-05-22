@@ -53,7 +53,7 @@ class __note_item extends ItemCore {
       this.postService(PLUGINS.note.remove, {
         id: this.mget(_a.id),
       }).then((data) => {
-        this.parent.restart();
+        this.goodbye();
         this.debug("Note deleted", data);
       })
     });

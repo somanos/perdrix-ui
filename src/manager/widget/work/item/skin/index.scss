@@ -17,9 +17,8 @@
       background-color: drumee.$perdrix-hover;
     }
 
-    // box-shadow: drumee.$drumee-shadow-box;
     padding:5px 15px;
-    border-bottom:.5px solid drumee.$core-default-separator;
+    border-bottom:0.5px solid lightgray;
   }
 
   &__main {
