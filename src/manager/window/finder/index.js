@@ -290,12 +290,12 @@ class __window_finder extends __window {
    * @param {*} args
   */
   onUiEvent(cmd, args = {}) {
-    const { service, type, content } = args
+    const service = args.service || cmd.model.get(_a.service);
     this.debug(`AAA:273 onUiEvent service=${service}`, cmd.mget(_a.type), cmd, args, this);
-
     switch (service) {
       case _e.close:
         this.hide();
+        this.triggerHandlers({ service: "finder-closed" })
         return;
       case _a.filter:
         this.filterContent(cmd);

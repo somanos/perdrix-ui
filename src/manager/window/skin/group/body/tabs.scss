@@ -28,7 +28,7 @@
     }
 
     .customer__button,
-    .site__button,
+    .customer__button-container,
     .tabs__button {
       cursor: pointer;
       height: 40px;
@@ -56,6 +56,35 @@
       }
 
       @include drumee.typo($size: 16px, $line: 25px, $weight: 400, $color: white);
+    }
+
+    .customer__button-container {
+      padding: 0;
+
+      &[data-state="0"] {
+        .customer__icon {
+          display: none;
+        }
+      }
+    }
+
+    .customer__icon {
+      color: white;
+      cursor: pointer;
+      height: 40px;
+      position: absolute;
+      right: 0;
+      width: 40px;
+      padding: 7px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-content: center;
+      flex-wrap: wrap;
+    }
+
+    &:hover {
+      color: drumee.$blue-midnight;
     }
   }
 

@@ -1,4 +1,4 @@
-const { customerHeader, selectionMenu } = require("../../../widget/skeleton")
+const { customerHeader } = require("../../../widget/skeleton")
 
 /**
  * 
@@ -12,35 +12,48 @@ export function tabs(ui) {
   let main = Skeletons.Box.X({
     className: `${pfx}__tabs main`,
     kidsOpt: {
-      className: `${item}__button`,
       radio: `${ui.cid}-tabs`,
       labelClass: `${item}__label contacts`,
       service: "load-context"
     },
     kids: [
-      Skeletons.Button.Label({
-        ico: 'icon-company',
-        label: 'Chantiers',
+      Skeletons.Note({
+        className: `${item}__button`,
+        content: 'Chantiers',
         name: 'sites',
       }),
-      Skeletons.Button.Label({
-        ico: 'desktop_desksettings',
-        label: 'Missions',
+      Skeletons.Box.X({
+        className: `${item}__button-container`,
+        state: 1,
+        uiHandler: [ui],
         name: 'works',
-        state: 1
+        kids: [
+          Skeletons.Note({
+            className: `${item}__button`,
+            content: 'Missions',
+            active: 0
+          }),
+          Skeletons.Button.Svg({
+            className: `${item}__icon`,
+            ico: 'editbox_list-plus',
+            uiHandler: [ui],
+            service: "create-work"
+          })
+        ],
       }),
-      //works,
-      Skeletons.Button.Label({
-        ico: 'editbox_openmenu',
-        label: 'Solde',
+      Skeletons.Note({
+        className: `${item}__button`,
+        content: 'Solde',
         name: 'solde',
       }),
     ]
   });
+
   let context = Skeletons.Wrapper.X({
     className: `${pfx}__tabs context`,
     sys_pn: "context-bar",
   })
+  
   return Skeletons.Box.Y({
     className: `${pfx}__tabs container`,
     kids: [main, context]

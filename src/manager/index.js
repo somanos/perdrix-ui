@@ -42,7 +42,7 @@ class __perdrix_manager extends DrumeeWm {
     this.acceptMedia = 0;
   }
 
-  
+
   /**
    * 
    * @param {*} e 
@@ -338,6 +338,12 @@ class __perdrix_manager extends DrumeeWm {
       case _e.search:
         this.search(cmd)
         return;
+      case "finder-closed":
+        this.ensurePart('search-box').then((p) => {
+          p.setValue('')
+        })
+        break;
+
     }
   }
 

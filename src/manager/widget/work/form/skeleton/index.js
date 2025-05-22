@@ -47,7 +47,7 @@ module.exports = function (ui) {
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      headerBox(ui, { title: "Creer un travail" }),
+      headerBox(ui, { title: "Créer une nouvelle mission" }),
       customerHeader(ui),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
@@ -55,8 +55,6 @@ module.exports = function (ui) {
           body,
           actionButtons(ui, [
             { content: "Créer la mission", service: "create-work", sys_pn: "button-work" },
-            // { content: "Creer le devis", service: "create-quote" },
-            // { content: "Reserver le devis", service: "reserve-quote" },
           ])
         ]
       })

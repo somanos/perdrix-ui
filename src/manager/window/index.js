@@ -92,8 +92,8 @@ class __window_perdrix extends Utils {
  * @param {object}  args 
  */
   onUiEvent(cmd, args = {}) {
-    const service = args.service || cmd.service || cmd.model.get(_a.service);
-    this.debug(`AAA:61 sd onUiEvent=${service}`, cmd, cmd.get(_a.state), this);
+    const service = args.service || cmd.model.get(_a.service);
+    this.debug(`AAA:61 sd onUiEvent=${service}`, cmd, cmd.get(_a.state), args, this);
     switch (service) {
       case 'close-form':
         this.__wrapperDialog && this.__wrapperDialog.clear();
@@ -101,7 +101,6 @@ class __window_perdrix extends Utils {
       case null:
       case undefined:
         break;
-
       case _a.search:
         //this.debug("AAA:132", cmd, args, this);
         Wm.search(cmd, args);
