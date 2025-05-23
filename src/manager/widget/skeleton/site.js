@@ -84,3 +84,29 @@ export function siteSelector(ui) {
     ],
   })
 }
+
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function addressSmallView(ui) {
+  let { location, postcode, city } = ui.model.toJSON();
+  const adresse = normalizelLocation(location);
+  let origin = ui.mget(_a.origin) || "";
+
+  return Skeletons.Box.Y({
+    className: `${ui.fig.family}__cartridge`,
+    debug: __filename,
+    kids: [
+      Skeletons.Note({
+        className: `${ui.fig.family}__text ${origin}`,
+        content: adresse,
+      }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__text ${origin}`,
+        content: `${postcode} ${city}`,
+      })
+    ]
+  })
+}

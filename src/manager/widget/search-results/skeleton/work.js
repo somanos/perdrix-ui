@@ -10,26 +10,24 @@
  */
 
 function workSkl(ui) {
-  let { custName, gender, type, description, city } = ui.data();
-
-  let title = `Missions`;
-
-  if (type) {
-    title = `${title} (${type})`;
-  }
-
-  if (gender) {
-    custName = `${gender} ${custName}`;
-  }
-
+  let { content, site, customer } = ui.data();
+  const uiHandler = ui.getHandlers(_a.ui);
   const kids = [
-    require('./header')(ui, 'desktop_desksettings', title, city),
-    require('./cartridge')(ui, 'Nom du client', custName),
-    require('./cartridge')(ui, 'Description', description),
-    // require('./cartridge')(ui, 'Montant HT', ht),
-    // require('./cartridge')(ui, `TVA (${taux_tva*100})`, val_tva),
-    // require('./cartridge')(ui, 'Montant TTC', ttc),
-    // require('./cartridge')(ui, 'Document', docId),
+    {
+      ...site,
+      customer,
+      service: "load-site-window",
+      uiHandler,
+      kind: "site_item"
+    },
+    {
+      ...content,
+      site,
+      customer,
+      service: "load-mission-window",
+      uiHandler,
+      kind: "work_item"
+    },
   ]
   return kids;
 }

@@ -110,6 +110,11 @@ class __bill_item extends LetcBox {
     })
   }
 
+  /**
+   * 
+   * @param {*} trigger 
+   * @param {*} args 
+   */
   onUiEvent(trigger, args = {}) {
     const service = trigger.mget(_a.service) || "show-doc";
     this.debug("AAA:27", service, this, trigger)

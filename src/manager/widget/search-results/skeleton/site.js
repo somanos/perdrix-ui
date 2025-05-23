@@ -9,17 +9,24 @@ const { normalizelLocation } = require("../../../utils")
  * @returns 
  */
 function siteSkl(ui) {
-  let { location, siteId, custName, custId, gender, city } = ui.data();
+  const uiHandler = ui.getHandlers(_a.ui);
+  let { content, site, customer } = ui.data();
 
-  if (gender) {
-    custName = `${gender} ${custName}`;
-  }
-
-  const adresse = normalizelLocation(location);
   const kids = [
-    require('./header')(ui, 'maintenance', "Chantier", city),
-    require('./cartridge')(ui, 'Nom du client', custName, custId),
-    require('./cartridge')(ui, 'Adresse du chantier', adresse, siteId),
+    {
+      ...customer,
+      service: "load-customer-window",
+      uiHandler,
+      kind: "customer_item"
+    },
+    {
+      ...content,
+      site,
+      customer,
+      service: "load-site-window",
+      uiHandler,
+      kind: "site_item"
+    },
   ]
   return kids;
 }

@@ -5,32 +5,34 @@
 @use 'mixins/drumee';
 @use 'quote' as *;
 @use "mixins/form" as *;
+@use "mixins/window" as *;
 
 .work-item {
-  &__ui {
-    background-color: inherit;
-    width: 100%;
-    margin-bottom: 1px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: drumee.$perdrix-hover;
-    }
-
-    padding:5px 15px;
-    border-bottom:0.5px solid lightgray;
-  }
+  @include widget-ui;
 
   &__main {
     background-color: inherit;
     width: 100%;
     grid-gap: 0.5rem;
-    grid-template-columns: 1fr;
+    grid-template-columns: 120px 1fr 120px;
+
+    &[data-attached="0"] {
+      grid-template-columns: 120px 1fr;
+    }
+  }
+
+  &__content {
+    width: 100%;
   }
 
   &__summary,
+  &__location,
   &__quote {
     width: 100%;
+  }
+
+  &__location {
+    grid-gap: 0.5rem;
   }
 
   &__container {
@@ -45,21 +47,21 @@
   &__summary {
     width: 100%;
 
-    &.header {
-      grid-template-columns: 190px 1fr;
-    }
+    // &.header {
+    //   grid-template-columns: minmax(50px, 120px) 1fr;
+    // }
 
-    &.content {
-      grid-template-columns: 190px 1fr;
-    }
+    // &.content {
+    //   grid-template-columns: minmax(50px, 120px) 1fr;
+    // }
 
-    &-count {
-      height: 24px;
-    }
+    // &-count {
+    //   height: 24px;
+    // }
 
-    &.extra {
-      grid-template-columns: 190px 1fr;
-    }
+    // &.extra {
+    //   grid-template-columns: minmax(50px, 120px) 1fr;
+    // }
 
 
     &-count-item {
@@ -138,6 +140,16 @@
 
   &__button-item {
     min-width: 180px;
+  }
+
+  &__icon {
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-right: 8px;
+    color: drumee.$eorange-sunset;
+    padding: 5px;
   }
 
   @include quote;

@@ -12,65 +12,70 @@ const { fromUnixtime, normalizelLocation } = require("../../../../utils")
 function work_item(ui) {
   let { type, workType, ctime, description, site, id } = ui.model.toJSON()
   let { city, location } = site;
+  let pfx = ui.fig.family;
   if (!id) {
     return Skeletons.Note({
       className: `${pfx}__description`,
       content: "Travail indéterminé"
     })
   }
-  let pfx = ui.fig.family;
   let { bill, quote, note } = ui.model.toJSON();
-  let line1 = Skeletons.Box.G({
-    className: `${pfx}__summary header`,
+  let attachments;
+  let attached = '0';
+  if (bill || quote || note) {
+    attached = '1';
+    attachments = Skeletons.Box.Y({
+      className: `${pfx}__content attachments`,
+      kidsOpt: {
+        className: `${pfx}__summary-count-item`,
+      },
+      kids: [
+        Skeletons.Button.Label({
+          ico: 'editbox_pencil',
+          label: `${note} notes`,
+        }),
+        Skeletons.Button.Label({
+          ico: 'account_documents',
+          label: `${quote} devis`,
+        }),
+        Skeletons.Button.Label({
+          ico: 'desktop_drumeememo',
+          label: `${bill} factures`,
+        }),
+      ]
+    });
+  } else {
+    attachments = Skeletons.Element()
+  }
+
+  let features = Skeletons.Box.Y({
+    className: `${pfx}__content features`,
     kids: [
       Skeletons.Note({
         className: `${pfx}__text`,
         content: fromUnixtime(ctime)
       }),
-      Skeletons.Box.X({
-        className: `${pfx}__summary-count`,
-        kidsOpt: {
-          className: `${pfx}__summary-count-item`,
-        },
-        kids: [
-          Skeletons.Button.Label({
-            ico: 'editbox_pencil',
-            label: `${note} notes`,
-          }),
-          Skeletons.Button.Label({
-            ico: 'account_documents',
-            label: `${quote} devis`,
-          }),
-          Skeletons.Button.Label({
-            ico: 'desktop_drumeememo',
-            label: `${bill} factures`,
-          }),
-        ]
+      Skeletons.Button.Svg({
+        className: `${pfx}__icon`,
+        ico: 'desktop_desksettings',
+      }),
+      Skeletons.Note({
+        className: `${pfx}__text`,
+        content: `Mission n° ${ui.mget('workId')}`,
       }),
     ]
-  })
-  let overview = [
-    line1,
-    Skeletons.Box.G({
-      className: `${pfx}__summary content`,
-      kids: [
-        Skeletons.Note({
-          className: `${pfx}__text type`,
-          content: type || workType
-        }),
-        Skeletons.Note({
-          className: `${pfx}__description`,
-          content: description.replace(/\n/g, '<br>')
-        })
-      ]
-    })
-  ]
+  });
 
-  if (ui.mget(_a.format) == _a.extra) {
-    const adresse = normalizelLocation(location)
-    overview.push(
-      Skeletons.Box.G({
-        className: `${pfx}__summary extra`,
+  let details = Skeletons.Box.Y({
+    className: `${pfx}__content details`,
+    kids: [
+      Skeletons.Note({
+        className: `${pfx}__text type`,
+        content: type || workType
+      }),
+      //addressSmallView(ui),
+      Skeletons.Box.X({
+        className: `${pfx}__location`,
         kids: [
           Skeletons.Note({
             className: `${pfx}__text`,
@@ -78,23 +83,32 @@ function work_item(ui) {
           }),
           Skeletons.Note({
             className: `${pfx}__text`,
-            content: adresse
+            content: normalizelLocation(location)
           })
         ]
-      }))
-  }
+      }),
+      Skeletons.Note({
+        className: `${pfx}__description`,
+        content: description.replace(/\n/g, '<br>')
+      })
+    ]
+  });
+
 
   return Skeletons.Box.G({
     className: `${pfx}__main`,
     debug: __filename,
     uiHandler: [ui],
+    dataset: {
+      attached
+    },
     kids: [
-      Skeletons.Box.Y({
-        className: `${pfx}__summary`,
-        kids: overview,
-      }),
-    ]
+      features,
+      details,
+      attachments,
+    ],
   })
 
 }
 module.exports = work_item;
+

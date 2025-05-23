@@ -9,31 +9,26 @@
  * @returns 
  */
 
-function header(ui, ico, content) {
+function header(ui, ico, t1, t2) {
   let icon = Skeletons.Button.Svg({
     className: `${ui.fig.family}__icon-header ${ui.mget(_a.type)}`,
     ico,
   })
-  let origin = ui.mget(_a.origin) || "";
-  return Skeletons.Box.Y({
+  return Skeletons.Box.X({
     className: `${ui.fig.family}__cartridge-header`,
     debug: __filename,
     kids: [
-      Skeletons.Box.X({
-        className: `${ui.fig.family}__text type ${origin}`,
-        kids:[
-          icon,
-          Skeletons.Note({
-            className: `${ui.fig.family}__text type ${origin}`,
-            content
-          }),    
-        ]
-      }),
+      icon,
       Skeletons.Note({
-        className: `${ui.fig.family}__text id`,
-        content: ui.mget('custId')
+        className: `${ui.fig.family}__text type`,
+        content:t1
       }),
+      // Skeletons.Note({
+      //   className: `${ui.fig.family}__text id`,
+      //   content: t2
+      // }),
     ]
   })
+
 }
 module.exports = header;

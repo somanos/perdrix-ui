@@ -14,70 +14,111 @@ class __search_result extends LetcBox {
     super.initialize(opt);
     this.declareHandlers();
     this.skeleton = require('./skeleton')(this);
-    this.mset(this.data())
   }
 
   /**
   * 
   */
   data() {
-    let content = this.mget(_a.content);
-    let reference = this.mget(_a.reference);
+    let c = this.mget(_a.content);
+    let r = this.mget(_a.reference);
+    this.debug("AAA:27", c, r)
+    return {
+      customer: r[0],
+      site: r[1],
+      work: r[2],
+      content: c,
+      ...c,
+    }
     switch (this.mget(_a.type)) {
       case "site":
         return {
-          id: content.siteId,
-          city: content.city,
-          companyclass: reference.companyclass,
-          custId: reference.custId,
-          custName: reference.custName,
-          gender: reference.gender,
-          location: content.location,
-          postcode: content.postcode,
-          siteId: content.siteId,
-          geometry: content.geometry,
-          customer: reference
+          id: c.siteId,
+          city: c.city,
+          companyclass: r.companyclass,
+          custId: r.custId,
+          custName: r.custName,
+          gender: r.gender,
+          location: c.location,
+          postcode: c.postcode,
+          siteId: c.siteId,
+          geometry: c.geometry,
+          customer: r
         }
       case "customer":
         return {
-          id: content.custId,
-          city: content.city,
-          companyclass: content.companyclass,
-          custId: content.custId,
-          custName: content.custName,
-          gender: content.gender,
-          location: content.location,
-          postcode: content.postcode,
-          siteId: content.siteId,
-          geometry: content.geometry,
+          id: c.custId,
+          city: c.city,
+          companyclass: c.companyclass,
+          custId: c.custId,
+          custName: c.custName,
+          gender: c.gender,
+          location: c.location,
+          postcode: c.postcode,
+          siteId: c.siteId,
+          geometry: c.geometry,
         }
       case "poc":
         return {
-          id: content.pocId,
-          pocId: content.pocId,
-          gender: content.gender,
-          phones: content.phones,
-          email: content.email,
-          pocName: content.pocName,
-          lastname: content.lastname,
-          firstname: content.firstname,
+          id: c.pocId,
+          pocId: c.pocId,
+          gender: c.gender,
+          phones: c.phones,
+          email: c.email,
+          pocName: c.pocName,
+          lastname: c.lastname,
+          firstname: c.firstname,
         }
         break;
       case "mission":
       case "work":
         return {
-          custName: reference.custName,
-          id: content.workId,
-          workType: content.type,
-          city: content.city,
-          location: content.location,
-          postcode: content.postcode,
-          siteId: content.siteId,
-          workId: content.workId,
-          customer: reference,
-          description: content.description
+          custName: r.custName,
+          id: c.workId,
+          workType: c.type,
+          city: c.city,
+          location: c.location,
+          postcode: c.postcode,
+          siteId: c.siteId,
+          workId: c.workId,
+          customer: r,
+          description: c.description
         }
-        break;
+      case "quote":
+        return {
+          custName: c.custName,
+          workId: c.workId,
+          quoteId: c.quoteId,
+          city: c.city,
+          location: c.location,
+          postcode: c.postcode,
+          siteId: c.siteId,
+          workId: c.workId,
+          chrono: c.chrono,
+          ht: c.ht,
+          ttc: c.ttc,
+          tva: c.tva,
+          discount: c.discount,
+          filepath: c.filepath,
+          description: c.description
+        }
+      case "bill":
+        return {
+          custName: c.custName,
+          workId: c.workId,
+          quoteId: c.quoteId,
+          city: c.city,
+          location: c.location,
+          postcode: c.postcode,
+          siteId: c.siteId,
+          workId: c.workId,
+          chrono: c.chrono,
+          ht: c.ht,
+          ttc: c.ttc,
+          tva: c.tva,
+          filepath: c.filepath,
+          description: c.description
+        }
     }
 
   }
@@ -88,6 +129,8 @@ class __search_result extends LetcBox {
     * @param {Object} args
     */
   onUiEvent(cmd, args = {}) {
+    const service = args.service || cmd.mget(_a.service);
+    this.debug("AAA:27", cmd, args, service, this)
     this.triggerHandlers({
       service: "open-viewer"
     })

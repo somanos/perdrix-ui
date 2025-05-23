@@ -3,28 +3,25 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 @use 'mixins/drumee';
+@use "mixins/window" as *;
 
 .site-item {
-  &__ui {
-    background-color: inherit;
-    width: 100%;
-    cursor: pointer;
-    border-bottom: 1px solid lightgrey;
 
-    &:hover {
-      background-color: drumee.$perdrix-hover;
-    }
-
-    //box-shadow: drumee.$drumee-shadow-box;
-    //padding:5px 15px;
-    //margin-bottom:8px;
-  }
+  @include widget-ui;
 
   &__main {
     background-color: inherit;
     width: 100%;
   }
 
+  &__container {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    grid-template-columns: minmax(100px, 150px) 1fr;
+  }
 
   &__content {
     width: 100%;
@@ -41,20 +38,19 @@
     flex-wrap: wrap;
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
 
-    &.type {
-      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
-
-      .inner {
-        border: solid 0.5px lightgray;
-        padding: 1px 10px;
-        border-radius: 3px;
-        background-color: drumee.$core-background-blue;
-      }
-    }
 
     &.status {
       border: solid 0.5px drumee.$core-background-blue;
       border-radius: 50%;
     }
+  }
+
+  &__icon-header {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-right: 8px;
+    color: drumee.$eorange-sunset;
+    padding: 5px;
   }
 }

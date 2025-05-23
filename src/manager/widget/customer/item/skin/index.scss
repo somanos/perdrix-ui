@@ -3,18 +3,17 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 @use 'mixins/drumee';
-
+@use "mixins/window" as *;
 .customer-item {
-  &__ui {
-    background-color: inherit;
-    width: 100%;
-    cursor: pointer;
-
-    &:hover {
-      background-color: drumee.$perdrix-hover;
-    }
-  }
-
+  // &__ui {
+  //   background-color: inherit;
+  //   width: 100%;
+  //   &:hover {
+  //     background-color: drumee.$perdrix-hover;
+  //   }
+  //   box-shadow:  0 2px 6px 1px rgba(75, 72, 72, 0.3)
+  // }
+  @include widget-ui;
   &__main {
     background-color: inherit;
     width: 100%;
@@ -34,7 +33,6 @@
     background-color: inherit;
     justify-content: start;
     align-items: start;
-    border-bottom: 1px solid lightgrey;
   }
 
   &__text {
@@ -71,7 +69,6 @@
   }
 
   &__cartridge-header {
-    height: 30px;
     flex: 3;
     margin-bottom: 3px;
   }

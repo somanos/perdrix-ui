@@ -252,6 +252,17 @@ class __window_finder extends __window {
   }
 
   /**
+   * 
+   */
+  async loadCustomerWindow(customer) {
+    this.loadWidget({
+      kind: 'window_customer',
+      ...customer.data(),
+      id: `customer-${customer.mget(_a.id)}`,
+    })
+  }
+
+  /**
     * 
     */
   async promptPoc(cmd) {
@@ -300,25 +311,18 @@ class __window_finder extends __window {
       case _a.filter:
         this.filterContent(cmd);
         return;
-      case 'open-viewer':
-        switch (cmd.mget(_a.type)) {
-          case "customer":
-            this.loadCustomer(cmd, 1);
-            break;
-          case "site":
-            this.loadSiteWindow(cmd, 1);
-            break;
-          case "work":
-            this.loadMissionWindow(cmd, 1);
-            break;
-          case "work":
-            this.loadMissionWindow(cmd, 1);
-            break;
-          case "poc":
-            this.promptPoc(cmd, 1);
-            break;
-        }
-        return
+      case 'load-site-window':
+        this.loadSiteWindow(cmd, 1);
+        return;
+      case 'load-mission-window':
+        this.loadMissionWindow(cmd, 1);
+        return;
+      case 'load-customer-window':
+        this.loadCustomerWindow(cmd, 1);
+        return;
+      case 'load-poc-form':
+        this.promptPoc(cmd, 1);
+        return;
 
       default:
         return super.onUiEvent(cmd, args);

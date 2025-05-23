@@ -3,9 +3,6 @@
 @mixin cartridge-sales {
   background-color: inherit;
   width: 100%;
-  // box-shadow: drumee.$drumee-shadow-box;
-  // padding: 5px 15px;
-  margin: 5px 0px;
 
   &:hover {
     background-color: drumee.$perdrix-hover;

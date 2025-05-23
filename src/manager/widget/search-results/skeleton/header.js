@@ -9,7 +9,7 @@
  * @returns 
  */
 
-function header(ui, ico, t1, t2) {
+function header(ui, ico, content) {
   let icon = Skeletons.Button.Svg({
     className: `${ui.fig.family}__icon-header ${ui.mget(_a.type)}`,
     ico,
@@ -21,12 +21,12 @@ function header(ui, ico, t1, t2) {
       icon,
       Skeletons.Note({
         className: `${ui.fig.family}__text type`,
-        content:t1
+        content
       }),
-      Skeletons.Note({
-        className: `${ui.fig.family}__text id`,
-        content: t2
-      }),
+      // Skeletons.Note({
+      //   className: `${ui.fig.family}__text id`,
+      //   content: t2
+      // }),
     ]
   })
 

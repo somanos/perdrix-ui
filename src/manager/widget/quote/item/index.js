@@ -8,9 +8,7 @@ class __quote_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.mset({
-      question: "ce devis",
-    });
+    this.debug("AAA:27", this, opt)
   }
 
   /**
@@ -24,7 +22,7 @@ class __quote_item extends LetcBox {
    * Prompt the user to confirm the removal of the bill
    */
   removeItem() {
-    let msg = `Voulez-vous vraiment supprimer cette facture ?`;
+    let msg = `Voulez-vous vraiment supprimer ce devis ?`;
     this.getHandlers(_a.ui)[0].confirm(msg).then(() => {
       this.debug("AAA:144", this, this.model.toJSON());
       this.postService(PLUGINS.quote.remove, {

@@ -33,6 +33,17 @@
     justify-content: start;
     align-items: start;
     border-bottom: 1px solid lightgrey;
+    grid-gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+
+    &[data-type="customer"],
+    &[data-type="poc"] {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__reference-container {
+    width: 100%;
   }
 
   &__text {
@@ -69,14 +80,15 @@
   }
 
   &__cartridge-header {
-    height: 30px;
+    height: 100%;
     width: 100%;
-    margin-bottom: 3px;
+    grid-gap: 0.5rem;
+    box-shadow: 0 2px 6px 1px rgba(75, 72, 72, 0.3)
   }
 
   &__icon-header {
     width: 30px;
-    height: 100%;
+    height: 30px;
     padding: 0;
     margin-right: 8px;
 
@@ -90,8 +102,21 @@
       padding: 5px;
     }
 
+    &.bill {
+      color: rgba(240, 4, 185, 0.801);
+      padding: 5px;
+    }
+
+    &.quote {
+      color: rgba(24, 13, 228, 0.801);
+      padding: 5px;
+    }
+
     &.poc {
       color: rgb(112, 135, 238);
+      width: 40px;
+      height: 35px;
+      margin-left: 5px;
     }
 
     &.work {

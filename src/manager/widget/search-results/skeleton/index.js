@@ -11,7 +11,7 @@
 
 function found_item(ui) {
   let kids = [];
-  let { siteId, custId, pocId, workId } = ui.mget(_a.content);
+  //let { siteId, custId, pocId, workId } = ui.mget(_a.content);
 
   switch (ui.mget(_a.type)) {
     case 'site':
@@ -26,20 +26,24 @@ function found_item(ui) {
     case 'work':
       kids = require('./work')(ui);
       break;
+    case 'bill':
+      kids = require('./bill')(ui);
+      break;
+    case 'quote':
+      kids = require('./quote')(ui);
+      break;
     default:
       kids = require('./header')(ui, 'account_contacts', "Type de donnees inconnues")
   }
+
   const skeleton = Skeletons.Box.Y({
     className: `${ui.fig.family}__main ${ui.mget(_a.type)}`,
     debug: __filename,
     uiHandler: [ui],
-    custId,
-    workId,
-    siteId,
-    pocId,
     kids: [
-      Skeletons.Box.Y({
+      Skeletons.Box.G({
         className: `${ui.fig.family}__container`,
+        dataset: { type: ui.mget(_a.type) },
         kids,
       })
     ]

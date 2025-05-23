@@ -2,11 +2,11 @@
 @use 'mixins/drumee';
 
 .bill-item {
-  &__ui {
-    box-shadow: drumee.$drumee-shadow-box;
-  }
-
+  // &__ui {
+  //   box-shadow: drumee.$drumee-shadow-box;
+  // }
   @include cartridge-sales;
+  @include widget-ui;
 
   &__summary {
     width: 100%;
