@@ -1,5 +1,5 @@
 # Perdrix User Interfa
-(c) 2025 Somanos Sar Licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**
+(c) 2025 Somanos Sar Licensed under the **Apache License V2**
 
 See [LICENSE](LICENSE) for full terms.
 
@@ -12,7 +12,11 @@ Before you go further, setup first Drumee OS, then [perdrix-server](https://gith
 This module
 
 # Getting started
+Clone the project and change webpack.options.json accordingly to the setup you've done in the server installation step.
+
 ```console
 git clone https://github.com/somanos/perdrix-ui
+cd perdrix-ui
 
 ```
+
