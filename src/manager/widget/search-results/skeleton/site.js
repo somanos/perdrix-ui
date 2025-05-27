@@ -11,7 +11,6 @@ const { normalizelLocation } = require("../../../utils")
 function siteSkl(ui) {
   const uiHandler = ui.getHandlers(_a.ui);
   let { content, site, customer } = ui.data();
-
   const kids = [
     {
       ...customer,
@@ -23,6 +22,8 @@ function siteSkl(ui) {
       ...content,
       site,
       customer,
+      siteId: site.id,
+      custId: customer.id,
       service: "load-site-window",
       uiHandler,
       kind: "site_item"

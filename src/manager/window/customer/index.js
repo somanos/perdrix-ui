@@ -18,8 +18,6 @@ class __window_customer extends __window {
   async initialize(opt) {
     require('./skin');
     super.initialize(opt);
-    this.source = opt.source;
-    this.mset(opt.source.data())
     this._filter = {
       date: 0,
       city: 1,
@@ -162,7 +160,7 @@ class __window_customer extends __window {
             className: `${this.fig.family}__button-action`,
             label: "Nouvelle mission",
             ico: "editbox_list-plus",
-            icons: null, service: "create-work"
+            icons: null, service: "create-mission"
           })
         ]
         context.feed(contextBar(this, buttons));
@@ -208,45 +206,6 @@ class __window_customer extends __window {
   }
 
 
-  /**
-    * 
-    */
-  async promptWork(cmd) {
-    this.loadWidget({
-      kind: 'form_site',
-      source: this.source,
-      id: `site-form-${this.mget(CUST_ID)}`,
-      uiHandler: [this],
-      service: "site-created"
-    })
-  }
-
-  /**
-    * 
-    */
-  async promptBill(cmd) {
-    this.loadWidget({
-      kind: 'form_bill',
-      source: this.source,
-      id: `bill-form-${this.mget(CUST_ID)}`,
-      uiHandler: [this],
-      service: "bill-created"
-    })
-  }
-
-
-  /**
-    * 
-    */
-  async promptQuote(cmd) {
-    this.loadWidget({
-      kind: 'form_quote',
-      source: this.source,
-      work: cmd,
-      id: `quote-form-${this.mget(CUST_ID)}`,
-      uiHandler: [this],
-    })
-  }
 
   /**
      * 
@@ -293,7 +252,7 @@ class __window_customer extends __window {
       case "mission-hitsory":
         this.loadMissionWindow(cmd);
         break;
-      case 'create-work':
+      case 'create-mission':
         this.loadWorkForm(cmd)
         break;
       case 'quote-created':

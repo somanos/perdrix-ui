@@ -44,7 +44,7 @@ class __bill_cartridge extends LetcBox {
    */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:27", service, this, cmd)
+    this.debug("AAA47", service, this, cmd)
     switch (service) {
       case _a.input:
         let { name } = cmd.getData();

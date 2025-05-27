@@ -256,7 +256,7 @@ export async function loadWorkList(opt, filter) {
   let itemsOpt = {
     ...opt,
     service: "mission-hitsory",
-    kind: 'work_item',
+    kind: 'mission_item',
     uiHandler: [this],
   }
   this.changeDataset("entries-manual", _a.state, 1)
@@ -302,7 +302,7 @@ export async function selectWork(cmd) {
     let args = {
       ...cmd.data(),
       format: _a.small,
-      kind: 'work_item',
+      kind: 'mission_item',
       uiHandler: [this],
     }
     p.feed(args)

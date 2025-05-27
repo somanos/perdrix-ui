@@ -1,25 +1,18 @@
-# liceman
+# Perdrix User Interfa
+(c) 2025 Somanos Sar Licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**
+
+See [LICENSE](LICENSE) for full terms.
+
+# This module is the UI part of the project Perdrix, designed as a simple ERP
+
+# Dependencies
+This module is a Drumee plugin. It is intended to run withind a Drumee Server Runtime Environment. [See Drumee installation guide here](https://github.com/drumee/documentation/wiki/Developer-Corner). 
+Before you go further, setup first Drumee OS, then [perdrix-server](https://github.com/somanos/perdrix-server).
+
+This module
+
 # Getting started
-## Update server code from branch code-review
-* https://gitlab.drumee.in/drumee/server/-/tree/code-review
+```console
+git clone https://github.com/somanos/perdrix-ui
 
-## Setup Electron devlopment mode
-This step is not mandatory, but if you use Electron from production mode you won't be able to be reachable by conference or chat
-
-## You will have to work on your LOCAL computer
-* Start Electron and login into your Drumee Dev environment
-* Open the link https://drumee.io/_/#/desk/wm/open/nid=6d66e64c6d66e65c&hub_id=6bb30fde6bb30fe7&kind=window_website&filetype=hub
-* Use a right-click on your folder, then select "See Local Version"
-* Get the file path from the local folder and use it as shell environment variable, i.e :
-* export LICEMAN_BUILD_DIR=/your/local/path/
-* It's recommanded to save this variable in your shell rc file
-## Clone from gitlab
-* On your LOCAL dev env
-* git clone git@gitlab.drumee.in:drumee/reseller.git
-* cd reseller
-* npm i
-* npm run dev
-
-## Check debug your branch
-* Configure your browser to disable cache on dev mode
-* load the page https://reseller.drumee.io/[your-dev-ident].html
+```

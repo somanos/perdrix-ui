@@ -28,7 +28,7 @@ function quote(ui) {
           ht,
           ttc,
           tva,
-          discount
+          discount,
         }]
       })
     ]

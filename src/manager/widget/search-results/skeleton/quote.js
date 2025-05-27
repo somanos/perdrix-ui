@@ -35,6 +35,9 @@ function quoteSlk(ui) {
       ...content,
       uiHandler,
       customer,
+      quoteId: content.id,
+      siteId: site.id,
+      custId: customer.id,
       site,
       service: "load-mission-window",
       kind: "quote_item"

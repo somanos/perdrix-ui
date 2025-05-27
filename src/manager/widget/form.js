@@ -24,8 +24,8 @@ class __form_core extends Core {
   }
 
   /**
- * 
- */
+  * 
+  */
   async loadSitesList(cmd) {
     let api = {
       service: "site.list",
@@ -33,7 +33,8 @@ class __form_core extends Core {
     };
     let itemsOpt = {
       kind: 'site_item',
-      service: 'set-site'
+      service: 'set-site',
+      uiHandler: [this]
     }
     let p = await this.ensurePart("entries-manual");
     p.el.dataset.state = 1;

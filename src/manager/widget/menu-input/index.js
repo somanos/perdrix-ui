@@ -21,6 +21,7 @@ class __menu_input extends LetcBox {
   onDestroy() {
     RADIO_KBD.off(_e.keyup, this.kbdHandler)
     RADIO_BROADCAST.off(_e.click, this.clickHandler)
+    RADIO_CLICK.off(_e.keyup, this.clickHandler)
   }
 
   /**
@@ -38,7 +39,6 @@ class __menu_input extends LetcBox {
    * @param {*} key 
    */
   clickHandler(e, origin) {
-    this.debug()
     if (mouseDragged) {
       return;
     }
@@ -64,8 +64,38 @@ class __menu_input extends LetcBox {
   onDomRefresh() {
     this.feed(require('./skeleton')(this));
     RADIO_KBD.on(_e.keyup, this.kbdHandler)
+    RADIO_CLICK.on(_e.keyup, this.clickHandler)
     RADIO_BROADCAST.on(_e.click, this.clickHandler)
   }
+
+  /**
+   * Show the menu
+   * @param {*} cmd
+   */
+  showMenu(cmd) {
+    this.ensurePart('items').then((p) => {
+      let name = this.mget(_a.name);
+      let refAttribute = this.mget('refAttribute');
+      let r = [];
+      for (let item of this.mget(_a.items)) {
+        let ref = item[refAttribute]
+        let el = Skeletons.Note({
+          ...item,
+          className: `${this.fig.family}__item ${name}`,
+          content: ref || item.label,
+          service: "item-selected",
+          uiHandler: [this],
+          formItem: name,
+          name,
+          state: 0
+        })
+        r.push(el);
+        if (r.length > 50) break;
+      }
+      p.feed(r)
+    })
+  }
+
 
   /**
    * User Interaction Evant Handler
@@ -79,6 +109,9 @@ class __menu_input extends LetcBox {
     switch (service) {
       case "item-selected":
         this.selectItem(cmd);
+        break;
+      case "show-menu":
+        this.showMenu(cmd);
         break;
       case _a.input:
         switch (cmd.mget(_a.name)) {
@@ -96,14 +129,14 @@ class __menu_input extends LetcBox {
   }
 
   /**
-    * 
-    */
+   * 
+   */
   populateItems(cmd) {
     let r = []
     if (!cmd || !cmd.getValue) return r;
     let val = cmd.getValue();
     let reg = new RegExp(val, 'i')
-    let name = this.mget(_a.name);
+
     let refAttribute = this.mget('refAttribute');
     this._selIndex = 0;
     for (let item of this.mget(_a.items)) {
@@ -138,9 +171,17 @@ class __menu_input extends LetcBox {
     this.ensurePart("entry").then((p) => {
       let value = cmd.mget(_a.content) || cmd.mget(_a.label)
       p.setValue(value);
+      this.debug("AAA: 174", value, this.mget(_a.value));
       const name = this.mget(_a.name);
       p.mset(name, cmd.mget(name))
       p.mset(_a.value, value)
+      let api = this.mget(_a.api);
+      if(value !== this.mget(_a.value) && api && api.service) {
+        this.postService(api.service, {}).then(() => {
+          this.mset(_a.value, value);
+          this.debug("AAA: 181", this.mget(_a.value));
+        })
+      }
       this.clearItems();
     })
   }

@@ -6,20 +6,21 @@
 
 .search-result {
   &__ui {
-    background-color: inherit;
+    background-color: white;
     width: 100%;
-    width: 100%;
+    min-height: 100px;
 
     &:hover {
-      background-color: drumee.$perdrix-hover;
+      background-color: rgba(0, 0, 0, 0.05);
+      // background-color: drumee.$core-default-icon-hover;
+      // color: white;
     }
   }
 
   &__main {
     background-color: inherit;
     width: 100%;
-    width: 100%;
-    cursor: pointer;
+    height: 100%;
   }
 
   &__topbar__title {

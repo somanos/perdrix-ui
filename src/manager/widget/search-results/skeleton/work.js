@@ -26,7 +26,7 @@ function workSkl(ui) {
       customer,
       service: "load-mission-window",
       uiHandler,
-      kind: "work_item"
+      kind: "mission_item"
     },
   ]
   return kids;

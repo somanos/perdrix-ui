@@ -36,9 +36,9 @@ class __window_perdrix extends Utils {
   loadCustomer(cmd, type) {
     const { custId } = cmd.model.toJSON();
     Wm.windowsLayer.append({
+      ...ui.mget('customer'),
       kind: 'window_customer',
       id: `customer-${custId}`,
-      source: cmd
     });
     setTimeout(() => {
       let w = Wm.windowsLayer.children.last();
@@ -49,12 +49,13 @@ class __window_perdrix extends Utils {
   /**
     * 
     */
-  loadWorkForm(cmd, hide = 0) {
+  loadMissionForm(cmd, hide = 0) {
     const { custId } = this.mget('custId');
     this.loadWidget({
-      ...this.source.data(),
-      kind: 'form_work',
-      id: `work-form-${custId}`,
+      ...this.data(),
+      customer: this.data(),
+      kind: 'form_mission',
+      id: `mission-form-${custId}`,
       uiHandler: [this]
     })
   }

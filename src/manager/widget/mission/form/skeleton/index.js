@@ -6,12 +6,10 @@ const {
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
-
   const body = Skeletons.Box.Y({
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
-      siteSelector(ui),
       Skeletons.Wrapper.Y({
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
@@ -42,6 +40,9 @@ module.exports = function (ui) {
     ]
   });
 
+  if (!ui.mget('site')) {
+    body.kids.unshift(siteSelector(ui));
+  }
 
   return Skeletons.Box.Y({
     debug: __filename,
@@ -54,7 +55,7 @@ module.exports = function (ui) {
         kids: [
           body,
           actionButtons(ui, [
-            { content: "Créer la mission", service: "create-work", sys_pn: "button-work" },
+            { content: "Créer la mission", service: "create-mission", sys_pn: "button-work" },
           ])
         ]
       })

@@ -11,6 +11,7 @@
 
 function billSlk(ui) {
   let { content, customer, site } = ui.data();
+  console.log("AAA:14 billSkl", { content, site, customer });
   const uiHandler = ui.getHandlers(_a.ui);
   const kids = [
     Skeletons.Box.Y({
@@ -26,6 +27,9 @@ function billSlk(ui) {
         },
         {
           ...site,
+          customer,
+          siteId: site.id,
+          custId: customer.id,
           service: "load-site-window",
           uiHandler,
           kind: "site_item"
@@ -34,6 +38,9 @@ function billSlk(ui) {
     {
       ...content,
       service: "load-mission-window",
+      siteId: site.id,
+      custId: customer.id,
+      billId: content.id,
       customer,
       site,
       uiHandler,

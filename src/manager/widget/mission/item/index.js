@@ -2,7 +2,7 @@ const {
   loadWidget
 } = require("../../../utils")
 
-class __work_item extends LetcBox {
+class __mission_item extends LetcBox {
   constructor(...args) {
     super(...args);
     this.loadWidget = loadWidget.bind(this);
@@ -94,4 +94,4 @@ class __work_item extends LetcBox {
 
 }
 
-module.exports = __work_item
+module.exports = __mission_item

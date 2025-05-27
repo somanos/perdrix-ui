@@ -10,7 +10,7 @@
  */
 function entry(ui) {
   let { value, name, placeholder } = ui.model.toJSON();
-  const pfx = `${ui.fig.family}__entry ${name}`;
+  const pfx = `${ui.fig.family}__entry`;
   let args = {
     className: `${pfx} entry`,
     name,
@@ -25,6 +25,18 @@ function entry(ui) {
     sys_pn: "entry",
     partHandler: [ui]
   }
+  return Skeletons.Box.X({
+    className: `${pfx}-container`,
+    debug: __filename,
+    kids: [
+      Skeletons.Entry(args),
+      Skeletons.Button.Svg({
+        className: `${pfx}-icon`,
+        ico: 'arrow-down',
+        service: 'show-menu'
+      })
+    ]
+  })
 
   return Skeletons.Entry(args)
 }

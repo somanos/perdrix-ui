@@ -1,5 +1,5 @@
 
-class __work_list extends LetcBox {
+class __mission_list extends LetcBox {
 
   /**
    * 
@@ -34,4 +34,4 @@ class __work_list extends LetcBox {
 
 }
 
-module.exports = __work_list
+module.exports = __mission_list

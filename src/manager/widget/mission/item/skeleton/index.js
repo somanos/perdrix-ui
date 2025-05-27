@@ -3,13 +3,16 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { fromUnixtime, normalizelLocation } = require("../../../../utils")
+const {
+  menuInput
+} = require("../../../../widget/skeleton");
 /**
  * 
  * @param {*} ui 
  * @returns 
  */
 
-function work_item(ui) {
+function mission_item(ui) {
   let { type, workType, ctime, description, site, id } = ui.model.toJSON()
   let { city, location } = site;
   let pfx = ui.fig.family;
@@ -69,11 +72,14 @@ function work_item(ui) {
   let details = Skeletons.Box.Y({
     className: `${pfx}__content details`,
     kids: [
-      Skeletons.Note({
-        className: `${pfx}__text type`,
-        content: type || workType
+      menuInput(ui, {
+        items: Env.get('workType'),
+        name: 'category',
+        placeholder: 'Type de travail',
+        refAttribute: 'label',
+        service: 'set-mission-type',
+        value: type
       }),
-      //addressSmallView(ui),
       Skeletons.Box.X({
         className: `${pfx}__location`,
         kids: [
@@ -110,5 +116,5 @@ function work_item(ui) {
   })
 
 }
-module.exports = work_item;
+module.exports = mission_item;
 

@@ -9,7 +9,7 @@ module.exports = {
 	'form_quote': import('./manager/widget/quote/form'),
 	'form_poc': import('./manager/widget/poc/form'),
 	'form_site': import('./manager/widget/site/form'),
-	'form_work': import('./manager/widget/work/form'),
+	'form_mission': import('./manager/widget/mission/form'),
 	'location_item': import('./manager/widget/location/item'),
 	'location_view': import('./manager/widget/location/view'),
 	'menu_input': import('./manager/widget/menu-input'),
@@ -28,6 +28,6 @@ module.exports = {
 	'window_mission': import('./manager/window/mission'),
 	'window_poc': import('./manager/window/poc'),
 	'window_site': import('./manager/window/site'),
-	'work_item': import('./manager/widget/work/item'),
-	'work_list': import('./manager/widget/work/list'),
+	'mission_item': import('./manager/widget/mission/item'),
+	'mission_list': import('./manager/widget/mission/list'),
 };

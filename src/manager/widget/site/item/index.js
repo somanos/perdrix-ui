@@ -15,7 +15,7 @@ class __site_item extends LetcBox {
   * 
   */
   data() {
-    const {
+    let {
       city,
       citycode,
       countrycode,
@@ -25,8 +25,12 @@ class __site_item extends LetcBox {
       siteId,
       location,
       postcode,
+      customer,
     } = this.model.toJSON();
 
+    if (!custId) {
+      custId = customer.id;
+    }
     return {
       city,
       id,
@@ -37,6 +41,7 @@ class __site_item extends LetcBox {
       location,
       postcode,
       siteId,
+      customer,
       type: 'site'
     }
   }
@@ -45,9 +50,9 @@ class __site_item extends LetcBox {
    * Upon DOM refresh, after element actually insterted into DOM
    */
   onDomRefresh() {
-    try{
+    try {
       this.feed(require('./skeleton')(this));
-    }catch(e){
+    } catch (e) {
       this.warn(e, this)
     }
   }
@@ -59,7 +64,7 @@ class __site_item extends LetcBox {
    */
   onUiEvent(trigger, args = {}) {
     const service = this.mget(_a.service) || "open-viewer";
-    this.debug("AAA:63", service, trigger.mget(_a.service))
+    this.debug("AAA:63", this, service, trigger.mget(_a.service))
     this.triggerHandlers({
       service,
     })

@@ -12,7 +12,7 @@ const { cartridge } = require("../../../skeleton")
 function bill_cartridge(ui) {
   let pfx = ui.fig.family;
   let {
-    ht, ttc, tva, discount, filepath
+    ht, ttc, tva, filepath
   } = ui.model.toJSON() || {};
   let input = [
     cartridge(ui, {
@@ -40,6 +40,12 @@ function bill_cartridge(ui) {
       value: ttc || 0
     }),
   ]
+  if (filepath) {
+    input.push(
+      labelValue(ui, "Document", { content: filepath, service: "show-doc" })
+    )
+  }
+
   return Skeletons.Box.G({
     className: `${pfx}__main`,
     debug: __filename,

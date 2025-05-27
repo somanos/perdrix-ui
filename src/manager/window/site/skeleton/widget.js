@@ -47,7 +47,7 @@ export function workTab(ui) {
       label: "Nouvelle mission",
       ico: "editbox_list-plus",
       icons: null,
-      service: "create-work"
+      service: "create-mission"
     }),
   ]
   return contextBar(ui, buttons)

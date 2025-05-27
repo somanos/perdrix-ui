@@ -60,11 +60,13 @@
         position: absolute;
         left: -50px;
         white-space: nowrap;
-        top: 17px;
-        padding: 3px;
+        top: 20px;
+        padding: 3px 5px;
         border-radius: 3px;
         box-shadow: drumee.$drumee-shadow-box;
-        @include drumee.typo($color: drumee.$core-default-text-tooltips, $size: 12px, $line: 20px);
+        padding: 3px 10px;
+        background-color: white;
+        @include drumee.typo($color: drumee.$core-default-text-tooltips, $size: 12px, $line: 24px);
       }
     }
 

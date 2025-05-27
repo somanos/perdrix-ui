@@ -15,9 +15,6 @@ class __bill_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.mset({
-      question: "cette facture",
-    });
   }
 
   /**
@@ -30,9 +27,11 @@ class __bill_item extends LetcBox {
       billId,
       description,
       site,
+      customer,
       status,
       workId,
       workType,
+      service,
     } = this.model.toJSON();
     let {
       city,
@@ -42,7 +41,6 @@ class __bill_item extends LetcBox {
       location,
       postcode,
     } = this.mget('site') || {};
-
     return {
       custId,
       siteId,
@@ -58,6 +56,8 @@ class __bill_item extends LetcBox {
       geometry,
       location,
       postcode,
+      customer,
+      service,
     }
   }
 
@@ -84,16 +84,17 @@ class __bill_item extends LetcBox {
    * Prompt the user to confirm the removal of the bill
    */
   removeItem() {
-    let msg = `Voulez-vous vraiment supprimer cette facture ?`;
+    let msg = `Voulez-vous vraiment retirer cette facture?<br>
+    Elle sera réaffectée client système puis pourra être réutilisée ultérieurement.`;
     this.getHandlers(_a.ui)[0].confirm(msg).then(() => {
       this.debug("AAA:144", this, this.model.toJSON());
-      this.postService(PLUGINS.bill.remove, {
+      this.postService(PLUGINS.bill.unassign, {
         id: this.mget(_a.id),
       }).then((data) => {
         //this.parent.restart();
         this.debug("Bill deleted", data);
         this.goodbye();
-        })
+      })
     });
   }
 
@@ -116,8 +117,8 @@ class __bill_item extends LetcBox {
    * @param {*} args 
    */
   onUiEvent(trigger, args = {}) {
-    const service = trigger.mget(_a.service) || "show-doc";
-    this.debug("AAA:27", service, this, trigger)
+    const service = trigger.mget(_a.service)
+    this.debug("AAA:121", service, this.mget(_a.service), trigger)
     switch (service) {
       case _a.save:
         this.saveItem();
@@ -127,7 +128,7 @@ class __bill_item extends LetcBox {
         break;
       default:
         this.triggerHandlers({
-          service,
+          service: this.mget(_a.service),
         })
     }
   }

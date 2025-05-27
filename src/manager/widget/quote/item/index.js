@@ -49,7 +49,7 @@ class __quote_item extends LetcBox {
   }
 
   onUiEvent(trigger, args = {}) {
-    const service = trigger.mget(_a.service) || "show-doc";
+    const service = trigger.mget(_a.service)
     this.debug("AAA:27", service, this, trigger)
     switch (service) {
       case _a.save:
@@ -64,9 +64,8 @@ class __quote_item extends LetcBox {
         })
         break;
       default:
-        this.triggerHandlers({
-          service,
-        })
+        this.debug("AAA:28", "Unknown service", service, trigger);
+        break;
     }
   }
 

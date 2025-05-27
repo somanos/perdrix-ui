@@ -1,0 +1,106 @@
+/* ==================================================================== *
+* Widget style automatically generated on 2025-03-05T03:29:33.857Z
+* npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
+* ==================================================================== */
+@use 'mixins/drumee';
+@use 'quote' as *;
+@use "mixins/form" as *;
+
+.work-history {
+  &__ui {
+    background-color: inherit;
+    width: 100%;
+    margin-bottom: 1px;
+    min-height: unset;
+    cursor: pointer;
+
+    &:hover {
+      background-color: drumee.$perdrix-hover;
+    }
+
+    // box-shadow: drumee.$drumee-shadow-box;
+    padding:5px 15px;
+    margin-bottom:8px;
+    border:.5px solid drumee.$core-default-separator;
+  }
+
+  &__main {
+    background-color: inherit;
+    width: 100%;
+    grid-gap: 0.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  &__summary,
+  &__quote {
+    width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    padding: 5px 10px;
+    background-color: inherit;
+    justify-content: start;
+    align-items: start;
+    border-bottom: 1px solid lightgrey;
+  }
+
+
+  &__summary.header {
+    grid-template-columns: 70px 70px 1fr;
+  }
+
+  &__summary {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__details {
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__description {
+    align-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+  }
+
+  &__text {
+    align-content: flex-end;
+    flex-wrap: wrap;
+    @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
+
+    &.type {
+      @include drumee.typo($color: drumee.$white, $size: 14px, $line: 20px);
+
+      .inner {
+        border: solid 0.5px lightgray;
+        padding: 1px 10px;
+        border-radius: 3px;
+        background-color: drumee.$core-background-blue;
+      }
+    }
+
+    &.status {
+      border: solid 0.5px drumee.$core-background-blue;
+      border-radius: 50%;
+    }
+  }
+
+  &__cartridge {
+    width: 100%;
+  }
+
+  @include form-buttons;
+
+  &__buttons-container {
+    height: 64px;
+  }
+
+  &__button-item {
+    min-width: 180px;
+  }
+
+  @include quote;
+}

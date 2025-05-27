@@ -7,7 +7,7 @@
 @use "mixins/form" as *;
 @use "mixins/window" as *;
 
-.work-item {
+.mission-item {
   @include widget-ui;
 
   &__main {

@@ -1,7 +1,7 @@
 
 const Form = require('../../form');
 
-class __form_work extends Form {
+class __form_mission extends Form {
 
 
   /**
@@ -112,21 +112,6 @@ class __form_work extends Form {
       case "prompt-location":
         this.promptSite(cmd);
         break;
-      // case "select-site":
-      //   let { choice } = cmd.getData();
-      //   this.debug("AAA:238", choice, service, cmd)
-      //   switch (choice) {
-      //     case "same-address":
-      //       this.selectSite(this)
-      //       break;
-      //     case "list-sites":
-      //       this.loadSitesList(cmd)
-      //       break;
-      //     case "add-site":
-      //       this.promptSite(cmd);
-      //       break;
-      //   }
-      //   break;
       case "site-created":
         this.loadSitesList(cmd);
         setTimeout(() => {
@@ -136,7 +121,7 @@ class __form_work extends Form {
       case "set-site":
         this.selectSite(cmd);
         break;
-      case "create-work":
+      case "create-mission":
         this.createWork(cmd);
         break;
       default:
@@ -146,4 +131,4 @@ class __form_work extends Form {
 
 }
 
-module.exports = __form_work
+module.exports = __form_mission

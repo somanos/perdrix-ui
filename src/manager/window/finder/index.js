@@ -244,6 +244,7 @@ class __window_finder extends __window {
    * 
    */
   async loadSiteWindow(site) {
+    this.debug("AAA:247", site.data())
     this.loadWidget({
       kind: 'window_site',
       ...site.data(),

@@ -101,7 +101,7 @@
 
     &[data-state="open"] {
       width: 100%;
-      height: 100%;
+      height: calc(100% - 42px);
       left: 0;
       right: 0;
       top: 44px;
@@ -206,19 +206,10 @@
 
     &__message {
       justify-content: center;
-      padding: 31px 10px 5px; //5px 10px 5px 10px;
+      padding: 31px 10px 5px;
       margin: 0 auto;
-      @include drumee.typo($weight: 300, $size: 16px, $line: 26px, $color: drumee.$core-default-text-color);
-
-      &.trash {
-        width: 50px;
-        margin: 10px 0;
-        @include drumee.typo($weight: 300, $size: 16px, $line: 26px, $color: violet);
-      }
-
-      &.delete-team {
-        max-width: 450px;
-      }
+      text-align: center;
+      @include drumee.typo($size: 14px, $line: 18px, $color: drumee.$btn-rollback-text );
     }
 
   }

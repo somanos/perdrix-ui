@@ -37,7 +37,7 @@ export function tabs(ui) {
             className: `${item}__icon`,
             ico: 'editbox_list-plus',
             uiHandler: [ui],
-            service: "create-work"
+            service: "create-mission"
           })
         ],
       }),

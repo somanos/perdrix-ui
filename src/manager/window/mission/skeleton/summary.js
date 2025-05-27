@@ -3,6 +3,10 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const { fromUnixtime } = require("../../../utils")
+const {
+  menuInput
+} = require("../../../widget/skeleton");
+
 
 function history(ui, { partName, kind, api }) {
   let opt = {
@@ -54,10 +58,19 @@ function work_summary(ui, data) {
             className: `${pfx}__text`,
             content: id.toString()
           }),
-          Skeletons.Note({
-            className: `${pfx}__text type`,
-            content: type
-          })
+          menuInput(ui, {
+            items: Env.get('workType'),
+            name: 'category',
+            placeholder: 'Type de travail',
+            refAttribute: 'label',
+            service: 'set-mission-type',
+            value: type
+          }),
+
+          // Skeletons.Note({
+          //   className: `${pfx}__text type`,
+          //   content: type
+          // })
         ]
       }),
       Skeletons.Note({
