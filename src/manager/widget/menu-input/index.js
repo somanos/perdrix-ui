@@ -74,6 +74,10 @@ class __menu_input extends LetcBox {
    */
   showMenu(cmd) {
     this.ensurePart('items').then((p) => {
+      if(!p.isEmpty()){
+        p.clear()
+        return
+      }
       let name = this.mget(_a.name);
       let refAttribute = this.mget('refAttribute');
       let r = [];
@@ -177,7 +181,9 @@ class __menu_input extends LetcBox {
       p.mset(_a.value, value)
       let api = this.mget(_a.api);
       if(value !== this.mget(_a.value) && api && api.service) {
-        this.postService(api.service, {}).then(() => {
+        this.postService(api.service, {
+          
+        }).then(() => {
           this.mset(_a.value, value);
           this.debug("AAA: 181", this.mget(_a.value));
         })

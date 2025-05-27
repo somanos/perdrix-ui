@@ -36,6 +36,7 @@ class __window_site extends __window {
       type: 'site'
     }
   }
+
   /**
    * 
    */
@@ -106,6 +107,9 @@ class __window_site extends __window {
         break;
       case 'create-poc':
         this.promptPoc(cmd);
+        break;
+      case 'create-mission':
+        this.loadMissionForm(cmd)
         break;
       case 'poc-created':
         this.loadSitePocs(cmd)

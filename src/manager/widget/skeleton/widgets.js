@@ -67,13 +67,14 @@ export function radioButtons(ui, opt) {
  * @param {*} ui 
  * @returns 
  */
-export function buttons(ui) {
+export function buttons(ui, opt = {}) {
+  const { label, service } = opt;
   const pfx = `${ui.fig.family}`;
   let ok = Skeletons.Note({
     className: `${pfx}__button-go`,
-    content: LOCALE.CREATE,
+    content: label || LOCALE.CREATE,
     uiHandler: [ui],
-    service: _a.create,
+    service: service || _a.create,
   })
   return Skeletons.Box.X({
     className: `${pfx}__buttons-container`,
@@ -268,7 +269,7 @@ export function person(ui, type) {
  * @returns 
  */
 export function company(ui) {
-  let type = ui.mget(_a.type);
+  let { type, custName, companyclass } = ui.model.toJSON();
   const pfx = ui.fig.family;
   return Skeletons.Box.G({
     className: `${pfx}__entries-${type}`,
@@ -276,14 +277,15 @@ export function company(ui) {
       entry(ui, {
         placeholder: "Nom de la societe",
         name: 'companyname',
-        sys_pn: "companyname"
+        sys_pn: "companyname",
+        value: custName || "",
       }),
       menuInput(ui, {
         items: Env.get('companyClass'),
         name: 'companyclass',
         placeholder: "Type de societe",
         refAttribute: 'label',
-        value: "",
+        value: companyclass || "",
       }),
     ]
   })

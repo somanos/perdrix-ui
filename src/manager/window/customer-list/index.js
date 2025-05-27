@@ -25,6 +25,9 @@ class __window_customer_list extends __window {
       hub_id: Visitor.id,
       role: _a.search,
     });
+    this.model.atLeast({
+      itemService: 'load-customer-window'
+    })
     this.contextmenuSkeleton = 'a';
     this.sources = {};
     let source = opt.trigger;
@@ -210,7 +213,7 @@ class __window_customer_list extends __window {
     Wm.windowsLayer.append({
       kind: 'window_customer',
       id: `customer-${custId}`,
-      source: cmd
+      ...cmd.data(),
     });
     setTimeout(() => {
       let w = Wm.windowsLayer.children.last();
@@ -234,7 +237,7 @@ class __window_customer_list extends __window {
       case _e.search:
         this.sortContent(cmd);
         return;
-      case 'open-viewer':
+      case 'load-customer-window':
         this.loadCustomer(cmd)
         return
 

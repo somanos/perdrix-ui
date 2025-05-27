@@ -1,5 +1,5 @@
 
-const { customerBox, acknowledge } = require("../../skeleton")
+const { customerBox, acknowledge, address } = require("../../skeleton")
 const Form = require('../../form');
 
 class __form_customer extends Form {
@@ -29,11 +29,32 @@ class __form_customer extends Form {
    */
   onPartReady(child, pn) {
     this.raise();
+    //this.debug("AAA:33", child, pn)
     switch (pn) {
       case 'companyname':
       case _a.lastname:
         child.on(_e.blur, (e) => {
           this.clearList();
+        })
+        break;
+      case 'entries-manual':
+        if (!this.mget('isUpdate')) break;
+        const {
+          street, city, housenumber, postcode, label
+        } = this.model.toJSON() || {};
+
+        this._locationCompleted = 1;
+        child.el.dataset.state = 1;
+        child.feed(address(this, {
+          street,
+          city,
+          housenumber,
+          postcode,
+          service: _e.update,
+          serviceLabel: LOCALE.UPDATE
+        }));
+        this.ensurePart("address-entry").then((addr) => {
+          addr.setValue(label)
         })
         break;
       default:
@@ -131,6 +152,50 @@ class __form_customer extends Form {
   /**
    * 
    */
+  updateCustomer() {
+    let args = this.getData();
+    let fields = [];
+    if (this.mget(_a.type) == 'company') {
+      fields = ['companyname', 'city', 'postcode']
+    } else {
+      fields = [_a.lastname, 'city', 'postcode']
+    }
+    let error = 0
+    for (let name of fields) {
+      if (!args[name]) {
+        this.changeDataset(name, _a.error, 1)
+        error = 1;
+      } else {
+        this.changeDataset(name, _a.error, 0)
+      }
+    }
+    if (error) return;
+    args.category = this.mget(_a.category)
+
+    this.postService("customer.update", { args }).then((data) => {
+      const { custName } = data;
+      let service = this.mget('callbackService');
+      if (service) {
+        this.triggerHandlers({
+          service,
+          data
+        })
+      }
+      this.goodbye();
+
+    }).catch((e) => {
+      this.__wrapperDialog.feed(acknowledge(this, {
+        message: LOCALE.ERROR_SERVER,
+        failed: 1,
+        service: 'close-dialog',
+      }))
+      this.debug("AAA:171 FAILED", e)
+    })
+  }
+
+  /**
+   * 
+   */
   onDomRefresh() {
     this.feed(require('./skeleton')(this));
   }
@@ -179,6 +244,9 @@ class __form_customer extends Form {
         break;
       case _e.create:
         this.createCustomer(cmd);
+        break;
+      case _e.update:
+        this.updateCustomer(cmd);
         break;
       case 'close-dialog':
         this.__wrapperDialog.clear();

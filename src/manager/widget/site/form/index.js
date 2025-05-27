@@ -15,7 +15,6 @@ class __form_site extends Form {
       type: 'site',
       category: 0
     })
-    this.source = opt.source;
   }
 
   /**
@@ -31,6 +30,7 @@ class __form_site extends Form {
       id,
       location,
       postcode,
+      customer
     } = this.model.toJSON();
 
     return {
@@ -41,6 +41,7 @@ class __form_site extends Form {
       geometry,
       location,
       postcode,
+      customer,
       siteId: id,
       type: 'site'
     }
@@ -94,7 +95,7 @@ class __form_site extends Form {
       args.lat = this._data.properties.x;
       args.lon = this._data.properties.y;
     }
-    args.custId = this.source.mget('custId');
+    args.custId = this.mget('custId');
     let fields = ['city', 'postcode']
     let error = 0
     for (let name of fields) {

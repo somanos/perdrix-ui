@@ -3,7 +3,7 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 const {
-  addressSmallView
+  addressSmallView, entry 
 } = require("../../../../widget/skeleton")
 
 /**
@@ -59,6 +59,12 @@ function identity(ui) {
     className: `${ui.fig.family}__cartridge-header`,
     debug: __filename,
     kids: [
+      Skeletons.Button.Svg({
+        ico: 'editbox_pencil',
+        service: 'update-customer',
+        className: `${ui.fig.family}__icon-update icon-update`,
+        uiHandler: [ui],
+      }),
       Skeletons.Note({
         className: `${ui.fig.family}__text id`,
         content: custName

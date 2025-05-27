@@ -1,4 +1,5 @@
 require('./form/skin');
+const { address } = require("../widget/skeleton")
 
 const Core = require('../core');
 const { placeholder } = require("./skeleton")

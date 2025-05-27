@@ -211,9 +211,11 @@ class __window_customer extends __window {
      * 
      */
   async loadSiteWindow(site) {
+    let args = site.data();
+    args.customer = args.customer || this.data();
     this.loadWidget({
       kind: 'window_site',
-      ...site.data(),
+      ...args,
       format: 'big',
       id: `site-${site.mget(_a.id)}`,
     })
@@ -253,7 +255,7 @@ class __window_customer extends __window {
         this.loadMissionWindow(cmd);
         break;
       case 'create-mission':
-        this.loadWorkForm(cmd)
+        this.loadMissionForm(cmd)
         break;
       case 'quote-created':
       case 'note-created':

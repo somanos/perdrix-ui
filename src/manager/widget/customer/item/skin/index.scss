@@ -4,22 +4,24 @@
 * ==================================================================== */
 @use 'mixins/drumee';
 @use "mixins/window" as *;
+
 .customer-item {
-  // &__ui {
-  //   background-color: inherit;
-  //   width: 100%;
-  //   &:hover {
-  //     background-color: drumee.$perdrix-hover;
-  //   }
-  //   box-shadow:  0 2px 6px 1px rgba(75, 72, 72, 0.3)
-  // }
   @include widget-ui;
+
   &__main {
     background-color: inherit;
     width: 100%;
 
     &.customer {
       cursor: pointer;
+    }
+
+    &:hover {
+      .icon-update {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 
@@ -80,5 +82,16 @@
     margin-right: 8px;
     color: drumee.$eviolet;
     padding: 5px;
+  }
+
+  &__icon-update {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    position: absolute;
+    left: -21px;
+    top: 5px;
+    color: drumee.$core-special-icon-info;
+    display: none;
   }
 }

@@ -8,7 +8,7 @@ import { entry, menuInput, buttons } from "./widgets"
  */
 export function address(ui, opt) {
   let {
-    street, city, housenumber, postcode, countrycode, extended
+    street, city, housenumber, postcode, countrycode, extended, service, serviceLabel
   } = opt;
   const pfx = `${ui.fig.family}`;
   let type = "";
@@ -30,7 +30,7 @@ export function address(ui, opt) {
     name: 'streettype',
     placeholder: "Type de voie",
     refAttribute: 'longTag',
-    value: type,
+    value: type.toLocaleLowerCase(),
   })
 
   let country = menuInput(ui, {
@@ -91,7 +91,7 @@ export function address(ui, opt) {
           country
         ]
       }),
-      buttons(ui)
+      buttons(ui, { label: serviceLabel, service })
     ]
   })
 };

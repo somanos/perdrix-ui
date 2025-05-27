@@ -77,8 +77,11 @@ function mission_item(ui) {
         name: 'category',
         placeholder: 'Type de travail',
         refAttribute: 'label',
-        service: 'set-mission-type',
-        value: type
+        service: 'update-mission',
+        value: type,
+        api:{
+          service: 'work.update',
+        }
       }),
       Skeletons.Box.X({
         className: `${pfx}__location`,

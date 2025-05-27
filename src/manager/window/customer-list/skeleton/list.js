@@ -12,10 +12,11 @@ module.exports = function (ui) {
     itemsOpt: {
       kind: 'customer_item',
       flow: _a.x,
-      service: ui.mget('itemService') || 'open-node',
+      service: ui.mget('itemService'),
       role: ui.mget(_a.role) || '',
       logicalParent: ui,
-      uiHandler: [ui]
+      uiHandler: [ui],
+      callbackService: "customer-updated"
     },
     vendorOpt: Preset.List.Orange_e,
     api: ui.getCurrentApi,

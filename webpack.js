@@ -7,6 +7,8 @@ const Plugins = require('./webpack/plugins');
 const args = require('./webpack.options.json');
 const { name: appName } = require('./package.json');
 const { existsSync } = require('fs');
+const { userInfo } = require('os');
+
 /**
  * 
  * @param {*} entry 
@@ -14,7 +16,9 @@ const { existsSync } = require('fs');
  * @returns 
  */
 function makeOptions(entry, opt) {
-
+  const { homedir } = userInfo();
+  opt.bundle_path = /^\~/.test(opt.bundle_path) ?
+    opt.bundle_path.replace(/^(\~)/, homedir) : opt.bundle_path;
   let output = {
     path: opt.bundle_path,
     publicPath: opt.public_path,
@@ -85,8 +89,8 @@ function normalize() {
     src_path
   } = args.dev;
 
-  if(!src_path || !existsSync(src_path)){
-    src_path=__dirname
+  if (!src_path || !existsSync(src_path)) {
+    src_path = __dirname
   }
   output_filename = output_filename || "[name].js";
   mode = mode || 'development';
@@ -96,7 +100,7 @@ function normalize() {
   }
 
   public_path = public_path || '/';
-  if(!/.+\/$/) public_path=`${public_path}/`
+  if (!/.+\/$/) public_path = `${public_path}/`
   let opt = {
     bundle_path,
     bundle_base,

@@ -67,4 +67,12 @@
       width: calc(100% - 65px);
     }
   }
+
+  .list-smart__container {
+    min-height: 300px;
+
+    .customer-item {
+      margin-top: 10px;
+    }
+  }
 }

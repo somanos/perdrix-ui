@@ -40,4 +40,12 @@
     width: 100%;
     height: 100%;
   }
+
+  .list-smart__container {
+    min-height: 300px;
+
+    .customer-item {
+      margin-top: 10px;
+    }
+  }
 }
