@@ -67,6 +67,28 @@ class __window_site extends __window {
 
 
   /**
+   * 
+   */
+  async loadCustomersList() {
+    let list = await this.ensurePart(_a.list);
+    list.model.unset(_a.itemsOpt)
+    list.feed(require('./skeleton/culstomers-list')(this))
+  }
+
+  /**
+   * 
+   */
+  async searchCustomers(cmd) {
+    let list = await this.ensurePart('customers-list');
+    let api = list.mget(_a.api)
+    api.words = cmd.getValue();
+    this.debug("AAAA:85", api, list)
+    if (!api.words) return;
+    list.mset({ api })
+    list.restart()
+  }
+
+  /**
   * 
   */
   async loadContextBar(cmd) {
@@ -113,6 +135,12 @@ class __window_site extends __window {
         break;
       case 'poc-created':
         this.loadSitePocs(cmd)
+        break;
+      case 'transfer':
+        this.loadCustomersList(cmd)
+        break;
+      case _a.input:
+        this.searchCustomers(cmd)
         break;
       default:
         super.onUiEvent(cmd, args);

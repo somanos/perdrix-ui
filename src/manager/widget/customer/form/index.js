@@ -40,13 +40,14 @@ class __form_customer extends Form {
       case 'entries-manual':
         if (!this.mget('isUpdate')) break;
         const {
-          street, city, housenumber, postcode, label
+          street, city, housenumber, postcode, label, location
         } = this.model.toJSON() || {};
 
         this._locationCompleted = 1;
         child.el.dataset.state = 1;
         child.feed(address(this, {
           street,
+          location,
           city,
           housenumber,
           postcode,
@@ -135,10 +136,8 @@ class __form_customer extends Form {
     args.category = this.mget(_a.category)
 
     this.postService("customer.create", { args }).then((data) => {
-      const { custName } = data;
-      this.__content.feed(acknowledge(this, {
-        message: `${custName} a bien ete cree`,
-      }))
+      RADIO_BROADCAST.trigger('customer-created', data);
+      this.goodbye();
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
         message: LOCALE.ERROR_SERVER,
@@ -174,7 +173,6 @@ class __form_customer extends Form {
     args.id = this.mget('custId');
     args.custId = args.id;
     this.postService("customer.update", { args }).then((data) => {
-      const { custName } = data;
       let service = this.mget('callbackService');
       if (service) {
         this.triggerHandlers({
@@ -183,7 +181,6 @@ class __form_customer extends Form {
         })
       }
       this.goodbye();
-
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
         message: LOCALE.ERROR_SERVER,
@@ -206,7 +203,7 @@ class __form_customer extends Form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:250", service, cmd.mget(_a.name), cmd.status, cmd, this)
+    this.debug("AAA:214", service, cmd, this)
     switch (service) {
       case "select-category":
         this.selectCategory(cmd);

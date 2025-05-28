@@ -12,18 +12,41 @@ function tabs(ui, states = [0, 1]) {
       uiHandler: ui
     },
     kids: [
-      Skeletons.Button.Label({
+      Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
-        ico: 'desktop_mysharing',
-        label: 'Contacs',
+        // ico: 'desktop_mysharing',
+        content: 'Transfert',
+        service: "transfer",
+        state: states[0]
+      }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__button-action regular`,
+        // ico: 'desktop_mysharing',
+        content: 'Devis',
         service: "load-context",
         name: 'pocs',
         state: states[0]
       }),
-      Skeletons.Button.Label({
+      Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
-        ico: 'desktop_desksettings',
-        label: 'Missions',
+        // ico: 'desktop_mysharing',
+        content: 'Factures',
+        service: "load-context",
+        name: 'pocs',
+        state: states[0]
+      }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__button-action regular`,
+        // ico: 'desktop_mysharing',
+        content: 'Contacs',
+        service: "load-context",
+        name: 'pocs',
+        state: states[0]
+      }),
+      Skeletons.Note({
+        className: `${ui.fig.family}__button-action regular`,
+        // ico: 'desktop_desksettings',
+        content: 'Missions',
         name: 'works',
         service: "load-context",
         state: states[1]

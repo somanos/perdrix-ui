@@ -28,7 +28,14 @@ class __window_customer_list extends __window {
     this.model.atLeast({
       itemService: 'load-customer-window'
     })
-    this.contextmenuSkeleton = 'a';
+
+    this.onDomRefresh = this.onDomRefresh.bind(this);
+    RADIO_BROADCAST.on('customer-created', this.onDomRefresh)
+    this._storedModels = [];
+    this._timer = new Date().getTime();
+    this._filters = [];
+    this._launchOptions = { explicit: 1, singleton: 1 };
+
     this.sources = {};
     let source = opt.trigger;
     if (!source) return;
@@ -41,10 +48,6 @@ class __window_customer_list extends __window {
     this.style.set({
       display: _a.none
     })
-    this._storedModels = [];
-    this._timer = new Date().getTime();
-    this._filters = [];
-    this._launchOptions = { explicit: 1, singleton: 1 };
   }
 
   /**
@@ -53,6 +56,7 @@ class __window_customer_list extends __window {
   onBeforeDestroy() {
     let list = this.getPart(_a.list);
     if (list) list.off("change:state", this._onDataReceived)
+    RADIO_BROADCAST.off('customer-created', this.onDomRefresh)
   }
 
   /**

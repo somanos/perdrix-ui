@@ -1,6 +1,6 @@
 // const { placeholder} = require("../widget/skeleton/widgets")
-const { fiscalBox, placeholder, contextBar } = require("../widget/skeleton")
-const { address } = require("../widget/skeleton/entries")
+const { fiscalBox, placeholder, contextBar, address } = require("../widget/skeleton")
+//const { address } = require("../widget/skeleton/entries")
 const CUST_ID = 'custId';
 const commaNumber = require('comma-number')
 /**
@@ -27,6 +27,26 @@ export function normalizelLocation(location) {
 
 /**
  * 
+ * @param {*} location 
+ * @returns 
+ */
+export function getLocationFields(location) {
+  let res = {
+    streettype:"",
+    streetname:"",
+    additional:""
+  };
+  if (_.isArray(location)) {
+    res.housenumber = location[0];
+    res.streettype = location[1];
+    res.streetname = location[2];
+    res.additional = location[3];
+  }
+  return res;
+}
+
+/**
+ * 
  * @param {*} v 
  * @returns 
  */
@@ -49,7 +69,11 @@ export function devise(v) {
  * @returns 
  */
 export function vat(v) {
-  return `${(v * 100).toFixed(2, 2)}%`
+  v = parseFloat(v)
+  if (v <= 1) {
+    v = v * 100
+  }
+  return `${v.toFixed(2, 2)}`
 }
 
 /**
@@ -229,7 +253,19 @@ export async function addressSelected(cmd, extended = 0) {
   this._locationCompleted = 1;
   let addr = await this.ensurePart("address-entry");
   addr.setValue(label)
-  p.feed(address(this, { street, city, housenumber, postcode, extended }));
+  let isUpdate = this.mget('isUpdate');
+  let serviceLabel;
+  let service = _e.create;
+  if (isUpdate) {
+    serviceLabel = LOCALE.UPDATE;
+    service = _e.update;
+  }
+  p.feed(address(this, {
+    street, city, housenumber,
+    postcode, extended,
+    isUpdate, serviceLabel,
+    service
+  }));
 }
 
 /**
@@ -330,10 +366,10 @@ export function updateAmount() {
 /**
   * 
   */
-export async function promptSite(source) {
+export async function promptSite() {
   this.loadWidget({
     kind: 'form_site',
-    source,
+    ...this.data(),
     id: `site-form-${this.mget('custId')}`,
     uiHandler: [this],
     service: "site-created"

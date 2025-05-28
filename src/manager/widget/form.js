@@ -1,5 +1,5 @@
 require('./form/skin');
-const { address } = require("../widget/skeleton")
+// const { address } = require("../widget/skeleton")
 
 const Core = require('../core');
 const { placeholder } = require("./skeleton")
@@ -72,9 +72,10 @@ class __form_core extends Core {
      * 
      */
   async promptSite(cmd) {
+    this.debug("AAAA:75", cmd, this, this.data())
     this.loadWidget({
       kind: 'form_site',
-      source: this,
+      ...this.data(),
       id: `site-form-${this.mget('custId')}`,
       uiHandler: [this],
       service: "site-created"
@@ -87,17 +88,24 @@ class __form_core extends Core {
   /**
   * 
   */
-  async addressSelected(cmd) {
-    await this.clearList();
-    let p = await this.ensurePart("entries-manual");
-    const {
-      street, city, housenumber, postcode, label
-    } = cmd.mget('properties') || {};
-    this._locationCompleted = 1;
-    p.feed(address(this, { street, city, housenumber, postcode }));
-    let addr = await this.ensurePart("address-entry");
-    addr.setValue(label)
-  }
+  // async addressSelected(cmd) {
+  //   this.debug("AAA:91", this, cmd)
+  //   await this.clearList();
+  //   let p = await this.ensurePart("entries-manual");
+  //   const {
+  //     street, city, housenumber, postcode, label
+  //   } = cmd.mget('properties') || {};
+  //   let isUpdate = this.mget('isUpdate');
+  //   let serviceLabel;
+  //   if (isUpdate) {
+  //     serviceLabel = LOCALE.UPDATE;
+  //   }
+  //   this.debug("AAA:101", { serviceLabel, isUpdate })
+  //   this._locationCompleted = 1;
+  //   p.feed(address(this, { street, city, housenumber, postcode, serviceLabel, isUpdate }));
+  //   let addr = await this.ensurePart("address-entry");
+  //   addr.setValue(label)
+  // }
 
 
   /**
@@ -105,7 +113,7 @@ class __form_core extends Core {
   */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:119", service, cmd, this)
+    this.debug("AAA:115", service, cmd, this)
     switch (service) {
       case "select-site":
         let { choice } = cmd.getData();
@@ -117,7 +125,7 @@ class __form_core extends Core {
             this.loadSitesList(cmd)
             break;
           case "add-site":
-            this.promptSite(cmd);
+            this.promptSite(this);
             break;
         }
         break;

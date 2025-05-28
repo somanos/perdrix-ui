@@ -79,8 +79,9 @@ function mission_item(ui) {
         refAttribute: 'label',
         service: 'update-mission',
         value: type,
-        api:{
+        api: {
           service: 'work.update',
+          id: ui.mget(_a.id)
         }
       }),
       Skeletons.Box.X({

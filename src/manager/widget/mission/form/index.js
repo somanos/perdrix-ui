@@ -53,6 +53,7 @@ class __form_mission extends Form {
       id,
       location,
       postcode,
+      customer,
     } = this.model.toJSON();
 
     return {
@@ -64,6 +65,7 @@ class __form_mission extends Form {
       location,
       postcode,
       siteId: id,
+      customer,
       type: 'work'
     }
   }

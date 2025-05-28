@@ -26,10 +26,10 @@ export function list(ui, partName = _a.list, args) {
  * @returns 
  */
 export function entry(ui, opt) {
-  let { value, name, placeholder, sys_pn, currency = "" } = opt;
+  let { value, name, placeholder, sys_pn, className = "", currency = "" } = opt;
   const pfx = `${ui.fig.family}__entry ${name}`;
   let args = {
-    className: `${pfx} entry`,
+    className: `${pfx} entry ${className}`,
     name,
     value,
     formItem: name,

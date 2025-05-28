@@ -2,9 +2,7 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { devise, vat } = require("../../../../utils")
-const { labelValue, entryValue } = require("../../../skeleton")
-const commaNumber = require('comma-number')
+const { vat } = require("../../../../utils")
 
 
 /**
@@ -28,7 +26,7 @@ function bill(ui) {
           kind: "bill_cartridge",
           ht,
           ttc,
-          tva,
+          tva: vat(tva),
         }]
       })
     ]

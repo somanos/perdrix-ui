@@ -64,13 +64,12 @@ function work_summary(ui, data) {
             placeholder: 'Type de travail',
             refAttribute: 'label',
             service: 'set-mission-type',
-            value: type
+            value: type,
+            api: {
+              service: 'work.update',
+              id: ui.mget(_a.id)
+            }
           }),
-
-          // Skeletons.Note({
-          //   className: `${pfx}__text type`,
-          //   content: type
-          // })
         ]
       }),
       Skeletons.Note({

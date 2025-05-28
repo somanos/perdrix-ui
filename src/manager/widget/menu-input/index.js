@@ -74,7 +74,7 @@ class __menu_input extends LetcBox {
    */
   showMenu(cmd) {
     this.ensurePart('items').then((p) => {
-      if(!p.isEmpty()){
+      if (!p.isEmpty()) {
         p.clear()
         return
       }
@@ -175,17 +175,22 @@ class __menu_input extends LetcBox {
     this.ensurePart("entry").then((p) => {
       let value = cmd.mget(_a.content) || cmd.mget(_a.label)
       p.setValue(value);
-      this.debug("AAA: 174", value, this.mget(_a.value));
       const name = this.mget(_a.name);
       p.mset(name, cmd.mget(name))
       p.mset(_a.value, value)
+      let payload = {};
+      payload[name] = value;
       let api = this.mget(_a.api);
-      if(value !== this.mget(_a.value) && api && api.service) {
-        this.postService(api.service, {
-          
-        }).then(() => {
+      this.debug("AAA: 174", p, this, api, payload, value, this.mget(_a.value));
+      let args;
+      if (value !== this.mget(_a.value) && api && api.service) {
+        let service = api.service;
+        delete api.service;
+
+        args = { ...api, ...payload };
+        this.postService(service, { args }).then((data) => {
           this.mset(_a.value, value);
-          this.debug("AAA: 181", this.mget(_a.value));
+          this.debug("AAA: 181", data, this.mget(_a.value));
         })
       }
       this.clearItems();

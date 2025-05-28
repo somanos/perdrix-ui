@@ -43,7 +43,12 @@ export function tabs(ui) {
       }),
       Skeletons.Note({
         className: `${item}__button`,
-        content: 'Solde',
+        content: 'Devis',
+        name: 'solde',
+      }),
+      Skeletons.Note({
+        className: `${item}__button`,
+        content: 'Factures',
         name: 'solde',
       }),
     ]
