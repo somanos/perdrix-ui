@@ -240,6 +240,9 @@ class __window_customer_list extends __window {
       case 'load-customer-window':
         this.loadCustomer(cmd)
         return
+      case 'customer-updated':
+        this.onDomRefresh();
+        return
 
         //this.filterContent(cmd);
         return;

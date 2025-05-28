@@ -25,10 +25,10 @@ class __customer_item extends Customer {
     this.loadWidget({
       kind: 'form_customer',
       id: `customer-form-${custId}`,
-      uiHandler: [this],
+      uiHandler: this.getHandlers(_a.ui),
       ...this.data(),
       type: !this.mget(_a.gender) ? 'company' : 'person',
-      callbackService: "customer-updated",
+      callbackService: this.mget('callbackService'),
       isUpdate: 1
     })
   }

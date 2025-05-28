@@ -171,7 +171,8 @@ class __form_customer extends Form {
     }
     if (error) return;
     args.category = this.mget(_a.category)
-
+    args.id = this.mget('custId');
+    args.custId = args.id;
     this.postService("customer.update", { args }).then((data) => {
       const { custName } = data;
       let service = this.mget('callbackService');
