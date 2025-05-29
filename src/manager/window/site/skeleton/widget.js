@@ -8,48 +8,45 @@ function tabs(ui, states = [0, 1]) {
   return Skeletons.Box.X({
     className: `${ui.fig.family}__buttons`,
     kidsOpt: {
-      radio: _a.on,
-      uiHandler: ui
+      radiotoggle: _a.parent,
+      uiHandler: ui,
+      service: "load-context",
     },
     kids: [
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Transfert',
-        service: "transfer",
+        name: 'transfer',
         state: states[0]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Devis',
-        service: "load-context",
-        name: 'pocs',
-        state: states[0]
+        name: 'quotes',
+        state: states[1]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Factures',
-        service: "load-context",
-        name: 'pocs',
-        state: states[0]
+        name: 'bills',
+        state: states[2]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Contacs',
-        service: "load-context",
         name: 'pocs',
-        state: states[0]
+        state: states[3]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_desksettings',
         content: 'Missions',
         name: 'works',
-        service: "load-context",
-        state: states[1]
+        state: states[4]
       }),
     ]
   })
@@ -64,7 +61,7 @@ export function workTab(ui) {
   let service = 'filter-works';
   let buttons = [
     menuItem(ui, { sys_pn: "fdate", label: "Par date", name: 'ctime', state: 0, service }),
-    tabs(ui),
+    tabs(ui, [0, 0, 0, 0, 1]),
     Skeletons.Button.Label({
       className: `${ui.fig.family}__button-action add`,
       label: "Nouvelle mission",
@@ -83,7 +80,7 @@ export function workTab(ui) {
  */
 export function pocTab(ui) {
   let buttons = [
-    tabs(ui, [1, 0]),
+    tabs(ui, [0, 0, 0, 1, 0]),
     Skeletons.Button.Label({
       className: `${ui.fig.family}__button-action add`,
       label: "Nouveau contact",
@@ -92,6 +89,38 @@ export function pocTab(ui) {
       service: "create-poc"
     }),
   ]
+  return contextBar(ui, buttons)
+};
+
+
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function quoteTab(ui) {
+  let buttons = [tabs(ui, [0, 1, 0, 0, 0])]
+  return contextBar(ui, buttons)
+};
+
+
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function billTab(ui) {
+  let buttons = [tabs(ui, [0, 0, 1, 0, 0])]
+  return contextBar(ui, buttons)
+};
+
+/**
+ * 
+ * @param {*} ui 
+ * @returns 
+ */
+export function transferTab(ui) {
+  let buttons = [tabs(ui, [1, 0, 0, 0, 0])]
   return contextBar(ui, buttons)
 };
 

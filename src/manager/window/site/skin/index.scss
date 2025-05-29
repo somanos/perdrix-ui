@@ -72,6 +72,14 @@
   &__customers {
     width: 100%;
 
+    &.main {
+      width: 75%;
+      margin: 0 auto;
+      background: rgba(45, 45, 45, 0.113);
+      border: 0.5px solid lightblue;
+      padding: 10px;
+    }
+
     &.content {
       overflow-y: auto;
       overflow-x: hidden;

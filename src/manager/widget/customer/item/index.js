@@ -39,7 +39,7 @@ class __customer_item extends Customer {
    */
   onUiEvent(trigger, args = {}) {
     const service = trigger.mget(_a.service);
-    this.debug("AAA:42", service, trigger.mget(_a.service))
+    this.debug("AAA:42", this, service, trigger.mget(_a.service))
     switch (service) {
       case 'update-customer':
         this.updateCustomer(trigger);

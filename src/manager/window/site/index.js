@@ -1,5 +1,5 @@
 const __window = require('..');
-const { workTab, pocTab } = require("./skeleton/widget")
+const { transferTab, quoteTab, billTab, pocTab, workTab } = require("./skeleton/widget")
 class __window_site extends __window {
 
   async initialize(opt) {
@@ -79,6 +79,7 @@ class __window_site extends __window {
    * 
    */
   async searchCustomers(cmd) {
+    this.debug("AAAA:88", cmd)
     let list = await this.ensurePart('customers-list');
     let api = list.mget(_a.api)
     api.words = cmd.getValue();
@@ -86,6 +87,29 @@ class __window_site extends __window {
     if (!api.words) return;
     list.mset({ api })
     list.restart()
+  }
+
+  /**
+   * 
+   */
+  transferToCustomer(customer) {
+    let custId = customer.mget('custId');
+    let args = {
+      id: this.mget('siteId'),
+      custId
+    }
+    this.debug("AAA:101", args, this)
+    let msg = `Voulez-vous transférer ce chantier au client 
+      ${customer.mget('custName')} (n°${custId})?`;
+    this.confirm(msg).then(() => {
+      this.postService(PLUGINS.site.transfer, args).then((data)=>{
+        //this.loadCustomersList()
+        Wm.alert("Transfert réussi!")
+        RADIO_BROADCAST.trigger('site-transfered')
+      }).catch((e)=>{
+        Wm.alert(LOCALE.ERROR_SERVER)
+      })
+    })
   }
 
   /**
@@ -98,16 +122,26 @@ class __window_site extends __window {
       name = cmd.mget(_a.name);
     }
     switch (name) {
+      case "transfer":
+        context.feed(transferTab(this));
+        this.loadCustomersList(cmd);
+        break;
+      case "quotes":
+        context.feed(quoteTab(this));
+        break;
+      case "bills":
+        context.feed(billTab(this));
+        break;
+      case "pocs":
+        context.feed(pocTab(this));
+        this.loadSitePocs(cmd)
+        break;
       case "works":
         context.feed(workTab(this));
         this.loadWorkList(
           { service: "mission-hitsory", format: 'big' },
           await this.getSortOptions(null, ["fdate"])
         );
-        break;
-      case "pocs":
-        context.feed(pocTab(this));
-        this.loadSitePocs(cmd)
         break;
     }
   }
@@ -141,6 +175,9 @@ class __window_site extends __window {
         break;
       case _a.input:
         this.searchCustomers(cmd)
+        break;
+      case 'transfer-to-customer':
+        this.transferToCustomer(cmd)
         break;
       default:
         super.onUiEvent(cmd, args);

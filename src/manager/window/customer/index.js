@@ -23,6 +23,8 @@ class __window_customer extends __window {
       city: 1,
       site: 1
     }
+    this.loadSitesList = this.loadSitesList.bind(this);
+    RADIO_BROADCAST.on('site-transfered', this.loadSitesList)
   }
 
   /**
@@ -54,6 +56,14 @@ class __window_customer extends __window {
       type: 'customer'
     }
   }
+
+  /**
+   * 
+   */
+  onBeforeDestroy() {
+    RADIO_BROADCAST.off('site-transfered', this.loadSitesList)
+  }
+
   /**
    * 
    */
