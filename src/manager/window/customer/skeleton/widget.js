@@ -20,13 +20,13 @@ export function tabs(ui) {
       Skeletons.Note({
         className: `${item}__button`,
         content: 'Chantiers',
-        name: 'sites',
+        name: 'site',
       }),
       Skeletons.Box.X({
         className: `${item}__button-container`,
         state: 1,
         uiHandler: [ui],
-        name: 'works',
+        name: 'work',
         kids: [
           Skeletons.Note({
             className: `${item}__button`,
@@ -44,12 +44,12 @@ export function tabs(ui) {
       Skeletons.Note({
         className: `${item}__button`,
         content: 'Devis',
-        name: 'solde',
+        name: 'quote',
       }),
       Skeletons.Note({
         className: `${item}__button`,
         content: 'Factures',
-        name: 'solde',
+        name: 'bill',
       }),
     ]
   });

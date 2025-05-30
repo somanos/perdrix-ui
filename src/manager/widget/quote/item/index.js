@@ -11,6 +11,36 @@ class __quote_item extends LetcBox {
     this.debug("AAA:27", this, opt)
   }
 
+
+  /**
+  * 
+  */
+  data() {
+    const {
+      custId,
+      siteId,
+      workId,
+      description,
+      site,
+      status,
+      type,
+      customer,
+    } = this.model.toJSON();
+
+    return {
+      custId,
+      siteId,
+      workId,
+      customer,
+      site,
+      description,
+      site,
+      status,
+      id: workId,
+      type
+    }
+  }
+
   /**
    * Upon DOM refresh, after element actually insterted into DOM
    */
@@ -64,7 +94,9 @@ class __quote_item extends LetcBox {
         })
         break;
       default:
-        this.debug("AAA:28", "Unknown service", service, trigger);
+        this.triggerHandlers({
+          service:this.mget(_a.service),
+        })
         break;
     }
   }

@@ -1,15 +1,27 @@
 const __window = require('..');
 const { transferTab, quoteTab, billTab, pocTab, workTab } = require("./skeleton/widget")
-class __window_site extends __window {
+const { updateBalance, loadSalesHistory, loadSalesList } = require("../../utils")
 
-  async initialize(opt) {
+class __window_site extends __window {
+  constructor(...args) {
+    super(...args);
+    this.updateBalance = updateBalance.bind(this);
+    this.loadSalesList = loadSalesList.bind(this);
+    this.loadSalesHistory = loadSalesHistory.bind(this);
+  }
+
+  /**
+   * 
+   * @param {*} opt 
+   */
+  initialize(opt) {
     require('./skin');
     super.initialize(opt);
   }
 
   /**
- * 
- */
+  * 
+  */
   data() {
     const {
       city,
@@ -102,11 +114,11 @@ class __window_site extends __window {
     let msg = `Voulez-vous transférer ce chantier au client 
       ${customer.mget('custName')} (n°${custId})?`;
     this.confirm(msg).then(() => {
-      this.postService(PLUGINS.site.transfer, args).then((data)=>{
+      this.postService(PLUGINS.site.transfer, args).then((data) => {
         //this.loadCustomersList()
         Wm.alert("Transfert réussi!")
         RADIO_BROADCAST.trigger('site-transfered')
-      }).catch((e)=>{
+      }).catch((e) => {
         Wm.alert(LOCALE.ERROR_SERVER)
       })
     })
@@ -117,26 +129,45 @@ class __window_site extends __window {
   */
   async loadContextBar(cmd) {
     let context = await this.ensurePart("context-bar");
-    let name = "works";
+    let name = "work";
     if (cmd) {
       name = cmd.mget(_a.name);
     }
+    let format = "normal";
+    let salesbox;
+    this._currentTab = name;
     switch (name) {
       case "transfer":
         context.feed(transferTab(this));
         this.loadCustomersList(cmd);
         break;
-      case "quotes":
+      case "quote":
+        format = "auto";
         context.feed(quoteTab(this));
+        salesbox = await this.ensurePart("salesbox");
+        this.loadSalesHistory(cmd, {
+          type: name,
+          salesbox,
+          custId: this.mget('custId'),
+          siteId: this.mget('siteId')
+        })
         break;
-      case "bills":
+      case "bill":
+        format = "auto";
         context.feed(billTab(this));
+        salesbox = await this.ensurePart("salesbox");
+        this.loadSalesHistory(cmd, {
+          type: name,
+          salesbox,
+          custId: this.mget('custId'),
+          siteId: this.mget('siteId')
+        })
         break;
-      case "pocs":
+      case "poc":
         context.feed(pocTab(this));
         this.loadSitePocs(cmd)
         break;
-      case "works":
+      case "work":
         context.feed(workTab(this));
         this.loadWorkList(
           { service: "mission-hitsory", format: 'big' },
@@ -144,6 +175,9 @@ class __window_site extends __window {
         );
         break;
     }
+    this.ensurePart('context-bar').then((p) => {
+      p.el.dataset.format = format;
+    })
   }
 
   /**
@@ -179,6 +213,10 @@ class __window_site extends __window {
       case 'transfer-to-customer':
         this.transferToCustomer(cmd)
         break;
+      case 'fiscal-year':
+        let name = cmd.mget(_a.name);
+        if (!name) break;
+        this.loadSalesHistory(cmd, { type: this._currentTab, custId: this.mget(CUST_ID) })
       default:
         super.onUiEvent(cmd, args);
     }

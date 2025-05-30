@@ -47,40 +47,6 @@ module.exports = function (ui) {
             value: description
           }),
           quoteForm(ui),
-          // Skeletons.Box.Y({
-          //   className: `${pfx}__cartridge-container`,
-          //   kids: [
-          //     cartridge(ui, {
-          //       content: "Montant HT",
-          //     }, {
-          //       name: 'ht',
-          //       currency: "€",
-          //       placeholder: 0
-          //     }),
-          //     cartridge(ui, {
-          //       content: "Taux TVA",
-          //     }, {
-          //       placeholder: 0,
-          //       value: 20,
-          //       currency: "%",
-          //       name: 'tva',
-          //     }),
-          //     cartridge(ui, {
-          //       content: "Remise",
-          //     }, {
-          //       name: 'discount',
-          //       placeholder: 0,
-          //       currency: "€"
-          //     }),
-          //     cartridge(ui, {
-          //       content: "Montant TTC",
-          //     }, {
-          //       placeholder: 0,
-          //       name: 'ttc',
-          //       currency: "€",
-          //     }),
-          //   ]
-          // })
         ]
       }),
       messageBock(ui)

@@ -1,9 +1,7 @@
 @use "mixins/window" as *;
 @use "mixins/drumee";
+
 .quote-item {
-  // &__ui {
-  //   box-shadow: drumee.$drumee-shadow-box;
-  // }
   @include cartridge-sales;
   @include widget-ui;
 
@@ -18,5 +16,14 @@
         width: 100px;
       }
     }
+  }
+
+  .tooltips {
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    //border: 1px solid lightblue;
+    top: 15px;
+    box-shadow: drumee.$drumee-shadow-container;
   }
 }

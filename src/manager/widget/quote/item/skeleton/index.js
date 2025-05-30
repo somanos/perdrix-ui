@@ -13,8 +13,14 @@ const { contextButtons } = require("../../../skeleton")
  */
 
 function quote_item(ui) {
-  let { ctime, description = "", chrono = "" } = ui.model.toJSON()
+  let { ctime, description = "", chrono = "", filepath } = ui.model.toJSON()
   let pfx = ui.fig.family;
+  let service;
+  let tooltips;
+  if (filepath) {
+    service = "show-doc";
+    tooltips = filepath;
+  }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -25,7 +31,9 @@ function quote_item(ui) {
         }),
         Skeletons.Note({
           className: `label`,
-          content: `Devis n ${chrono}`
+          content: `Devis n ${chrono}`,
+          service,
+          tooltips
         }),
         ...contextButtons(ui)
       ]

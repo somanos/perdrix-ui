@@ -1,18 +1,18 @@
 const __window = require('..');
 const {
-  searchbox, placeholder, menuItem, fiscalBox, contextBar
+  searchbox, placeholder, menuItem, contextBar
 } = require("../../widget/skeleton")
 
-const { updateBalance, loadBillsList, loadBalance } = require("../../utils")
+const { updateBalance, loadSalesHistory, loadSalesList } = require("../../utils")
 
 const CUST_ID = 'custId';
 
 class __window_customer extends __window {
   constructor(...args) {
     super(...args);
-    this.loadBillsList = loadBillsList.bind(this);
     this.updateBalance = updateBalance.bind(this);
-    this.loadBalance = loadBalance.bind(this);
+    this.loadSalesList = loadSalesList.bind(this);
+    this.loadSalesHistory = loadSalesHistory.bind(this);
   }
 
   async initialize(opt) {
@@ -150,7 +150,7 @@ class __window_customer extends __window {
   */
   async loadContextBar(cmd) {
     let context = await this.ensurePart("context-bar");
-    let name = "works";
+    let name = "work";
     if (cmd) {
       name = cmd.mget(_a.name);
     }
@@ -158,8 +158,9 @@ class __window_customer extends __window {
     let state = 1;
     let service;
     let format = "normal";
+    this._currentTab = name;
     switch (name) {
-      case "works":
+      case "work":
         service = 'filter-works';
         buttons = [
           menuItem(this, { sys_pn: "fdate", label: "Par date", name: 'ctime', state: 0, service }),
@@ -176,19 +177,7 @@ class __window_customer extends __window {
         context.feed(contextBar(this, buttons));
         this.loadWorkList({ format: _a.extra }, await this.getSortOptions(null, ["fdate", "fcity", "fsite"]));
         break;
-      case "pocs":
-        buttons = [
-          Skeletons.Button.Label({
-            className: `${this.fig.family}__button-action`,
-            label: "Nouveau contact",
-            ico: "editbox_list-plus",
-            icons: null, service: "add-poc"
-          })
-        ]
-        context.feed(contextBar(this, buttons));
-        this.loadSitePocs(cmd)
-        break;
-      case "sites":
+      case "site":
         service = 'filter-sites';
         buttons = [
           menuItem(this, { sys_pn: "fcity", label: "Par ville", name: 'city', state, service }),
@@ -205,9 +194,10 @@ class __window_customer extends __window {
         context.feed(contextBar(this, buttons));
         this.loadSitesList(await this.getSortOptions(null, ["fcity", "fstreet", "fhouse"], 0));
         break;
-      case "solde":
+      case "bill":
+      case "quote":
         format = "auto";
-        this.loadBalance(cmd, { custId: this.mget(CUST_ID) })
+        this.loadSalesHistory(cmd, { type: name, custId: this.mget(CUST_ID) })
         break;
     }
     this.ensurePart('context-bar').then((p) => {
@@ -303,7 +293,8 @@ class __window_customer extends __window {
       case 'fiscal-year':
         let name = cmd.mget(_a.name);
         if (!name) break;
-        this.loadBalance(cmd, { custId: this.mget(CUST_ID) })
+        this.loadSalesHistory(cmd, { type: this._currentTab, custId: this.mget(CUST_ID) })
+        // this.loadBillsHistory(cmd, { custId: this.mget(CUST_ID) })
         break;
       default:
         super.onUiEvent(cmd, args);

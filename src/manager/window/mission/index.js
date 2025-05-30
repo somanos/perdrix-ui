@@ -162,7 +162,7 @@ class __window_mission extends __window {
         let { nid, hub_id, filepath, filename, privilege } = cmd.model.toJSON()
         this.viewDoc({ nid, hub_id, filepath, filename, privilege });
         break;
-     case 'create-mission':
+      case 'create-mission':
         this.loadMissionForm(cmd)
         break;
       default:

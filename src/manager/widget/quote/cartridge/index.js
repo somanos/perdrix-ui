@@ -55,6 +55,10 @@ class __quote_cartridge extends LetcBox {
         })
         break;
       default:
+        this.triggerHandlers({
+          service: this.mget(_a.service),
+        })
+        break;
     }
   }
 

@@ -24,28 +24,28 @@ function tabs(ui, states = [0, 1]) {
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Devis',
-        name: 'quotes',
+        name: 'quote',
         state: states[1]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Factures',
-        name: 'bills',
+        name: 'bill',
         state: states[2]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Contacs',
-        name: 'pocs',
+        name: 'poc',
         state: states[3]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__button-action regular`,
         // ico: 'desktop_desksettings',
         content: 'Missions',
-        name: 'works',
+        name: 'work',
         state: states[4]
       }),
     ]
@@ -99,7 +99,14 @@ export function pocTab(ui) {
  * @returns 
  */
 export function quoteTab(ui) {
-  let buttons = [tabs(ui, [0, 1, 0, 0, 0])]
+  let buttons = [
+    Skeletons.Box.X({
+      className: `${ui.fig.family}__salesbox`,
+      sys_pn: "salesbox",
+      partHandler:[ui]
+    }),
+    tabs(ui, [0, 1, 0, 0, 0])
+  ]
   return contextBar(ui, buttons)
 };
 
@@ -110,7 +117,15 @@ export function quoteTab(ui) {
  * @returns 
  */
 export function billTab(ui) {
-  let buttons = [tabs(ui, [0, 0, 1, 0, 0])]
+//  let buttons = [tabs(ui, [0, 0, 1, 0, 0])]
+  let buttons = [
+    Skeletons.Box.X({
+      className: `${ui.fig.family}__salesbox`,
+      sys_pn: "salesbox",
+      partHandler:[ui]
+    }),
+    tabs(ui, [0, 0, 1, 0, 0])
+  ]
   return contextBar(ui, buttons)
 };
 

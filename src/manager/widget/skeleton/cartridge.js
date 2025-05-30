@@ -12,7 +12,8 @@ const { entry } = require('./widgets')
 export function cartridge(ui, note, input) {
   let kids = [
     Skeletons.Note({
-      className: `${ui.fig.family}__label`,
+      className: `${ui.fig.family}__label inactive`,
+      active: 0,
       ...note
     }),
     entry(ui, {

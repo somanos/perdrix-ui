@@ -2,6 +2,9 @@
 const { fiscalBox, placeholder, contextBar, address } = require("../widget/skeleton")
 //const { address } = require("../widget/skeleton/entries")
 const CUST_ID = 'custId';
+const SITE_ID = 'siteId';
+let FISCAL_YEARS;
+
 const commaNumber = require('comma-number')
 /**
  * 
@@ -32,9 +35,9 @@ export function normalizelLocation(location) {
  */
 export function getLocationFields(location) {
   let res = {
-    streettype:"",
-    streetname:"",
-    additional:""
+    streettype: "",
+    streetname: "",
+    additional: ""
   };
   if (_.isArray(location)) {
     res.housenumber = location[0];
@@ -285,8 +288,8 @@ export function itemMenuSelected(cmd) {
 export async function loadWorkList(opt, filter) {
   let api = {
     service: "work.list",
-    custId: this.mget('custId'),
-    siteId: this.mget('siteId')
+    custId: this.mget(CUST_ID),
+    siteId: this.mget(SITE_ID)
   };
   if (filter) api.filter = filter;
   let itemsOpt = {
@@ -329,7 +332,7 @@ export async function loadMissionWindow(cmd) {
  */
 export async function selectWork(cmd) {
   this.mset({
-    siteId: cmd.mget('siteId'),
+    siteId: cmd.mget(SITE_ID),
     category: cmd.mget(_a.type),
     workId: cmd.mget(_a.id),
   })
@@ -370,7 +373,7 @@ export async function promptSite() {
   this.loadWidget({
     kind: 'form_site',
     ...this.data(),
-    id: `site-form-${this.mget('custId')}`,
+    id: `site-form-${this.mget(CUST_ID)}`,
     uiHandler: [this],
     service: "site-created"
   })
@@ -438,7 +441,7 @@ export function searchPoc(cmd, k) {
 export async function loadSitePocs(cmd) {
   let api = {
     service: "site.list_poc",
-    siteId: this.mget('siteId'),
+    siteId: this.mget(SITE_ID),
   };
   let itemsOpt = {
     kind: 'poc_item',
@@ -467,7 +470,11 @@ export function showMessage(m, timeout = 3000) {
 /**
  * 
  */
-export async function viewDoc(data) {
+export async function viewDoc(data = {}) {
+  if (!data.nid || !data.hub_id) {
+    this.warn("Missing nid or hub_id", data);
+    return
+  }
   let Media = await Kind.waitFor('media_pseudo');
   if (!data.filename && data.filepath) {
     let a = data.filepath.split(/\/+/);
@@ -546,17 +553,24 @@ export function dataTransfer(e) {
 * 
 * @param {*} cmd 
 */
-export function updateBalance(cmd) {
+export function updateBalance(cmd, opt) {
   let fiscalYear = cmd.mget(_a.name);
-  let custId = this.mget(CUST_ID);
-  let opt = {}
+  let { type, custId, siteId } = opt;
+  custId = custId || this.mget(CUST_ID);
+  siteId = siteId || this.mget(SITE_ID);
+  let api = {
+    service: `${type}.balance`,
+  };
   if (/[0-9]{4,4}/.test(fiscalYear)) {
-    opt.fiscalYear = fiscalYear;
+    api.fiscalYear = fiscalYear;
   }
   if (custId) {
-    opt.custId = custId;
+    api.custId = custId;
   }
-  this.postService("bill.balance", opt).then((data) => {
+  if (siteId) {
+    api.siteId = siteId;
+  }
+  this.postService(`${type}.balance`, api).then((data) => {
     let { ht, ttc } = data || {}
     this.ensurePart('amount_ht').then((p) => {
       p.set({ content: commaNumber(ht, ' ', '.') })
@@ -570,11 +584,13 @@ export function updateBalance(cmd) {
 /**
  * 
  */
-export async function loadBillsList(cmd) {
+export async function loadSalesList(cmd, opt = {}) {
   let fiscalYear = cmd.mget(_a.name);
-  let custId = this.mget(CUST_ID);
+  let { type, custId, siteId } = opt;
+  custId = custId || this.mget(CUST_ID);
+  siteId = siteId || this.mget(SITE_ID);
   let api = {
-    service: "bill.list",
+    service: `${type}.list`,
   };
   if (/[0-9]{4,4}/.test(fiscalYear)) {
     api.fiscalYear = fiscalYear;
@@ -582,15 +598,18 @@ export async function loadBillsList(cmd) {
   if (custId) {
     api.custId = custId;
   }
+  if (siteId) {
+    api.siteId = siteId;
+  }
 
   let itemsOpt = {
-    kind: 'bill_item',
+    kind: `${type}_item`,
     uiHandler: [this]
   }
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
-      labels: ["Aucune facture trouvee"],
+      labels: ["Aucune élément trouvee"],
     }));
   })
 }
@@ -599,14 +618,16 @@ export async function loadBillsList(cmd) {
  * 
  * @param {*} cmd 
  */
-export async function loadBalance(cmd, opt) {
-  let buttons = await this.fetchService("pdx_utils.fiscal_years", opt);
-  buttons.unshift({ name: _a.all, content: "Toutes les années" });
-  let bar = fiscalBox(this, buttons);
-  let context = await this.ensurePart("context-bar");
-  context.feed(contextBar(this, bar));
-  this.loadBillsList(cmd);
-  this.updateBalance(cmd);
+export async function loadSalesHistory(cmd, opt = {}) {
+  if (!FISCAL_YEARS) {
+    FISCAL_YEARS = await this.fetchService("pdx_utils.fiscal_years");
+    FISCAL_YEARS.unshift({ name: _a.all, content: "Toutes les années" });
+  }
+  // let buttons = await this.getFiscalYears(opt);
+  let context = opt.salesbox || await this.ensurePart("context-bar");
+  context.feed(contextBar(this, fiscalBox(this, FISCAL_YEARS)));
+  this.loadSalesList(cmd, opt);
+  this.updateBalance(cmd, opt);
   const content = cmd.mget(_a.content);
   if (!content) return;
   this.ensurePart('current-fyear').then((p) => {
