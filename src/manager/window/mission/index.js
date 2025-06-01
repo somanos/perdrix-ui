@@ -89,7 +89,7 @@ class __window_mission extends __window {
    * 
    */
   loadMissionHistory() {
-    this.fetchService("work.summary", { workId: this.mget('workId') }).then(async (data) => {
+    this.fetchService(PLUGINS.work.summary, { workId: this.mget('workId') }).then(async (data) => {
       let list = await this.ensurePart(_a.list)
       if (!data.id) return;
       this.mset(data);
@@ -103,14 +103,14 @@ class __window_mission extends __window {
   async loadSales() {
     let quotes = [];
     try {
-      quotes = await this.fetchService("work.quotations", { workId: this.mget('workId') })
+      quotes = await this.fetchService(PLUGINS.work.quotes, { workId: this.mget('workId') })
     } catch (e) {
       this.warn("Failed to fetch quotes", e)
       quotes = []
     }
     let bills = [];
     try {
-      bills = await this.fetchService("work.bills", { workId: this.mget('workId') })
+      bills = await this.fetchService(PLUGINS.work.bills, { workId: this.mget('workId') })
     } catch (e) {
       this.warn("Failed to fetch quotes", e)
       bills = []

@@ -4,7 +4,7 @@ const {
   headerBox, messageBock, descriptionEntry, menuInput
 } = require("../../../skeleton")
 
-module.exports = function (ui) {
+module.exports = function (ui, orphanedNumbers) {
   const pfx = ui.fig.family;
   let { workId, site, description } = ui.model.toJSON()
 
@@ -53,11 +53,22 @@ module.exports = function (ui) {
               refAttribute: 'label',
               sys_pn: "category",
               value: "",
-            })
+            }),
           ),
           Skeletons.Box.Y({
-            className: `${pfx}__cartridge-container`,
+            className: `${pfx}__main bill-cartridge`,
             kids: [
+              menuInput(ui, {
+                items: orphanedNumbers,
+                className: `bill-number`,
+                name: 'chrono',
+                placeholder: 'Réutiliser un numéro',
+                refAttribute: 'label',
+                sys_pn: "bill-number",
+                service: "reuse-old-bill",
+                uiHandler: [ui],
+                value: "",
+              }),
               cartridge(ui, {
                 content: "Montant HT",
               }, {

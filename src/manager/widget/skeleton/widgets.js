@@ -143,12 +143,13 @@ export function placeholder(ui, opt) {
  * 
  * @returns 
  */
-export function menuInput(ui, opt) {
+export function menuInput(ui, opt = {}) {
   const pfx = `${ui.fig.family}`;
+  let { className = "" } = opt;
   return {
     ...opt,
     kind: 'menu_input',
-    className: `${pfx}__menu-input`,
+    className: `${pfx}__menu-input ${className}`,
     uiHandler: [ui]
   }
 }

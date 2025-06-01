@@ -1,6 +1,7 @@
 
-const Form = require('../../form');
 
+const Form = require('../../form');
+const { vat } = require('../../../utils');
 class __form_bill extends Form {
 
 
@@ -20,7 +21,6 @@ class __form_bill extends Form {
     if (opt.source && opt.source.data) {
       this.mset(opt.source.data())
     }
-    this.debug("AAA:23", this)
   }
 
 
@@ -40,7 +40,8 @@ class __form_bill extends Form {
       postcode,
       description,
       workType,
-      site
+      site,
+      billId
     } = this.model.toJSON();
 
     return {
@@ -56,7 +57,8 @@ class __form_bill extends Form {
       workType,
       description,
       site,
-      id: workId
+      id: workId,
+      billId
     }
   }
 
@@ -65,8 +67,8 @@ class __form_bill extends Form {
    */
   createBill() {
     let args = this.getData();
-    let { custId, siteId, workId } = this.data();
-    args = { ...args, custId, siteId, workId }
+    let { custId, siteId, workId, billId } = this.data();
+    args = { ...args, custId, siteId, billId, workId }
     let error = 0;
     if (!args.description) {
       error = 1
@@ -81,7 +83,7 @@ class __form_bill extends Form {
       return;
     }
     this.changeDataset("btn-create", _a.state, 0)
-    this.postService("bill.create", { args }).then((data) => {
+    this.postService(PLUGINS.bill.create, { args }).then((data) => {
       let service = this.mget("callbackService") || 'bill-created'
       this.triggerHandlers({ service, data });
       this.goodbye()
@@ -94,10 +96,36 @@ class __form_bill extends Form {
 
   /**
    * 
+   * @param {*} source 
+   */
+  async reuseBill(source) {
+    if (!source) return
+    let { ht, ttc, tva, billId } = source.model.toJSON();
+    let el_ht = await this.ensurePart('ht');
+    let el_ttc = await this.ensurePart('ttc');
+    let el_tva = await this.ensurePart('tva');
+    el_ht.setValue(ht);
+    el_ttc.setValue(ttc);
+    el_tva.setValue(vat(tva));
+    this.mset({ billId })
+  }
+
+  /**
+   * 
    */
   onDomRefresh() {
-    this.feed(require('./skeleton')(this));
+    this.postService(PLUGINS.bill.orphanedNumbers).then((data) => {
+      this._orphanedNumber = {}
+      this.debug("AAA:100", data)
+      for (let row of data) {
+        this._orphanedNumber[row.chrono] = row;
+      }
+      this.feed(require('./skeleton')(this, data));
+    }).catch((e) => {
+      this.feed(require('./skeleton')(this));
+    })
   }
+
   /**
    * 
    */
@@ -133,9 +161,10 @@ class __form_bill extends Form {
         this.selectWork(cmd);
         break;
       case _a.input:
-        let { name } = cmd.getData();
-        this.debug("AAA:238", name, service, cmd)
         this.updateAmount();
+        break;
+      case "reuse-old-bill":
+        this.reuseBill(args.source);
         break;
 
       default:

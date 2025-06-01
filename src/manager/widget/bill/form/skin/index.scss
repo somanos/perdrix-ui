@@ -37,6 +37,15 @@
     align-items: center;
     //height: 100%;
     width: 100%;
+
+    &.bill-cartridge {
+      border-radius: 6px 6px 0px 0px;
+      height: 100%;
+      min-height: 80px;
+      width: 100%;
+      border: .5px solid lightgray;
+      padding: 5px;
+    }
   }
 
   &__container {
@@ -112,4 +121,22 @@
   @include dialog-acknowledge;
   @include dialog-overlay;
 
+  &__cartridge-container {
+    margin-top: 10px;
+    padding: 5px;
+  }
+
+  &__bill-number {
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  &__menu-input {
+    justify-self: end;
+
+    &.bill-number {
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+  }
 }

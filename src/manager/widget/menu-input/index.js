@@ -181,7 +181,7 @@ class __menu_input extends LetcBox {
       let payload = {};
       payload[name] = value;
       let api = this.mget(_a.api);
-      this.debug("AAA: 174", p, this, api, payload, value, this.mget(_a.value));
+      //this.debug("AAA: 174", p, this, api, payload, value, this.mget(_a.value));
       let args;
       if (value !== this.mget(_a.value) && api && api.service) {
         let service = api.service;
@@ -190,7 +190,13 @@ class __menu_input extends LetcBox {
         args = { ...api, ...payload };
         this.postService(service, { args }).then((data) => {
           this.mset(_a.value, value);
-          this.debug("AAA: 181", data, this.mget(_a.value));
+          //this.debug("AAA: 181", data, this.mget(_a.value));
+        })
+      }
+      if (this.mget(_a.service)) {
+        this.triggerHandlers({
+          service: this.mget(_a.service),
+          source: cmd
         })
       }
       this.clearItems();

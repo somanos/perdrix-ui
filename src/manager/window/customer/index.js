@@ -108,6 +108,7 @@ class __window_customer extends __window {
     let api = {
       service: "work.search",
       words: cmd.getValue(),
+      spinner: true,
       custId: this.mget(CUST_ID)
     };
     let itemsOpt = {
@@ -229,9 +230,9 @@ class __window_customer extends __window {
     this.debug("AAA:153:", cmd, args)
     this.ensurePart(_a.list).then((p) => {
       let { data } = args;
+      if (!data) return;
       let c = p.getItemsByAttr('workId', data.workId)[0];
       if (c) {
-        this.debug("AAAA:292", c, data)
         c.restart(data);
       }
     })

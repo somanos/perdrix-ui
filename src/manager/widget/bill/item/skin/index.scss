@@ -2,9 +2,6 @@
 @use 'mixins/drumee';
 
 .bill-item {
-  // &__ui {
-  //   box-shadow: drumee.$drumee-shadow-box;
-  // }
   @include cartridge-sales;
   @include widget-ui;
 
@@ -21,4 +18,11 @@
     }
   }
 
+  .tooltips {
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    top: 15px;
+    box-shadow: drumee.$drumee-shadow-container;
+  }
 }

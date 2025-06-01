@@ -137,7 +137,6 @@ export async function feedList(api, itemsOpt, onEmpty) {
   list.mset({
     api,
     itemsOpt,
-    spinnerWait: 1000,
     spinner: true,
   });
   list.restart();
