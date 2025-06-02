@@ -140,8 +140,12 @@ class __perdrix_manager extends DrumeeWm {
    */
   handleCustomersList() {
     let kind = 'window_customer_list';
-    if (this.getItemByKind(kind)) return
-    this.launch({ kind }, { explicit: 1, singleton: 1 });
+    if(this._timeout) return
+    this._timeout = setTimeout(()=>{
+      this._timeout = null;
+      if (this.getItemByKind(kind)) return
+      this.launch({ kind }, { explicit: 1, singleton: 1 });
+    }, 2000)
   }
 
   /**
