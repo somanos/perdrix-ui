@@ -8,24 +8,33 @@ import { entry, menuInput, buttons } from "./widgets"
  */
 export function address(ui, opt) {
   let {
-    city, postcode, countrycode,
-    service, serviceLabel, location
+    street, city, housenumber,
+    postcode, extended, countrycode,
+    isUpdate, serviceLabel,
+    service, location
   } = opt;
   const pfx = `${ui.fig.family}`;
 
-  let { housenumber, streettype, streetname, additional } = getLocationFields(location)
+  if (_.isString(location) || !location) {
+    location = []
+    if (housenumber) {
+      location.push(housenumber)
+    } else {
+      location.push("")
+    }
 
-  // if (!streetname &) {
-  //   loc = street.split(/ +/);
-  //   let { length } = Env.get('streetType').filter(function (p) {
-  //     let r = new RegExp(`^${p.longTag}$`, 'i');
-  //     return (r.test(type))
-  //   })
-  //   if (length) {
-  //     loc.shift()
-  //     street = loc.join(' ');
-  //   }
-  // }
+    let l = street.split(' ');
+    if (l[0]) {
+      location.push(l[0].toLocaleLowerCase())
+      l.shift()
+    }
+    if (l[0]) {
+      location.push(l.join(' '))
+    }
+  }
+  let o = getLocationFields(location)
+  let { streettype, streetname, additional } = o
+  housenumber = housenumber || o.housenumber;
   let streetType = menuInput(ui, {
     items: Env.get('streetType'),
     name: 'streettype',
@@ -42,17 +51,6 @@ export function address(ui, opt) {
     value: countrycode || 'France',
   })
 
-  let floor;
-  // if (extended) {
-  //   floor = Skeletons.Box.G({
-  //     className: `${pfx}__address street`,
-  //     kids: [
-  //       entry(ui, { placeholder: "Etage", name: "floor" }),
-  //       entry(ui, { placeholder: "Appartement", name: 'room' }),
-  //       entry(ui, { placeholder: "Autre", name: 'other' }),
-  //     ]
-  //   })
-  // }
   return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__entries-main`,
