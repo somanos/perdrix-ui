@@ -12,7 +12,7 @@ function setEnv(data) {
     return (data.privilege & _K.permission.write)? 1 : 0;
   };
   Visitor.isPdxAdmin = function () {
-    return (data.privilege & _K.permission.admin)? 1 : 0;
+    return (data.privilege & _K.permission.delete)? 1 : 0;
   };
   window.PLUGINS = Platform.get('plugins');
 }
