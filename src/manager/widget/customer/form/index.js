@@ -29,7 +29,6 @@ class __form_customer extends Form {
    */
   onPartReady(child, pn) {
     this.raise();
-    //this.debug("AAA:33", child, pn)
     switch (pn) {
       case 'companyname':
       case _a.lastname:
@@ -203,7 +202,7 @@ class __form_customer extends Form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:214", service, cmd, this)
+    this.verbose("AAA:214", service, cmd, this)
     switch (service) {
       case "select-category":
         this.selectCategory(cmd);

@@ -14,6 +14,7 @@ class __perdrix_manager extends DrumeeWm {
     this._getViewerPosition = this._getViewerPosition.bind(this);
     this.onDomRefresh = this.onDomRefresh.bind(this);
     this.onUiEvent = this.onUiEvent.bind(this);
+    this.handleCustomersList = this.handleCustomersList.bind(this);
     this._displayContent = this._displayContent.bind(this);
     this._onmouseover = this._onmouseover.bind(this);
   }
@@ -134,6 +135,14 @@ class __perdrix_manager extends DrumeeWm {
     return this._target = t.seek_insertion(m);
   }
 
+  /**
+   * 
+   */
+  handleCustomersList() {
+    let kind = 'window_customer_list';
+    if (this.getItemByKind(kind)) return
+    this.launch({ kind }, { explicit: 1, singleton: 1 });
+  }
 
   /**
    * 
@@ -181,6 +190,7 @@ class __perdrix_manager extends DrumeeWm {
             }
           })
           child.el.style.width = '';
+          RADIO_BROADCAST.on('customer-created', this.handleCustomersList)
           return child.el.style.height = '';
         }
 
