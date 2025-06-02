@@ -23,11 +23,10 @@ class __search_result extends LetcBox {
   data() {
     let c = this.mget(_a.content);
     let r = this.mget(_a.reference);
-    this.debug("AAA:26", this.mget(_a.type), c, r)
     return {
       customer: r[0],
-      site: r[1],
-      work: r[2],
+      site: r[1] || {},
+      work: r[2] || {},
       content: c,
       ...c,
     }
@@ -41,7 +40,6 @@ class __search_result extends LetcBox {
     */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:27", cmd, args, service, this)
     this.triggerHandlers({
       service: "open-viewer"
     })

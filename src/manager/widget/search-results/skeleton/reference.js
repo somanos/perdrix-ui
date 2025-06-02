@@ -10,23 +10,25 @@
  */
 
 function header(ui, ico, t1, t2) {
-  let icon = Skeletons.Button.Svg({
-    className: `${ui.fig.family}__icon-header ${ui.mget(_a.type)}`,
-    ico,
-  })
-  return Skeletons.Box.X({
-    className: `${ui.fig.family}__cartridge-header`,
+
+  return Skeletons.Box.Y({
+    className: `${ui.fig.family}__reference`,
     debug: __filename,
     kids: [
-      icon,
-      Skeletons.Note({
-        className: `${ui.fig.family}__text type`,
-        content:t1
-      }),
-      // Skeletons.Note({
-      //   className: `${ui.fig.family}__text id`,
-      //   content: t2
-      // }),
+      Skeletons.Box.X({
+        className: `${ui.fig.family}__reference-row`,
+        debug: __filename,
+        kids: [
+          Skeletons.Note({
+            className: `${ui.fig.family}__text`,
+            ico,
+          }),
+          Skeletons.Note({
+            className: `${ui.fig.family}__text type`,
+            content:t1
+          }),
+        ]
+      })
     ]
   })
 
