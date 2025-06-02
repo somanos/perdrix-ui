@@ -58,7 +58,6 @@ class __window_site extends __window {
     this.setupInteract();
     this.raise();
     this.loadContextBar();
-    //this.loadWorkList({ service: "mission-hitsory", format: _a.small })
   }
 
   /**
@@ -91,11 +90,9 @@ class __window_site extends __window {
    * 
    */
   async searchCustomers(cmd) {
-    this.debug("AAAA:88", cmd)
     let list = await this.ensurePart('customers-list');
     let api = list.mget(_a.api)
     api.words = cmd.getValue();
-    this.debug("AAAA:85", api, list)
     if (!api.words) return;
     list.mset({ api })
     list.restart()
@@ -110,12 +107,10 @@ class __window_site extends __window {
       id: this.mget('siteId'),
       custId
     }
-    this.debug("AAA:101", args, this)
     let msg = `Voulez-vous transférer ce chantier au client 
       ${customer.mget('custName')} (n°${custId})?`;
     this.confirm(msg).then(() => {
       this.postService(PLUGINS.site.transfer, args).then((data) => {
-        //this.loadCustomersList()
         Wm.alert("Transfert réussi!")
         RADIO_BROADCAST.trigger('site-transfered')
       }).catch((e) => {
@@ -216,7 +211,7 @@ class __window_site extends __window {
       case 'fiscal-year':
         let name = cmd.mget(_a.name);
         if (!name) break;
-        this.loadSalesHistory(cmd, { type: this._currentTab, custId: this.mget(CUST_ID) })
+        this.loadSalesHistory(cmd, { type: this._currentTab, custId: this.mget('custId') })
       default:
         super.onUiEvent(cmd, args);
     }

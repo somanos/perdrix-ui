@@ -562,6 +562,8 @@ export function updateBalance(cmd, opt) {
   };
   if (/[0-9]{4,4}/.test(fiscalYear)) {
     api.fiscalYear = fiscalYear;
+  }else if(/^(status)$/.test(fiscalYear)){
+    api.status = 1;
   }
   if (custId) {
     api.custId = custId;
@@ -593,6 +595,8 @@ export async function loadSalesList(cmd, opt = {}) {
   };
   if (/[0-9]{4,4}/.test(fiscalYear)) {
     api.fiscalYear = fiscalYear;
+  }else if(/^(status)$/.test(fiscalYear)){
+    api.status = 1;
   }
   if (custId) {
     api.custId = custId;
@@ -605,6 +609,7 @@ export async function loadSalesList(cmd, opt = {}) {
     kind: `${type}_item`,
     uiHandler: [this]
   }
+  this.debug("AAA:608", api)
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
@@ -621,8 +626,8 @@ export async function loadSalesHistory(cmd, opt = {}) {
   if (!FISCAL_YEARS) {
     FISCAL_YEARS = await this.fetchService("pdx_utils.fiscal_years");
     FISCAL_YEARS.unshift({ name: _a.all, content: "Toutes les années" });
+    FISCAL_YEARS.unshift({ name: _a.status, content: "Non soldées" });
   }
-  // let buttons = await this.getFiscalYears(opt);
   let context = opt.salesbox || await this.ensurePart("context-bar");
   context.feed(contextBar(this, fiscalBox(this, FISCAL_YEARS)));
   this.loadSalesList(cmd, opt);
