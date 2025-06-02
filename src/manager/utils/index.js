@@ -609,11 +609,10 @@ export async function loadSalesList(cmd, opt = {}) {
     kind: `${type}_item`,
     uiHandler: [this]
   }
-  this.debug("AAA:608", api)
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
-      labels: ["Aucune élément trouvee"],
+      labels: ["Aucun élément trouvé"],
     }));
   })
 }
