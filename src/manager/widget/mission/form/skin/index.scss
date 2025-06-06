@@ -72,6 +72,11 @@
       align-content: center;
       justify-content: center;
       grid-template-columns: 235px 1fr;
+
+      &.mission {
+        grid-template-columns: 185px 1fr 1fr 1fr;
+      }
+
       margin-top: 5px;
     }
   }
@@ -109,6 +114,18 @@
     padding: 20px 0px;
   }
 
+  &__button-item.poc {
+    background-color: drumee.$white;
+    border: solid 0.5px lightgray;
+    border-radius: 3px;
+    color: drumee.$core-default-text-color;
+
+    &:hover {
+      color: drumee.$ewhite;
+      background-color: drumee.$customer-selection-bg;
+    }
+  }
+
   &__menu-input {
     height: 35px;
 
@@ -119,5 +136,6 @@
 
   @include dialog-acknowledge;
   @include dialog-overlay;
+
 
 }

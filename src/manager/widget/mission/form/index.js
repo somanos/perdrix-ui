@@ -73,6 +73,19 @@ class __form_mission extends Form {
   /**
    * 
    */
+  async loadPocsList() {
+    let p = await this.ensurePart("entries-manual");
+    this.debug("AAAA:130", p)
+    p.el.dataset.state = 1;
+    let list = await this.ensurePart(_a.list);
+    list.el.dataset.mode = 'context';
+    list.model.unset(_a.itemsOpt)
+    list.feed(require('./skeleton/pocs-list')(this))
+  }
+
+  /**
+   * 
+   */
   createWork() {
     let args = this.getData();
     let error = 0;
@@ -111,6 +124,9 @@ class __form_mission extends Form {
     let service = args.service || cmd.mget(_a.service);
     this.debug("AAA:213", service, cmd, this)
     switch (service) {
+      case "show-pocs":
+        this.loadPocsList()
+        break;
       case "prompt-location":
         this.promptSite(cmd);
         break;

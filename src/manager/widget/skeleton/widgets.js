@@ -190,9 +190,9 @@ export function dialogWrapper(ui, opt) {
  * @param {*} opt 
  * @returns 
  */
-export function descriptionEntry(ui, opt, extra) {
+export function descriptionEntry(ui, opt, ...extra) {
 
-  let { value, name, placeholder, sys_pn, ico, label } = opt;
+  let { value, name, placeholder, sys_pn, ico, label, innerClass = "" } = opt;
   placeholder = placeholder || label;
   const pfx = `${ui.fig.family}__entry-label`;
   let args = {
@@ -210,7 +210,7 @@ export function descriptionEntry(ui, opt, extra) {
     args.partHandler = [ui];
   }
   let head = Skeletons.Box.G({
-    className: `${pfx}__description-head ${name}`,
+    className: `${pfx}__description-head ${name} ${innerClass}`,
     kids: [
       Skeletons.Button.Label({
         ico,
@@ -219,7 +219,12 @@ export function descriptionEntry(ui, opt, extra) {
       }),
     ]
   });
-  if (extra) head.kids.push(extra);
+  if (extra && extra.length) {
+    for (let e of extra) {
+      head.kids.push(e);
+    }
+  }
+  //if (extra) head.kids.push(extra);
   return Skeletons.Box.Y({
     className: `${pfx}__main ${name}`,
     kids: [

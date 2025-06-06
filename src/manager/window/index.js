@@ -50,7 +50,7 @@ class __window_perdrix extends Utils {
     * 
     */
   loadMissionForm(cmd, hide = 0) {
-    const { custId } = this.mget('custId');
+    const { custId } = this.data(); 
     this.loadWidget({
       ...this.data(),
       customer: this.data(),

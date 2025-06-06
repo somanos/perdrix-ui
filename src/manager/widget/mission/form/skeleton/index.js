@@ -26,6 +26,7 @@ module.exports = function (ui) {
           label: "Description du travail",
           ico: "desktop_desksettings",
           name: "description",
+          innerClass:"mission",
           sys_pn: "description",
         },
         menuInput(ui, {
@@ -34,8 +35,20 @@ module.exports = function (ui) {
           placeholder: 'Type de travail',
           refAttribute: 'label',
           value: "",
+        }),
+        Skeletons.Note({
+          className: `${pfx}__button-item poc`,
+          content: 'Choisir un contact',
+          uiHandler: [ui],
+          service: "show-pocs",
+        }),
+        Skeletons.Note({
+          className: `${pfx}__button-item poc`,
+          content: 'Ajouter un contact',
+          uiHandler: [ui],
+          service: "add-poc",
         })
-      ),
+      ),  
       messageBock(ui),
     ]
   });

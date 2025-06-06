@@ -60,22 +60,6 @@ class __window_site extends __window {
     this.loadContextBar();
   }
 
-  /**
-    * 
-    */
-  async promptPoc(cmd) {
-    let { siteId, custId } = this.model.toJSON();
-    this.loadWidget({
-      kind: 'form_poc',
-      customer: this.mget('customer'),
-      id: `poc-form-${this.mget(_a.id)}`,
-      uiHandler: [this],
-      custId,
-      siteId,
-      service: "poc-created"
-    })
-  }
-
 
   /**
    * 

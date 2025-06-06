@@ -111,7 +111,11 @@ class __form_site extends Form {
 
     if (error) return;
     this.postService("site.create", { args }).then((data) => {
+      if(this.mget(_a.origin) == 'form'){
+        this.loadPocsList()
+      }else{
       this.triggerHandlers({ service: 'site-created', data })
+      }
       this.goodbye()
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
@@ -121,7 +125,6 @@ class __form_site extends Form {
       }))
     })
   }
-
 
   /**
    * 
@@ -137,19 +140,9 @@ class __form_site extends Form {
     let service = args.service || cmd.mget(_a.service);
     this.debug("AAA:212b", service, cmd.mget(_a.name), cmd, this)
     switch (service) {
-      // case "select-site":
-      //   let { choice } = cmd.getData();
-      //   switch (choice) {
-      //     case "same-address":
-      //       this.selectSite(this)
-      //       break;
-      //     case "list-sites":
-      //       this.loadSitesList(cmd)
-      //       break;
-      //     case "add-site":
-      //       break;
-      //   }
-      //   break;
+      case "show-poc":
+        this.loadPocsList()
+        break;
       case "set-site":
         this.selectSite(cmd);
         break;
@@ -166,6 +159,7 @@ class __form_site extends Form {
         this.triggerHandlers({ service });
         this.goodbye();
         break;
+
       case _a.input:
         switch (cmd.mget(_a.name)) {
           case _a.location:

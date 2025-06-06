@@ -1,14 +1,13 @@
 const __window = require('..');
-const { fiscalBox, contextBar } = require("../../widget/skeleton")
-const { updateBalance, loadBillsList, loadBalance } = require("../../utils");
+const { loadSalesList, loadSalesHistory, updateBalance } = require("../../utils");
 
 class __window_balance extends __window {
 
   constructor(...args) {
     super(...args);
-    this.loadBillsList = loadBillsList.bind(this);
     this.updateBalance = updateBalance.bind(this);
-    this.loadBalance = loadBalance.bind(this);
+    this.loadSalesList = loadSalesList.bind(this);
+    this.loadSalesHistory = loadSalesHistory.bind(this);
   }
 
   async initialize(opt) {
@@ -28,7 +27,7 @@ class __window_balance extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    this.loadBalance(this)
+    this.loadSalesHistory(this, { type: "bill" })
   }
 
   /**
@@ -65,7 +64,7 @@ class __window_balance extends __window {
       case 'fiscal-year':
         let name = cmd.mget(_a.name);
         if (!name) break;
-        this.loadBalance(cmd)
+        this.loadSalesHistory(cmd, { type: "bill" })
         break;
       case _a.search:
         this.searchBill(cmd);

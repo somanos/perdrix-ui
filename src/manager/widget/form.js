@@ -71,19 +71,19 @@ class __form_core extends Core {
   /**
      * 
      */
-  async promptSite(cmd) {
-    this.debug("AAAA:75", cmd, this, this.data())
-    this.loadWidget({
-      kind: 'form_site',
-      ...this.data(),
-      id: `site-form-${this.mget('custId')}`,
-      uiHandler: [this],
-      service: "site-created"
-    })
-    this.ensurePart("entries-manual").then((p) => {
-      p.el.dataset.state = 0;
-    });
-  }
+  // async promptSite(cmd) {
+  //   this.debug("AAAA:75", cmd, this, this.data())
+  //   this.loadWidget({
+  //     kind: 'form_site',
+  //     ...this.data(),
+  //     id: `site-form-${this.mget('custId')}`,
+  //     uiHandler: [this],
+  //     service: "site-created"
+  //   })
+  //   this.ensurePart("entries-manual").then((p) => {
+  //     p.el.dataset.state = 0;
+  //   });
+  // }
 
   /**
   * 

@@ -1,5 +1,5 @@
 // const { placeholder} = require("../widget/skeleton/widgets")
-const { fiscalBox, placeholder, contextBar, address } = require("../widget/skeleton")
+const { fiscalBox, placeholder, contextBar, address, pocsList } = require("../widget/skeleton")
 //const { address } = require("../widget/skeleton/entries")
 const CUST_ID = 'custId';
 const SITE_ID = 'siteId';
@@ -194,10 +194,37 @@ export async function changeDataset(name, attr, val) {
 /**
 * 
 */
-export async function prompLocation(extendex = 0) {
+export async function promptLocation(extendex = 0) {
   await this.clearList();
   let p = await this.ensurePart("entries-manual");
   p.feed(address(this, { extendex }));
+}
+
+/**
+  * 
+  */
+export async function promptPoc(cmd) {
+  let { siteId, custId } = this.model.toJSON();
+  this.loadWidget({
+    kind: 'form_poc',
+    customer: this.mget('customer'),
+    id: `poc-form-${this.mget(_a.id)}`,
+    uiHandler: [this],
+    custId,
+    siteId,
+    service: "poc-created"
+  })
+}
+
+/**
+ * 
+ */
+export async function loadPocsList() {
+  let p = await this.ensurePart("entries-manual");
+  p.el.dataset.state = 1;
+  let list = await this.ensurePart(_a.list);
+  list.model.unset(_a.itemsOpt)
+  list.feed(pocsList(this))
 }
 
 /**
@@ -374,7 +401,21 @@ export async function promptSite() {
     ...this.data(),
     id: `site-form-${this.mget(CUST_ID)}`,
     uiHandler: [this],
-    service: "site-created"
+    callbackService: "site-created"
+  })
+}
+
+/**
+  * 
+  */
+export async function promptMission() {
+  const { custId } = this.data();
+  this.loadWidget({
+    ...this.data(),
+    customer: this.data(),
+    kind: 'form_mission',
+    id: `mission-form-${custId}`,
+    uiHandler: [this]
   })
 }
 
@@ -562,7 +603,7 @@ export function updateBalance(cmd, opt) {
   };
   if (/[0-9]{4,4}/.test(fiscalYear)) {
     api.fiscalYear = fiscalYear;
-  }else if(/^(status)$/.test(fiscalYear)){
+  } else if (/^(status)$/.test(fiscalYear)) {
     api.status = 1;
   }
   if (custId) {
@@ -590,12 +631,16 @@ export async function loadSalesList(cmd, opt = {}) {
   let { type, custId, siteId } = opt;
   custId = custId || this.mget(CUST_ID);
   siteId = siteId || this.mget(SITE_ID);
+  if (!/^(quote|bill)$/.test(type)) {
+    this.warn(`Requires type to be quote or bill`)
+    return;
+  }
   let api = {
     service: `${type}.list`,
   };
   if (/[0-9]{4,4}/.test(fiscalYear)) {
     api.fiscalYear = fiscalYear;
-  }else if(/^(status)$/.test(fiscalYear)){
+  } else if (/^(status)$/.test(fiscalYear)) {
     api.status = 1;
   }
   if (custId) {

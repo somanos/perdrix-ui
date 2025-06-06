@@ -25,6 +25,43 @@ class __form_customer extends Form {
   }
 
   /**
+ * 
+ */
+  data() {
+    const {
+      category,
+      city,
+      companyclass,
+      ctime,
+      custId,
+      custName,
+      gender,
+      geometry,
+      location,
+      customer,
+      postcode,
+      street,
+      type,
+    } = this.model.toJSON();
+
+    return {
+      category,
+      city,
+      companyclass,
+      ctime,
+      custId,
+      custName,
+      gender,
+      geometry,
+      location,
+      customer,
+      postcode,
+      street,
+      type,
+    }
+  }
+
+  /**
    * 
    */
   onPartReady(child, pn) {
@@ -135,7 +172,9 @@ class __form_customer extends Form {
     args.category = this.mget(_a.category)
 
     this.postService("customer.create", { args }).then((data) => {
-      RADIO_BROADCAST.trigger('customer-created', data);
+      this.mset({ ...data, customer: data })
+      //this.promptSite(this)
+      this.promptMission(this);
       this.goodbye();
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {
@@ -237,7 +276,7 @@ class __form_customer extends Form {
         this.addressSelected(cmd);
         break;
       case "prompt-location":
-        this.prompLocation(cmd);
+        this.promptLocation(cmd);
         break;
       case _e.create:
         this.createCustomer(cmd);
