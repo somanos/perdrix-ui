@@ -97,7 +97,7 @@ class __window_perdrix extends Utils {
  */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`AAA:61 sd onUiEvent=${service}`, cmd, cmd.get(_a.state), args, this);
+    this.debug(`AAA:100 onUiEvent=${service}`, cmd, cmd.get(_a.state), args, this);
     switch (service) {
       case 'close-form':
         this.__wrapperDialog && this.__wrapperDialog.clear();

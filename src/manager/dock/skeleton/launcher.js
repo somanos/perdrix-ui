@@ -17,6 +17,15 @@ function dockLaunchers(_ui_, ismobile) {
       service: _e.launch
     }, "Liste des clients"),
     button(_ui_, {
+      ico: 'company',
+      className: `${button_class} address launcher-icon`,
+      innerClass: 'address',
+      sys_pn: 'address-launcher',
+      respawn: 'window_address',
+      helperName: 'address',
+      service: _e.launch
+    }, "Liste des addresse"),
+    button(_ui_, {
       ico: 'desktop_contactbook',
       className: `${button_class} company launcher-icon`,
       innerClass: 'company',

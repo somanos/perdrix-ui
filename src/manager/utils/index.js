@@ -131,7 +131,7 @@ export function reverseSortBy(sortByFunction) {
 /**
  * 
  */
-export async function feedList(api, itemsOpt, onEmpty) {
+export async function feedList(api, itemsOpt, onEmpty, onData) {
   let list = await this.ensurePart(_a.list);
   list.model.unset(_a.itemsOpt)
   list.mset({
@@ -141,18 +141,23 @@ export async function feedList(api, itemsOpt, onEmpty) {
   });
   list.restart();
   list.once(_e.data, async (data) => {
-    if (_.isEmpty(data)) {
+    if (_.isEmpty(data) && _.isFunction(onEmpty)) {
       return onEmpty(list);
+    }
+    if (_.isFunction(onData)) {
+      return onData(data)
     }
   })
   list.once(_e.eod, async (e) => {
-    if (list.isNaturalyEmpty()) {
+    if (list.isNaturalyEmpty() && _.isFunction(onEmpty)) {
       onEmpty(list);
     }
   });
 
   list.once(_e.error, async () => {
-    onEmpty(list);
+    if (_.isFunction(onEmpty)) {
+      onEmpty(list);
+    }
   });
 
   this.changeDataset(_a.footer, _a.state, 1);
@@ -163,10 +168,10 @@ export async function feedList(api, itemsOpt, onEmpty) {
 /**
  * 
  */
-export async function clearList() {
+export async function clearList(part = _a.footer) {
   let p = await this.ensurePart(_a.list);
   p.clear();
-  p = await this.ensurePart(_a.footer);
+  p = await this.ensurePart(part);
   p.el.dataset.state = 0;
 }
 
@@ -313,9 +318,13 @@ export function itemMenuSelected(cmd) {
  */
 export async function loadWorkList(opt, filter) {
   let api = {
-    service: "work.list",
-    custId: this.mget(CUST_ID),
-    siteId: this.mget(SITE_ID)
+    service: PLUGINS.work.list,
+    args: {
+      custId: this.mget(CUST_ID),
+      siteId: this.mget(SITE_ID),
+      sort_by: _a.ctime,
+      order: "desc"
+    }
   };
   if (filter) api.filter = filter;
   let itemsOpt = {
@@ -328,7 +337,8 @@ export async function loadWorkList(opt, filter) {
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
-      labels: ["Aucune mission trouvée"],
+      labels: ["Aucun contact à cette adress", "Créer un contact"],
+      service: "add-poc"
     }));
   })
 }
@@ -337,7 +347,7 @@ export async function loadWorkList(opt, filter) {
  * 
  */
 export async function loadMissionWindow(cmd) {
-  let { custId, siteId, workId, customer } = cmd.model.toJSON()
+  let { custId, siteId, workId, customer, addressId } = cmd.model.toJSON()
   let { site } = cmd.data()
   if (!site) site = cmd.data();
   this.loadWidget({
@@ -346,6 +356,7 @@ export async function loadMissionWindow(cmd) {
     siteId,
     workId,
     site,
+    addressId,
     customer: customer || this.mget('customer'),
     id: `mission-${workId}`,
     uiHandler: [this],
@@ -375,6 +386,23 @@ export async function selectWork(cmd) {
   this.changeDataset("go-btn", _a.state, 1)
 }
 
+
+
+/**
+ * 
+ */
+export function loadCustomerWindow(cmd) {
+  const { custId } = cmd.model.toJSON();
+  Wm.windowsLayer.append({
+    kind: 'window_customer',
+    id: `customer-${custId}`,
+    ...cmd.data(),
+  });
+  setTimeout(() => {
+    let w = Wm.windowsLayer.children.last();
+    if (w && w.raise) w.raise()
+  }, 1000)
+}
 
 /**
   * 

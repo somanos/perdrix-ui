@@ -12,26 +12,27 @@ function _entries(ui) {
     case 'company':
       kids = [
         company(ui),
-        entry(ui, {
-          placeholder: "Adresse",
-          name: _a.location,
-          sys_pn: "address-entry"
-        }),
+        // entry(ui, {
+        //   placeholder: "Adresse",
+        //   name: _a.location,
+        //   sys_pn: "address-entry"
+        // }),
       ]
       break;
     case 'person':
       kids = [
         person(ui),
-        entry(ui, {
-          placeholder: "Adresse",
-          name: _a.location,
-          sys_pn: "address-entry"
-        }),
+        // entry(ui, {
+        //   placeholder: "Adresse",
+        //   name: _a.location,
+        //   sys_pn: "address-entry"
+        // }),
       ]
       break;
   }
   return Skeletons.Box.Y({
     className: `${pfx}__entries-content`,
+    sys_pn: "entries-content",
     kids
   })
 };

@@ -10,7 +10,7 @@ let LABELS = [
  * @param {*} ui 
  * @returns 
  */
-export function phoneNumbers(ui, numbers) {
+export function phoneNumbers(ui, numbers = []) {
   const pfx = `${ui.fig.family}`;
   let uiHandler = [ui];
   let kids = [];
@@ -18,6 +18,10 @@ export function phoneNumbers(ui, numbers) {
   let i = 0;
   for (let label of LABELS) {
     if (numbers[i]) {
+      let href;
+      if (ui.mget(_a.view) == _a.active) {
+        href = `tel:${numbers[i]}`;
+      }
       kids.push(
         Skeletons.Box.G({
           className: `${pfx}__phone-number`,
@@ -31,7 +35,7 @@ export function phoneNumbers(ui, numbers) {
             Skeletons.Note({
               className: `${pfx}__text number`,
               content: numbers[i],
-              href: `tel:${numbers[i]}`,
+              href,
               position: i,
               uiHandler,
             })

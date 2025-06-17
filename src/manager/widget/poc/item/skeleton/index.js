@@ -8,7 +8,7 @@ const {
  * @returns 
  */
 function poc_item(ui) {
-  let { gender, lastname, firstname, phones, email } = ui.model.toJSON();
+  let { gender, lastname, firstname, phones, email, mode } = ui.model.toJSON();
   let name = "";
   let pfx = ui.fig.family;
 
@@ -21,8 +21,17 @@ function poc_item(ui) {
     className: `${pfx}__text email`,
     content: email
   })
-  if (email) {
-    message.href = `mailto:${email}`
+  let editable = 0;
+  if (email && ui.mget(_a.view) == _a.active) {
+    message.href = `mailto:${email}`;
+    editable = 1;
+  }
+  let ico = 'desktop_edit';
+  let service = _a.change;
+  if (mode == 'removable') {
+    ico = 'drumee-trash';
+    service = _e.remove;
+    editable = 1;
   }
   return Skeletons.Box.Y({
     className: `${pfx}__main`,
@@ -40,8 +49,9 @@ function poc_item(ui) {
           phoneNumbers(ui, phones),
           Skeletons.Button.Svg({
             className: `${pfx}__icon`,
-            ico: 'desktop_edit',
-            service: _a.change
+            ico,
+            service,
+            dataset: { editable }
           })
         ]
       }),

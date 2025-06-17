@@ -1,5 +1,5 @@
 
-const { customerBox, acknowledge, address } = require("../../skeleton")
+const { acknowledge, address, company, person } = require("../../skeleton")
 const Form = require('../../form');
 
 class __form_customer extends Form {
@@ -79,7 +79,6 @@ class __form_customer extends Form {
           street, city, housenumber, postcode, label, location
         } = this.model.toJSON() || {};
 
-        this._locationCompleted = 1;
         child.el.dataset.state = 1;
         child.feed(address(this, {
           street,
@@ -99,12 +98,43 @@ class __form_customer extends Form {
     }
   }
 
+  /**
+   * 
+   * @param {*} cmd 
+   * @param {*} extended 
+   */
+  async selectAddress(cmd, extended = 0) {
+    await this.clearList();
+    let p = await this.ensurePart("entries");
+    this._data['properties'] = cmd.mget('properties');
+    const {
+      street, city, housenumber, postcode, label
+    } = this._data['properties'] || {};
+
+    let addr = await this.ensurePart("address-entry");
+    addr.setValue(label)
+    let isUpdate = this.mget('isUpdate');
+    let serviceLabel;
+    let service = _e.create;
+    if (isUpdate) {
+      serviceLabel = LOCALE.UPDATE;
+      service = _e.update;
+    }
+    if (p.collection.length >= 3) {
+      p.collection.pop()
+    }
+    p.append(address(this, {
+      street, city, housenumber,
+      postcode, extended,
+      isUpdate, serviceLabel,
+      service
+    }));
+  }
 
   /**
    * 
    */
   searchCustomer(cmd) {
-    if (this._locationCompleted) return;
     let words = cmd.getValue();
     let api = {
       service: "customer.search",
@@ -120,6 +150,7 @@ class __form_customer extends Form {
     return new Promise((will, wont) => {
       if (!words || !words.length) return will();
       this.feedList(api, itemsOpt, (data) => {
+        this.clearList()
       })
     })
   }
@@ -129,10 +160,19 @@ class __form_customer extends Form {
   */
   selectCategory(cmd) {
     this._locationCompleted = 0;
-    this.ensurePart("entries").then((p) => {
-      let category = cmd.mget(_a.value) == 'company' ? 0 : 1;
-      this.mset({ type: cmd.mget(_a.value), category })
-      p.feed(customerBox(this))
+    this.ensurePart("entries-content").then((p) => {
+      let type = cmd.mget(_a.value)
+      this.mset({ type })
+      let category;
+      p.collection.shift()
+      if (type == 'company') {
+        p.collection.unshift(company(this));
+        category = 0;
+      } else {
+        p.collection.unshift(person(this))
+        category = 1;
+      }
+      this.mset({ category })
     })
     this.ensurePart("entries-manual").then((p) => {
       p.clear()
@@ -171,17 +211,12 @@ class __form_customer extends Form {
     if (error) return;
     args.category = this.mget(_a.category)
 
-    this.postService("customer.create", { args }).then((data) => {
-      this.mset({ ...data, customer: data })
+    this.postService(PLUGINS.customer.create, { args }).then((data) => {
+      //this.mset({ ...data, customer: data })
       //this.promptSite(this)
-      this.promptMission(this);
+      this.loadPocForm(data);
       this.goodbye();
     }).catch((e) => {
-      this.__wrapperDialog.feed(acknowledge(this, {
-        message: LOCALE.ERROR_SERVER,
-        failed: 1,
-        service: 'close-dialog',
-      }))
       this.debug("AAA:377 FAILED", e)
     })
   }
@@ -220,13 +255,87 @@ class __form_customer extends Form {
       }
       this.goodbye();
     }).catch((e) => {
-      this.__wrapperDialog.feed(acknowledge(this, {
-        message: LOCALE.ERROR_SERVER,
-        failed: 1,
-        service: 'close-dialog',
-      }))
       this.debug("AAA:171 FAILED", e)
     })
+  }
+
+  /**
+   * 
+   */
+  async selectPoc(cmd, args = {}) {
+    this.debug("AAAA:275", cmd, args)
+    let { data } = args;
+    data.id = `poc-${data.custId}`;
+    this.ensurePart("poc-container").then((p) => {
+      p.append({ ...data, kind: 'poc_item', mode: 'removable' })
+    })
+  }
+
+  /**
+   * 
+   */
+  loadPocForm(customer) {
+    this.loadWidget({
+      kind: "form_customer_poc",
+      customer
+    })
+  }
+
+  /**
+   * 
+   */
+  async getCustomerPocs(cmd) {
+    this.ensurePart('btn-create').then((p) => {
+      p.el.dataset.state = 1;
+    })
+
+    // let {
+    //   street, city, housenumber,
+    //   postcode
+    // } = cmd.mget('properties');
+    // let location = []
+    // if (housenumber) {
+    //   location.push(housenumber)
+    // } else {
+    //   location.push("")
+    // }
+
+    // let l = street.split(' ');
+    // if (l[0]) {
+    //   location.push(l[0].toLocaleLowerCase())
+    //   l.shift()
+    // }
+    // if (l[0]) {
+    //   location.push(l.join(' '))
+    // }
+    // let customer = {
+    //   ...this.getData(),
+    //   location,
+    //   city,
+    //   postcode,
+    // }
+    // let { top } = this.$el.offset();
+    // let width = this.$el.width();
+    // let x = (window.innerWidth - (width + 550)) / 2;
+    // if (x < 0) x = 0;
+    // this.el.dataset.anim = 1;
+    // setTimeout(() => { this.el.style.left = `${x}px`; }, 100)
+    // setTimeout(() => { this.el.dataset.anim = 0 }, 1000);
+    // let kind = "poc_selector";
+    // await Kind.waitFor(kind)
+    // if (this._pocsList && !this._pocsList.isDestroyed()) {
+    //   this._pocsList.suppress()
+    // }
+    // this._pocsList = this.loadWidget({
+    //   kind,
+    //   uiHandler: [this],
+    //   callbackService: "poc-selected",
+    //   customer,
+    //   style: {
+    //     left: x + this.$el.width(),
+    //     top,
+    //   }
+    // })
   }
 
   /**
@@ -241,7 +350,7 @@ class __form_customer extends Form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.verbose("AAA:214", service, cmd, this)
+    this.debug("AAA:214", service, cmd, this)
     switch (service) {
       case "select-category":
         this.selectCategory(cmd);
@@ -273,7 +382,11 @@ class __form_customer extends Form {
         this.raise();
         break;
       case 'select-address':
-        this.addressSelected(cmd);
+        this.selectAddress(cmd).then(() => {
+          this.ensurePart('btn-create').then((p) => {
+            p.el.dataset.state = 1;
+          })
+        });
         break;
       case "prompt-location":
         this.promptLocation(cmd);
@@ -284,8 +397,16 @@ class __form_customer extends Form {
       case _e.update:
         this.updateCustomer(cmd);
         break;
+      case "poc-selected":
+        this.selectPoc(cmd, args);
+        break;
       case 'close-dialog':
         this.__wrapperDialog.clear();
+        break;
+      case _e.close:
+        if (this._pocsList && !this._pocsList.isDestroyed()) {
+          this._pocsList.goodbye();
+        };
       default:
         super.onUiEvent(cmd, args)
     }

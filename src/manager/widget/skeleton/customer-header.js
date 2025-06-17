@@ -14,7 +14,6 @@ export function customerHeader(ui, customer) {
     location,
     city,
   } = ui.mget('customer') || source.model.toJSON();
-  console.log("AAA:17", ui.mget('customer'), customer, ui)
 
   let fig = 'customer'
   let company = null;

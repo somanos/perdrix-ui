@@ -90,7 +90,7 @@ export function address(ui, opt) {
           country
         ]
       }),
-      buttons(ui, { label: serviceLabel, service })
+      serviceLabel ? buttons(ui, { label: serviceLabel, service }) : null
     ]
   })
 };

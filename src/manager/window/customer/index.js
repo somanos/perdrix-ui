@@ -25,6 +25,7 @@ class __window_customer extends __window {
     }
     this.loadSitesList = this.loadSitesList.bind(this);
     RADIO_BROADCAST.on('site-transfered', this.loadSitesList)
+    this.debug("AAAA:20", this)
   }
 
   /**
@@ -75,7 +76,7 @@ class __window_customer extends __window {
     this.mset({ customer: this.data() })
     setTimeout(() => {
       this.loadContextBar()
-    }, 500)
+    }, 500);
   }
 
   /**
@@ -95,7 +96,7 @@ class __window_customer extends __window {
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucun chantier", "Creer un chantier"],
+        labels: ["Aucun chantier", "Créer un chantier"],
         service: "add-site"
       }));
     })

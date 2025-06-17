@@ -19,6 +19,7 @@ export function list(ui, partName = _a.list, args) {
   return Skeletons.List.Smart(opt);
 };
 
+
 /**
  * 
  * @param {*} ui 
@@ -26,7 +27,9 @@ export function list(ui, partName = _a.list, args) {
  * @returns 
  */
 export function entry(ui, opt) {
-  let { value, name, placeholder, sys_pn, className = "", currency = "" } = opt;
+  let { value, name, placeholder, sys_pn,
+    className = "", currency = "", ico,
+    uppercase = 0, capitalize = 0 } = opt;
   const pfx = `${ui.fig.family}__entry ${name}`;
   let args = {
     className: `${pfx} entry ${className}`,
@@ -37,6 +40,8 @@ export function entry(ui, opt) {
     mode: _a.interactive,
     service: _a.input,
     placeholder,
+    uppercase,
+    capitalize,
     uiHandler: [ui],
     dataset: { currency },
   }
@@ -44,7 +49,37 @@ export function entry(ui, opt) {
     args.sys_pn = sys_pn;
     args.partHandler = [ui];
   }
+  if (ico) {
+    args.className = `${args.className} no-border`
+    return Skeletons.Box.G({
+      className: `${pfx} row`,
+      kids: [
+        Skeletons.Button.Svg({
+          className: `${pfx} no-border icon`,
+          ico
+        }),
+        Skeletons.Entry(args)
+      ]
+    })
+  }
   return Skeletons.Entry(args)
+}
+
+/**
+* 
+* @param {*} ui 
+* @param {*} opt 
+* @returns 
+*/
+export function locationSearch(ui, entryOpt, listopt) {
+  return Skeletons.Box.Y({
+    className: `${ui.fig.family}__location-search`,
+    sys_pn: "search-box",
+    kids: [
+      entry(ui, entryOpt),
+      footerWrapper(ui, listopt)
+    ]
+  })
 }
 
 /**
@@ -160,6 +195,22 @@ export function menuInput(ui, opt = {}) {
  * @param {*} opt 
  * @returns 
  */
+export function resultsWrapper(ui, opt) {
+  return Skeletons.Wrapper.Y({
+    className: `${ui.fig.family}__footer`,
+    sys_pn: "results",
+    kids: [list(ui)],
+    state: 0,
+    ...opt
+  })
+}
+
+/**
+ * 
+ * @param {*} ui 
+ * @param {*} opt 
+ * @returns 
+ */
 export function footerWrapper(ui, opt) {
   return Skeletons.Wrapper.Y({
     className: `${ui.fig.family}__footer`,
@@ -257,12 +308,14 @@ export function person(ui, type) {
         placeholder: LOCALE.LASTNAME,
         name: _a.lastname,
         sys_pn: _a.lastname,
+        uppercase: 1,
         value: ui.mget(_a.lastname) || "",
       }),
       entry(ui, {
         placeholder: LOCALE.FIRSTNAME,
         name: _a.firstname,
         sys_pn: _a.firstname,
+        capitalize: 1,
         value: ui.mget(_a.firstname) || "",
       }),
     ]
@@ -283,6 +336,7 @@ export function company(ui) {
       entry(ui, {
         placeholder: "Nom de la societe",
         name: 'companyname',
+        uppercase: 1,
         sys_pn: "companyname",
         value: custName || "",
       }),

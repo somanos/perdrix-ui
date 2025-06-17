@@ -1,15 +1,12 @@
 const __window = require('..');
-const {loadCustomerWindow} = require("../../utils")
-
-const CTYPE = 'ctype';
-class __window_customer_list extends __window {
+const BLIND_CHARS = [
+  _e.click, _e.blur, _e.Escape, 'Tab', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'
+];
+class __window_address extends __window {
   constructor(...args) {
     super(...args);
     this.getCurrentApi = this.getCurrentApi.bind(this);
-    this.hide = this.hide.bind(this);
     this._onDataReceived = this._onDataReceived.bind(this);
-    this._onFilterClosed = this._onFilterClosed.bind(this);
-    this.loadCustomerWindow = this.loadCustomerWindow.bind(this);
   }
 
 
@@ -103,11 +100,9 @@ class __window_customer_list extends __window {
   getCurrentApi() {
     if (!this._api) {
       this._api = {
-        service: PLUGINS.customer.list,
-        args: {
-          sort_by: _a.ctime,
-          order: "desc"
-        }
+        service: 'address.list',
+        sort_by: _a.city,
+        order: "asc"
       }
     }
     return this._api;
@@ -123,47 +118,24 @@ class __window_customer_list extends __window {
     }, 200);
   }
 
-  /**
-   * 
-   */
-  async filterContent(cmd) {
-    let filters = await this._updateFilter();
-
-    this.ensurePart(_a.list).then((p) => {
-      let models = this._storedModels.filter((m) => {
-        return filters.includes(m.get(CTYPE))
-      })
-      p.collection.set(models)
-    })
-  }
 
 
   /**
    * 
    */
-  sortContent(cmd) {
+  searchAddress(cmd) {
     let order, name;
     if (cmd) {
       name = cmd.mget(_a.name);
-      order = cmd.mget(_a.state) ? "asc" : "desc";
-    } else {
-      name = this._api.sort_by || _a.ctime;
-      order = this._api.order || "desc";
+      if (BLIND_CHARS.includes(cmd.status)) return;
+      //order = cmd.mget(_a.state) ? "asc" : "desc";
     }
-
-    this._api.sort_by = name;
-    this._api.order = order;
+    this.debug("AAAA:145", cmd.status, name)
+    if (!name) return;
     if (cmd.getValue) {
-      let words = cmd.getValue();
-      if (this._lastWords == words) return;
-      this.debug("AAA:148", words)
-      if (words && words.length) {
-        this._api.words = words;
-      } else {
-        this._api.words = null;;
-      }
+      this._api[name] = cmd.getValue();
     }
-    this._lastWords = this._api.words;
+    //if (!this._api.city && !this._api.street && !this._api.postcode) return;
     this.ensurePart(_a.list).then((list) => {
       list.mset({ api: this._api });
       list.restart();
@@ -177,18 +149,6 @@ class __window_customer_list extends __window {
     this.feed(require("./skeleton")(this));
   }
 
-  /**
-   * 
-   */
-  async _updateFilter() {
-    let roll = await this.ensurePart('filter-roll');
-    let filters = roll.collection.map((m) => {
-      if (m.get(_a.state)) return m.get(CTYPE);
-      return null
-    })
-    this._filters = _.filter(filters);
-    return filters;
-  }
 
   /**
    *
@@ -198,62 +158,39 @@ class __window_customer_list extends __window {
       case _a.content:
         child.feed(require('./skeleton/list')(this));
         break;
-      case _a.list:
-        child.on(_e.data, this._onDataReceived);
-        this.list = child;
-        this.debug("AAA:192", child)
-        break;
-      case _a.filter:
-        this._updateFilter();
-        child.on(_e.close, this._onFilterClosed);
-        break;
-
-      case "window-header":
-        this.setupInteract();
-        break;
     }
   }
 
-  // /**
-  //  * 
-  //  */
-  // loadCustomer(cmd, type) {
-  //   const { custId } = cmd.model.toJSON();
-  //   Wm.windowsLayer.append({
-  //     kind: 'window_customer',
-  //     id: `customer-${custId}`,
-  //     ...cmd.data(),
-  //   });
-  //   setTimeout(() => {
-  //     let w = Wm.windowsLayer.children.last();
-  //     if (w && w.raise) w.raise()
-  //   }, 1000)
-  // }
+  /**
+   * 
+   */
+  loadViewer(cmd, type) {
+    const { addressId } = cmd.model.toJSON();
+    Wm.windowsLayer.append({
+      kind: 'window_address_browser',
+      id: `address-${addressId}`,
+      ...cmd.data(),
+    });
+    setTimeout(() => {
+      let w = Wm.windowsLayer.children.last();
+      if (w && w.raise) w.raise()
+    }, 1000)
+  }
 
   /**
    * @param {*} cmd
    * @param {*} args
   */
   onUiEvent(cmd, args = {}) {
-    const { service, type, content } = args
+    const service = args.service || cmd.model.get(_a.service);
     this.debug(`onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
-      case _e.close:
-        this.hide();
+      case _a.input:
+        this.searchAddress(cmd);
         return;
-      case _e.sort:
-      case _e.search:
-        this.sortContent(cmd);
-        return;
-      case 'load-customer-window':
-        this.loadCustomerWindow(cmd)
-        return
-      case 'customer-updated':
-        this.onDomRefresh();
-        return
-
-        //this.filterContent(cmd);
+      case "load-viewer":
+        this.loadViewer(cmd);
         return;
 
       default:
@@ -264,4 +201,4 @@ class __window_customer_list extends __window {
 
 }
 
-module.exports = __window_customer_list;
+module.exports = __window_address;

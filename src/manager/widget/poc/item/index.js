@@ -18,6 +18,30 @@ class __poc_item extends LetcBox {
     this.declareHandlers();
   }
 
+  /**
+  * 
+  */
+  data() {
+    let {
+      custId,
+      role,
+      gender,
+      lastname,
+      firstname,
+      email,
+      phones,
+    } = this.model.toJSON();
+
+    return {
+      custId,
+      role,
+      gender,
+      lastname,
+      firstname,
+      email,
+      phones,
+    }
+  }
 
   /**
   * 

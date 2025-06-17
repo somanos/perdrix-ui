@@ -52,8 +52,12 @@
     "webpack-stats-plugin": "^1.1.1"
   },
   "dependencies": {
+    "@tiptap/core": "^2.14.0",
+    "@tiptap/pm": "^2.14.0",
+    "@tiptap/starter-kit": "^2.14.0",
     "argparse": "^2.0.1",
     "comma-number": "^2.1.0",
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "quill": "^2.0.3"
   }
 }

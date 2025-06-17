@@ -1,6 +1,6 @@
 
 const {
-  customerBox, radioButtons, headerBox, messageBock, footerWrapper
+  customerBox, radioButtons, headerBox, messageBock, locationSearch, actionButtons
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -17,7 +17,12 @@ module.exports = function (ui) {
       sys_pn: "street-selection"
     });
   }
-  const body = Skeletons.Box.Y({
+  let entryOpt = {
+    placeholder: "Adresse",
+    name: _a.location,
+    sys_pn: "address-entry"
+  }
+  const customer = Skeletons.Box.Y({
     className: `${pfx}__body`,
     sys_pn: _a.content,
     kids: [
@@ -35,6 +40,7 @@ module.exports = function (ui) {
         sys_pn: "entries",
         kids: [
           customerBox(ui),
+          locationSearch(ui, entryOpt),
         ]
       }),
       messageBock(ui),
@@ -42,13 +48,17 @@ module.exports = function (ui) {
         className: `${pfx}__entries-manual`,
         sys_pn: "entries-manual",
         state: isUpdate,
-      })
+      }),
+      actionButtons(ui, [
+        { sys_pn: "btn-create", service: _a.create, content: "Créer", state: 0 }
+      ]),
     ]
   });
 
+
   let title = "Créer un client";
   if (isUpdate) {
-    title = "Mettre à jour une client"
+    title = "Mettre à jour un client"
   }
   return Skeletons.Box.Y({
     debug: __filename,
@@ -59,8 +69,12 @@ module.exports = function (ui) {
         service: _e.raise,
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
-          body,
-          footerWrapper(ui),
+          customer,
+          Skeletons.Wrapper.Y({
+            className: `${pfx}__body`,
+            sys_pn: "poc-container"
+          }),
+          //require('./poc')(ui),
         ]
       })
     ]

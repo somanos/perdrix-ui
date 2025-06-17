@@ -16,15 +16,17 @@ export function placeView(ui, site) {
   return Skeletons.Box.G({
     className: `${ui.fig.family}__address`,
     debug: __filename,
-    service: _a.toggle,
-    state: 1,
-    kidsOpt: {
-      active: 0
-    },
+    // service: _a.toggle,
+    // state: 1,
+    // kidsOpt: {
+    //   active: 0
+    // },
     kids: [
       Skeletons.Button.Svg({
         className: `icon`,
-        ico: "geolocation"
+        ico: "geolocation",
+        state:0,
+        service: _a.toggle,
       }),
       Skeletons.Note({
         className: `text`,

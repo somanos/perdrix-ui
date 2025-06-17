@@ -7,17 +7,6 @@
 @use "mixins/window" as *;
 
 .poc-item {
-  // &__ui {
-  //   background-color: inherit;
-  //   width: 100%;
-  //   // cursor: pointer;
-
-  //   &:hover {
-  //     background-color: drumee.$perdrix-hover;
-  //   }
-
-  //   box-shadow: 0 2px 6px 1px rgba(75, 72, 72, 0.3);
-  // }
   @include widget-ui;
 
   &__main {
@@ -49,17 +38,6 @@
     align-content: center;
     flex-wrap: wrap;
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
-
-    // &.number {
-    //   margin-left: 10px;
-
-    //   .inner {
-    //     border: solid 0.5px lightgray;
-    //     padding: 1px 10px;
-    //     border-radius: 3px;
-    //     @include drumee.typo($color: drumee.$ewhite, $size: 12px, $line: 20px);
-    //   }
-    // }
   }
 
   &__icon {
@@ -68,6 +46,11 @@
     padding: 3px;
     color: drumee.$egrey-78;
     cursor: pointer;
+
+    &[data-editable="0"] {
+      cursor: none;
+      visibility: hidden;
+    }
   }
 
   &__phones-main {

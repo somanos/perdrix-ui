@@ -1,4 +1,3 @@
-const { topbarBox } = require("../../../widget/skeleton")
 
 module.exports = function (ui) {
   const { main, topbar } = require("./widget")
@@ -20,4 +19,4 @@ module.exports = function (ui) {
     kids: [topbar(ui), tooltips, main(ui), dialog]
   });
 
-};
+};;

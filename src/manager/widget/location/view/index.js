@@ -15,6 +15,31 @@ class __locaion_view extends LetcBox {
   }
 
   /**
+  * 
+  */
+  data() {
+    const {
+      addressId,
+      city,
+      ctime,
+      geometry,
+      location,
+      postcode,
+      streetname
+    } = this.model.toJSON();
+
+    return {
+      addressId,
+      city,
+      ctime,
+      geometry,
+      location,
+      postcode,
+      street:streetname,
+    }
+  }
+
+  /**
    * 
    */
   hasCoordinates() {
@@ -114,16 +139,26 @@ class __locaion_view extends LetcBox {
    */
   onUiEvent(cmd, args = {}) {
     const service = cmd.mget(_a.service) || "open-viewer";
-    this.debug("AAA:119", service, cmd.mget(_a.state), this.mget(_a.state))
-    if (!cmd.mget(_a.state)) {
-      if (!this.mget('showMap')) {
-        this.mset({ showMap: 1 })
-        this.checkGeo();
-      }
+    this.debug("AAA:119", service, cmd.mget(_a.state), this)
+    switch (service) {
+      case _a.toggle:
+        this.mset({ showMap: cmd.mget(_a.state) });
+        if (this.mget('showMap')) {
+          this.checkGeo();
+        }
+        this.ensurePart("map-container").then((p) => {
+          p.el.dataset.state = cmd.mget(_a.state);
+        })
+        break;
+      default:
+        this.triggerHandlers({ service: this.mget(_a.service) })
     }
-    this.ensurePart("map-container").then((p) => {
-      p.el.dataset.state = cmd.mget(_a.state);
-    })
+    // if (!cmd.mget(_a.state)) {
+    //   if (!this.mget('showMap')) {
+    //     this.mset({ showMap: 1 })
+    //     this.checkGeo();
+    //   }
+    // }
   }
 
 

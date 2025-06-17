@@ -162,6 +162,12 @@
       width: 43px;
     }
 
+    &.address {
+      svg.address {
+        padding: 2px;
+      }
+    }
+
     &.launcher {
       svg.addressbook {
         padding: 2px;
