@@ -347,7 +347,7 @@ export async function loadWorkList(opt, filter) {
  * 
  */
 export async function loadMissionWindow(cmd) {
-  let { custId, siteId, workId, customer, addressId } = cmd.model.toJSON()
+  let { custId, siteId, workId, customer, addressId, address } = cmd.model.toJSON()
   let { site } = cmd.data()
   if (!site) site = cmd.data();
   this.loadWidget({
@@ -357,6 +357,7 @@ export async function loadMissionWindow(cmd) {
     workId,
     site,
     addressId,
+    address,
     customer: customer || this.mget('customer'),
     id: `mission-${workId}`,
     uiHandler: [this],
@@ -402,6 +403,30 @@ export function loadCustomerWindow(cmd) {
     let w = Wm.windowsLayer.children.last();
     if (w && w.raise) w.raise()
   }, 1000)
+}
+
+
+/**
+ * 
+ */
+export function loadAddressWindow(address) {
+  let id = `address-${address.addressId}`;
+  let existing = Wm.getItemsByAttr(_a.id, id)[0];
+  if (existing) {
+    setTimeout(() => {
+      existing.raise();
+    }, 500)
+    return
+  }
+  Wm.windowsLayer.append({
+    kind: 'window_address_browser',
+    ...address,
+    id,
+  });
+  setTimeout(() => {
+    let w = Wm.windowsLayer.children.last();
+    if (w && w.raise) w.raise()
+  }, 500)
 }
 
 /**
@@ -483,7 +508,6 @@ export async function getSortOptions(cmd, parts, reorder = 1) {
 export function searchPoc(cmd, k) {
   let words = cmd.getValue();
   let key = cmd.mget(_a.name) || k;
-  this.debug("AAA:32", key)
   let api = {
     service: "poc.search",
     words,

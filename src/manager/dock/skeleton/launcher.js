@@ -17,7 +17,7 @@ function dockLaunchers(_ui_, ismobile) {
       service: _e.launch
     }, "Liste des clients"),
     button(_ui_, {
-      ico: 'company',
+      ico: 'geolocation',
       className: `${button_class} address launcher-icon`,
       innerClass: 'address',
       sys_pn: 'address-launcher',

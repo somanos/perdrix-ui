@@ -2,11 +2,14 @@ const __window = require('..');
 const BLIND_CHARS = [
   _e.click, _e.blur, _e.Escape, 'Tab', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'
 ];
+const { loadAddressWindow } = require("../../utils")
+
 class __window_address extends __window {
   constructor(...args) {
     super(...args);
     this.getCurrentApi = this.getCurrentApi.bind(this);
     this._onDataReceived = this._onDataReceived.bind(this);
+    this.loadAddressWindow = loadAddressWindow.bind(this)
   }
 
 
@@ -119,7 +122,6 @@ class __window_address extends __window {
   }
 
 
-
   /**
    * 
    */
@@ -158,24 +160,26 @@ class __window_address extends __window {
       case _a.content:
         child.feed(require('./skeleton/list')(this));
         break;
+      default:
+        super.onPartReady(child, pn)
     }
   }
 
-  /**
-   * 
-   */
-  loadViewer(cmd, type) {
-    const { addressId } = cmd.model.toJSON();
-    Wm.windowsLayer.append({
-      kind: 'window_address_browser',
-      id: `address-${addressId}`,
-      ...cmd.data(),
-    });
-    setTimeout(() => {
-      let w = Wm.windowsLayer.children.last();
-      if (w && w.raise) w.raise()
-    }, 1000)
-  }
+  // /**
+  //  * 
+  //  */
+  // loadViewer(cmd, type) {
+  //   const { addressId } = cmd.model.toJSON();
+  //   Wm.windowsLayer.append({
+  //     kind: 'window_address_browser',
+  //     id: `address-${addressId}`,
+  //     ...cmd.data(),
+  //   });
+  //   setTimeout(() => {
+  //     let w = Wm.windowsLayer.children.last();
+  //     if (w && w.raise) w.raise()
+  //   }, 1000)
+  // }
 
   /**
    * @param {*} cmd
@@ -190,7 +194,7 @@ class __window_address extends __window {
         this.searchAddress(cmd);
         return;
       case "load-viewer":
-        this.loadViewer(cmd);
+        this.loadAddressWindow(cmd.data());
         return;
 
       default:

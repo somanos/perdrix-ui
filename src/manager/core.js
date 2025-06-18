@@ -46,6 +46,7 @@ class __form_core extends DrumeeInteractWindow {
    * 
    */
   onPartReady(child, pn) {
+    this.raise();
     switch (pn) {
       case "topbar":
         this.raise();
@@ -53,6 +54,9 @@ class __form_core extends DrumeeInteractWindow {
         break;
       case "wrapper-dialog":
         this._dialogPos = child.$el.offset()
+        break;
+      case "window-header":
+        this.setupInteract();
         break;
     }
   }

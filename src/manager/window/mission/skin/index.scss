@@ -111,6 +111,10 @@
     @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
   }
 
+  &__site-header {
+    cursor: pointer;
+  }
+
   &__history {
     &-main {
       width: 100%;

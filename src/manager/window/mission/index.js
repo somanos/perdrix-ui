@@ -1,10 +1,36 @@
 const __window = require('..');
-
+const { loadAddressWindow } = require("../../utils")
 class __window_mission extends __window {
 
   async initialize(opt) {
     require('./skin');
     super.initialize(opt);
+    this.loadAddressWindow = loadAddressWindow.bind(this)
+  }
+
+  /**
+  * 
+  */
+  data() {
+    const {
+      addressId,
+      city,
+      ctime,
+      geometry,
+      location,
+      postcode,
+      streetname
+    } = this.mget(_a.address);
+
+    return {
+      addressId,
+      city,
+      ctime,
+      geometry,
+      location,
+      postcode,
+      street:streetname,
+    }
   }
 
   /**
@@ -164,6 +190,9 @@ class __window_mission extends __window {
         break;
       case 'create-mission':
         this.loadMissionForm(cmd)
+        break;
+      case "load-address-window":
+        this.loadAddressWindow(this.mget(_a.address));
         break;
       default:
         super.onUiEvent(cmd, args);

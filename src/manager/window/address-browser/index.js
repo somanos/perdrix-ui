@@ -1,5 +1,5 @@
 const __window = require('..');
-const { customerTab, missionTab, billTab, quoteTab, noteTab } = require("./skeleton/widget")
+
 const { placeholder } = require("../../widget/skeleton")
 
 const { loadCustomerWindow } = require("../../utils")
@@ -24,8 +24,8 @@ class __window_address_browser extends __window {
   */
   data() {
     const {
+      addressId,
       city,
-      citycode,
       countrycode,
       custId,
       geometry,
@@ -36,9 +36,9 @@ class __window_address_browser extends __window {
     } = this.model.toJSON();
 
     return {
+      addressId,
       city,
-      id,
-      citycode,
+      id:addressId,
       countrycode,
       custId,
       geometry,
@@ -57,15 +57,14 @@ class __window_address_browser extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    this.debug("AAA:60", this)
-    this.loadContextBar();
+    this._loadMissionsList(this);
   }
 
 
   /**
    * 
    */
-  loadCustomersList() {
+  _loadCustomersList() {
     const api = {
       service: PLUGINS.customer.list,
       args: {
@@ -95,7 +94,7 @@ class __window_address_browser extends __window {
   /**
    * 
    */
-  loadMissionsList() {
+  _loadMissionsList() {
     const api = {
       service: PLUGINS.work.list,
       args: {
@@ -110,6 +109,7 @@ class __window_address_browser extends __window {
       flow: _a.x,
       service: "load-mission-window",
       role: '',
+      address:this.data(),
       logicalParent: this,
       uiHandler: [this],
     }
@@ -124,7 +124,7 @@ class __window_address_browser extends __window {
   /**
    * 
    */
-  loadBillsList() {
+  _loadBillsList() {
     const api = {
       service: PLUGINS.bill.list,
       args: {
@@ -153,7 +153,7 @@ class __window_address_browser extends __window {
   /**
    * 
    */
-  loadQuotesList() {
+  _loadQuotesList() {
     const api = {
       service: PLUGINS.quote.list,
       args: {
@@ -183,7 +183,7 @@ class __window_address_browser extends __window {
   /**
    * 
    */
-  loadNotesList() {
+  _loadNotesList() {
     const api = {
       service: PLUGINS.note.list,
       args: {
@@ -210,46 +210,76 @@ class __window_address_browser extends __window {
     })
   }
 
+  /**
+   * 
+   */
+  _loadPocsList() {
+    const api = {
+      service: PLUGINS.poc.list,
+      args: {
+        sort_by: _a.ctime,
+        addressId: this.mget('addressId'),
+        order: "desc"
+      }
+    }
+
+    const itemsOpt = {
+      kind: 'poc_item',
+      flow: _a.x,
+      service: "load-mission-window",
+      role: '',
+      logicalParent: this,
+      uiHandler: [this],
+    }
+    this.feedList(api, itemsOpt, (list) => {
+      list.model.unset(_a.itemsOpt)
+      list.feed(placeholder(this, {
+        labels: ["Aucun devis à cette adresse"]
+      }))
+    })
+  }
+
 
   /**
   * 
   */
-  async loadContextBar(cmd) {
-    let context = await this.ensurePart("context-bar");
-    let name = "customer";
-    if (cmd) {
-      name = cmd.mget(_a.name);
-    }
-    let format = "normal";
-    let salesbox;
-    this._currentTab = name;
-    switch (name) {
-      case "customer":
-        context.feed(customerTab(this));
-        this.loadCustomersList(this);
-        break;
-      case "mission":
-        context.feed(missionTab(this));
-        this.loadMissionsList(this);
-        break;
-      case "bill":
-        format = "auto";
-        context.feed(billTab(this));
-        this.loadBillsList(this);
-        break;
-      case "quote":
-        context.feed(quoteTab(this));
-        this.loadQuotesList(this);
-        break;
-      case "note":
-        context.feed(noteTab(this));
-        this.loadNotesList(this);
-        break;
-    }
-    // this.ensurePart('context-bar').then((p) => {
-    //   p.el.dataset.format = format;
-    // })
-  }
+  // async loadContextBar(cmd) {
+  //   let context = await this.ensurePart("context-bar");
+  //   let name = "customer";
+  //   if (cmd) {
+  //     name = cmd.mget(_a.name);
+  //   }
+  //   let format = "normal";
+  //   let salesbox;
+  //   this._currentTab = name;
+  //   switch (name) {
+  //     case "customer":
+  //       context.feed(customerTab(this));
+  //       this.loadCustomersList(this);
+  //       break;
+  //     case "mission":
+  //       context.feed(missionTab(this));
+  //       this.loadMissionsList(this);
+  //       break;
+  //     case "bill":
+  //       format = "auto";
+  //       context.feed(billTab(this));
+  //       this.loadBillsList(this);
+  //       break;
+  //     case "quote":
+  //       context.feed(quoteTab(this));
+  //       this.loadQuotesList(this);
+  //       break;
+  //     case "note":
+  //       context.feed(noteTab(this));
+  //       this.loadNotesList(this);
+  //       break;
+  //     case "poc":
+  //       context.feed(pocTab(this));
+  //       this.loadPocsList(this);
+  //       break;
+  //   }
+  // }
 
   /**
    * 
@@ -258,7 +288,7 @@ class __window_address_browser extends __window {
    */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`AAA:170 onUiEvent=${service}`, cmd, args, this);
+    this.debug(`AAA:295 onUiEvent=${service}`, cmd, args, this);
     switch (service) {
       case 'load-customer-window':
         this.loadCustomerWindow(cmd)
@@ -267,7 +297,25 @@ class __window_address_browser extends __window {
         this.loadMissionWindow(cmd)
         break
       case 'load-context':
-        this.loadContextBar(cmd, args);
+        this._loadContextBar(cmd, args);
+        break;
+      case "load-customer":
+        this._loadCustomersList(this);
+        break;
+      case "load-mission":
+        this._loadMissionsList(this);
+        break;
+      case "load-bill":
+        this._loadBillsList(this);
+        break;
+      case "load-quote":
+        this._loadQuotesList(this);
+        break;
+      case "load-note":
+        this._loadNotesList(this);
+        break;
+      case "load-poc":
+        this._loadPocsList(this);
         break;
       default:
         super.onUiEvent(cmd, args);

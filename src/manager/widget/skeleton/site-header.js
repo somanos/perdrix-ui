@@ -30,6 +30,10 @@ export function siteHeader(ui) {
   let a = Skeletons.Box.X({
     className: `${ui.fig.family}__site-header`,
     debug: __filename,
+    service: "load-address-window",
+    kidsOpt: {
+      active: 0
+    },
     kids
   })
   return a;

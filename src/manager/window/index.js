@@ -20,6 +20,8 @@ class __window_perdrix extends Utils {
       case 'wrapper-dialog':
         this.overlayWrapper = child;
         break;
+      default:
+        super.onPartReady(child, pn)
     }
   }
 
@@ -50,7 +52,7 @@ class __window_perdrix extends Utils {
     * 
     */
   loadMissionForm(cmd, hide = 0) {
-    const { custId } = this.data(); 
+    const { custId } = this.data();
     this.loadWidget({
       ...this.data(),
       customer: this.data(),

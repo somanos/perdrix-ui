@@ -9,45 +9,52 @@ function tabs(ui, states = [0, 1]) {
   return Skeletons.Box.X({
     className: `${pfx}__tab`,
     kidsOpt: {
-      radiotoggle: _a.parent,
+      radio: `radion-${ui._id}`,
       uiHandler: ui,
-      service: "load-context",
+      //service: "load-context",
     },
     kids: [
       Skeletons.Note({
         className: `${pfx}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Clients',
-        name: 'customer',
+        service: 'load-customer',
         state: states[0]
       }),
       Skeletons.Note({
         className: `${pfx}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Missions',
-        name: 'mission',
+        service: 'load-mission',
         state: states[1]
       }),
       Skeletons.Note({
         className: `${pfx}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Factures',
-        name: 'bill',
+        service: 'load-bill',
         state: states[2]
       }),
       Skeletons.Note({
         className: `${pfx}__button-action regular`,
         // ico: 'desktop_mysharing',
         content: 'Devis',
-        name: 'quote',
+        service: 'load-quote',
         state: states[3]
       }),
       Skeletons.Note({
         className: `${pfx}__button-action regular`,
         // ico: 'desktop_desksettings',
         content: 'Notes',
-        name: 'note',
+        service: 'load-note',
         state: states[4]
+      }),
+      Skeletons.Note({
+        className: `${pfx}__button-action regular`,
+        // ico: 'desktop_desksettings',
+        content: 'Contacts',
+        service: 'load-poc',
+        state: states[5]
       }),
     ]
   })
@@ -71,6 +78,7 @@ export function main(ui) {
   let context = Skeletons.Wrapper.X({
     className: `${pfx}__tabs context`,
     sys_pn: "context-bar",
+    kids:[tabs(ui)]
   })
 
   return Skeletons.Box.Y({
@@ -116,59 +124,69 @@ export function topbar(ui) {
 };
 
 
-
-/**
- * 
- * @param {*} ui 
- * @returns 
- */
-export function customerTab(ui) {
-  let buttons = [tabs(ui, [1, 0, 0, 0, 0])]
-  return contextBar(ui, buttons)
-};
-
-
-/**
- * 
- * @param {*} ui 
- * @returns 
- */
-export function missionTab(ui) {
-  let buttons = [tabs(ui, [0, 1, 0, 0, 0])]
-  return contextBar(ui, buttons)
-};
+// /**
+//  * 
+//  * @param {*} ui 
+//  * @returns 
+//  */
+// export function customerTab(ui) {
+//   let buttons = [tabs(ui, [1, 0, 0, 0, 0])]
+//   return contextBar(ui, buttons)
+// };
 
 
-/**
- * 
- * @param {*} ui 
- * @returns 
- */
-export function billTab(ui) {
-  let buttons = [tabs(ui, [0, 0, 1, 0, 0])]
-  return contextBar(ui, buttons)
-};
+// /**
+//  * 
+//  * @param {*} ui 
+//  * @returns 
+//  */
+// export function missionTab(ui) {
+//   let buttons = [tabs(ui, [0, 1, 0, 0, 0, 0])]
+//   return contextBar(ui, buttons)
+// };
 
 
-/**
- * 
- * @param {*} ui 
- * @returns 
- */
-export function quoteTab(ui) {
-  let buttons = [tabs(ui, [0, 0, 0, 1, 0])]
-  return contextBar(ui, buttons)
-};
+// /**
+//  * 
+//  * @param {*} ui 
+//  * @returns 
+//  */
+// export function billTab(ui) {
+//   let buttons = [tabs(ui, [0, 0, 1, 0, 0, 0])]
+//   return contextBar(ui, buttons)
+// };
 
 
-/**
- * 
- * @param {*} ui 
- * @returns 
- */
-export function noteTab(ui) {
-  let buttons = [tabs(ui, [0, 0, 0, 0, 1])]
-  return contextBar(ui, buttons)
-};
+// /**
+//  * 
+//  * @param {*} ui 
+//  * @returns 
+//  */
+// export function quoteTab(ui) {
+//   let buttons = [tabs(ui, [0, 0, 0, 1, 0, 0])]
+//   return contextBar(ui, buttons)
+// };
+
+
+// /**
+//  * 
+//  * @param {*} ui 
+//  * @returns 
+//  */
+// export function noteTab(ui) {
+//   let buttons = [tabs(ui, [0, 0, 0, 0, 1, 0])]
+//   return contextBar(ui, buttons)
+// };
+
+
+// /**
+//  * 
+//  * @param {*} ui 
+//  * @returns 
+//  */
+// export function pocTab(ui) {
+//   let buttons = [tabs(ui, [0, 0, 0, 0, 0, 1])]
+//   return contextBar(ui, buttons)
+// };
 
 

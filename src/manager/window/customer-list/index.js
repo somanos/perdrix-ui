@@ -1,5 +1,5 @@
 const __window = require('..');
-const {loadCustomerWindow} = require("../../utils")
+const { loadCustomerWindow } = require("../../utils")
 
 const CTYPE = 'ctype';
 class __window_customer_list extends __window {
@@ -9,7 +9,7 @@ class __window_customer_list extends __window {
     this.hide = this.hide.bind(this);
     this._onDataReceived = this._onDataReceived.bind(this);
     this._onFilterClosed = this._onFilterClosed.bind(this);
-    this.loadCustomerWindow = this.loadCustomerWindow.bind(this);
+    this.loadCustomerWindow = loadCustomerWindow.bind(this);
   }
 
 
@@ -207,10 +207,11 @@ class __window_customer_list extends __window {
         this._updateFilter();
         child.on(_e.close, this._onFilterClosed);
         break;
-
-      case "window-header":
-        this.setupInteract();
-        break;
+      // case "window-header":
+      //   this.setupInteract();
+      //   break;
+      default:
+        super.onPartReady(child, pn)
     }
   }
 
