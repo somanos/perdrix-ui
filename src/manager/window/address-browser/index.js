@@ -234,7 +234,7 @@ class __window_address_browser extends __window {
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucun devis à cette adresse"]
+        labels: ["Aucun contact à cette adresse"]
       }))
     })
   }

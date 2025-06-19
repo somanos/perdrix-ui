@@ -12,7 +12,6 @@ module.exports = function (ui) {
     customer = customerHeader(ui);
   }
   let pocsList;
-  console.log("AAA:15", c, addressId)
   if (addressId) {
     let api = {
       service: PLUGINS.poc.list,

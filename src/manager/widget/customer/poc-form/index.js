@@ -130,7 +130,7 @@ class __form_custumer_poc extends Form {
   * 
   */
   async selectPoc(cmd) {
-    await this.clearList();
+    //await this.clearList();
     for (let part of [_a.gender, _a.role, _a.firstname, _a.lastname, _a.email]) {
       let p = await this.ensurePart(part);
       if (cmd.mget(part)) {
