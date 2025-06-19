@@ -226,7 +226,7 @@ class __window_address_browser extends __window {
     const itemsOpt = {
       kind: 'poc_item',
       flow: _a.x,
-      service: "load-mission-window",
+      service: "load-poc-window",
       role: '',
       logicalParent: this,
       uiHandler: [this],

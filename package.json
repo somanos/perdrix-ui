@@ -58,6 +58,7 @@
     "argparse": "^2.0.1",
     "comma-number": "^2.1.0",
     "leaflet": "^1.9.4",
+    "libphonenumber-js": "^1.12.9",
     "quill": "^2.0.3"
   }
 }
