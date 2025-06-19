@@ -32,7 +32,7 @@ module.exports = {
 	'window_mission': import('./manager/window/mission'),
 	'window_poc': import('./manager/window/poc'),
 	'window_site': import('./manager/window/site'),
-	'window_quill': import('./manager/window/quill'),
+	// 'window_quill': import('./manager/window/quill'),
 	'mission_item': import('./manager/widget/mission/item'),
 	'mission_list': import('./manager/widget/mission/list'),
 };
