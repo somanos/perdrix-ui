@@ -74,7 +74,7 @@ class __form_custumer_poc extends Form {
     if (error) return;
 
     this.postService(PLUGINS.customer.create_poc, { args }).then((customer) => {
-      this.mset({customer})
+      this.mset({ customer })
       this.promptSite()
       this.goodbye()
     }).catch((e) => {
@@ -116,6 +116,22 @@ class __form_custumer_poc extends Form {
       postcode,
       street,
       type,
+    }
+  }
+
+  /**
+    * 
+    */
+  onPartReady(child, pn) {
+    this.raise();
+    switch (pn) {
+      case _a.list:
+        child.on(_e.eod, (e) => {
+          this.debug("AAA:130", e)
+        })
+        break;
+      default:
+        super.onPartReady(child, pn);
     }
   }
 

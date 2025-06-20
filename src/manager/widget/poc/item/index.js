@@ -123,7 +123,7 @@ class __poc_item extends LetcBox {
         break;
       default:
         this.triggerHandlers({
-          service,
+          service: this.mget(_a.service),
         })
     }
   }

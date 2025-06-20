@@ -21,7 +21,8 @@ module.exports = function (ui) {
     }
     let itemsOpt = {
       kind: 'poc_item',
-      service: "select-poc"
+      service: "select-poc",
+      uiHandler: [ui]
     }
     pocsList = list(ui, _a.list, { api, itemsOpt })
   }
