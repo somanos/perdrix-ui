@@ -1,5 +1,5 @@
 const __window = require('..');
-const { modelComparator } = require('../../utils')
+const { modelComparator} = require('../../utils')
 const CTYPE = 'ctype';
 class __window_finder extends __window {
   constructor(...args) {
@@ -315,16 +315,18 @@ class __window_finder extends __window {
       case 'load-site-window':
         this.loadSiteWindow(cmd, 1);
         return;
-      case 'load-mission-window':
-        this.loadMissionWindow(cmd, 1);
-        return;
       case 'load-customer-window':
         this.loadCustomerWindow(cmd, 1);
         return;
       case 'load-poc-form':
         this.promptPoc(cmd, 1);
         return;
-
+      case "load-mission-window":
+        this.loadMissionWindow(cmd.data());
+        return;
+      case "load-address-window":
+        this.loadAddressWindow(cmd.data());
+        return;
       default:
         return super.onUiEvent(cmd, args);
     }

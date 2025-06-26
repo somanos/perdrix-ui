@@ -46,19 +46,18 @@ class __form_core extends Core {
     })
   }
 
+  /** */
+  syncGeometry() {
+    /** DO NOT DELETE */
+  }
   /**
   * 
   */
-  async selectSite(cmd) {
-    this._locationCompleted = 0;
-    if (!cmd.mget('siteId')) {
-      let { siteId } = await this.postService("site.create", { args: cmd.data() })
-      cmd.mset({ siteId })
-    }
-    this.debug("AAA:46", cmd, cmd.mget('siteId'))
+  async selectSite(data) {
+    this.debug("AAA:46", data)
     this.ensurePart("site-address").then((p) => {
       p.feed({
-        ...cmd.data(),
+        ...data,
         kind: 'location_view',
         state: 1
       })
@@ -68,44 +67,6 @@ class __form_core extends Core {
     })
   }
 
-  /**
-     * 
-     */
-  // async promptSite(cmd) {
-  //   this.debug("AAAA:75", cmd, this, this.data())
-  //   this.loadWidget({
-  //     kind: 'form_site',
-  //     ...this.data(),
-  //     id: `site-form-${this.mget('custId')}`,
-  //     uiHandler: [this],
-  //     service: "site-created"
-  //   })
-  //   this.ensurePart("entries-manual").then((p) => {
-  //     p.el.dataset.state = 0;
-  //   });
-  // }
-
-  /**
-  * 
-  */
-  // async addressSelected(cmd) {
-  //   this.debug("AAA:91", this, cmd)
-  //   await this.clearList();
-  //   let p = await this.ensurePart("entries-manual");
-  //   const {
-  //     street, city, housenumber, postcode, label
-  //   } = cmd.mget('properties') || {};
-  //   let isUpdate = this.mget('isUpdate');
-  //   let serviceLabel;
-  //   if (isUpdate) {
-  //     serviceLabel = LOCALE.UPDATE;
-  //   }
-  //   this.debug("AAA:101", { serviceLabel, isUpdate })
-  //   this._locationCompleted = 1;
-  //   p.feed(address(this, { street, city, housenumber, postcode, serviceLabel, isUpdate }));
-  //   let addr = await this.ensurePart("address-entry");
-  //   addr.setValue(label)
-  // }
 
 
   /**
@@ -113,7 +74,7 @@ class __form_core extends Core {
   */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:115", service, cmd, this)
+    this.debug("AAA:77", service, cmd, this)
     switch (service) {
       case "select-site":
         let { choice } = cmd.getData();

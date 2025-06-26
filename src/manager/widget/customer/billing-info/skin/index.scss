@@ -4,7 +4,7 @@
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
 
-.form-customer {
+.form-billing-info {
   &__ui {
     height: auto;
     max-height: 95vh;
@@ -51,7 +51,7 @@
 
   @include form-content;
   @include form-menu;
-
+  @include customer-header;
   &__buttons {
     align-items: center;
     height: 60px;

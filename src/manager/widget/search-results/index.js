@@ -40,9 +40,9 @@ class __search_result extends LetcBox {
     */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
-    this.triggerHandlers({
-      service: "open-viewer"
-    })
+    // this.triggerHandlers({
+    //   service: "open-viewer"
+    // })
   }
 }
 

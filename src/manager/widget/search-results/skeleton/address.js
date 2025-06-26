@@ -8,19 +8,18 @@
  * @param {*} ui 
  * @returns 
  */
-
-function customerview(ui) {
-  let { content } = ui.data();
+function addressSkl(ui) {
   const uiHandler = ui.getHandlers(_a.ui);
-
+  let { content } = ui.data();
   const kids = [
     {
       ...content,
+      service: "load-address-window",
       uiHandler,
-      service: "load-customer-window",
-      kind: "customer_item"
-    }
+      showMap:0,
+      kind: "location_view"
+    },
   ]
   return kids;
 }
-module.exports = customerview;
+module.exports = addressSkl;

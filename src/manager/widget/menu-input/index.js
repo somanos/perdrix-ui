@@ -81,7 +81,11 @@ class __menu_input extends LetcBox {
       let name = this.mget(_a.name);
       let refAttribute = this.mget('refAttribute');
       let r = [];
-      for (let item of this.mget(_a.items)) {
+      let items = [];
+      if (_.isArray(this.mget(_a.items))) {
+        items = this.mget(_a.items);
+      }
+      for (let item of items) {
         let ref = item[refAttribute]
         let el = Skeletons.Note({
           ...item,

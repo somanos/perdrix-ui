@@ -1,10 +1,10 @@
 @use "sass:meta";
 @use 'mixins/drumee';
-// @use 'content' as *;
+//@use 'content' as *;
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
 
-.form-customer-poc {
+.form-site-poc {
   &__ui {
     background-color: drumee.$core-default-background;
     border-radius: drumee.$default-border-radius;
@@ -128,11 +128,6 @@
     justify-content: center;
     width: 100%;
     padding: 20px 0px;
-  }
-
-  &__searchbox {
-    max-height: 120px;
-    overflow: auto;
   }
 
   @include dialog-acknowledge;

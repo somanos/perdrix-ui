@@ -15,7 +15,6 @@
     width: 800px;
     height: auto;
     min-width: 340px;
-    //min-height: 400px;
     flex-direction: column;
     left: calc(50vw - 350px);
     top: 40px;
@@ -106,7 +105,7 @@
 
   @include work-site;
   @include customer-header;
-  @include form-content;
+  @include bill-form-content;
   @include form-menu;
   @include form-button;
 

@@ -3,7 +3,7 @@ const {
   feedList, clearList, loadWidget, changeDataset, loadWorkList,
   promptLocation, searchLocation, throtle, addressSelected, promptSite, loadSitePocs,
   itemMenuSelected, selectWork, updateAmount, loadMissionWindow, getSortOptions,
-  showMessage, viewDoc, promptMission, promptPoc, loadPocsList
+  showMessage, viewDoc, promptMission, promptPoc, loadPocsList, loadAddressWindow
 } = require("./utils")
 
 class __form_core extends DrumeeInteractWindow {
@@ -24,12 +24,12 @@ class __form_core extends DrumeeInteractWindow {
     this.promptSite = promptSite.bind(this);
     this.promptMission = promptMission.bind(this)
     this.promptPoc = promptPoc.bind(this)
-    this.loadMissionWindow = loadMissionWindow.bind(this);
     this.loadPocsList = loadPocsList.bind(this);
     this.getSortOptions = getSortOptions.bind(this);
     this.loadSitePocs = loadSitePocs.bind(this);
     this.showMessage = showMessage.bind(this);
     this.viewDoc = viewDoc.bind(this);
+    this.loadAddressWindow = loadAddressWindow.bind(this)
   }
 
   /**
@@ -40,6 +40,7 @@ class __form_core extends DrumeeInteractWindow {
     this.declareHandlers();
     this._timer = {}
     this._data = {}
+    this.loadMissionWindow = loadMissionWindow.bind(this);
   }
 
   /**

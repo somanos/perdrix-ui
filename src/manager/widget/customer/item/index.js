@@ -12,7 +12,7 @@ class __customer_item extends Customer {
     this.model.set({ type: "customer" })
     this.skeleton = require('./skeleton')(this);
     this.loadWidget = loadWidget.bind(this);
-
+    
 
   }
 

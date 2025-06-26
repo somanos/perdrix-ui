@@ -1,21 +1,17 @@
 
 const {
   entry, person, menuInput, actionButtons
-} = require("../../../skeleton")
+} = require("./")
 
-module.exports = function (ui) {
+export function pocForm(ui) {
   const pfx = ui.fig.family;
-
+  let label = LOCALE.CREATE;
+  if(ui.mget('pocId')){
+    label = LOCALE.UPDATE;
+  }
   return Skeletons.Box.Y({
     className: `${pfx}__body`,
     kids: [
-      // Skeletons.Box.X({
-      //   className: `${pfx}__main`,
-      //   kids: Skeletons.Note({
-      //     className: `${pfx}__text`,
-      //     content: "Ajouter un contact client"
-      //   })
-      // }),
       Skeletons.Box.Y({
         className: `${pfx}__entries-container`,
         sys_pn: "entries",
@@ -66,7 +62,7 @@ module.exports = function (ui) {
             ]
           }),
           actionButtons(ui, [
-            { sys_pn: "btn-create", service: _a.create, content: "Créer" }
+            { sys_pn: "btn-create", service: _a.create, content: label }
           ]),
         ]
       }),

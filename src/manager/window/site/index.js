@@ -33,6 +33,7 @@ class __window_site extends __window {
       siteId,
       location,
       postcode,
+      customer,
     } = this.model.toJSON();
 
     return {
@@ -45,7 +46,18 @@ class __window_site extends __window {
       location,
       postcode,
       siteId,
-      type: 'site'
+      site: {
+        city,
+        id,
+        citycode,
+        countrycode,
+        custId,
+        geometry,
+        location,
+        postcode,
+        siteId,
+      },
+      customer
     }
   }
 
@@ -144,7 +156,7 @@ class __window_site extends __window {
         break;
       case "poc":
         context.feed(pocTab(this));
-        this.loadSitePocs(cmd)
+        this.loadSitePocs(this)
         break;
       case "work":
         context.feed(workTab(this));
@@ -166,10 +178,12 @@ class __window_site extends __window {
    */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`AAA:170 onUiEvent=${service}`, cmd, args, this);
+    this.debug(`AAA:169 onUiEvent=${service}`, cmd, args, this);
     switch (service) {
       case "mission-hitsory":
-        this.loadMissionWindow(cmd);
+        let data = cmd.data()
+        data.customer = this.mget('customer');
+        this.loadMissionWindow(data);
         break;
       case 'load-context':
         this.loadContextBar(cmd, args);
@@ -178,7 +192,7 @@ class __window_site extends __window {
         this.promptPoc(cmd);
         break;
       case 'create-mission':
-        this.loadMissionForm(cmd)
+        this.loadMissionForm(this.data())
         break;
       case 'poc-created':
         this.loadSitePocs(cmd)
@@ -196,6 +210,8 @@ class __window_site extends __window {
         let name = cmd.mget(_a.name);
         if (!name) break;
         this.loadSalesHistory(cmd, { type: this._currentTab, custId: this.mget('custId') })
+      case "load-address-window":
+        this.loadAddressWindow(this.data().site)
       default:
         super.onUiEvent(cmd, args);
     }

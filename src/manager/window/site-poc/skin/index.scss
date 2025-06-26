@@ -4,7 +4,7 @@
 @use '../../skin/group/header/list' as *;
 
 
-.window-poc {
+.window-site-poc {
   @include header-list;
 
   &__ui {

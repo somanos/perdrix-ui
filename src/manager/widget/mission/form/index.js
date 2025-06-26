@@ -45,58 +45,36 @@ class __form_mission extends Form {
   */
   data() {
     const {
-      city,
-      citycode,
-      countrycode,
-      custId,
-      geometry,
-      id,
-      location,
-      postcode,
+      site,
       customer,
     } = this.model.toJSON();
 
     return {
-      city,
-      citycode,
-      countrycode,
-      custId,
-      geometry,
-      location,
-      postcode,
-      siteId: id,
+      ...site,
+      site,
       customer,
-      type: 'work'
     }
   }
 
-  /**
-   * 
-   */
-  async loadPocsList() {
-    let p = await this.ensurePart("entries-manual");
-    this.debug("AAAA:130", p)
-    p.el.dataset.state = 1;
-    let list = await this.ensurePart(_a.list);
-    list.el.dataset.mode = 'context';
-    list.model.unset(_a.itemsOpt)
-    list.feed(require('./skeleton/pocs-list')(this))
-  }
 
   /**
    * 
    */
-  createWork() {
+  createMission() {
     let args = this.getData();
     let error = 0;
     if (!args.description) {
       error = 1
     }
     this.changeDataset('description', _a.error, error)
-    args.custId = this.mget('custId');
+    let { custId, siteId, addressId } = this.data();
+    args.custId = custId;
+    args.siteId = siteId;
+    args.addressId = addressId;
     if (error) return;
-    this.postService("work.create", { args }).then((data) => {
+    this.postService(PLUGINS.work.create, { args }).then((data) => {
       let { id } = data;
+      this.loadMissionWindow(data);
       this.showMessage(`Le travail a bien ete cree sous le numero ${id}`)
       this.ensurePart("button-work").then((p) => {
         p.setState(1)
@@ -114,6 +92,7 @@ class __form_mission extends Form {
    * 
    */
   onDomRefresh() {
+    this.debug("AAAA:122", this)
     this.feed(require('./skeleton')(this));
   }
 
@@ -137,10 +116,10 @@ class __form_mission extends Form {
         }, 1000)
         break;
       case "set-site":
-        this.selectSite(cmd);
+        this.selectSite(cmd.data())
         break;
       case "create-mission":
-        this.createWork(cmd);
+        this.createMission(cmd);
         break;
       default:
         super.onUiEvent(cmd, args)

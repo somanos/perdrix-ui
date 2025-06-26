@@ -26,6 +26,7 @@ class __form_site extends Form {
       citycode,
       countrycode,
       custId,
+      custName,
       geometry,
       id,
       location,
@@ -38,6 +39,7 @@ class __form_site extends Form {
       citycode,
       countrycode,
       custId,
+      custName,
       geometry,
       location,
       postcode,
@@ -85,6 +87,15 @@ class __form_site extends Form {
       list.feed(placeholder(this));
     })
   }
+  /**
+   * 
+   */
+  loadPocForm(data) {
+    this.loadWidget({
+      ...data,
+      kind: "form_site_poc",
+    })
+  }
 
   /**
   * 
@@ -110,12 +121,11 @@ class __form_site extends Form {
     delete args.location /** Shall be built by backend */
 
     if (error) return;
-    this.postService("site.create", { args }).then((data) => {
-      if(this.mget(_a.origin) == 'form'){
-        this.loadPocsList()
-      }else{
-      this.triggerHandlers({ service: 'site-created', data })
-      }
+    this.postService(PLUGINS.site.create, { args }).then((data) => {
+      this.debug("AAA:123", data)
+      let site = { ...data };
+      delete site.customer;
+      this.promptMission({ ...data, site })
       this.goodbye()
     }).catch((e) => {
       this.__wrapperDialog.feed(acknowledge(this, {

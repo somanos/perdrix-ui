@@ -23,7 +23,10 @@ module.exports = function (ui) {
           uiHandler: [ui],
         },
         api: {
-          service: PLUGINS.poc.list
+          service: PLUGINS.poc.list,
+          args:{
+            addressId:ui.mget('addressId')
+          }
         },
         vendorOpt: Preset.List.Orange_e,
       })

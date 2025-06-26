@@ -16,11 +16,6 @@ export function placeView(ui, site) {
   return Skeletons.Box.G({
     className: `${ui.fig.family}__address`,
     debug: __filename,
-    // service: _a.toggle,
-    // state: 1,
-    // kidsOpt: {
-    //   active: 0
-    // },
     kids: [
       Skeletons.Button.Svg({
         className: `icon`,
@@ -80,7 +75,7 @@ export function siteSelector(ui) {
     name: "choice",
     service: "select-site",
     buttons: [
-      { label: "Meme addresse", state: 1, value: "same-address" },
+      { label: "Chez le client", state: 0, value: "same-address" },
       { label: "Choisir un chantier", state: 0, value: "list-sites" },
       { label: "Ajouter un chantier", state: 0, value: "add-site" },
     ],

@@ -15,3 +15,4 @@ export * from './window';
 export * from './filter-menu';
 export * from './fiscal-box';
 export * from './pocs-list';
+export * from './poc-form';

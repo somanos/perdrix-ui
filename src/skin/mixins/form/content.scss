@@ -1,14 +1,11 @@
 @use "mixins/drumee";
-@use "mixins/form" as *;
-@use "mixins/window" as *;
+@use "./button" as *;
+@use "./main" as *;
+@use "./menu" as *;
+@use "./topbar" as *;
 
-@mixin bill-form-content {
+@mixin form-content {
   @include form-entries;
-
-  &__category-main {
-    width: 100%;
-    padding: 0 10px;
-  }
 
   &__entrybox {
     width: 100%;
@@ -24,6 +21,7 @@
     border-radius: 3px;
     margin: 5px;
     cursor: pointer;
+    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
 
     &[data-state="1"] {
       background-color: drumee.$customer-selection-bg;
@@ -33,32 +31,37 @@
     &[data-state="0"] {
       border: solid 0.5px lightgray;
     }
-    @include drumee.typo($color: drumee.$core-default-text-color, $weight: 400, $line: 30px, $size: 14px);
   }
 
-  @include entry-label;
   @include form-entry;
   @include form-body;
   @include form-address;
   @include form-footer;
   @include form-buttons;
   @include form-placeholder;
-  @include entry-cartridge;
 
   &__searchbox {
     height: 100%;
     overflow: auto;
-    max-height: 200px;
+    background-color: drumee.$ewhite;
 
     .smart-container {
       min-height: 100px;
     }
+
+    box-shadow: drumee.$drumee-shadow-container;
   }
 
-  &__description-container {
-    grid-template-columns: 2fr 1fr;
-    width: 100%;
-    grid-gap: 0.5em;
+  &__entries {
+
+    &-main,
+    &-content {
+      width: 100%;
+      grid-gap: 0.5em;
+    }
   }
 
+  &__entries-manual {
+    z-index: 1 !important;
+  }
 }

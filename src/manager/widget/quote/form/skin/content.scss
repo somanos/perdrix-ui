@@ -2,7 +2,7 @@
 @use "mixins/form" as *;
 @use "mixins/window" as *;
 
-@mixin form-content {
+@mixin quote-form-content {
   @include form-entries;
 
   &__category-main {
@@ -46,6 +46,12 @@
   @include form-buttons;
   @include form-placeholder;
   @include entry-cartridge;
+
+  &__description-container {
+    grid-template-columns: 2fr 1fr;
+    width: 100%;
+    grid-gap: 0.5em;
+  }
 
   &__searchbox {
     height: 100%;

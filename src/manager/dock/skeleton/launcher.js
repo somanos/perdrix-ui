@@ -38,9 +38,9 @@ function dockLaunchers(_ui_, ismobile) {
       ico: 'book',
       className: `${button_class} perdrix launcher-icon`,
       service: _e.launch,
-      respawn: 'window_poc',
+      respawn: 'window_site_poc',
       helperName: 'perdrix',
-    }, "Liste des contacts"),
+    }, "Liste des contacts chantiers"),
     button(_ui_, {
       ico: 'book',
       className: `${button_class} perdrix launcher-icon`,

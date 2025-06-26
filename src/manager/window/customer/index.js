@@ -54,7 +54,18 @@ class __window_customer extends __window {
       location,
       postcode,
       custName,
-      type: 'customer'
+      customer: {
+        city,
+        citycode,
+        countrycode,
+        custId,
+        geometry,
+        id,
+        location,
+        postcode,
+        custName
+
+      }
     }
   }
 
@@ -131,18 +142,19 @@ class __window_customer extends __window {
    */
   searchSites(cmd) {
     let api = {
-      service: "site.search",
+      service: PLUGINS.site.search,
       words: cmd.getValue(),
       custId: this.mget(CUST_ID)
     };
     let itemsOpt = {
       kind: 'site_item',
-      uiHandler: [this]
+      uiHandler: [this],
+      service:"show-works"
     }
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucune mission trouvée"],
+        labels: ["Pas encore de chantier"],
       }));
     })
   }
@@ -246,7 +258,7 @@ class __window_customer extends __window {
    */
   async onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`AAA:170 onUiEvent=${service}`, cmd, args, this);
+    this.debug(`AAA:260 onUiEvent=${service}`, cmd, args, this);
     switch (service) {
       case "show-contacts":
         break;
@@ -254,10 +266,10 @@ class __window_customer extends __window {
         this.loadSiteWindow(cmd)
         break;
       case "mission-hitsory":
-        this.loadMissionWindow(cmd);
+        this.loadMissionWindow(cmd.data());
         break;
       case 'create-mission':
-        this.loadMissionForm(cmd)
+        this.loadMissionForm(this.data())
         break;
       case 'quote-created':
       case 'note-created':

@@ -24,22 +24,28 @@ class __mission_item extends LetcBox {
   data() {
     const {
       custId,
+      customer,
+      addressId,
       siteId,
       workId,
       description,
       site,
       status,
+      workType,
       type
     } = this.model.toJSON();
 
     return {
-      custId,
+      custId: custId || customer.custId,
+      customer,
+      addressId: addressId || site.addresId,
       siteId,
       workId,
       description,
       site,
       status,
       id: workId,
+      workType,
       type
     }
   }
@@ -79,7 +85,7 @@ class __mission_item extends LetcBox {
    */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:27", service, this, cmd)
+    this.debug("AAA:88", service, this, cmd)
     switch (service) {
       case 'view-quote':
         this.viewQuote()
@@ -87,7 +93,7 @@ class __mission_item extends LetcBox {
         break;
       default:
         this.triggerHandlers({
-          service,
+          service: this.mget(_a.service),
         })
     }
   }

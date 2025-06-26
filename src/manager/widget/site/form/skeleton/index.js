@@ -1,6 +1,6 @@
 
 const {
-  entry, customerHeader, headerBox, messageBock, footerWrapper, address
+  entry, customerHeader, headerBox, messageBock, footerWrapper, address, actionButtons
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
@@ -38,6 +38,7 @@ module.exports = function (ui) {
         kids: site
       }),
       messageBock(ui),
+      actionButtons(ui, [{ content: LOCALE.CREATE, service: _e.create }])
     ]
   });
 

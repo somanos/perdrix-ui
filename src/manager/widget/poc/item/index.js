@@ -23,23 +23,39 @@ class __poc_item extends LetcBox {
   */
   data() {
     let {
+      pocId,
+      category,
       custId,
+      addressId,
       role,
       gender,
       lastname,
       firstname,
       email,
+      office,
+      home,
+      mobile,
+      fax,
       phones,
+      customer,
     } = this.model.toJSON();
 
     return {
+      pocId,
+      category,
       custId,
+      addressId,
       role,
       gender,
       lastname,
       firstname,
       email,
+      office,
+      home,
+      mobile,
+      fax,
       phones,
+      customer
     }
   }
 

@@ -1,6 +1,6 @@
 @use "sass:meta";
 @use 'mixins/drumee';
-@use 'content' as *;
+//@use 'content' as *;
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
 
@@ -100,11 +100,18 @@
     }
   }
 
+  &__pocs-list {
+    width: 100%;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
   @include work-site;
   @include customer-header;
   @include form-content;
   @include form-menu;
   @include form-button;
+  @include entry-label;
 
   &__buttons {
     align-items: center;

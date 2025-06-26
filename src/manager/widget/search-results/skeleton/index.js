@@ -14,6 +14,9 @@ function found_item(ui) {
   //let { siteId, custId, pocId, workId } = ui.mget(_a.content);
 
   switch (ui.mget(_a.type)) {
+    case 'address':
+      kids = require('./address')(ui);
+      break;
     case 'site':
       kids = require('./site')(ui);
       break;

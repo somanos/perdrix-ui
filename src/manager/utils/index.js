@@ -337,8 +337,8 @@ export async function loadWorkList(opt, filter) {
   this.feedList(api, itemsOpt, (list) => {
     list.model.unset(_a.itemsOpt)
     list.feed(placeholder(this, {
-      labels: ["Aucun contact à cette adress", "Créer un contact"],
-      service: "add-poc"
+      labels: ["Pas encore de mission à cette adress", "Créer une mission"],
+      service: "create-mission"
     }));
   })
 }
@@ -346,20 +346,12 @@ export async function loadWorkList(opt, filter) {
 /**
  * 
  */
-export async function loadMissionWindow(cmd) {
-  let { custId, siteId, workId, customer, addressId, address } = cmd.model.toJSON()
-  let { site } = cmd.data()
-  if (!site) site = cmd.data();
+export async function loadMissionWindow(data) {
+  await Kind.waitFor('window_mission')
   this.loadWidget({
+    ...data,
     kind: 'window_mission',
-    custId,
-    siteId,
-    workId,
-    site,
-    addressId,
-    address,
-    customer: customer || this.mget('customer'),
-    id: `mission-${workId}`,
+    id: `mission-${data.custId}`,
     uiHandler: [this],
   })
 }
@@ -448,26 +440,24 @@ export function updateAmount() {
 /**
   * 
   */
-export async function promptSite() {
+export async function promptSite(data) {
   this.loadWidget({
-    kind: 'form_site',
-    ...this.data(),
-    id: `site-form-${this.mget(CUST_ID)}`,
+    ...data,
+    id: `site-form-${data.custId}`,
     uiHandler: [this],
-    callbackService: "site-created"
+    callbackService: "site-created",
+    kind: 'form_site',
   })
 }
 
 /**
   * 
   */
-export async function promptMission() {
-  const { custId } = this.data();
+export async function promptMission(data) {
   this.loadWidget({
-    ...this.data(),
-    customer: this.data(),
+    ...data,
     kind: 'form_mission',
-    id: `mission-form-${custId}`,
+    id: `mission-form-${data.custId}`,
     uiHandler: [this]
   })
 }
@@ -506,10 +496,38 @@ export async function getSortOptions(cmd, parts, reorder = 1) {
 * 
 */
 export function searchPoc(cmd, k) {
+  let lastname = cmd.getValue();
+  let key = cmd.mget(_a.name) || k;
+  let api = {
+    service: PLUGINS.poc.list,
+    args: {
+      lastname,
+      key,
+    }
+  };
+  let itemsOpt = {
+    kind: 'poc_item',
+    origin: 'searchbox',
+    service: "select-poc",
+    uiHandler: [this]
+  }
+
+  return new Promise((will, wont) => {
+    if (!lastname || !lastname.length) return will();
+    this.feedList(api, itemsOpt, (data) => {
+    })
+  })
+}
+
+/**
+* 
+*/
+export function searchSitePoc(cmd, k) {
   let words = cmd.getValue();
   let key = cmd.mget(_a.name) || k;
   let api = {
-    service: "poc.search",
+    service: PLUGINS.poc.search,
+    type: 'site',
     words,
     key
   };
@@ -532,8 +550,8 @@ export function searchPoc(cmd, k) {
 */
 export async function loadSitePocs(cmd) {
   let api = {
-    service: "site.list_poc",
-    siteId: this.mget(SITE_ID),
+    service: PLUGINS.poc.list,
+    args: { addressId: this.mget('addressId') },
   };
   let itemsOpt = {
     kind: 'poc_item',
@@ -690,17 +708,19 @@ export async function loadSalesList(cmd, opt = {}) {
   let api = {
     service: `${type}.list`,
   };
+  let args = {};
   if (/[0-9]{4,4}/.test(fiscalYear)) {
-    api.fiscalYear = fiscalYear;
+    args.fiscalYear = fiscalYear;
   } else if (/^(status)$/.test(fiscalYear)) {
-    api.status = 1;
+    args.status = 1;
   }
   if (custId) {
-    api.custId = custId;
+    args.custId = custId;
   }
   if (siteId) {
-    api.siteId = siteId;
+    args.siteId = siteId;
   }
+  api.args = args;
 
   let itemsOpt = {
     kind: `${type}_item`,

@@ -37,6 +37,7 @@
     grid-gap: 0.5rem;
     grid-template-columns: 1fr 1fr;
 
+    &[data-type="address"],
     &[data-type="customer"],
     &[data-type="poc"] {
       grid-template-columns: 1fr;

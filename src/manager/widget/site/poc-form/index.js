@@ -3,7 +3,7 @@ require('./skin');
 const Form = require('../../form');
 const { phoneNumbersObject, searchPoc } = require("../../../utils");
 const { AsYouType } = require('libphonenumber-js')
-class __form_customer_poc extends Form {
+class __form_site_poc extends Form {
 
   constructor(...args) {
     super(...args);
@@ -23,7 +23,7 @@ class __form_customer_poc extends Form {
   /**
    * 
    */
-  createCustomerPoc() {
+  createSitePoc() {
     let args = {
       ...this.data(),
       ...this.getData()
@@ -74,14 +74,16 @@ class __form_customer_poc extends Form {
     }
     args.pocId = this.mget('pocId');
     args.siteId = this.mget('siteId');
-    args.category = 'customer';
+    args.category = 'site';
     if (error) return;
 
-    this.postService(PLUGINS.customer.create_poc, { args }).then((data) => {
+    this.postService(PLUGINS.site.create_poc, { args }).then((data) => {
       this.mset(data)
-      this.debug("AAA:82", data, this.data())
-      this.promptSite(data)
+      if (data.isNew) {
+        this.promptMission(data)
+      }
       this.goodbye()
+      RADIO_BROADCAST.trigger('site-poc-pupdate', data);
     }).catch((e) => {
       this.debug("AAA:377 FAILED", e)
     })
@@ -94,37 +96,47 @@ class __form_customer_poc extends Form {
     const {
       category,
       city,
-      companyclass,
+      customer,
       ctime,
       custId,
-      pocId,
       addressId,
-      custName,
-      gender,
       geometry,
       location,
-      customer,
       postcode,
+      site,
       street,
       type,
-    } = this.mget('customer') || this.model.toJSON();
+    } = this.model.toJSON();
 
     return {
       category,
       city,
-      companyclass,
+      customer,
       ctime,
       custId,
-      pocId,
       addressId,
-      custName,
-      gender,
       geometry,
       location,
-      customer,
       postcode,
+      site,
       street,
       type,
+    }
+  }
+
+  /**
+    * 
+    */
+  onPartReady(child, pn) {
+    this.raise();
+    switch (pn) {
+      case _a.list:
+        child.on(_e.eod, (e) => {
+          this.debug("AAA:130", e)
+        })
+        break;
+      default:
+        super.onPartReady(child, pn);
     }
   }
 
@@ -158,8 +170,9 @@ class __form_customer_poc extends Form {
         p.setValue("")
       }
     }
-    const { pocId, customer, addressId } = cmd.model.toJSON();
-    this.mset({ pocId, address: customer, addressId })
+    const { pocId, address, addressId } = cmd.model.toJSON();
+    this.debug("AAA:169", addressId, phones, pocId)
+    this.mset({ pocId, address, addressId })
   }
 
 
@@ -171,7 +184,7 @@ class __form_customer_poc extends Form {
     this.debug("AAA:107", service, cmd.mget(_a.name), cmd, this)
     switch (service) {
       case _a.create:
-        this.createCustomerPoc(cmd);
+        this.createSitePoc(cmd);
         break;
       case 'select-poc':
         this.selectPoc(cmd);
@@ -182,8 +195,7 @@ class __form_customer_poc extends Form {
           case _a.home:
           case 'office':
           case 'fax':
-            let v = cmd.getValue();
-            v = new AsYouType('FR').input(v)
+            let v = new AsYouType('FR').input(cmd.getValue())
             cmd.setValue(v);
           case _a.email:
           case _a.lastname:
@@ -198,4 +210,4 @@ class __form_customer_poc extends Form {
   }
 }
 
-module.exports = __form_customer_poc
+module.exports = __form_site_poc

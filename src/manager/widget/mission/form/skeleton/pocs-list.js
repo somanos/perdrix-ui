@@ -1,4 +1,4 @@
-const { entry } = require("../../../../widget/skeleton")
+const { entry, list } = require("../../../../widget/skeleton")
 
 module.exports = function (ui) {
 
@@ -13,19 +13,21 @@ module.exports = function (ui) {
         name: 'poc',
         sys_pn: "pocs-entry"
       }),
-      Skeletons.List.Smart({
+      list(ui, null, {
         className: `${ui.fig.family}__pocs content`,
-        sys_pn: 'pocs-list',
-        partHandler: [ui],
+        placeholder: Skeltons.Note("Pas encore de contact à cette addresse"),
         itemsOpt: {
           service: 'select-poc',
           kind: 'poc_item',
           uiHandler: [ui],
         },
         api: {
-          service: PLUGINS.poc.list
+          service: PLUGINS.poc.list,
+          args: {
+            addressId: ui.mget('addressId'),
+            type: 'site'
+          }
         },
-        vendorOpt: Preset.List.Orange_e,
       })
     ]
   });

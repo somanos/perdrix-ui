@@ -1,8 +1,8 @@
 
-const { acknowledge, address, company, person } = require("../../skeleton")
+const { address, company, person } = require("../../skeleton")
 const Form = require('../../form');
 
-class __form_customer extends Form {
+class __form_billing_info extends Form {
 
   constructor(...args) {
     super(...args);
@@ -288,6 +288,54 @@ class __form_customer extends Form {
     this.ensurePart('btn-create').then((p) => {
       p.el.dataset.state = 1;
     })
+
+    // let {
+    //   street, city, housenumber,
+    //   postcode
+    // } = cmd.mget('properties');
+    // let location = []
+    // if (housenumber) {
+    //   location.push(housenumber)
+    // } else {
+    //   location.push("")
+    // }
+
+    // let l = street.split(' ');
+    // if (l[0]) {
+    //   location.push(l[0].toLocaleLowerCase())
+    //   l.shift()
+    // }
+    // if (l[0]) {
+    //   location.push(l.join(' '))
+    // }
+    // let customer = {
+    //   ...this.getData(),
+    //   location,
+    //   city,
+    //   postcode,
+    // }
+    // let { top } = this.$el.offset();
+    // let width = this.$el.width();
+    // let x = (window.innerWidth - (width + 550)) / 2;
+    // if (x < 0) x = 0;
+    // this.el.dataset.anim = 1;
+    // setTimeout(() => { this.el.style.left = `${x}px`; }, 100)
+    // setTimeout(() => { this.el.dataset.anim = 0 }, 1000);
+    // let kind = "poc_selector";
+    // await Kind.waitFor(kind)
+    // if (this._pocsList && !this._pocsList.isDestroyed()) {
+    //   this._pocsList.suppress()
+    // }
+    // this._pocsList = this.loadWidget({
+    //   kind,
+    //   uiHandler: [this],
+    //   callbackService: "poc-selected",
+    //   customer,
+    //   style: {
+    //     left: x + this.$el.width(),
+    //     top,
+    //   }
+    // })
   }
 
   /**
@@ -355,10 +403,10 @@ class __form_customer extends Form {
       case 'close-dialog':
         this.__wrapperDialog.clear();
         break;
-      // case _e.close:
-      //   if (this._pocsList && !this._pocsList.isDestroyed()) {
-      //     this._pocsList.goodbye();
-      //   };
+      case _e.close:
+        if (this._pocsList && !this._pocsList.isDestroyed()) {
+          this._pocsList.goodbye();
+        };
       default:
         super.onUiEvent(cmd, args)
     }
@@ -366,4 +414,4 @@ class __form_customer extends Form {
 
 }
 
-module.exports = __form_customer
+module.exports = __form_billing_info

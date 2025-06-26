@@ -28,10 +28,19 @@ function poc_item(ui) {
   }
   let ico = 'desktop_edit';
   let service = _a.change;
+  switch (mode) {
+    case 'removable':
+      ico = 'drumee-trash';
+      service = _e.remove;
+      editable = 1;
+      break;
+    case 'editable':
+      ico = 'editbox_pencil';
+      service = _e.edit;
+      editable = 1;
+      break;
+  }
   if (mode == 'removable') {
-    ico = 'drumee-trash';
-    service = _e.remove;
-    editable = 1;
   }
   return Skeletons.Box.Y({
     className: `${pfx}__main`,

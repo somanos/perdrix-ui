@@ -2,7 +2,7 @@ const __window = require('..');
 const { placeholder } = require("../../widget/skeleton")
 const { searchPoc } = require("../../utils");
 
-class __window_poc extends __window {
+class __window_site_poc extends __window {
 
   constructor(...args) {
     super(...args);
@@ -16,7 +16,10 @@ class __window_poc extends __window {
       date: 0,
       name: 1,
     }
+    this.handlePocsList = this.handlePocsList.bind(this);
+    RADIO_BROADCAST.on('site-poc-pupdate', this.handlePocsList)
   }
+
 
   /**
    * 
@@ -30,18 +33,48 @@ class __window_poc extends __window {
   }
 
   /**
+   * 
+   */
+  onBeforeDestroy() {
+    RADIO_BROADCAST.on('site-poc-pupdate', this.handlePocsList)
+    super.onBeforeDestroy();
+  }
+  /**
+   * 
+   */
+  handlePocsList(data) {
+    let item = this.__list.getItemsByAttr(_a.id, data.id)[0];
+    if (!item) {
+      this.__list.prepend({
+        ...data, kind: 'poc_item',
+        uiHandler: [this],
+        service: "update-poc",
+        mode: "editable"
+      })
+    } else {
+      item.mset(data);
+      item.onDomRefresh();
+    }
+  }
+
+  /**
   * 
   * @param {*} cmd 
   */
   loadPocList(filter) {
     let api = {
-      service: "poc.list",
+      service: PLUGINS.poc.list,
+      args: {
+        type: 'site'
+      }
     };
     let itemsOpt = {
       kind: 'poc_item',
-      uiHandler: [this]
+      uiHandler: [this],
+      service: "update-poc",
+      mode: "editable"
     }
-    if (filter) api.filter = filter;
+    if (filter) api.args = { ...api.args, ...filter };
     this.debug("AAA:39", filter)
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
@@ -106,11 +139,26 @@ class __window_poc extends __window {
         this.loadNotesList(cmd)
         break;
       case "sort":
-        this.debug(`AAA:103`, await this.getSortOptions(null, [_a.lastname, _a.ctime]));
         this.loadPocList(await this.getSortOptions(null, [_a.lastname, _a.ctime]));
         break;
       case _a.search:
-        this.searchPoc(cmd, _a.lastname);
+        let lastname = cmd.getValue();
+        if (!lastname) {
+          this.loadPocList();
+          return;
+        };
+        this.loadPocList({ lastname });
+        break;
+      case "update-poc":
+        let kind = "form_site_poc";
+        if (cmd.mget(_a.category) == 'customer') {
+          kind = "form_customer_poc";
+        }
+        this.loadWidget({
+          ...cmd.data(),
+          kind,
+        })
+
         break;
       default:
         super.onUiEvent(cmd, args);
@@ -127,7 +175,6 @@ class __window_poc extends __window {
 
 }
 
-__window_poc.initClass();
 
-module.exports = __window_poc;
+module.exports = __window_site_poc;
 

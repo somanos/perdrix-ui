@@ -91,7 +91,7 @@ class __locaion_view extends LetcBox {
    */
   checkGeo() {
     let {
-      location, postcode, type, siteId, custId, id
+      location, postcode, type, siteId, custId, id, addressId
     } = this.model.toJSON();
     if (!postcode || !location) return;
     let i = 0;
@@ -113,7 +113,8 @@ class __locaion_view extends LetcBox {
     if (!id) {
       this.warn("Got no site id", { id, type, siteId, custId })
     }
-    let args = { location: loc, postcode, type, id }
+    let args = { location: loc, postcode, type, id, addressId}
+    this.debug("AAA:117", args)
     this.postService('pdx_utils.get_geoloc', args)
       .then((data) => {
         delete data.type;
