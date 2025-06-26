@@ -294,7 +294,7 @@ class __window_address_browser extends __window {
         this.loadCustomerWindow(cmd)
         return
       case "load-mission-window":
-        this.loadMissionWindow(cmd)
+        this.loadMissionWindow(cmd.data())
         break
       case 'load-context':
         this._loadContextBar(cmd, args);

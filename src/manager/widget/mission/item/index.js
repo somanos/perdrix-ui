@@ -70,12 +70,38 @@ class __mission_item extends LetcBox {
   /**
    * 
    */
-  async viewQuote() {
-    let quote = this.mget('quote');
-    let Media = await Kind.waitFor('media_pseudo');
-    let media = new Media(quote);
-    let args = { kind: "document_reader", media }
-    this.loadWidget(args)
+  async viewQuotes() {
+    let args = {
+      workId: this.mget('workId'),
+    }
+    this.postService(PLUGINS.work.quotes, args).then(async (data) => {
+      let Media = await Kind.waitFor('media_pseudo');
+      for (let item of data) {
+        if (!item.filepath) continue;
+        let media = new Media(item);
+        let args = { kind: "document_reader", media }
+        this.loadWidget(args)
+      }
+    })
+  }
+
+  /**
+   * 
+   */
+  async viewBills() {
+    let args = {
+      workId: this.mget('workId'),
+    }
+    this.postService(PLUGINS.work.bills, args).then(async (data) => {
+      this.debug("AAAA:96", data)
+      let Media = await Kind.waitFor('media_pseudo');
+      for (let item of data) {
+        if (!item.filepath) continue;
+        let media = new Media(item);
+        let args = { kind: "document_reader", media }
+        this.loadWidget(args)
+      }
+    })
   }
 
   /**
@@ -87,9 +113,11 @@ class __mission_item extends LetcBox {
     const service = args.service || cmd.mget(_a.service);
     this.debug("AAA:88", service, this, cmd)
     switch (service) {
-      case 'view-quote':
-        this.viewQuote()
-        //this.promptSite(cmd);
+      case 'view-quotes':
+        this.viewQuotes()
+        break;
+      case 'view-bills':
+        this.viewBills()
         break;
       default:
         this.triggerHandlers({

@@ -36,14 +36,17 @@ function mission_item(ui) {
         Skeletons.Button.Label({
           ico: 'editbox_pencil',
           label: `${note} notes`,
+          service: "view-notes"
         }),
         Skeletons.Button.Label({
           ico: 'account_documents',
           label: `${quote} devis`,
+          service: "view-quotes"
         }),
         Skeletons.Button.Label({
           ico: 'desktop_drumeememo',
           label: `${bill} factures`,
+          service: "view-bills"
         }),
       ]
     });
