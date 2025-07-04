@@ -13,7 +13,7 @@ const { contextButtons } = require("../../../skeleton")
  */
 
 function quote_item(ui) {
-  let { ctime, description = "", chrono = "", filepath } = ui.model.toJSON()
+  let { ctime, description = "", chrono = "", filepath, customer } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let service;
   let tooltips;
