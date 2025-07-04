@@ -21,6 +21,13 @@ function quote_item(ui) {
     service = "show-doc";
     tooltips = filepath;
   }
+  let cust;
+  if (customer) {
+    cust = Skeletons.Note({
+      className: `${pfx}__text`,
+      content: `${customer.custName}`,
+    });
+  }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -29,6 +36,7 @@ function quote_item(ui) {
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
+        cust,
         Skeletons.Note({
           className: `label`,
           content: `Devis n ${chrono}`,

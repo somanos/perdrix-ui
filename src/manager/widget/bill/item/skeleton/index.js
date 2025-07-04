@@ -12,7 +12,7 @@ const { contextButtons } = require("../../../skeleton")
  */
 
 function bill_item(ui) {
-  let { chrono, ctime, description, workId, filepath } = ui.model.toJSON()
+  let { chrono, ctime, description, workId, filepath, customer } = ui.model.toJSON()
   let pfx = ui.fig.family;
   if (!workId) {
     return Skeletons.Note({
@@ -22,9 +22,16 @@ function bill_item(ui) {
   }
   let service;
   let tooltips;
-  if(filepath){
+  if (filepath) {
     service = "show-doc";
     tooltips = filepath;
+  }
+  let cust;
+  if (customer) {
+    cust = Skeletons.Note({
+      className: `${pfx}__text`,
+      content: `${customer.custName}`,
+    });
   }
   let overview = [
     Skeletons.Box.G({
@@ -34,6 +41,7 @@ function bill_item(ui) {
           className: `${pfx}__text`,
           content: fromUnixtime(ctime)
         }),
+        cust,
         Skeletons.Note({
           className: `label bill-number`,
           content: `Facture n ${chrono}`,

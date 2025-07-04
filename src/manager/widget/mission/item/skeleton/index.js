@@ -13,7 +13,7 @@ const {
  */
 
 function mission_item(ui) {
-  let { type, workType, ctime, description, site, id } = ui.model.toJSON()
+  let { type, workType, ctime, description, site, id, customer } = ui.model.toJSON()
   let { city, location } = site;
   let pfx = ui.fig.family;
   if (!id) {
@@ -53,7 +53,13 @@ function mission_item(ui) {
   } else {
     attachments = Skeletons.Element()
   }
-
+  let cust;
+  if (customer) {
+    cust = Skeletons.Note({
+      className: `${pfx}__text`,
+      content: `${customer.custName}`,
+    });
+  }
   let features = Skeletons.Box.Y({
     className: `${pfx}__content features`,
     kids: [
@@ -65,10 +71,7 @@ function mission_item(ui) {
         className: `${pfx}__icon`,
         ico: 'desktop_desksettings',
       }),
-      Skeletons.Note({
-        className: `${pfx}__text`,
-        content: `Mission n° ${ui.mget('workId')}`,
-      }),
+      cust
     ]
   });
 
