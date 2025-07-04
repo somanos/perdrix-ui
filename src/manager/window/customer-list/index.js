@@ -147,22 +147,21 @@ class __window_customer_list extends __window {
       name = cmd.mget(_a.name);
       order = cmd.mget(_a.state) ? "asc" : "desc";
     } else {
-      name = this._api.sort_by || _a.ctime;
-      order = this._api.order || "desc";
+      name = this._api.args.sort_by || _a.ctime;
+      order = this._api.args.order || "desc";
     }
-
-    this._api.sort_by = name;
-    this._api.order = order;
+    this._api.args.sort_by = name;
+    this._api.args.order = order;
     if (cmd.getValue) {
       let words = cmd.getValue();
       if (this._lastWords == words) return;
-      this.debug("AAA:148", words)
       if (words && words.length) {
-        this._api.words = words;
+        this._api.args.words = words;
       } else {
-        this._api.words = null;;
+        delete this._api.args.words;
       }
     }
+    this.debug("AAA:148", this._api)
     this._lastWords = this._api.words;
     this.ensurePart(_a.list).then((list) => {
       list.mset({ api: this._api });

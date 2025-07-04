@@ -1,4 +1,4 @@
-const { entry } = require("../../../../widget/skeleton")
+const { entry } = require("../../../skeleton")
 
 module.exports = function (ui) {
 
