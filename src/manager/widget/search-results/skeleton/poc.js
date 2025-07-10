@@ -9,16 +9,31 @@ const { normalizelLocation } = require("../../../utils")
  * @param {*} ui 
  * @returns 
  */
-const LABELS = [
-  "Tel. bureau",
-  "Tel. domicile",
-  "Tel. portable",
-  "Fax"
-]
+
 function contactchantierview(ui) {
-  let { content } = ui.data();
+  let { content, category, customer, site } = ui.data();
   const uiHandler = ui.getHandlers(_a.ui);
+  let ref;
+  if (category == 'customer') {
+    ref = {
+      ...customer,
+      service: "load-customer-window",
+      uiHandler,
+      kind: "customer_item"
+    }
+  } else {
+    ref = {
+      ...site,
+      customer,
+      siteId: site.id,
+      custId: customer.id,
+      service: "load-site-window",
+      uiHandler,
+      kind: "site_item"
+    }
+  }
   const kids = [
+    ref,
     {
       ...content,
       uiHandler,

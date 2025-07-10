@@ -73,7 +73,7 @@ class __window_perdrix extends Utils {
       this._timer[cmd.cid] = setTimeout(async () => {
         await will(cmd);
         this._timer[cmd.cid] = null;
-      }, 1000)
+      }, 600)
     })
   }
 

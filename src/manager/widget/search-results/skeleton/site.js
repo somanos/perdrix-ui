@@ -12,12 +12,12 @@ function siteSkl(ui) {
   const uiHandler = ui.getHandlers(_a.ui);
   let { content, site, customer } = ui.data();
   const kids = [
-    {
-      ...customer,
-      service: "load-customer-window",
-      uiHandler,
-      kind: "customer_item"
-    },
+    // {
+    //   ...customer,
+    //   service: "load-customer-window",
+    //   uiHandler,
+    //   kind: "customer_item"
+    // },
     {
       ...content,
       site,

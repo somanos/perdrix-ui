@@ -37,13 +37,13 @@ export function getLocationFields(location) {
   let res = {
     streettype: "",
     streetname: "",
-    additional: ""
+    //additional: ""
   };
   if (_.isArray(location)) {
     res.housenumber = location[0];
     res.streettype = location[1];
     res.streetname = location[2];
-    res.additional = location[3];
+    //res.additional = location[3];
   }
   return res;
 }

@@ -17,12 +17,12 @@ function quoteSlk(ui) {
       className: `${ui.fig.family}_reference-container`,
       debug: __filename,
       kids: [
-        {
-          ...customer,
-          uiHandler,
-          service: "load-customer-window",
-          kind: "customer_item"
-        },
+        // {
+        //   ...customer,
+        //   uiHandler,
+        //   service: "load-customer-window",
+        //   kind: "customer_item"
+        // },
         {
           ...site,
           uiHandler,

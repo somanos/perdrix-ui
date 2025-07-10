@@ -84,7 +84,7 @@ function mission_item(ui) {
         placeholder: 'Type de travail',
         refAttribute: 'label',
         service: 'update-mission',
-        value: type,
+        value: workType || type,
         api: {
           service: 'work.update',
           id: ui.mget(_a.id)

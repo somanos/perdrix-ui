@@ -3,8 +3,11 @@
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
 @use 'mixins/drumee';
+@use "mixins/window" as *;
 
 .locaion-view {
+  @include widget-ui;
+
   &__ui {
     background-color: inherit;
     width: 100%;

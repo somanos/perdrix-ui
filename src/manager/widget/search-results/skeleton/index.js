@@ -12,8 +12,8 @@
 function found_item(ui) {
   let kids = [];
   //let { siteId, custId, pocId, workId } = ui.mget(_a.content);
-
-  switch (ui.mget(_a.type)) {
+  let type = ui.mget(_a.type);
+  switch (type) {
     case 'address':
       kids = require('./address')(ui);
       break;
@@ -36,7 +36,7 @@ function found_item(ui) {
       kids = require('./quote')(ui);
       break;
     default:
-      kids = require('./header')(ui, 'account_contacts', "Type de donnees inconnues")
+      kids = require('./header')(ui, 'account_contacts', `Type de donnees inconnues:${type}`)
   }
 
   const skeleton = Skeletons.Box.Y({

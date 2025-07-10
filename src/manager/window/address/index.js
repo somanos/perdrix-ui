@@ -165,21 +165,6 @@ class __window_address extends __window {
     }
   }
 
-  // /**
-  //  * 
-  //  */
-  // loadViewer(cmd, type) {
-  //   const { addressId } = cmd.model.toJSON();
-  //   Wm.windowsLayer.append({
-  //     kind: 'window_address_browser',
-  //     id: `address-${addressId}`,
-  //     ...cmd.data(),
-  //   });
-  //   setTimeout(() => {
-  //     let w = Wm.windowsLayer.children.last();
-  //     if (w && w.raise) w.raise()
-  //   }, 1000)
-  // }
 
   /**
    * @param {*} cmd

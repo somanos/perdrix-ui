@@ -8,7 +8,7 @@
   &__ui {
     background-color: white;
     width: 100%;
-    min-height: 100px;
+    //min-height: 100px;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
@@ -35,12 +35,11 @@
     align-items: start;
     border-bottom: 1px solid lightgrey;
     grid-gap: 0.5rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
 
-    &[data-type="address"],
-    &[data-type="customer"],
-    &[data-type="poc"] {
-      grid-template-columns: 1fr;
+    &[data-type="quote"],
+    &[data-type="bill"] {
+      grid-template-columns: 1fr 1fr;
     }
   }
 

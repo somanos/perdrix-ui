@@ -13,7 +13,7 @@ const {
  * @returns 
  */
 
-function header(ui, ico) {
+function header(ui, ico, custName) {
   let icon = Skeletons.Button.Svg({
     className: `${ui.fig.family}__icon-header ${ui.mget(_a.type)}`,
     ico,
@@ -25,13 +25,13 @@ function header(ui, ico) {
     kids: [
       Skeletons.Box.X({
         className: `${ui.fig.family}__text type ${origin}`,
-        kids:[
+        kids: [
           icon,
         ]
       }),
       Skeletons.Note({
         className: `${ui.fig.family}__text id`,
-        content: `Chantier n° ${ui.mget('siteId')}`
+        content: custName
       }),
     ]
   })
@@ -44,12 +44,13 @@ function header(ui, ico) {
  */
 function site_item(ui) {
 
-  let { custName, gender, location, companyclass, category } = ui.model.toJSON();
+  let { custName, gender, location, companyclass, category, customer } = ui.model.toJSON();
   let adresse = "";
   if (location) {
     adresse = location.join(' ');
   }
-
+  gender = gender || customer.gender;
+  custName = custName || customer.custName;
   if (gender) {
     custName = `${gender} ${custName}`;
   }
@@ -62,9 +63,8 @@ function site_item(ui) {
   if (category == 0) {
     icon = 'company';
   }
-
   const kids = [
-    header(ui, icon, "Chantier"),
+    header(ui, icon, custName),
     addressSmallView(ui),
   ]
 

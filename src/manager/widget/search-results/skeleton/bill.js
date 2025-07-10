@@ -18,13 +18,13 @@ function billSlk(ui) {
       className: `${ui.fig.family}_reference-container`,
       debug: __filename,
       kids: [
-        {
-          ...customer,
-          site,
-          service: "load-customer-window",
-          uiHandler,
-          kind: "customer_item"
-        },
+        // {
+        //   ...customer,
+        //   site,
+        //   service: "load-customer-window",
+        //   uiHandler,
+        //   kind: "customer_item"
+        // },
         {
           ...site,
           customer,

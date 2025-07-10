@@ -1,6 +1,20 @@
 const __window = require('..');
-const { modelComparator} = require('../../utils')
+const { modelComparator } = require('../../utils')
 const CTYPE = 'ctype';
+const TABLES_MAP = {
+  ad: 'address', /* Address*/
+  cc: 'customerPoc', /* Contact Client*/
+  ch: 'site', /* Chantier*/
+  cl: 'customer', /* Client*/
+  cs: 'sitePoc', /* Contact Chantier*/
+  de: 'quote', /* Devis*/
+  fa: 'bill', /* Factures*/
+  mi: 'work', /* Mission*/
+  tr: 'work', /* Mission*/
+}
+const BLIND_CHARS = [
+  _e.click, _e.blur, _e.Escape, 'Tab', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End', 'arrow'
+];
 class __window_finder extends __window {
   constructor(...args) {
     super(...args);
@@ -148,16 +162,14 @@ class __window_finder extends __window {
    */
   async filterContent(cmd) {
     let filters = await this._updateFilter();
+    if (!this._storedModels) return;
     this.ensurePart(_a.list).then((p) => {
       let models = this._storedModels.filter((m) => {
-        return filters.includes(m.get(CTYPE))
+        return filters.includes(m.get(_a.type))
       })
       p.collection.set(models)
     })
   }
-
-
-
 
   /**
  * 
@@ -167,6 +179,13 @@ class __window_finder extends __window {
       this.warn("Invalid search source");
       return;
     }
+    this.debug("AAA:204", source, source.status)
+    if (source.status == _e.cancel) {
+      source.setValue('');
+      this.hide();
+      return
+    }
+    if (BLIND_CHARS.includes(source?._input.status)) return;
     let words = source.getValue();
     if (!words) {
       this.hide();
@@ -186,9 +205,23 @@ class __window_finder extends __window {
     if (list.isWaiting()) return;
 
     let api = {
-      service: "pdx_utils.search",
+      service: PLUGINS.pdx_utils.search,
       words
     }
+    if (/^[a-z]{2,2} *: */i.test(words)) {
+      let [key, content = ""] = words.split(/:+/);
+      key = key.toLowerCase()
+      if (TABLES_MAP[key]) {
+        api.words = content.trim();
+        api.table = TABLES_MAP[key];
+        if (api.words.length > 1) {
+          list.mset({ api });
+          list.restart();
+        }
+        return;
+      }
+    }
+
     if (!api.words) return;
     let a = api.words.split(/:+/);
     if (a.length == 0) return;

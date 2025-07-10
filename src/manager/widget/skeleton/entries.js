@@ -33,7 +33,7 @@ export function address(ui, opt) {
     }
   }
   let o = getLocationFields(location)
-  let { streettype, streetname, additional } = o
+  let { streettype, streetname } = o
   housenumber = housenumber || o.housenumber;
   let streetType = menuInput(ui, {
     items: Env.get('streetType'),
@@ -64,13 +64,13 @@ export function address(ui, opt) {
           entry(ui, { placeholder: "Nom de voie", name: 'streetname', value: streetname }),
         ]
       }),
-      Skeletons.Box.G({
-        className: `${pfx}__address additional`,
-        kids: [
-          Skeletons.Element(),
-          entry(ui, { placeholder: "Complément", value: additional, name: 'additional' }),
-        ]
-      }),
+      // Skeletons.Box.G({
+      //   className: `${pfx}__address additional`,
+      //   kids: [
+      //     Skeletons.Element(),
+      //     entry(ui, { placeholder: "Complément", value: additional, name: 'additional' }),
+      //   ]
+      // }),
       //floor,
       Skeletons.Box.G({
         className: `${pfx}__address city`,
