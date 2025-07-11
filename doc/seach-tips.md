@@ -1,3 +1,4 @@
+**La syntaxe est composée d'un mot-clef, deux caractères suivis d'un : puis suivi des arguments de la recherche**
 **Les champs entre [ ] sont optionnels**
 
 ### Rechercher une adresse
