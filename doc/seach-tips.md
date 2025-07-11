@@ -25,24 +25,28 @@ Le champ *adresse* est du même format que pour la recherche d'adresse. **Le cha
 
 ### Rechercher un chantier
 **ch**:*adresse*
+
 Même syntaxe que pour la recherche d'adresse 
 #### Exemple:
   - **ch**:*carnot suresnes*
 
 ### Rechercher un client
 **cl**:[nom]@*adresse*
+
 Même syntaxe que pour la recherche d'un contact client
 #### Exemple:
   - **cl**:*imax*@*carnot suresnes*
 
 ### Rechercher un contact chantier
 **cs**: [nom]@*adresse*
+
 Même syntaxe que pour la recherche d'un contact client
 #### Exemple:
   - **cs**:*pers*@*carnot suresnes*
 
 ### Rechercher un devis
 **de**: [nom du client]@*adresse*
+
 Même syntaxe que pour la recherche d'un contact client
 #### Exemple:
   - **de**:*imax*@*29 carnot*
@@ -54,12 +58,14 @@ Même syntaxe que pour la recherche d'un contact client
 Même syntaxe que pour la recherche d'un devis
 #### Exemple:
   - **fa**:*imax*@*29 carnot*
+    
   Donne la liste des devis établis à *imax* don't l'adresse est au *29 rue Carnot*
 
 ### Rechercher une mission
 **mi**: [description de la mission]@*adresse*
 #### Exemple:
   - **mi**:*horloge*@*106 rue carnot*
+
   Donne la liste des missions au 106 rue carnot en relation avec le mot horloge
 
   
