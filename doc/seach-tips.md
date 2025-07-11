@@ -3,7 +3,7 @@
 
 ### Rechercher une adresse
 **ad**: [*numero*] [*type-voie*] *nom-voie* [*commune*]
-Exemle:
+#### Exemle:
 - **ad**:*rue carnot*
 - **ad**:*77 carnot*
 - **ad**:*77 carnot suresnes*
@@ -12,7 +12,7 @@ NB: Pour un résultat plus précis, la requête doit contenir au moins deux mots
 ### Rechercher un contact client
 **cc**: [*nom du contact*]@*adresse*
 Le champ *adresse* est du même format que pour la recherche d'adresse. **Le charactère *@* est obligatoire**
-Exemle:
+#### Exemle:
   - **cc**:@*carnot suresnes *
     Donne tous les contacts rattachés aux clients se trouvant sur voies *Carnot* (rue, avenue, etc) à *Suresens*
   - **cc**:*abel*@*carnot suresnes*
@@ -21,7 +21,7 @@ Exemle:
 ### Rechercher un chantier
 **ch**:*adresse*
 Même syntaxe que pour la recherche d'adresse 
-Exemple:
+#### Exemple:
   -*ch*:*carnot suresnes*
 
 ### Rechercher un client
@@ -39,14 +39,14 @@ Exemple:
 ### Rechercher un devis
 **de**: [nom du client]@*adresse*
 Même syntaxe que pour la recherche d'un contact client
-Exemple:
+#### Exemple:
   -**de**:*imax*@*29 carnot*
   Donne la liste des devis établis à *imax* don't l'adresse est au *29 rue Carnot*. Le résultat montre le devis et le chantier associé (dans la partie gauche)
 
 ### Rechercher une facture
 **fa**: [nom du client]@*adresse*
 Même syntaxe que pour la recherche d'un devis
-Exemple:
+#### Exemple:
   -**fa**:*imax*@*29 carnot*
   Donne la liste des devis établis à *imax* don't l'adresse est au *29 rue Carnot*
 
