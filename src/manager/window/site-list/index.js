@@ -2,7 +2,7 @@ const __window = require('..');
 const { loadCustomerWindow } = require("../../utils")
 
 const CTYPE = 'ctype';
-class __window_customer_list extends __window {
+class __window_site_list extends __window {
   constructor(...args) {
     super(...args);
     this.getCurrentApi = this.getCurrentApi.bind(this);
@@ -103,7 +103,7 @@ class __window_customer_list extends __window {
   getCurrentApi() {
     if (!this._api) {
       this._api = {
-        service: PLUGINS.customer.list,
+        service: PLUGINS.site.list,
         args: {
           sort_by: _a.ctime,
           order: "desc"
@@ -250,4 +250,4 @@ class __window_customer_list extends __window {
 
 }
 
-module.exports = __window_customer_list;
+module.exports = __window_site_list;

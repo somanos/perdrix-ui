@@ -1,6 +1,6 @@
 const { resolve, join } = require("path");
 const { exec } = require('shelljs');
-const {template} = require('lodash');
+const { template } = require('lodash');
 const { readFileSync, writeFileSync } = require('jsonfile');
 const {
   existsSync,
@@ -22,7 +22,7 @@ class DrumeeSyncer {
       let data = this.get_hash(stats);
       const { entry_page, src_path, bundle_base } = this.options;
       console.log("Building with options:", this.options);
-      if(entry_page){
+      if (entry_page) {
         let tpl = join(src_path, entry_page);
         console.log("Building entry page:", src_path, tpl);
         if (existsSync(tpl)) {
@@ -31,9 +31,9 @@ class DrumeeSyncer {
           let { hash } = stats;
           let dest = join(bundle_base, entry_page);
           let data = template(html)({ hash });
-          console.log({dest, })
+          console.log({ dest, })
           fsWriteFile(dest, data)
-        } else{
+        } else {
           console.warn(`Could not find entry page ${tpl}`)
         }
       }
@@ -45,7 +45,7 @@ class DrumeeSyncer {
 
 
   get_hash(stats) {
-    let { bundle_path, output_filename } = this.options;
+    let { bundle_path, public_path, output_filename } = this.options;
     console.log(`BUILDING FROM HASH=${stats.hash}`, this.options);
     let file = resolve(bundle_path, "index.json");
     const { stdout } = exec("git log -1 --pretty=format:'%h:%H' --abbrev-commit", { silent: true });
@@ -54,6 +54,7 @@ class DrumeeSyncer {
     let no_hash = output_filename == "[name].js" ? 1 : 0;
     let data = {
       hash: stats.hash,
+      location: public_path,
       timestamp: new Date().getTime(),
       head: long,
       rev: short,

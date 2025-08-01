@@ -8,15 +8,6 @@ function dockLaunchers(_ui_, ismobile) {
   const button = require('./button');
   let launchers = [
     button(_ui_, {
-      ico: 'desktop_group',
-      className: `${button_class} customer launcher-icon`,
-      innerClass: 'customer',
-      sys_pn: 'customer-launcher',
-      respawn: 'window_customer_list',
-      helperName: 'customer',
-      service: _e.launch
-    }, "Liste des clients"),
-    button(_ui_, {
       ico: 'geolocation',
       className: `${button_class} address launcher-icon`,
       innerClass: 'address',
@@ -26,6 +17,15 @@ function dockLaunchers(_ui_, ismobile) {
       service: _e.launch
     }, "Liste des addresse"),
     button(_ui_, {
+      ico: 'desktop_group',
+      className: `${button_class} customer launcher-icon`,
+      innerClass: 'customer',
+      sys_pn: 'customer-launcher',
+      respawn: 'window_customer_list',
+      helperName: 'customer',
+      service: _e.launch
+    }, "Liste des clients"),
+    button(_ui_, {
       ico: 'desktop_contactbook',
       className: `${button_class} company launcher-icon`,
       innerClass: 'company',
@@ -34,6 +34,24 @@ function dockLaunchers(_ui_, ismobile) {
       service: _e.launch,
       helperName: 'company'
     }, "Ajouter un client"),
+    button(_ui_, {
+      ico: 'desktop_group',
+      className: `${button_class} customer launcher-icon`,
+      innerClass: 'customer',
+      sys_pn: 'site-list-launcher',
+      respawn: 'window_site_list',
+      helperName: 'customer',
+      service: _e.launch
+    }, "Liste des chantiers"),
+    button(_ui_, {
+      ico: 'desktop_contactbook',
+      className: `${button_class} company launcher-icon`,
+      innerClass: 'company',
+      sys_pn: 'new-customer-launcher',
+      respawn: 'form_site',
+      service: _e.launch,
+      helperName: 'company'
+    }, "Ajouter un chantier"),
     button(_ui_, {
       ico: 'book',
       className: `${button_class} perdrix launcher-icon`,

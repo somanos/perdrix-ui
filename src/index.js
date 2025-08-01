@@ -67,7 +67,7 @@ async function start(parent) {
     LOCALE = { ...LOCALE, ...locale };
     Kind.register(kind, m.default);
     Kind.waitFor(kind).then((k) => {
-      console.log("Loading Plugin Entry", kind);
+      console.log("Loading Plugin Entry 70", kind);
       if (location.hash) {
         uiRouter.currentModule.feed({ kind })
       } else {

@@ -25,7 +25,6 @@ class __window_customer extends __window {
     }
     this.loadSitesList = this.loadSitesList.bind(this);
     RADIO_BROADCAST.on('site-transfered', this.loadSitesList)
-    this.debug("AAAA:20", this)
   }
 
   /**
