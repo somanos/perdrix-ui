@@ -26,13 +26,6 @@ class __window_perdrix extends Utils {
   }
 
   /**
-   * @param {*} type
-  */
-  getCurrentApi(type) {
-    return this._api
-  }
-
-  /**
    * 
    */
   loadCustomer(cmd, type) {

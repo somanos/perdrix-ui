@@ -1,5 +1,6 @@
 export * from './acknowledge';
 export * from './customer-header';
+export * from './address-list';
 export * from './customer';
 export * from './entries';
 export * from './location-viewer';

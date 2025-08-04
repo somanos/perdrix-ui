@@ -26,8 +26,8 @@ function dockLaunchers(_ui_, ismobile) {
       service: _e.launch
     }, "Liste des clients"),
     button(_ui_, {
-      ico: 'desktop_contactbook',
-      className: `${button_class} company launcher-icon`,
+      ico: 'desktop_group',
+      className: `${button_class} customer launcher-icon plus`,
       innerClass: 'company',
       sys_pn: 'new-customer-launcher',
       respawn: 'form_customer',
@@ -35,8 +35,8 @@ function dockLaunchers(_ui_, ismobile) {
       helperName: 'company'
     }, "Ajouter un client"),
     button(_ui_, {
-      ico: 'desktop_group',
-      className: `${button_class} customer launcher-icon`,
+      ico: 'maintenance',
+      className: `${button_class} site launcher-icon`,
       innerClass: 'customer',
       sys_pn: 'site-list-launcher',
       respawn: 'window_site_list',
@@ -44,8 +44,8 @@ function dockLaunchers(_ui_, ismobile) {
       service: _e.launch
     }, "Liste des chantiers"),
     button(_ui_, {
-      ico: 'desktop_contactbook',
-      className: `${button_class} company launcher-icon`,
+      ico: 'maintenance',
+      className: `${button_class} site launcher-icon plus`,
       innerClass: 'company',
       sys_pn: 'new-customer-launcher',
       respawn: 'form_site',

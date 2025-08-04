@@ -1,11 +1,13 @@
 const __window = require('..');
 const { loadCustomerWindow } = require("../../utils")
-
 const CTYPE = 'ctype';
+const BLIND_CHARS = [
+  _e.click, _e.blur, _e.Escape, 'Tab', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'
+];
+
 class __window_site_list extends __window {
   constructor(...args) {
     super(...args);
-    this.getCurrentApi = this.getCurrentApi.bind(this);
     this.hide = this.hide.bind(this);
     this._onDataReceived = this._onDataReceived.bind(this);
     this._onFilterClosed = this._onFilterClosed.bind(this);
@@ -51,6 +53,7 @@ class __window_site_list extends __window {
     this.style.set({
       display: _a.none
     })
+    this.getCurrentApi = this.getCurrentApi.bind(this);
   }
 
   /**
@@ -104,10 +107,7 @@ class __window_site_list extends __window {
     if (!this._api) {
       this._api = {
         service: PLUGINS.site.list,
-        args: {
-          sort_by: _a.ctime,
-          order: "desc"
-        }
+        args: { filter: [{ name: _a.ctime, value: "desc" }] }
       }
     }
     return this._api;
@@ -198,7 +198,6 @@ class __window_site_list extends __window {
       case _a.list:
         child.on(_e.data, this._onDataReceived);
         this.list = child;
-        this.debug("AAA:192", child)
         break;
       case _a.filter:
         this._updateFilter();
@@ -212,6 +211,51 @@ class __window_site_list extends __window {
     }
   }
 
+  getCurrentApi() {
+    if (!this._api) {
+      this._api = {
+        service: PLUGINS.site.list,
+        args: { filter: [{ name: _a.ctime, value: 'desc' }] }
+      }
+    }
+    return this._api;
+  }
+
+  /**
+   * 
+   */
+  searchSite(cmd) {
+    let order, name;
+    if (cmd) {
+      name = cmd.mget(_a.name);
+      if (BLIND_CHARS.includes(cmd.status)) return;
+      //order = cmd.mget(_a.state) ? "asc" : "desc";
+    }
+    if (!name) return;
+    if (cmd.getValue) {
+      this._api.args[name] = cmd.getValue();
+    }
+    if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
+      let a = this._api.args[name].split(/ +/)
+      this._api.args.housenumber = a.shift();
+      this._api.args.street = a.join('');
+    }
+    this.ensurePart(_a.list).then((list) => {
+      list.mset({ api: this._api });
+      list.restart();
+    })
+  }
+
+  /**
+   * 
+   */
+  async loadSiteWindow(site) {
+    this.loadWidget({
+      kind: 'window_site',
+      ...site.data(),
+      id: `site-${site.mget(_a.id)}`,
+    })
+  }
 
 
   /**
@@ -219,23 +263,23 @@ class __window_site_list extends __window {
    * @param {*} args
   */
   onUiEvent(cmd, args = {}) {
-    const { service, type, content } = args
-    this.debug(`onUiEvent service=${service}`, cmd, this);
+    const service = args.service || cmd.model.get(_a.service);
+    this.debug(`AAA:257 onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
+      case _a.input:
+        this.searchSite(cmd);
+        // this.throtle(cmd).then(() => {
+        //   this.sortContent(cmd);
+        // })
+        return;
       case _e.close:
         this.hide();
         return;
-      case _e.sort:
-      case _e.search:
-        this.throtle(cmd).then(() => {
-          this.sortContent(cmd);
-        })
-        return;
-      case 'load-customer-window':
-        this.loadCustomerWindow(cmd)
-        return
-      case 'customer-updated':
+      case 'load-site-window':
+        this.loadSiteWindow(cmd);
+        break;
+      case 'site-updated':
         this.onDomRefresh();
         return
 

@@ -166,6 +166,13 @@
       svg.address {
         padding: 2px;
       }
+
+    }
+
+    &.site {
+      svg {
+        padding: 4px;
+      }
     }
 
     &.launcher {
@@ -176,7 +183,23 @@
       svg.bigchat {
         transform: rotateY(180deg);
       }
+
+      &.plus:after {
+        content: "+";
+        font-size: 29px;
+        color: white;
+        position: absolute;
+        top: 7px;
+        left: 53px;
+        background-color: orangered;
+        line-height: 18px;
+        border-radius: 50%;
+      }
+      &.plus.site:after {
+        left: 44px;
+      }
     }
+
 
 
     .label {

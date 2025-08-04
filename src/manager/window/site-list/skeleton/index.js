@@ -1,5 +1,5 @@
 
-const { topbarBox, filterMenu, searchbox} = require("../../../widget/skeleton")
+const { topbarBox } = require("../../../widget/skeleton")
 
 /**
  * 
@@ -15,23 +15,21 @@ function topbar(ui) {
     service: _e.raise,
     debug: __filename,
     kids: [
-      filterMenu(ui),
-      searchbox(ui),
       topbarBox(ui, { title: "Liste des chantiers", mode: "sc" })
     ]
   });
 }
 
-module.exports = function(_ui_) {
+module.exports = function (_ui_) {
   const menu = Skeletons.Box.X({
-    debug     : __filename,
-    className : `${_ui_.fig.family}__header ${_ui_.fig.group}__header`, 
-    sys_pn    : "window-header",
+    debug: __filename,
+    className: `${_ui_.fig.family}__header ${_ui_.fig.group}__header`,
+    sys_pn: "window-header",
     kidsOpt: {
-      radio : _a.on,
-      uiHandler    : _ui_
+      radio: _a.on,
+      uiHandler: _ui_
     },
-    kids : topbar(_ui_)
+    kids: topbar(_ui_)
   });
 
   const a = require("../../skeleton/content")(_ui_, menu);

@@ -30,15 +30,64 @@
     }
   }
 
-  &__main {
+  &-topbar__container {
+    grid-template-columns: 1fr;
+  }
+
+  &__search-container {
+    grid-template-columns: 3fr 2fr 100px;
+    height: 35px;
+    box-shadow: drumee.$drumee-shadow-container;
+  }
+
+  &__searchbox {
     width: 100%;
+
+    input {
+      border: 0.5px solid rgb(163, 161, 161);
+    }
+
+    &.street {
+      input {
+        margin-left: 20px;
+      }
+    }
+
+    &.city {
+      input {
+        margin-left: 10px;
+      }
+    }
+
+    &.postcode {
+      input {
+        margin: 0;
+      }
+    }
+  }
+
+  &-topbar__main {
+    width: 100%;
+  }
+
+  &-topbar__title {
+    margin: 0;
+  }
+
+  &__main {
     height: 100%;
     align-items: center;
   }
 
-  &__content-results {
+  &__list {
     width: 100%;
     height: 100%;
+  }
+
+  &__content-results {
+    width: 100%;
+    margin-top: 5px;
+    height: calc(100% - 40px);
   }
 
   .list-smart__container {
@@ -48,4 +97,5 @@
       margin-top: 10px;
     }
   }
+
 }

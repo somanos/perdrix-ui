@@ -100,10 +100,14 @@ class __window_address extends __window {
   }
 
 
+  /**
+   * 
+   * @returns 
+   */
   getCurrentApi() {
     if (!this._api) {
       this._api = {
-        service: 'address.list',
+        service: PLUGINS.address.list,
         sort_by: _a.city,
         order: "asc"
       }
