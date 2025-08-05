@@ -1,26 +1,21 @@
 
-module.exports = function (ui) {
-  return Skeletons.List.Smart({
-    className: `${ui.fig.family}__content-results`,
-    innerClass: "drive-content-scroll",
-    sys_pn: _a.list,
-    flow: _a.none,
-    uiHandler: null,
-    dataset: {
-      role: _a.container,
-    },
-    itemsOpt: {
-      kind: 'customer_item',
-      flow: _a.x,
-      service: ui.mget('itemService'),
-      role: ui.mget(_a.role) || '',
-      logicalParent: ui,
-      uiHandler: [ui],
-      callbackService: "customer-updated"
-    },
-    vendorOpt: Preset.List.Orange_e,
-    api: ui.getCurrentApi,
-  });
+const { entry, addressSearchBoxes } = require("../../../widget/skeleton")
 
-  return list;
+module.exports = function (ui) {
+  let itemsOpt = {
+    kind: 'customer_item',
+    flow: _a.x,
+    service: ui.mget('itemService'),
+    role: ui.mget(_a.role) || '',
+    logicalParent: ui,
+    uiHandler: [ui],
+    callbackService: "customer-updated"
+  }
+  let extra = entry(ui, {
+    className: `${ui.fig.family}__searchbox customer`,
+    placeholder: "Nom client",
+    name: 'custName',
+    sys_pn: "cust-entry"
+  });
+  return addressSearchBoxes(ui, itemsOpt, extra)
 };

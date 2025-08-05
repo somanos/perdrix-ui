@@ -6,6 +6,7 @@
 
 .window-address {
   @include header-list;
+  @include window-search-boxes;
 
   &__ui {
     background-color: drumee.$core-default-background;
@@ -27,38 +28,6 @@
       height: 100vh;
       left: 0;
       top: 0;
-    }
-  }
-
-  &__search-container {
-    grid-template-columns: 3fr 2fr 100px;
-    height: 35px;
-    box-shadow: drumee.$drumee-shadow-container;
-  }
-
-  &__searchbox {
-    width: 100%;
-
-    input {
-      border: 0.5px solid rgb(163, 161, 161);
-    }
-
-    &.street {
-      input {
-        margin-left: 20px;
-      }
-    }
-
-    &.city {
-      input {
-        margin-left: 10px;
-      }
-    }
-
-    &.postcode {
-      input {
-        margin: 0;
-      }
     }
   }
 

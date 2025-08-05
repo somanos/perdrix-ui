@@ -136,7 +136,6 @@ class __window_address extends __window {
       if (BLIND_CHARS.includes(cmd.status)) return;
       //order = cmd.mget(_a.state) ? "asc" : "desc";
     }
-    this.debug("AAAA:145", cmd.status, name)
     if (!name) return;
     if (cmd.getValue) {
       this._api[name] = cmd.getValue();
@@ -152,6 +151,7 @@ class __window_address extends __window {
   *
   */
   onDomRefresh() {
+    super.onDomRefresh();
     this.feed(require("./skeleton")(this));
   }
 
@@ -179,7 +179,7 @@ class __window_address extends __window {
     this.debug(`onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
-      case _a.input:
+      case _e.search:
         this.searchAddress(cmd);
         return;
       case "load-viewer":

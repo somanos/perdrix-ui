@@ -1,9 +1,6 @@
 const __window = require('..');
 const { loadCustomerWindow } = require("../../utils")
-const CTYPE = 'ctype';
-const BLIND_CHARS = [
-  _e.click, _e.blur, _e.Escape, 'Tab', 'ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', 'Home', 'End'
-];
+const { BLIND_CHARS, CTYPE } = require("../../utils/constants")
 
 class __window_site_list extends __window {
   constructor(...args) {
@@ -171,6 +168,7 @@ class __window_site_list extends __window {
   *
   */
   onDomRefresh() {
+    super.onDomRefresh();
     this.feed(require("./skeleton")(this));
   }
 
@@ -195,10 +193,10 @@ class __window_site_list extends __window {
       case _a.content:
         child.feed(require('./skeleton/list')(this));
         break;
-      case _a.list:
-        child.on(_e.data, this._onDataReceived);
-        this.list = child;
-        break;
+      // case _a.list:
+      //   child.on(_e.data, this._onDataReceived);
+      //   this.list = child;
+      //   break;
       case _a.filter:
         this._updateFilter();
         child.on(_e.close, this._onFilterClosed);
@@ -267,11 +265,12 @@ class __window_site_list extends __window {
     this.debug(`AAA:257 onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
-      case _a.input:
-        this.searchSite(cmd);
-        // this.throtle(cmd).then(() => {
-        //   this.sortContent(cmd);
-        // })
+      case _e.sort:
+      case _e.search:
+        if (BLIND_CHARS.includes(cmd.status)) return;
+        this.throtle(cmd).then(() => {
+          this.searchSite(cmd);
+        })
         return;
       case _e.close:
         this.hide();

@@ -20,6 +20,22 @@ class __window_site_poc extends __window {
     RADIO_BROADCAST.on('site-poc-pupdate', this.handlePocsList)
   }
 
+  /**
+   *
+   */
+  onPartReady(child, pn) {
+    switch (pn) {
+      case _a.content:
+        child.feed(require('./skeleton/list')(this));
+        break;
+      case _a.list:
+        child.on(_e.data, this._onDataReceived);
+        this.list = child;
+        break;
+      default:
+        super.onPartReady(child, pn)
+    }
+  }
 
   /**
    * 
@@ -84,6 +100,44 @@ class __window_site_poc extends __window {
     })
   }
 
+  /**
+   * 
+   * @returns 
+   */
+  getCurrentApi() {
+    if (!this._api) {
+      this._api = {
+        service: PLUGINS.poc.list,
+        args: { filter: [{ name: _a.ctime, value: 'desc' }] }
+      }
+    }
+    return this._api;
+  }
+
+  /**
+   * 
+   */
+  searchPoc(cmd) {
+    let order, name;
+    if (cmd) {
+      name = cmd.mget(_a.name);
+      if (BLIND_CHARS.includes(cmd.status)) return;
+      //order = cmd.mget(_a.state) ? "asc" : "desc";
+    }
+    if (!name) return;
+    if (cmd.getValue) {
+      this._api.args[name] = cmd.getValue();
+    }
+    if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
+      let a = this._api.args[name].split(/ +/)
+      this._api.args.housenumber = a.shift();
+      this._api.args.street = a.join('');
+    }
+    this.ensurePart(_a.list).then((list) => {
+      list.mset({ api: this._api });
+      list.restart();
+    })
+  }
 
   /**
   * 

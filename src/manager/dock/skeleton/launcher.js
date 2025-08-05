@@ -10,71 +10,56 @@ function dockLaunchers(_ui_, ismobile) {
     button(_ui_, {
       ico: 'geolocation',
       className: `${button_class} address launcher-icon`,
-      innerClass: 'address',
       sys_pn: 'address-launcher',
       respawn: 'window_address',
-      helperName: 'address',
       service: _e.launch
     }, "Liste des addresse"),
     button(_ui_, {
       ico: 'desktop_group',
       className: `${button_class} customer launcher-icon`,
-      innerClass: 'customer',
       sys_pn: 'customer-launcher',
       respawn: 'window_customer_list',
-      helperName: 'customer',
       service: _e.launch
     }, "Liste des clients"),
     button(_ui_, {
       ico: 'desktop_group',
       className: `${button_class} customer launcher-icon plus`,
-      innerClass: 'company',
       sys_pn: 'new-customer-launcher',
       respawn: 'form_customer',
       service: _e.launch,
-      helperName: 'company'
     }, "Ajouter un client"),
     button(_ui_, {
       ico: 'maintenance',
       className: `${button_class} site launcher-icon`,
-      innerClass: 'customer',
       sys_pn: 'site-list-launcher',
       respawn: 'window_site_list',
-      helperName: 'customer',
       service: _e.launch
     }, "Liste des chantiers"),
     button(_ui_, {
       ico: 'maintenance',
       className: `${button_class} site launcher-icon plus`,
-      innerClass: 'company',
       sys_pn: 'new-customer-launcher',
       respawn: 'form_site',
       service: _e.launch,
-      helperName: 'company'
     }, "Ajouter un chantier"),
     button(_ui_, {
-      ico: 'book',
-      className: `${button_class} perdrix launcher-icon`,
+      ico: 'account_name',
+      className: `${button_class} poc launcher-icon`,
       service: _e.launch,
       respawn: 'window_site_poc',
-      helperName: 'perdrix',
     }, "Liste des contacts chantiers"),
     button(_ui_, {
-      ico: 'book',
-      className: `${button_class} perdrix launcher-icon`,
-      innerClass: 'addressbook',
+      ico: 'account_name',
+      className: `${button_class} poc launcher-icon plus`,
       sys_pn: 'new-poc-launcher',
       respawn: 'form_poc',
-      helperName: 'addressbook',
       service: _e.launch
     }, "Créer un contact"),
     button(_ui_, {
       ico: 'editbox_fill',
       className: `${button_class} perdrix launcher-icon`,
-      innerClass: 'addressbook',
       sys_pn: 'new-balance-launcher',
       respawn: 'window_balance',
-      helperName: 'addressbook',
       service: _e.launch
     }, "Liste des factures"),
   ]

@@ -6,6 +6,7 @@
 
 .window-site-list {
   @include header-list;
+  @include window-search-boxes;
 
   &__ui {
     background-color: drumee.$core-default-background;
@@ -30,72 +31,40 @@
     }
   }
 
-  &-topbar__container {
-    grid-template-columns: 1fr;
-  }
+  // &-topbar__container {
+  //   grid-template-columns: 1fr;
+  // }
 
-  &__search-container {
-    grid-template-columns: 3fr 2fr 100px;
-    height: 35px;
-    box-shadow: drumee.$drumee-shadow-container;
-  }
+  // &-topbar__main {
+  //   width: 100%;
+  // }
 
-  &__searchbox {
-    width: 100%;
+  // &-topbar__title {
+  //   margin: 0;
+  // }
 
-    input {
-      border: 0.5px solid rgb(163, 161, 161);
-    }
+  // &__main {
+  //   height: 100%;
+  //   align-items: center;
+  // }
 
-    &.street {
-      input {
-        margin-left: 20px;
-      }
-    }
+  // &__list {
+  //   width: 100%;
+  //   height: 100%;
+  // }
 
-    &.city {
-      input {
-        margin-left: 10px;
-      }
-    }
+  // &__content-results {
+  //   width: 100%;
+  //   margin-top: 5px;
+  //   height: calc(100% - 40px);
+  // }
 
-    &.postcode {
-      input {
-        margin: 0;
-      }
-    }
-  }
+  // .list-smart__container {
+  //   min-height: 300px;
 
-  &-topbar__main {
-    width: 100%;
-  }
-
-  &-topbar__title {
-    margin: 0;
-  }
-
-  &__main {
-    height: 100%;
-    align-items: center;
-  }
-
-  &__list {
-    width: 100%;
-    height: 100%;
-  }
-
-  &__content-results {
-    width: 100%;
-    margin-top: 5px;
-    height: calc(100% - 40px);
-  }
-
-  .list-smart__container {
-    min-height: 300px;
-
-    .customer-item {
-      margin-top: 10px;
-    }
-  }
+  //   .customer-item {
+  //     margin-top: 10px;
+  //   }
+  // }
 
 }

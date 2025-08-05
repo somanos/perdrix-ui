@@ -263,6 +263,7 @@ export async function searchLocation(cmd, wrapper) {
   */
 export function throtle(cmd, wrapper) {
   return new Promise((will, wont) => {
+    if (typeof this._timer !== 'object') this._timer = {}
     if (!cmd || !cmd.getValue) return;
     if (this._timer[cmd.cid]) {
       clearTimeout(this._timer[cmd.cid])
@@ -270,7 +271,7 @@ export function throtle(cmd, wrapper) {
     this._timer[cmd.cid] = setTimeout(async () => {
       await will(cmd, wrapper);
       this._timer[cmd.cid] = null;
-    }, 1000)
+    }, 500)
   })
 }
 

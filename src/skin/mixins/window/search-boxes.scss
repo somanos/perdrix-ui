@@ -1,0 +1,72 @@
+@use "../drumee";
+
+@mixin window-search-boxes {
+  &__search-container {
+    grid-template-columns: 3fr 2fr 100px;
+    height: 35px;
+    box-shadow: drumee.$drumee-shadow-container;
+    z-index: 100;
+
+    &[data-col="4"] {
+      grid-template-columns: 2fr 2fr 2fr 100px;
+    }
+
+    padding:5px;
+  }
+
+  &__searchbox {
+    width: 100%;
+
+    input {
+      border: 0.5px solid rgb(163, 161, 161, .7);
+    }
+
+    &.street {
+      input {
+        margin-left: 20px;
+      }
+    }
+
+    &.city {
+      input {
+        margin-left: 10px;
+      }
+    }
+
+    &.postcode {
+      input {
+        margin: 0;
+      }
+    }
+  }
+
+  &-topbar__container {
+    grid-template-columns: 1fr;
+    z-index: 100;
+  }
+
+  &-topbar__title {
+    margin: 0;
+  }
+
+  &__main {
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
+  &__content-results {
+    width: 100%;
+    //height: 100%;
+    height: calc(100% - 35px);
+  }
+
+  &__list-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .list-smart__container {
+    min-height: 300px;
+  }
+}

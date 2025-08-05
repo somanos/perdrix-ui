@@ -1,7 +1,6 @@
 const __window = require('..');
 const { loadCustomerWindow } = require("../../utils")
-
-const CTYPE = 'ctype';
+const { BLIND_CHARS, CTYPE } = require("../../utils/constants")
 class __window_customer_list extends __window {
   constructor(...args) {
     super(...args);
@@ -100,6 +99,10 @@ class __window_customer_list extends __window {
   }
 
 
+  /**
+   * 
+   * @returns 
+   */
   getCurrentApi() {
     if (!this._api) {
       this._api = {
@@ -112,6 +115,46 @@ class __window_customer_list extends __window {
     }
     return this._api;
   }
+
+  /**
+   * 
+   */
+  _sortOptions(cmd) {
+    let name = cmd.mget(_a.name);
+    if (!cmd) return;
+    this._api.args = {
+      sort_by: name,
+      order: "asc"
+    }
+  }
+
+
+  /**
+  * 
+  */
+  async searchCustomer(cmd) {
+    let order, name;
+    if (cmd) {
+      name = cmd.mget(_a.name);
+      if (BLIND_CHARS.includes(cmd.status)) return;
+      //order = cmd.mget(_a.state) ? "asc" : "desc";
+    }
+    let form = await this.ensurePart("search-box")
+    if (!name) return;
+    if (cmd.getValue) {
+      this._api.args[name] = cmd.getValue();
+    }
+    if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
+      let a = this._api.args[name].split(/ +/)
+      this._api.args.housenumber = a.shift();
+      this._api.args.street = a.join('');
+    }
+    this.ensurePart(_a.list).then((list) => {
+      list.mset({ api: this._api });
+      list.restart();
+    })
+  }
+
   /**
    * 
    */
@@ -137,40 +180,11 @@ class __window_customer_list extends __window {
     })
   }
 
-
-  /**
-   * 
-   */
-  sortContent(cmd) {
-    let order, name;
-    if (!cmd.getValue) return;
-    if (cmd) {
-      name = cmd.mget(_a.name);
-      order = cmd.mget(_a.state) ? "asc" : "desc";
-    } else {
-      name = this._api.args.sort_by || _a.ctime;
-      order = this._api.args.order || "desc";
-    }
-    this._api.args.sort_by = name;
-    this._api.args.order = order;
-    let words = cmd.getValue();
-    if (words && words.length) {
-      this._api.args.words = words;
-    } else {
-      delete this._api.args.words;
-    }
-
-    this._lastWords = this._api.words;
-    this.ensurePart(_a.list).then((list) => {
-      list.mset({ api: this._api });
-      list.restart();
-    })
-  }
-
   /**
   *
   */
   onDomRefresh() {
+    super.onDomRefresh();
     this.feed(require("./skeleton")(this));
   }
 
@@ -198,7 +212,6 @@ class __window_customer_list extends __window {
       case _a.list:
         child.on(_e.data, this._onDataReceived);
         this.list = child;
-        this.debug("AAA:192", child)
         break;
       case _a.filter:
         this._updateFilter();
@@ -219,8 +232,8 @@ class __window_customer_list extends __window {
    * @param {*} args
   */
   onUiEvent(cmd, args = {}) {
-    const { service, type, content } = args
-    this.debug(`onUiEvent service=${service}`, cmd, this);
+    const service = args.service || cmd.model.get(_a.service);
+    this.debug(`AAA:257 onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
       case _e.close:
@@ -228,8 +241,9 @@ class __window_customer_list extends __window {
         return;
       case _e.sort:
       case _e.search:
+        if (BLIND_CHARS.includes(cmd.status)) return;
         this.throtle(cmd).then(() => {
-          this.sortContent(cmd);
+          this.searchCustomer(cmd);
         })
         return;
       case 'load-customer-window':

@@ -1,9 +1,10 @@
 //const __webinar_socket = require('./socket');
 const Utils = require("../core");
+const { throtle } = require("../utils")
 class __window_perdrix extends Utils {
   constructor(...args) {
     super(...args);
-    this.getCurrentApi = this.getCurrentApi.bind(this);
+    this.throtle = throtle.bind(this);
   }
 
   initialize(opt = {}) {
@@ -57,18 +58,19 @@ class __window_perdrix extends Utils {
   /**
   * 
   */
-  throtle(cmd) {
-    return new Promise((will, wont) => {
-      if (!cmd || !cmd.getValue) return;
-      if (this._timer[cmd.cid]) {
-        clearTimeout(this._timer[cmd.cid])
-      }
-      this._timer[cmd.cid] = setTimeout(async () => {
-        await will(cmd);
-        this._timer[cmd.cid] = null;
-      }, 600)
-    })
-  }
+  // throtle(cmd) {
+  //   return new Promise((will, wont) => {
+  //     if (!cmd || !cmd.getValue) return;
+  //     this._timer = this._timer || {}
+  //     if (this._timer[cmd.cid]) {
+  //       clearTimeout(this._timer[cmd.cid])
+  //     }
+  //     this._timer[cmd.cid] = setTimeout(async () => {
+  //       await will(cmd);
+  //       this._timer[cmd.cid] = null;
+  //     }, 600)
+  //   })
+  // }
 
   /**
    * 

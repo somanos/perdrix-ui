@@ -6,6 +6,7 @@
 
 .window-customer-list {
   @include header-list;
+  @include window-search-boxes;
 
   &__ui {
     background-color: drumee.$core-default-background;
@@ -30,22 +31,30 @@
     }
   }
 
-  &__main {
-    width: 100%;
-    height: 100%;
-    align-items: center;
-  }
+  // &-topbar__container {
+  //   grid-template-columns: 1fr;
+  // }
 
-  &__content-results {
-    width: 100%;
-    height: 100%;
-  }
+  // &-topbar__title {
+  //   margin: 0;
+  // }
 
-  .list-smart__container {
-    min-height: 300px;
+  // &__main {
+  //   width: 100%;
+  //   height: 100%;
+  //   align-items: center;
+  // }
 
-    .customer-item {
-      margin-top: 10px;
-    }
-  }
+  // &__content-results {
+  //   width: 100%;
+  //   height: 100%;
+  // }
+
+  // .list-smart__container {
+  //   min-height: 300px;
+
+  //   .customer-item {
+  //     margin-top: 10px;
+  //   }
+  // }
 }

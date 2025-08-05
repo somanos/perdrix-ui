@@ -162,16 +162,11 @@
       width: 43px;
     }
 
+    &.site,
+    &.poc,
     &.address {
-      svg.address {
-        padding: 2px;
-      }
-
-    }
-
-    &.site {
       svg {
-        padding: 4px;
+        padding: 6px;
       }
     }
 
@@ -190,13 +185,14 @@
         color: white;
         position: absolute;
         top: 7px;
-        left: 53px;
-        background-color: orangered;
-        line-height: 18px;
+        left: 57px;
+        border: 1px solid white;
+        line-height: 17px;
         border-radius: 50%;
       }
+
       &.plus.site:after {
-        left: 44px;
+        left: 46px;
       }
     }
 
