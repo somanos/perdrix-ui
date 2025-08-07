@@ -562,7 +562,8 @@ export async function searchWithAddress(cmd) {
   }
   if (!name) return;
   if (cmd.getValue) {
-    this._api.args[name] = cmd.getValue();
+    this._api.args[name] = cmd.getValue().trim();
+    this._api.args[name] = this._api.args[name].replace(/\*/g, '')
   }
   if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
     let a = this._api.args[name].split(/ +/)
