@@ -3,6 +3,7 @@ module.exports = {
 	'bill_cartridge': import('./manager/widget/bill/cartridge'),
 	'bill_item': import('./manager/widget/bill/item'),
 	'customer_item': import('./manager/widget/customer/item'),
+	'customer_selector': import('./manager/widget/customer/selector'),
 	'form_bill': import('./manager/widget/bill/form'),
 	'form_billing_info': import('./manager/widget/customer/billing-info'),
 	'form_customer': import('./manager/widget/customer/form'),

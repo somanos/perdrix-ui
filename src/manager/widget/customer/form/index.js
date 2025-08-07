@@ -135,11 +135,15 @@ class __form_customer extends Form {
    * 
    */
   searchCustomer(cmd) {
-    let words = cmd.getValue();
+    if (this.isBlindChar(cmd)) return;
+    let custName = cmd.getValue();
     let api = {
-      service: "customer.search",
-      words,
-      type: this.mget(_a.type)
+      service: PLUGINS.customer.list,
+      args: {
+        custName,
+        sort_by: _a.name,
+        order:"aasc"
+      },
     };
     let itemsOpt = {
       kind: 'customer_item',
@@ -148,7 +152,6 @@ class __form_customer extends Form {
     }
 
     return new Promise((will, wont) => {
-      if (!words || !words.length) return will();
       this.feedList(api, itemsOpt, (data) => {
         this.clearList()
       })
@@ -302,7 +305,6 @@ class __form_customer extends Form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:214", service, cmd, this)
     switch (service) {
       case "select-category":
         this.selectCategory(cmd);

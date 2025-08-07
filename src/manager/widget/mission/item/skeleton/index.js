@@ -74,6 +74,18 @@ function mission_item(ui) {
       cust
     ]
   });
+  let name = 'description';
+  let args = {
+    className: `${pfx}__textarea ${name}`,
+    name,
+    value: description,
+    formItem: name,
+    innerClass: name,
+    placeholder: "Description de la mission",
+    uiHandler: [ui],
+    type: _a.textarea,
+    sys_pn: "description"
+  }
 
   let details = Skeletons.Box.Y({
     className: `${pfx}__content details`,
@@ -103,10 +115,11 @@ function mission_item(ui) {
           })
         ]
       }),
-      Skeletons.Note({
-        className: `${pfx}__description`,
-        content: description.replace(/\n/g, '<br>')
-      })
+      Skeletons.Entry(args)
+      // Skeletons.Note({
+      //   className: `${pfx}__description`,
+      //   content: description.replace(/\n/g, '<br>')
+      // })
     ]
   });
 

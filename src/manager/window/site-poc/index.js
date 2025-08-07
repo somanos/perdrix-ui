@@ -1,13 +1,13 @@
 const __window = require('..');
 const { placeholder } = require("../../widget/skeleton")
-const { searchPoc } = require("../../utils");
-
+// const { searchPoc } = require("../../utils");
+const { BLIND_CHARS, CTYPE } = require("../../utils/constants")
 class __window_site_poc extends __window {
 
-  constructor(...args) {
-    super(...args);
-    this.searchPoc = searchPoc.bind(this);
-  }
+  // constructor(...args) {
+  //   super(...args);
+  //   this.searchPoc = searchPoc.bind(this);
+  // }
 
   async initialize(opt) {
     require('./skin');
@@ -108,7 +108,10 @@ class __window_site_poc extends __window {
     if (!this._api) {
       this._api = {
         service: PLUGINS.poc.list,
-        args: { filter: [{ name: _a.ctime, value: 'desc' }] }
+        args: { 
+          type: "site",
+          filter: [{ name: "pocName", value: 'asc' }] 
+        }
       }
     }
     return this._api;
@@ -117,7 +120,7 @@ class __window_site_poc extends __window {
   /**
    * 
    */
-  searchPoc(cmd) {
+  async searchPoc(cmd) {
     let order, name;
     if (cmd) {
       name = cmd.mget(_a.name);
@@ -131,8 +134,14 @@ class __window_site_poc extends __window {
     if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
       let a = this._api.args[name].split(/ +/)
       this._api.args.housenumber = a.shift();
-      this._api.args.street = a.join('');
+      this._api.args.street = a.join(' ');
+    } else {
+      let form = await this.ensurePart("search-box")
+      let { street } = form.getData();
+      if (!street) delete this._api.args.housenumber;
+      this.debug("AAA:137", form.getData())
     }
+    this
     this.ensurePart(_a.list).then((list) => {
       list.mset({ api: this._api });
       list.restart();
@@ -196,12 +205,16 @@ class __window_site_poc extends __window {
         this.loadPocList(await this.getSortOptions(null, [_a.lastname, _a.ctime]));
         break;
       case _a.search:
-        let lastname = cmd.getValue();
-        if (!lastname) {
-          this.loadPocList();
-          return;
-        };
-        this.loadPocList({ lastname });
+        if (BLIND_CHARS.includes(cmd.status)) return;
+        this.throtle(cmd).then(() => {
+          this.searchPoc(cmd);
+        })
+        // let lastname = cmd.getValue();
+        // if (!lastname) {
+        //   this.loadPocList();
+        //   return;
+        // };
+        // this.loadPocList({ lastname });
         break;
       case "update-poc":
         let kind = "form_site_poc";

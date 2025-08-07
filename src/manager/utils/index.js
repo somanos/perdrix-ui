@@ -1,10 +1,7 @@
 // const { placeholder} = require("../widget/skeleton/widgets")
 const { fiscalBox, placeholder, contextBar, address, pocsList } = require("../widget/skeleton")
-//const { address } = require("../widget/skeleton/entries")
-const CUST_ID = 'custId';
-const SITE_ID = 'siteId';
 let FISCAL_YEARS;
-
+const { BLIND_CHARS, SITE_ID, CUST_ID } = require("./constants")
 const commaNumber = require('comma-number')
 /**
  * 
@@ -43,7 +40,7 @@ export function getLocationFields(location) {
     res.housenumber = location[0];
     res.streettype = location[1];
     res.streetname = location[2];
-    //res.additional = location[3];
+    res.additional = location[3];
   }
   return res;
 }
@@ -194,6 +191,7 @@ export function loadWidget(opt, hide = 0) {
 export async function changeDataset(name, attr, val) {
   let p = await this.ensurePart(name);
   p.el.dataset[attr] = val;
+  return p;
 }
 
 /**
@@ -543,6 +541,42 @@ export function searchSitePoc(cmd, k) {
     if (!words || !words.length) return will();
     this.feedList(api, itemsOpt, (data) => {
     })
+  })
+}
+
+/**
+ * 
+ */
+export function isBlindChar(cmd) {
+  return BLIND_CHARS.includes(cmd.status)
+}
+
+/**
+ * 
+ */
+export async function searchWithAddress(cmd) {
+  let name;
+  if (cmd) {
+    name = cmd.mget(_a.name);
+    if (BLIND_CHARS.includes(cmd.status)) return;
+  }
+  if (!name) return;
+  if (cmd.getValue) {
+    this._api.args[name] = cmd.getValue();
+  }
+  if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
+    let a = this._api.args[name].split(/ +/)
+    this._api.args.housenumber = a.shift();
+    this._api.args.street = a.join(' ');
+  } else {
+    let form = await this.ensurePart("search-box")
+    let { street } = form.getData();
+    if (!street) delete this._api.args.housenumber;
+    this.debug("AAA:137", form.getData())
+  }
+  this.ensurePart(_a.list).then((list) => {
+    list.mset({ api: this._api });
+    list.restart();
   })
 }
 

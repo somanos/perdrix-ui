@@ -9,10 +9,11 @@ import { entry, menuInput, buttons } from "./widgets"
 export function address(ui, opt) {
   let {
     street, city, housenumber,
-    postcode, extended, countrycode,
+    postcode, additional, countrycode,
     isUpdate, serviceLabel,
     service, location
   } = opt;
+  ui.debug("AAA:16", opt)
   const pfx = `${ui.fig.family}`;
 
   if (_.isString(location) || !location) {

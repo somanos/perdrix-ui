@@ -1,6 +1,6 @@
 @use "sass:meta";
 @use 'mixins/drumee';
-//@use 'content' as *;
+@use 'customer' as *;
 @use 'mixins/form' as *;
 @use 'mixins/window' as *;
 
@@ -11,14 +11,14 @@
     box-shadow: drumee.$drumee-shadow-container;
     display: flex;
     max-height: 95vh;
-    overflow: visible;
+    overflow: hidden;
     width: 750px;
     min-width: 340px;
     min-height: 480px;
     flex-direction: column;
     left: calc(50vw - 350px);
     top: 40px;
-
+    max-height: 80vh;
 
     &[data-device="mobile"] {
       height: 100vh;
@@ -32,11 +32,6 @@
     @include form-topbar;
   }
 
-  &__main {
-    align-items: center;
-    //height: 100%;
-    width: 100%;
-  }
 
   &__container {
     min-height: 200px;
@@ -80,6 +75,7 @@
   @include form-content;
   @include form-menu;
   @include form-button;
+  @include window-search-boxes;
 
   &__buttons {
     align-items: center;

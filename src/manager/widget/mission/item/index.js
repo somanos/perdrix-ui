@@ -16,6 +16,7 @@ class __mission_item extends LetcBox {
     super.initialize(opt);
     this.declareHandlers();
     this.mset({ workId: opt.id })
+    this.checkChanges = this.checkChanges.bind(this);
   }
 
   /**
@@ -53,6 +54,26 @@ class __mission_item extends LetcBox {
   /**
    * 
    */
+  onBeforeDestroy() {
+    this.el.onmouseleave = null;
+  }
+
+  /**
+   * 
+   */
+  async checkChanges() {
+    let { description } = this.getData();
+    if (this._description === description) {
+      return
+    }
+    this._description = description;
+    let { id } = this.data()
+    this.postService(PLUGINS.work.update, { args: { description, id } })
+  }
+
+  /**
+   * 
+   */
   restart(data) {
     if (data) {
       this.mset(data);
@@ -65,6 +86,7 @@ class __mission_item extends LetcBox {
    */
   onDomRefresh() {
     this.restart()
+    this.el.onmouseleave = this.checkChanges
   }
 
   /**
@@ -93,7 +115,6 @@ class __mission_item extends LetcBox {
       workId: this.mget('workId'),
     }
     this.postService(PLUGINS.work.bills, args).then(async (data) => {
-      this.debug("AAAA:96", data)
       let Media = await Kind.waitFor('media_pseudo');
       for (let item of data) {
         if (!item.filepath) continue;
@@ -111,13 +132,20 @@ class __mission_item extends LetcBox {
    */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:88", service, this, cmd)
+    this.debug("AAA:114", service, this, cmd)
     switch (service) {
       case 'view-quotes':
         this.viewQuotes()
         break;
       case 'view-bills':
         this.viewBills()
+        break;
+      case "update-mission":
+        this.checkChanges();
+        break;
+      case _e.input:
+      case _a.interactive:
+
         break;
       default:
         this.triggerHandlers({

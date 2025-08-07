@@ -30,4 +30,9 @@
       background-color: drumee.$btn-commit-background-hover
     }
   }
+
+  &__buttons-main {
+    flex: 1;
+    padding: 7px 0;
+  }
 }

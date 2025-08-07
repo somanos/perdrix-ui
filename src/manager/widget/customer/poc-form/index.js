@@ -133,6 +133,19 @@ class __form_customer_poc extends Form {
    */
   onDomRefresh() {
     this.feed(require('./skeleton')(this));
+    let { addressId, custName, lastname, firstname } = this.mget('customer') || {}
+    this.mget({ custName, lastname, firstname })
+    this.debug("AAA:137", this.mget('customer'), addressId)
+    this.fetchService(PLUGINS.poc.list, {
+      args: {
+        addressId
+      }
+    }).then(async (data) => {
+      if (!data || !data.length) return;
+      let list = await this.changeDataset(_a.list, _a.state, 1);
+      this.debug("AAA:142", list, data)
+      list.feed(data)
+    })
   }
 
   /**

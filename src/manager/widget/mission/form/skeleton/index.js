@@ -47,18 +47,6 @@ module.exports = function (ui) {
           refAttribute: 'label',
           value: "",
         }),
-        // Skeletons.Note({
-        //   className: `${pfx}__button-item poc`,
-        //   content: 'Choisir un contact',
-        //   uiHandler: [ui],
-        //   service: "show-pocs",
-        // }),
-        // Skeletons.Note({
-        //   className: `${pfx}__button-item poc`,
-        //   content: 'Ajouter un contact',
-        //   uiHandler: [ui],
-        //   service: "add-poc",
-        // })
       ),
       messageBock(ui),
     ]

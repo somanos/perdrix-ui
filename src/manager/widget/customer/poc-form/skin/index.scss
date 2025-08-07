@@ -133,6 +133,10 @@
   &__searchbox {
     max-height: 120px;
     overflow: auto;
+
+    &[data-state="0"] {
+      display: none;
+    }
   }
 
   @include dialog-acknowledge;

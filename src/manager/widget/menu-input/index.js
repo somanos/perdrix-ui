@@ -112,7 +112,7 @@ class __menu_input extends LetcBox {
    */
   onUiEvent(cmd, args = {}) {
     const service = cmd.mget(_a.service);
-    this.debug("AAA:45", service, cmd, args);
+    // this.debug("AAA:45", service, cmd, args);
     let name = this.mget(_a.name);
     switch (service) {
       case "item-selected":

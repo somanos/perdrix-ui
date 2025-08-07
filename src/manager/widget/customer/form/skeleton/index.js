@@ -49,13 +49,16 @@ module.exports = function (ui) {
         sys_pn: "entries-manual",
         state: isUpdate,
       }),
-      actionButtons(ui, [
-        { sys_pn: "btn-create", service: _a.create, content: "Créer", state: 0 }
-      ]),
     ]
   });
 
-
+  if (!isUpdate) {
+    customer.kids.push(actionButtons(ui, [
+      { sys_pn: "btn-create", service: _a.create, content: "Créer", state: 0 }
+    ]),
+    )
+  }
+  
   let title = "Créer un client";
   if (isUpdate) {
     title = "Mettre à jour un client"

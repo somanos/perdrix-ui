@@ -132,28 +132,32 @@ class __window_customer_list extends __window {
   /**
   * 
   */
-  async searchCustomer(cmd) {
-    let order, name;
-    if (cmd) {
-      name = cmd.mget(_a.name);
-      if (BLIND_CHARS.includes(cmd.status)) return;
-      //order = cmd.mget(_a.state) ? "asc" : "desc";
-    }
-    let form = await this.ensurePart("search-box")
-    if (!name) return;
-    if (cmd.getValue) {
-      this._api.args[name] = cmd.getValue();
-    }
-    if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
-      let a = this._api.args[name].split(/ +/)
-      this._api.args.housenumber = a.shift();
-      this._api.args.street = a.join('');
-    }
-    this.ensurePart(_a.list).then((list) => {
-      list.mset({ api: this._api });
-      list.restart();
-    })
-  }
+  // async searchCustomer(cmd) {
+  //   let order, name;
+  //   if (cmd) {
+  //     name = cmd.mget(_a.name);
+  //     if (thsi.isBlindChar(cmd)) return;
+  //   }
+  //   let form = await this.ensurePart("search-box")
+  //   if (!name) return;
+  //   if (cmd.getValue) {
+  //     this._api.args[name] = cmd.getValue();
+  //   }
+  //   if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
+  //     let a = this._api.args[name].split(/ +/)
+  //     this._api.args.housenumber = a.shift();
+  //     this._api.args.street = a.join(' ');
+  //   }else {
+  //     let form = await this.ensurePart("search-box")
+  //     let { street } = form.getData();
+  //     if (!street) delete this._api.args.housenumber;
+  //     this.debug("AAA:137", form.getData())
+  //   }
+  //   this.ensurePart(_a.list).then((list) => {
+  //     list.mset({ api: this._api });
+  //     list.restart();
+  //   })
+  // }
 
   /**
    * 
@@ -243,7 +247,7 @@ class __window_customer_list extends __window {
       case _e.search:
         if (BLIND_CHARS.includes(cmd.status)) return;
         this.throtle(cmd).then(() => {
-          this.searchCustomer(cmd);
+          this.searchWithAddress(cmd);
         })
         return;
       case 'load-customer-window':

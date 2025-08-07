@@ -1,0 +1,74 @@
+@use "sass:meta";
+@use 'mixins/drumee';
+@use 'mixins/window' as *;
+@use 'mixins/form' as *;
+@use '../../../../window/skin/group/header/list' as *;
+
+.site-selector {
+  @include header-list;
+  @include window-search-boxes;
+  @include form-buttons;
+
+  &__header {
+    width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    height: calc(100% - 44px);
+  }
+
+  &__searchbox-main {
+    width: 100%;
+    height: calc(100% - 50px);
+  }
+
+  &-topbar {
+    @include form-topbar;
+  }
+
+  &__ui {
+    background-color: drumee.$core-default-background;
+    width: 800px;
+    height: 600px;
+    box-shadow: drumee.$drumee-shadow-container;
+    overflow: hidden;
+    min-width: 340px;
+    min-height: 500px;
+    flex-direction: column;
+    display: flex;
+    left: calc(50vw - 400px);
+    top: 60px;
+
+    &[data-device="mobile"] {
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+    }
+
+    &[data-state="1"] {
+      z-index: 10000 !important;
+    }
+
+    &[data-state="0"] {
+      .site__header {
+        opacity: 0.4;
+      }
+    }
+  }
+
+  &__button-item {
+    &[data-state="0"] {
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
+
+  .customer-item {
+    &[data-radio="on"] {
+      background: linear-gradient(45deg, black, transparent);
+    }
+  }
+}

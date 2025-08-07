@@ -13,18 +13,18 @@ module.exports = function (ui) {
   }
   let pocsList;
   if (addressId) {
-    let api = {
-      service: PLUGINS.poc.list,
-      args: {
-        addressId
-      }
-    }
+    // let api = {
+    //   service: PLUGINS.poc.list,
+    //   args: {
+    //     addressId
+    //   }
+    // }
     let itemsOpt = {
       kind: 'poc_item',
       service: "select-poc",
       uiHandler: [ui]
     }
-    pocsList = list(ui, _a.list, { api, itemsOpt })
+    pocsList = list(ui, _a.list, { state:0, itemsOpt })
   }
   return Skeletons.Box.Y({
     debug: __filename,

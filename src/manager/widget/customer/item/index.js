@@ -12,8 +12,6 @@ class __customer_item extends Customer {
     this.model.set({ type: "customer" })
     this.skeleton = require('./skeleton')(this);
     this.loadWidget = loadWidget.bind(this);
-    
-
   }
 
   /**
@@ -21,7 +19,6 @@ class __customer_item extends Customer {
    */
   updateCustomer() {
     const { custId } = this.data();
-    this.debug("AAA:24", this)
     this.loadWidget({
       kind: 'form_customer',
       id: `customer-form-${custId}`,

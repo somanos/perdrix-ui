@@ -16,6 +16,15 @@
   &__main {
     background-color: inherit;
     width: 100%;
+
+    &:hover {
+      .icon-update {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
   }
 
   &__address {
@@ -54,14 +63,23 @@
     }
   }
 
-  // &__content {
-  //   width: 100%;
-  //   padding: 5px 10px;
-  //   background-color: inherit;
-  //   justify-content: start;
-  //   align-items: start;
-  //   border-bottom: 1px solid lightgrey;
-  //   grid-template-columns: 3fr 1fr 80px;
-  //   grid-gap: 0.5rem;
-  // }
+  &__icon-header {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-right: 8px;
+    color: drumee.$eviolet;
+    padding: 5px;
+  }
+
+  &__icon-update {
+    width: 15px;
+    height: 15px;
+    padding: 0;
+    position: absolute;
+    left: 30%;
+    top: 5px;
+    color: drumee.$core-special-icon-info;
+    display: none;
+  }
 }

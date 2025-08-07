@@ -1,14 +1,14 @@
 const {
-  phoneNumbers
+  phoneNumbers, addressView, 
 } = require("../../../skeleton")
-
+const {normalizelLocation} = require("../../../../utils")
 /**
  * 
  * @param {*} ui 
  * @returns 
  */
 function poc_item(ui) {
-  let { gender, lastname, firstname, phones, email, mode } = ui.model.toJSON();
+  let { gender, lastname, firstname, phones, email, mode, site, customer } = ui.model.toJSON();
   let name = "";
   let pfx = ui.fig.family;
 
@@ -42,6 +42,9 @@ function poc_item(ui) {
   }
   if (mode == 'removable') {
   }
+  let location = site?.location || customer?.location;
+  let city = site?.city || customer?.city;
+  let postcode = site?.postcode || customer?.postcode;
   return Skeletons.Box.Y({
     className: `${pfx}__main`,
     debug: __filename,
@@ -50,9 +53,25 @@ function poc_item(ui) {
       Skeletons.Box.G({
         className: `${pfx}__content`,
         kids: [
-          Skeletons.Note({
-            className: `${pfx}__text`,
-            content: name
+          Skeletons.Box.Y({
+            kids: [
+              Skeletons.Note({
+                className: `${pfx}__text`,
+                content: name
+              }),
+              Skeletons.Note({
+                className: `${pfx}__text`,
+                content: normalizelLocation(location)
+              }),
+              Skeletons.Note({
+                className: `${pfx}__text`,
+                content: city
+              }),
+              Skeletons.Note({
+                className: `${pfx}__text`,
+                content: postcode
+              }),
+            ]
           }),
           message,
           phoneNumbers(ui, phones),

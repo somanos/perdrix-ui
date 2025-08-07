@@ -95,6 +95,9 @@ class __window_customer extends __window {
   async loadSitesList(filter) {
     let api = {
       service: "site.list",
+      args:{
+        custId: this.mget(CUST_ID)
+      },
       custId: this.mget(CUST_ID),
     };
     if (filter) api.filter = filter;

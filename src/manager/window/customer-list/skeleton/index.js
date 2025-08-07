@@ -15,8 +15,6 @@ function topbar(ui) {
     service: _e.raise,
     debug: __filename,
     kids: [
-      // filterMenu(ui),
-      // searchbox(ui),
       topbarBox(ui, { title: "Liste des clients", mode: "sc" })
     ]
   });

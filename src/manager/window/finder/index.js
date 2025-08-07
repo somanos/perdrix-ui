@@ -115,16 +115,6 @@ class __window_finder extends __window {
       words: this.getValue()
     }
   }
-  /**
-   * 
-   */
-  hide() {
-    this.el.style.display = _a.none;
-    setTimeout(() => {
-      this.el.style.display = _a.none;
-      //this.el.dataset.state = _a.closed;
-    }, 200);
-  }
 
   /**
    * 

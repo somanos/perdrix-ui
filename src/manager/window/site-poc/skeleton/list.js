@@ -13,8 +13,8 @@ module.exports = function (ui) {
   };
   let extra = entry(ui, {
     className: `${ui.fig.family}__searchbox poc`,
-    placeholder: "Nom client",
-    name: 'custName',
+    placeholder: "Nom contact",
+    name: 'pocName',
     sys_pn: "poc-entry",
      mode: "editable"
   });

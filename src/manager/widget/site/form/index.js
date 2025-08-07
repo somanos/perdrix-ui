@@ -1,6 +1,7 @@
 
 const { placeholder, acknowledge } = require("../../skeleton")
 const Form = require('../../form');
+
 class __form_site extends Form {
 
 
@@ -171,6 +172,7 @@ class __form_site extends Form {
         break;
 
       case _a.input:
+        if (this.isBlindChar(cmd)) return;
         switch (cmd.mget(_a.name)) {
           case _a.location:
             this.changeDataset(_a.footer, _a.state, 1)

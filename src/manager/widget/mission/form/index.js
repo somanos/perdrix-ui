@@ -93,6 +93,11 @@ class __form_mission extends Form {
    */
   onDomRefresh() {
     this.debug("AAAA:122", this)
+    let { customer } = this.data()
+    if (!customer) {
+      this.feed(require('./skeleton/customers')(this))
+      return
+    }
     this.feed(require('./skeleton')(this));
   }
 

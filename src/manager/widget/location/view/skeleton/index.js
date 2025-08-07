@@ -28,7 +28,13 @@ function locaion_view(ui) {
           id: `${ui.get(_a.widgetId)}-map`
         })
       ]
-    })
+    }),
+    Skeletons.Button.Svg({
+      ico: 'editbox_pencil',
+      service: 'update-customer',
+      className: `${ui.fig.family}__icon-update icon-update`,
+      uiHandler: [ui],
+    }),
   ]
   return Skeletons.Box.Y({
     className: `${ui.fig.family}__main`,

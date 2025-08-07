@@ -39,7 +39,7 @@ function dockLaunchers(_ui_, ismobile) {
       ico: 'maintenance',
       className: `${button_class} site launcher-icon plus`,
       sys_pn: 'new-customer-launcher',
-      respawn: 'form_site',
+      respawn: 'customer_selector',
       service: _e.launch,
     }, "Ajouter un chantier"),
     button(_ui_, {
