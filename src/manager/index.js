@@ -379,7 +379,6 @@ class __perdrix_manager extends DrumeeWm {
   onWsMessage(service, data, options = {}) {
     this.trigger(WS_EVENT, { service, data, options })
   }
-
 }
 __perdrix_manager.initClass();
 

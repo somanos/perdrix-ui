@@ -10,10 +10,8 @@ export function address(ui, opt) {
   let {
     street, city, housenumber,
     postcode, additional, countrycode,
-    isUpdate, serviceLabel,
-    service, location
+    serviceLabel, service, location
   } = opt;
-  ui.debug("AAA:16", opt)
   const pfx = `${ui.fig.family}`;
 
   if (_.isString(location) || !location) {
@@ -36,6 +34,7 @@ export function address(ui, opt) {
   let o = getLocationFields(location)
   let { streettype, streetname } = o
   housenumber = housenumber || o.housenumber;
+  additional = additional || o.additional;
   let streetType = menuInput(ui, {
     items: Env.get('streetType'),
     name: 'streettype',

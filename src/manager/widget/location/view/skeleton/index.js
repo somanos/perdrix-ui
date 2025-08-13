@@ -31,7 +31,7 @@ function locaion_view(ui) {
     }),
     Skeletons.Button.Svg({
       ico: 'editbox_pencil',
-      service: 'update-customer',
+      service: 'update-address',
       className: `${ui.fig.family}__icon-update icon-update`,
       uiHandler: [ui],
     }),

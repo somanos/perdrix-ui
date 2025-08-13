@@ -129,35 +129,6 @@ class __window_customer_list extends __window {
   }
 
 
-  /**
-  * 
-  */
-  // async searchCustomer(cmd) {
-  //   let order, name;
-  //   if (cmd) {
-  //     name = cmd.mget(_a.name);
-  //     if (thsi.isBlindChar(cmd)) return;
-  //   }
-  //   let form = await this.ensurePart("search-box")
-  //   if (!name) return;
-  //   if (cmd.getValue) {
-  //     this._api.args[name] = cmd.getValue();
-  //   }
-  //   if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
-  //     let a = this._api.args[name].split(/ +/)
-  //     this._api.args.housenumber = a.shift();
-  //     this._api.args.street = a.join(' ');
-  //   }else {
-  //     let form = await this.ensurePart("search-box")
-  //     let { street } = form.getData();
-  //     if (!street) delete this._api.args.housenumber;
-  //     this.debug("AAA:137", form.getData())
-  //   }
-  //   this.ensurePart(_a.list).then((list) => {
-  //     list.mset({ api: this._api });
-  //     list.restart();
-  //   })
-  // }
 
   /**
    * 
@@ -166,7 +137,6 @@ class __window_customer_list extends __window {
     this.el.style.display = _a.none;
     setTimeout(() => {
       this.el.style.display = _a.none;
-      //this.el.dataset.state = _a.closed;
     }, 200);
   }
 
@@ -237,7 +207,7 @@ class __window_customer_list extends __window {
   */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`AAA:257 onUiEvent service=${service}`, cmd, this);
+    this.debug(`AAA:210 onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
       case _e.close:

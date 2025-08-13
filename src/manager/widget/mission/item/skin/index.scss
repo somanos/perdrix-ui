@@ -137,14 +137,16 @@
 
   &__textarea {
     textarea {
-      @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
       border-width: 0.5px;
       width: 100%;
       border-color: #9d9d9ecb;
       border-radius: 3px;
+
       &:focus {
         border-width: 1px;
       }
+
+      @include drumee.typo($color: drumee.$egrey-78, $size: 12px, $line: 20px);
     }
   }
 

@@ -30,7 +30,6 @@ class __location_item extends LetcBox {
     })
   }
 
-
 }
 
 module.exports = __location_item

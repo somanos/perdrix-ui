@@ -47,6 +47,20 @@ export function getLocationFields(location) {
 
 /**
  * 
+ * @param {*} location 
+ * @returns 
+ */
+export function getLocationText(a) {
+  if (_.isArray(a)) {
+    return a.join(' ')
+  } else if (_.isObject(a)) {
+    return [a.housenumber, a.streettype, a.streetname, a.additional].join(' ')
+  }
+  return a;
+}
+
+/**
+ * 
  * @param {*} v 
  * @returns 
  */

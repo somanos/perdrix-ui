@@ -8,6 +8,7 @@ module.exports = {
 	'form_billing_info': import('./manager/widget/customer/billing-info'),
 	'form_customer': import('./manager/widget/customer/form'),
 	'form_customer_poc': import('./manager/widget/customer/poc-form'),
+	'form_location': import('./manager/widget/location/form'),
 	'form_note': import('./manager/widget/note/form'),
 	'form_quote': import('./manager/widget/quote/form'),
 	'form_poc': import('./manager/widget/poc/form'),

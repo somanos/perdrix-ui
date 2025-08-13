@@ -32,8 +32,8 @@ class __window_address extends __window {
       itemService: 'load-customer-window'
     })
 
-    this.onDomRefresh = this.onDomRefresh.bind(this);
-    RADIO_BROADCAST.on('customer-created', this.onDomRefresh)
+    this.refreshList = this.refreshList.bind(this);
+    RADIO_BROADCAST.on('address-update', this.refreshList)
     this._storedModels = [];
     this._timer = new Date().getTime();
     this._filters = [];
@@ -59,7 +59,7 @@ class __window_address extends __window {
   onBeforeDestroy() {
     let list = this.getPart(_a.list);
     if (list) list.off("change:state", this._onDataReceived)
-    RADIO_BROADCAST.off('customer-created', this.onDomRefresh)
+    RADIO_BROADCAST.off('address-update', this.refreshList)
   }
 
   /**
@@ -108,8 +108,8 @@ class __window_address extends __window {
     if (!this._api) {
       this._api = {
         service: PLUGINS.address.list,
-        sort_by: _a.city,
-        order: "asc"
+        sort_by: _a.ctime,
+        order: "desc"
       }
     }
     return this._api;
@@ -125,6 +125,14 @@ class __window_address extends __window {
     }, 200);
   }
 
+  /**
+   * 
+   */
+  refreshList() {
+    this.ensurePart(_a.list).then((list) => {
+      list.restart();
+    })
+  }
 
   /**
    * 

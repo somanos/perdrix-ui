@@ -1,8 +1,17 @@
 
 const Leaflet = require('leaflet');
+
 require('leaflet/dist/leaflet.css');
+const {
+  loadWidget, getLocationFields
+} = require("../../../utils")
 
 class __locaion_view extends LetcBox {
+  constructor(...args) {
+    super(...args);
+    this.loadWidget = loadWidget.bind(this);
+    this.getLocationFields = getLocationFields.bind(this);
+  }
 
   /**
    * 
@@ -25,7 +34,7 @@ class __locaion_view extends LetcBox {
       geometry,
       location,
       postcode,
-      streetname
+      streetname,
     } = this.model.toJSON();
 
     return {
@@ -35,7 +44,8 @@ class __locaion_view extends LetcBox {
       geometry,
       location,
       postcode,
-      street:streetname,
+      street: streetname,
+      ...this.getLocationFields(location)
     }
   }
 
@@ -113,7 +123,7 @@ class __locaion_view extends LetcBox {
     if (!id) {
       this.warn("Got no site id", { id, type, siteId, custId })
     }
-    let args = { location: loc, postcode, type, id, addressId}
+    let args = { location: loc, postcode, type, id, addressId }
     this.debug("AAA:117", args)
     this.postService('pdx_utils.get_geoloc', args)
       .then((data) => {
@@ -121,6 +131,22 @@ class __locaion_view extends LetcBox {
         this.mset(data);
         this.showMap()
       })
+  }
+
+  /**
+   * 
+   */
+  promptLocation() {
+    const { custId } = this.data();
+    this.loadWidget({
+      kind: 'form_location',
+      id: `location-form-${custId}`,
+      uiHandler: this.getHandlers(_a.ui),
+      ...this.data(),
+      type: !this.mget(_a.gender) ? 'company' : 'person',
+      callbackService: this.mget('callbackService'),
+      isUpdate: 1
+    })
   }
 
   /**
@@ -150,6 +176,9 @@ class __locaion_view extends LetcBox {
         this.ensurePart("map-container").then((p) => {
           p.el.dataset.state = cmd.mget(_a.state);
         })
+        break;
+      case 'update-address':
+        this.promptLocation();
         break;
       default:
         this.triggerHandlers({ service: this.mget(_a.service) })
