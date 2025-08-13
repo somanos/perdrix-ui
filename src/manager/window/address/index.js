@@ -108,8 +108,16 @@ class __window_address extends __window {
     if (!this._api) {
       this._api = {
         service: PLUGINS.address.list,
-        sort_by: _a.ctime,
-        order: "desc"
+        filter: [
+          {
+            name: _a.ctime,
+            value: "desc",
+          },
+          {
+            name: "streetname",
+            value: "asc",
+          },
+        ],
       }
     }
     return this._api;
@@ -148,7 +156,7 @@ class __window_address extends __window {
     if (cmd.getValue) {
       this._api[name] = cmd.getValue();
     }
-    //if (!this._api.city && !this._api.street && !this._api.postcode) return;
+    this.debug("AAA:151", this._api, name, this._api[name])
     this.ensurePart(_a.list).then((list) => {
       list.mset({ api: this._api });
       list.restart();
@@ -188,6 +196,19 @@ class __window_address extends __window {
 
     switch (service) {
       case _e.search:
+        this._api = {
+          ...this._api,
+          filter: [
+            {
+              name: "streetname",
+              value: "asc",
+            },
+            {
+              name: "housenumber",
+              value: "asc",
+            },
+          ],
+        }
         this.searchAddress(cmd);
         return;
       case "load-viewer":
