@@ -15,6 +15,7 @@ module.exports = function (ui) {
     className: `${ui.fig.family}__searchbox customer`,
     placeholder: "Nom client",
     name: 'custName',
+    service: _e.search,
     sys_pn: "cust-entry"
   });
   return addressSearchBoxes(ui, itemsOpt, extra)

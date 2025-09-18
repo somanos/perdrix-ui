@@ -2,7 +2,7 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime } = require("../../../../utils")
+const { fromUnixtime, normalizelLocation } = require("../../../../utils")
 const { contextButtons } = require("../../../skeleton")
 
 
@@ -13,7 +13,7 @@ const { contextButtons } = require("../../../skeleton")
  */
 
 function quote_item(ui) {
-  let { ctime, description = "", chrono = "", filepath, customer } = ui.model.toJSON()
+  let { ctime, description = "", chrono = "", filepath, customer, site } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let service;
   let tooltips;
@@ -28,6 +28,13 @@ function quote_item(ui) {
       content: `${customer.custName}`,
     });
   }
+  let place;
+  if (site && site.location) {
+    place = Skeletons.Note({
+      className: `${pfx}__text`,
+      content: `${normalizelLocation(site.location)} ${site.city}`
+    });
+  }
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -39,13 +46,14 @@ function quote_item(ui) {
         cust,
         Skeletons.Note({
           className: `label`,
-          content: `Devis n ${chrono}`,
+          content: `Devis n° ${chrono}`,
           service,
           tooltips
         }),
         ...contextButtons(ui)
       ]
     }),
+    place,
     Skeletons.Box.X({
       className: `${pfx}__description`,
       kids: [

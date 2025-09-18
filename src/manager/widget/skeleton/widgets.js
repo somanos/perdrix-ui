@@ -27,7 +27,7 @@ export function list(ui, partName = _a.list, args) {
  * @returns 
  */
 export function entry(ui, opt) {
-  let { value, name, placeholder, sys_pn,
+  let { value, name, placeholder, sys_pn, service = _a.input,
     className = "", currency = "", ico,
     uppercase = 0, capitalize = 0 } = opt;
   const pfx = `${ui.fig.family}__entry ${name}`;
@@ -38,7 +38,7 @@ export function entry(ui, opt) {
     formItem: name,
     innerClass: name,
     mode: _a.interactive,
-    service: _a.input,
+    service,
     placeholder,
     uppercase,
     capitalize,

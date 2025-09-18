@@ -9,14 +9,14 @@ module.exports = function (ui) {
     role: ui.mget(_a.role) || '',
     logicalParent: ui,
     uiHandler: [ui],
-    callbackService: "poc-updated"
+    callbackService: "quote-updated"
   };
   let extra = entry(ui, {
     className: `${ui.fig.family}__searchbox poc`,
-    placeholder: "Nom contact",
-    name: 'pocName',
-    sys_pn: "poc-entry",
-    service: _e.search,
+    placeholder: "Nom du client",
+    name: 'custName',
+    sys_pn: "custname-entry",
+    service: _a.search,
     mode: "editable"
   });
   return addressSearchBoxes(ui, itemsOpt, extra)

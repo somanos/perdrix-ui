@@ -193,22 +193,19 @@ class __window_site_list extends __window {
       case _a.content:
         child.feed(require('./skeleton/list')(this));
         break;
-      // case _a.list:
-      //   child.on(_e.data, this._onDataReceived);
-      //   this.list = child;
-      //   break;
       case _a.filter:
         this._updateFilter();
         child.on(_e.close, this._onFilterClosed);
         break;
-      // case "window-header":
-      //   this.setupInteract();
-      //   break;
       default:
         super.onPartReady(child, pn)
     }
   }
 
+  /**
+   * 
+   * @returns 
+   */
   getCurrentApi() {
     if (!this._api) {
       this._api = {
@@ -217,6 +214,21 @@ class __window_site_list extends __window {
       }
     }
     return this._api;
+  }
+
+  /**
+   * 
+   */
+  resetEntries() {
+    super.resetEntries("street-entry", "city-entry", "postcode-entry", "cust-entry");
+    this._api = {
+      service: PLUGINS.site.list,
+      args: { filter: [{ name: _a.ctime, value: 'desc' }] }
+    }
+    this.ensurePart(_a.list).then((list) => {
+      list.mset({ api: this._api });
+      list.restart();
+    })
   }
 
   /**
@@ -265,6 +277,10 @@ class __window_site_list extends __window {
     this.debug(`AAA:257 onUiEvent service=${service}`, cmd, this);
 
     switch (service) {
+      case _e.reset:
+        this.resetEntries();
+        break;
+
       case _e.sort:
       case _e.search:
         if (BLIND_CHARS.includes(cmd.status)) return;

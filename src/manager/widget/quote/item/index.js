@@ -8,7 +8,6 @@ class __quote_item extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.debug("AAA:27", this, opt)
   }
 
 

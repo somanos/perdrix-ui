@@ -2,7 +2,7 @@
 * Widget skeleton automatically generated on 2025-03-05T03:29:33.857Z
 * npm run add-widget -- --fig=<grpup.family> --dest=/path/to/the/widget
 * ==================================================================== */
-const { fromUnixtime } = require("../../../../utils")
+const { fromUnixtime, normalizelLocation } = require("../../../../utils")
 const { contextButtons } = require("../../../skeleton")
 
 /**
@@ -12,7 +12,7 @@ const { contextButtons } = require("../../../skeleton")
  */
 
 function bill_item(ui) {
-  let { chrono, ctime, description, workId, filepath, customer } = ui.model.toJSON()
+  let { chrono, ctime, description, workId, filepath, customer, site } = ui.model.toJSON()
   let pfx = ui.fig.family;
   if (!workId) {
     return Skeletons.Note({
@@ -33,6 +33,14 @@ function bill_item(ui) {
       content: `${customer.custName}`,
     });
   }
+  let place;
+  if (site && site.location) {
+    place = Skeletons.Note({
+      className: `${pfx}__text`,
+      content: `${normalizelLocation(site.location)} ${site.city}`
+    });
+  }
+
   let overview = [
     Skeletons.Box.G({
       className: `${pfx}__summary header`,
@@ -51,6 +59,7 @@ function bill_item(ui) {
         ...contextButtons(ui)
       ]
     }),
+    place,
     Skeletons.Box.X({
       className: `${pfx}__description`,
       kids: [

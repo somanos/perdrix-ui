@@ -1,23 +1,22 @@
 const __window = require('..');
 const { placeholder } = require("../../widget/skeleton")
-// const { searchPoc } = require("../../utils");
 const { BLIND_CHARS, CTYPE } = require("../../utils/constants")
-class __window_site_poc extends __window {
+class window_quote_list extends __window {
 
-  // constructor(...args) {
-  //   super(...args);
-  //   this.searchPoc = searchPoc.bind(this);
-  // }
 
-  async initialize(opt) {
+  /**
+   * 
+   * @param {*} opt 
+   */
+  initialize(opt) {
     require('./skin');
     super.initialize(opt);
     this._filter = {
       date: 0,
       name: 1,
     }
-    this.handlePocsList = this.handlePocsList.bind(this);
-    RADIO_BROADCAST.on('site-poc-pupdate', this.handlePocsList)
+    this.handleQuotesList = this.handleQuotesList.bind(this);
+    RADIO_BROADCAST.on('quote-pupdate', this.handleQuotesList)
   }
 
   /**
@@ -45,20 +44,20 @@ class __window_site_poc extends __window {
     this.feed(require('./skeleton')(this));
     this.setupInteract();
     this.raise();
-    this.loadPocList();
+    this.loadQuotesList();
   }
 
   /**
    * 
    */
   onBeforeDestroy() {
-    RADIO_BROADCAST.on('site-poc-pupdate', this.handlePocsList)
+    RADIO_BROADCAST.on('quote-pupdate', this.handleQuotesList)
     super.onBeforeDestroy();
   }
   /**
    * 
    */
-  handlePocsList(data) {
+  handleQuotesList(data) {
     let item = this.__list.getItemsByAttr(_a.id, data.id)[0];
     if (!item) {
       this.__list.prepend({
@@ -77,24 +76,24 @@ class __window_site_poc extends __window {
   * 
   * @param {*} cmd 
   */
-  loadPocList(filter) {
+  loadQuotesList(filter) {
     let api = {
-      service: PLUGINS.poc.list,
+      service: PLUGINS.quote.list,
       args: {
         type: 'site'
       }
     };
     let itemsOpt = {
-      kind: 'poc_item',
+      kind: 'quote_item',
       uiHandler: [this],
-      service: "update-poc",
+      service: "update-quote",
       mode: "editable"
     }
     if (filter) api.args = { ...api.args, ...filter };
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
       list.feed(placeholder(this, {
-        labels: ["Aucun contact pour le moment"],
+        labels: ["Aucun devis pour le moment"],
       }));
     })
   }
@@ -106,10 +105,10 @@ class __window_site_poc extends __window {
   getCurrentApi() {
     if (!this._api) {
       this._api = {
-        service: PLUGINS.poc.list,
+        service: PLUGINS.quote.list,
         args: {
           type: "site",
-          filter: [{ name: "pocName", value: 'asc' }]
+          filter: [{ name: "custName", value: 'asc' }]
         }
       }
     }
@@ -119,7 +118,7 @@ class __window_site_poc extends __window {
   /**
    * 
    */
-  async searchPoc(cmd) {
+  async searchQuote(cmd) {
     let order, name;
     if (cmd) {
       name = cmd.mget(_a.name);
@@ -148,27 +147,9 @@ class __window_site_poc extends __window {
   }
 
   /**
-   * 
-   */
-  resetEntries() {
-    super.resetEntries("street-entry", "city-entry", "postcode-entry", "poc-entry");
-    this._api = {
-      service: PLUGINS.poc.list,
-      args: {
-        type: "site",
-        filter: [{ name: "pocName", value: 'asc' }]
-      }
-    }
-    this.ensurePart(_a.list).then((list) => {
-      list.mset({ api: this._api });
-      list.restart();
-    })
-  }
-
-  /**
   * 
   */
-  async promptPoc(cmd) {
+  async promptQuote(cmd) {
     let {
       siteId, custId, pocId, phones, email, customer, role, gender, firstname, lastname
     } = cmd.model.toJSON();
@@ -194,7 +175,7 @@ class __window_site_poc extends __window {
   /**
     * 
     */
-  async updatePocItem(cmd, args) {
+  async updateQuoteItem(cmd, args) {
     this.debug("AAA:153:", cmd, args)
     this.ensurePart(_a.list).then((p) => {
       let { data } = args;
@@ -215,23 +196,25 @@ class __window_site_poc extends __window {
     const service = args.service || cmd.model.get(_a.service);
     this.debug(`AAA:97XXX onUiEvent=${service}`, cmd, args, this);
     switch (service) {
-      case _e.reset:
-        this.resetEntries();
-        break;
-      case 'poc-created':
+      case 'quote-created':
         this.loadNotesList(cmd)
         break;
+      case _e.reset:
+        this.resetEntries("street-entry", "city-entry", "postcode-entry", "custname-entry");
+        this.loadQuotesList();
+        break;
       case "sort":
-        this.loadPocList(await this.getSortOptions(null, [_a.lastname, _a.ctime]));
+        this.loadQuotesList(await this.getSortOptions(null, [_a.lastname, _a.ctime]));
         break;
       case _a.search:
+      case _e.input:
         if (BLIND_CHARS.includes(cmd.status)) return;
         this.throtle(cmd).then(() => {
-          this.searchPoc(cmd);
+          this.searchQuote(cmd);
         })
         break;
-      case "update-poc":
-        let kind = "form_site_poc";
+      case "update-quote":
+        let kind = "form_bill";
         if (cmd.mget(_a.category) == 'customer') {
           kind = "form_customer_poc";
         }
@@ -257,5 +240,5 @@ class __window_site_poc extends __window {
 }
 
 
-module.exports = __window_site_poc;
+module.exports = window_quote_list;
 

@@ -2,7 +2,7 @@ require('./skin');
 const {
   feedList, clearList, loadWidget, changeDataset, loadWorkList,
   promptLocation, searchLocation, throtle, addressSelected, promptSite, loadSitePocs,
-  itemMenuSelected, selectWork, updateAmount, loadMissionWindow, getSortOptions,isBlindChar,
+  itemMenuSelected, selectWork, updateAmount, loadMissionWindow, getSortOptions, isBlindChar,
   showMessage, viewDoc, promptMission, promptPoc, loadPocsList, loadAddressWindow, searchWithAddress
 } = require("./utils")
 
@@ -61,6 +61,18 @@ class __form_core extends DrumeeInteractWindow {
       case "window-header":
         this.setupInteract();
         break;
+    }
+  }
+
+  /**
+ * 
+ * @param  {...any} entries 
+ */
+  resetEntries(...entries) {
+    if (!entries || !entries.length) return
+    for (let e of entries) {
+      let p = this.getPart(e);
+      if (p && p.setValue) p.setValue('')
     }
   }
 

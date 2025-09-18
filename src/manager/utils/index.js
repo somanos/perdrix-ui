@@ -587,7 +587,6 @@ export async function searchWithAddress(cmd) {
     let form = await this.ensurePart("search-box")
     let { street } = form.getData();
     if (!street) delete this._api.args.housenumber;
-    this.debug("AAA:137", form.getData())
   }
   this.ensurePart(_a.list).then((list) => {
     list.mset({ api: this._api });

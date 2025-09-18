@@ -199,7 +199,23 @@ class __window_customer_list extends __window {
     }
   }
 
-
+  /**
+   * 
+   */
+  resetEntries() {
+    super.resetEntries("street-entry", "city-entry", "postcode-entry", "cust-entry");
+    this._api = {
+      service: PLUGINS.customer.list,
+      args: {
+        sort_by: _a.ctime,
+        order: "desc"
+      }
+    }
+    this.ensurePart(_a.list).then((list) => {
+      list.mset({ api: this._api });
+      list.restart();
+    })
+  }
 
   /**
    * @param {*} cmd
@@ -213,6 +229,9 @@ class __window_customer_list extends __window {
       case _e.close:
         this.hide();
         return;
+      case _e.reset:
+        this.resetEntries();
+        break;
       case _e.sort:
       case _e.search:
         if (BLIND_CHARS.includes(cmd.status)) return;

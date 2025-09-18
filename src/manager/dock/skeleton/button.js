@@ -3,18 +3,18 @@ function _helpers (_ui_, content, name) {
   const a = Skeletons.Box.X({
     debug: __filename,
     className: `${pfx}-container`,
-    service : `video-help`,
+    // service : `video-help`,
     name,
     haptic:2000,
     kidsOpt:{
       active:0
     },
     kids: [
-      Skeletons.Button.Svg({
-        ico: 'desktop_videofile',
-        className: `${pfx}-icon`,
-        innerClass:'helper',
-      }),
+      // Skeletons.Button.Svg({
+      //   ico: 'desktop_videofile',
+      //   className: `${pfx}-icon`,
+      //   innerClass:'helper',
+      // }),
       Skeletons.Note({
         className: `${pfx}-text`,
         content

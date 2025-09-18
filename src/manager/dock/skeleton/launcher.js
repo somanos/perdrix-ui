@@ -10,35 +10,30 @@ function dockLaunchers(_ui_, ismobile) {
     button(_ui_, {
       ico: 'geolocation',
       className: `${button_class} address launcher-icon`,
-      sys_pn: 'address-launcher',
       respawn: 'window_address',
       service: _e.launch
     }, "Liste des addresse"),
     button(_ui_, {
       ico: 'desktop_group',
       className: `${button_class} customer launcher-icon`,
-      sys_pn: 'customer-launcher',
       respawn: 'window_customer_list',
       service: _e.launch
     }, "Liste des clients"),
     button(_ui_, {
       ico: 'desktop_group',
       className: `${button_class} customer launcher-icon plus`,
-      sys_pn: 'new-customer-launcher',
       respawn: 'form_customer',
       service: _e.launch,
     }, "Ajouter un client"),
     button(_ui_, {
       ico: 'maintenance',
       className: `${button_class} site launcher-icon`,
-      sys_pn: 'site-list-launcher',
       respawn: 'window_site_list',
       service: _e.launch
     }, "Liste des chantiers"),
     button(_ui_, {
       ico: 'maintenance',
       className: `${button_class} site launcher-icon plus`,
-      sys_pn: 'new-customer-launcher',
       respawn: 'customer_selector',
       service: _e.launch,
     }, "Ajouter un chantier"),
@@ -47,21 +42,43 @@ function dockLaunchers(_ui_, ismobile) {
       className: `${button_class} poc launcher-icon`,
       service: _e.launch,
       respawn: 'window_site_poc',
-    }, "Liste des contacts chantiers"),
+    }, "Liste des contacts chantier"),
     button(_ui_, {
       ico: 'account_name',
       className: `${button_class} poc launcher-icon plus`,
-      sys_pn: 'new-poc-launcher',
       respawn: 'form_poc',
       service: _e.launch
-    }, "Créer un contact"),
+    }, "Créer un contact chantier"),
     button(_ui_, {
-      ico: 'editbox_fill',
-      className: `${button_class} perdrix launcher-icon`,
-      sys_pn: 'new-balance-launcher',
-      respawn: 'window_balance',
+      ico: 'desktop_docfile',
+      className: `${button_class} quote launcher-icon`,
+      service: _e.launch,
+      respawn: 'window_quote_list',
+    }, "Liste des devis"),
+    button(_ui_, {
+      ico: 'desktop_docfile',
+      className: `${button_class} quote launcher-icon plus`,
+      respawn: 'form_poc',
       service: _e.launch
-    }, "Liste des factures"),
+    }, "Créer un devis"),
+    button(_ui_, {
+      ico: 'menu_pages',
+      className: `${button_class} bill launcher-icon`,
+      respawn: 'window_bill_list',
+      service: _e.launch
+    }, "Liste des facture"),
+    button(_ui_, {
+      ico: 'menu_pages',
+      className: `${button_class} bill launcher-icon plus`,
+      respawn: 'form_poc',
+      service: _e.launch
+    }, "Créer une facture"),
+    // button(_ui_, {
+    //   ico: 'menu_pages',
+    //   className: `${button_class} bill launcher-icon`,
+    //   respawn: 'window_balance',
+    //   service: _e.launch
+    // }, "Liste des facture"),
   ]
   if (Env.get('quote_home')) {
     launchers.push(
