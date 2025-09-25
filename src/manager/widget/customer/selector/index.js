@@ -1,7 +1,7 @@
 
 const { placeholder, acknowledge } = require("../../skeleton")
 const Form = require('../../form');
-class __site_selector extends Form {
+class customer_selector extends Form {
 
 
   /**
@@ -88,6 +88,7 @@ class __site_selector extends Form {
    * 
    */
   async onDomRefresh() {
+    this.debug("AAA:91", this.mget(_a.title))
     this.feed(require('./skeleton')(this));
   }
 
@@ -109,7 +110,17 @@ class __site_selector extends Form {
 
       case "create-from-selected":
         if (!this._selected) return;
-        this.promptSite(this._selected);
+        switch (this.mget('purpose')) {
+          case "create-site":
+            this.promptSite(this._selected);
+            break;
+          case "create-quote":
+            this.promptSite(this._selected);
+            break;
+          case "create-bill":
+            this.promptSite(this._selected);
+            break;
+        }
         this.goodbye();
         break;
 
@@ -135,4 +146,4 @@ class __site_selector extends Form {
 
 }
 
-module.exports = __site_selector
+module.exports = customer_selector

@@ -1,13 +1,13 @@
-function _helpers (_ui_, content, name) {
-  const pfx = `${_ui_.fig.family}__helper`
+function _helpers(ui, content, name) {
+  const pfx = `${ui.fig.family}__helper`
   const a = Skeletons.Box.X({
     debug: __filename,
     className: `${pfx}-container`,
     // service : `video-help`,
     name,
-    haptic:2000,
-    kidsOpt:{
-      active:0
+    haptic: 2000,
+    kidsOpt: {
+      active: 0
     },
     kids: [
       // Skeletons.Button.Svg({
@@ -25,14 +25,15 @@ function _helpers (_ui_, content, name) {
   return a;
 };
 
-const dockButtom = function (_ui_, opt, label, extra) {
+const dockButtom = function (ui, opt, label, extra) {
   const a = Skeletons.Box.X({
     debug: __filename,
-    className: `${_ui_.fig.family}__action`,
-    helper: _helpers(_ui_, label, opt.helperName),
-    kids: [Skeletons.Button.Svg({innerClass:'action', ...opt})]
+    className: `${ui.fig.family}__action`,
+    helper: _helpers(ui, label, opt.helperName),
+    args: opt.args,
+    kids: [Skeletons.Button.Svg({ innerClass: 'action', ...opt })]
   })
-  if(extra){
+  if (extra) {
     a.kids.unshift(extra)
   }
   return a;

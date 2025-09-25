@@ -2,7 +2,7 @@ const __window = require('..');
 const { transferTab, quoteTab, billTab, pocTab, workTab } = require("./skeleton/widget")
 const { updateBalance, loadSalesHistory, loadSalesList } = require("../../utils")
 
-class __window_site extends __window {
+class window_site extends __window {
   constructor(...args) {
     super(...args);
     this.updateBalance = updateBalance.bind(this);
@@ -227,7 +227,6 @@ class __window_site extends __window {
 
 }
 
-__window_site.initClass();
 
-module.exports = __window_site;
+module.exports = window_site;
 

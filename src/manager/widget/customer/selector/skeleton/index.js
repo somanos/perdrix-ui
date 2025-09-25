@@ -21,12 +21,14 @@ module.exports = function (ui) {
       addressSearchBoxes(ui, itemsOpt, extra)
     ]
   });
+  const title = ui.mget(_a.title) || 'Choisir un client pour le nouveau chantier';
+  const purpose = ui.mget('purpose') || "create-customer";
 
   return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      headerBox(ui, { title: "Choisir un client pour le nouveau chantier" }),
+      headerBox(ui, { title }),
       Skeletons.Box.Y({
         service: _e.raise,
         className: `${pfx}__container ${ui.fig.group}__container`,
@@ -46,7 +48,7 @@ module.exports = function (ui) {
               Skeletons.Note({
                 className: `${pfx}__button-item`,
                 content: "Créer un nouveau client",
-                service: "create-customer",
+                service: purpose,
                 state: 1,
               }),
             ]

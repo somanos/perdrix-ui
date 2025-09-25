@@ -31,4 +31,13 @@
     }
   }
 
+  &__search-container.quote {
+    grid-template-columns: 1fr 100px 1fr 1fr 30px;
+    grid-gap: 0.5rem;
+
+    input {
+      width: 100%;
+    }
+  }
+
 }

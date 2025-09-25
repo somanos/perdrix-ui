@@ -1,6 +1,6 @@
 require('./skin');
 const {
-  feedList, clearList, loadWidget, changeDataset, loadWorkList,
+  feedList, clearList, loadWidget, changeDataset, loadWorkList, promptQuote, promptBill,
   promptLocation, searchLocation, throtle, addressSelected, promptSite, loadSitePocs,
   itemMenuSelected, selectWork, updateAmount, loadMissionWindow, getSortOptions, isBlindChar,
   showMessage, viewDoc, promptMission, promptPoc, loadPocsList, loadAddressWindow, searchWithAddress
@@ -24,6 +24,8 @@ class __form_core extends DrumeeInteractWindow {
     this.promptSite = promptSite.bind(this);
     this.promptMission = promptMission.bind(this)
     this.promptPoc = promptPoc.bind(this)
+    this.promptQuote = promptQuote.bind(this)
+    this.promptBill = promptBill.bind(this)
     this.loadPocsList = loadPocsList.bind(this);
     this.getSortOptions = getSortOptions.bind(this);
     this.loadSitePocs = loadSitePocs.bind(this);
@@ -70,10 +72,13 @@ class __form_core extends DrumeeInteractWindow {
  */
   resetEntries(...entries) {
     if (!entries || !entries.length) return
+    let found = 0;
     for (let e of entries) {
       let p = this.getPart(e);
+      if (p.getValue()) found = 1;
       if (p && p.setValue) p.setValue('')
     }
+    return found;
   }
 
 

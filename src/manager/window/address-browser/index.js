@@ -240,46 +240,6 @@ class __window_address_browser extends __window {
   }
 
 
-  /**
-  * 
-  */
-  // async loadContextBar(cmd) {
-  //   let context = await this.ensurePart("context-bar");
-  //   let name = "customer";
-  //   if (cmd) {
-  //     name = cmd.mget(_a.name);
-  //   }
-  //   let format = "normal";
-  //   let salesbox;
-  //   this._currentTab = name;
-  //   switch (name) {
-  //     case "customer":
-  //       context.feed(customerTab(this));
-  //       this.loadCustomersList(this);
-  //       break;
-  //     case "mission":
-  //       context.feed(missionTab(this));
-  //       this.loadMissionsList(this);
-  //       break;
-  //     case "bill":
-  //       format = "auto";
-  //       context.feed(billTab(this));
-  //       this.loadBillsList(this);
-  //       break;
-  //     case "quote":
-  //       context.feed(quoteTab(this));
-  //       this.loadQuotesList(this);
-  //       break;
-  //     case "note":
-  //       context.feed(noteTab(this));
-  //       this.loadNotesList(this);
-  //       break;
-  //     case "poc":
-  //       context.feed(pocTab(this));
-  //       this.loadPocsList(this);
-  //       break;
-  //   }
-  // }
 
   /**
    * 

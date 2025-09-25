@@ -338,6 +338,7 @@ class __perdrix_manager extends DrumeeWm {
    */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.mget(_a.service);
+    const options = cmd.mget(_a.args);
     this.closeTooltips();
     switch (service) {
       case _e.launch:
@@ -349,7 +350,7 @@ class __perdrix_manager extends DrumeeWm {
           }
         }
         cmd.el.dataset.isActive = _a.on;
-        return Wm.launch({ kind: cmd.mget(_a.respawn), source: cmd }, this._launchOptions);
+        return Wm.launch({ ...options, kind: cmd.mget(_a.respawn), source: cmd }, this._launchOptions);
       case _e.search:
         this.search(cmd)
         return;

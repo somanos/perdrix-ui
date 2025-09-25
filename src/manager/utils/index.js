@@ -234,6 +234,52 @@ export async function promptPoc(cmd) {
 }
 
 /**
+* 
+*/
+export async function promptQuote(ref) {
+  ref = ref || this
+  const { custId, category, siteId, workId, site, workType, customer, description } = ref.model.toJSON();
+  this.loadWidget({
+    kind: 'form_quote',
+    custId,
+    siteId,
+    workId,
+    site,
+    category,
+    workType,
+    category,
+    customer,
+    description,
+    id: `quote-form-${workId}`,
+    uiHandler: [this],
+    callbackService: "quote-created"
+  })
+}
+
+/**
+* 
+*/
+export async function promptBill(ref) {
+  ref = ref || this
+  const { custId, category, siteId, workId, site, workType, customer, description } = ref.model.toJSON();
+  this.loadWidget({
+    kind: 'form_bill',
+    custId,
+    siteId,
+    workId,
+    site,
+    category,
+    workType,
+    category,
+    customer,
+    description,
+    id: `bill-form-${workId}`,
+    uiHandler: [this],
+    callbackService: "bill-created"
+  })
+}
+
+/**
  * 
  */
 export async function loadPocsList() {

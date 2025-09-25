@@ -1,5 +1,5 @@
 
-const { acknowledge, address, company, person } = require("../../skeleton")
+const { address, company, person } = require("../../skeleton")
 const Form = require('../../form');
 
 class __form_customer extends Form {

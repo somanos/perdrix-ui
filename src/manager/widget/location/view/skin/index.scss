@@ -23,6 +23,10 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+
+        &[data-state="0"] {
+          display: none;
+        }
       }
     }
   }

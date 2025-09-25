@@ -1,9 +1,9 @@
 const __window = require('..');
 const { placeholder } = require("../../widget/skeleton")
-const { BLIND_CHARS, CTYPE } = require("../../utils/constants")
+const { BLIND_CHARS } = require("../../utils/constants")
+
+
 class window_quote_list extends __window {
-
-
   /**
    * 
    * @param {*} opt 
@@ -16,7 +16,7 @@ class window_quote_list extends __window {
       name: 1,
     }
     this.handleQuotesList = this.handleQuotesList.bind(this);
-    RADIO_BROADCAST.on('quote-pupdate', this.handleQuotesList)
+    RADIO_BROADCAST.on('quote-pupdated', this.handleQuotesList)
   }
 
   /**
@@ -51,7 +51,7 @@ class window_quote_list extends __window {
    * 
    */
   onBeforeDestroy() {
-    RADIO_BROADCAST.on('quote-pupdate', this.handleQuotesList)
+    RADIO_BROADCAST.on('quote-pupdated', this.handleQuotesList)
     super.onBeforeDestroy();
   }
   /**
@@ -61,9 +61,10 @@ class window_quote_list extends __window {
     let item = this.__list.getItemsByAttr(_a.id, data.id)[0];
     if (!item) {
       this.__list.prepend({
-        ...data, kind: 'poc_item',
+        ...data,
+        kind: 'quote_item',
         uiHandler: [this],
-        service: "update-poc",
+        service: "quote-pupdated",
         mode: "editable"
       })
     } else {
@@ -127,7 +128,12 @@ class window_quote_list extends __window {
     }
     if (!name) return;
     if (cmd.getValue) {
-      this._api.args[name] = cmd.getValue();
+      let value = cmd.getValue();
+      this._api.args[name] = value
+      if (name == "address") {
+        /** Require address to be more complete to avoid jaming request */
+        if (value.split(/[ ,]+/).lenght < 3) return;
+      }
     }
     if (/^[0-9]+ /.test(this._api.args[name]) && name == _a.street) {
       let a = this._api.args[name].split(/ +/)
@@ -137,9 +143,8 @@ class window_quote_list extends __window {
       let form = await this.ensurePart("search-box")
       let { street } = form.getData();
       if (!street) delete this._api.args.housenumber;
-      this.debug("AAA:137", form.getData())
     }
-    this
+    this.debug("AAA:137", this._api)
     this.ensurePart(_a.list).then((list) => {
       list.mset({ api: this._api });
       list.restart();
@@ -194,14 +199,28 @@ class window_quote_list extends __window {
    */
   async onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`AAA:97XXX onUiEvent=${service}`, cmd, args, this);
+    this.debug(`AAA:198 onUiEvent=${service}`, cmd, args, this);
+    let kind;
     switch (service) {
       case 'quote-created':
-        this.loadNotesList(cmd)
+        // this.loadNotesList(cmd)
+        break;
+      case 'quote-updated':
+        let items = this.getItemsByAttr(_a.id, args.data.id)
+        for (let item of items) {
+          item.mset(args.data);
+          item.onDomRefresh()
+        }
+        // this.loadNotesList(cmd)
         break;
       case _e.reset:
-        this.resetEntries("street-entry", "city-entry", "postcode-entry", "custname-entry");
-        this.loadQuotesList();
+        this._api.args = {
+          type: "site",
+          filter: [{ name: "custName", value: 'asc' }]
+        };
+        if (this.resetEntries("description-entry", "chrono-entry", "custname-entry", "address-entry")) {
+          this.loadQuotesList();
+        }
         break;
       case "sort":
         this.loadQuotesList(await this.getSortOptions(null, [_a.lastname, _a.ctime]));
@@ -214,12 +233,27 @@ class window_quote_list extends __window {
         })
         break;
       case "update-quote":
-        let kind = "form_bill";
+        kind = "form_quote";
         if (cmd.mget(_a.category) == 'customer') {
           kind = "form_customer_poc";
         }
         this.loadWidget({
           ...cmd.data(),
+          uiHandler: [this],
+          kind,
+        })
+        break;
+      case _e.duplicate:
+        kind = "form_quote";
+        let data = {
+          ...cmd.data(),
+          mode: service,
+        }
+        delete data.id;
+        this.loadWidget({
+          ...data,
+          mode: service,
+          uiHandler: [this],
           kind,
         })
 

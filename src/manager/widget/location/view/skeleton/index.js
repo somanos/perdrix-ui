@@ -34,6 +34,7 @@ function locaion_view(ui) {
       service: 'update-address',
       className: `${ui.fig.family}__icon-update icon-update`,
       uiHandler: [ui],
+      state: ui.mget('editable'),
     }),
   ]
   return Skeletons.Box.Y({

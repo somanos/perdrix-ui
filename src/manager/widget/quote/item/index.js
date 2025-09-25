@@ -23,6 +23,11 @@ class __quote_item extends LetcBox {
       site,
       status,
       type,
+      ttc,
+      tva,
+      ht,
+      discount,
+      id,
       customer,
     } = this.model.toJSON();
 
@@ -35,7 +40,11 @@ class __quote_item extends LetcBox {
       description,
       site,
       status,
-      id: workId,
+      ttc,
+      tva,
+      ht,
+      discount,
+      id,
       type
     }
   }
@@ -82,6 +91,7 @@ class __quote_item extends LetcBox {
       case _a.remove:
         this.removeItem();
         break;
+      case _e.duplicate:
       case "show-doc":
         this.triggerHandlers({
           service,
@@ -89,7 +99,7 @@ class __quote_item extends LetcBox {
         break;
       default:
         this.triggerHandlers({
-          service:this.mget(_a.service),
+          service: this.mget(_a.service),
         })
         break;
     }

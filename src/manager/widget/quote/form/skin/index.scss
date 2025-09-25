@@ -120,12 +120,38 @@
 
   @include dialog-acknowledge;
   @include dialog-overlay;
+  @include window-search-boxes;
 
   &__cartridge-container {
     margin-top: 50px;
     border: 0.5px solid lightgrey;
     padding: 5px;
     border-radius: 3px;
+  }
+
+  &__cartridge-main {
+    width: 100%;
+    grid-template-columns: 150px 1fr 30px;
+    height: 35px;
+
+    input {
+      text-align: start;
+    }
+
+    &.proposal {
+      grid-template-columns: 120px 1fr;
+
+      input {
+        text-align: end;
+      }
+    }
+
+    svg {
+      padding: 6px;
+      color: rgb(125, 123, 123);
+    }
+
+    margin: 10px 0;
   }
 
   &__category-main {
@@ -157,6 +183,31 @@
     &[data-state="0"] {
       border: solid 0.5px lightgray;
     }
+  }
+
+  &__entries-manual dialog__wrapper {
+    position: absolute;
+    top: 90px;
+    background: white;
+    max-width: 555px;
+    left: 70px;
+  }
+
+  &__entries-main {
+    grid-gap: 0.5rem;
+  }
+
+  &__address {
+    height: 30px;
+
+    input {
+      text-align: start;
+    }
+  }
+
+  &__address-form {
+    background: white;
+    width: 100%;
   }
 }
 

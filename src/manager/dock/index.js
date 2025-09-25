@@ -107,8 +107,7 @@ class __perdrix_dock extends LetcBox {
    * @param {*} args 
    */
   onUiEvent(cmd, args) {
-    const service = cmd.service || cmd.mget(_a.service) || cmd.mget(_a.name);
-    this.debug("AAA:111", cmd.mget('exclude'), service)
+    const service = cmd.mget(_a.service) || cmd.mget(_a.name);
     switch (service) {
       case _e.launch:
         if (cmd.mget('exclude')) {
@@ -119,7 +118,9 @@ class __perdrix_dock extends LetcBox {
           }
         }
         cmd.el.dataset.isActive = _a.on;
-        let w = Wm.launch({ kind: cmd.mget(_a.respawn), source: cmd }, this._launchOptions);
+        let args = { ...cmd.mget(_a.args), kind: cmd.mget(_a.respawn), source: cmd }
+        this.debug("AAA:111", args, service)
+        let w = Wm.launch(args, this._launchOptions);
         if (!w) {
           Wm.getItemsByKind(cmd.mget(_a.respawn))[0]?.show()
         }

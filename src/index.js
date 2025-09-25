@@ -81,8 +81,10 @@ async function start(parent) {
 
 
 if (document.readyState == 'complete') {
+  console.log("AAAA:84");
   start()
 } else {
+  console.log("AAAA:87", location.hash);
   if (location.hash) {
     document.addEventListener('drumee:plugins:ready', start);
   } else {

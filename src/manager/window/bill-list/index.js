@@ -196,8 +196,13 @@ class window_bill_list extends __window {
     this.debug(`AAA:97XXX onUiEvent=${service}`, cmd, args, this);
     switch (service) {
       case _e.reset:
-        this.resetEntries("street-entry", "city-entry", "postcode-entry", "custname-entry");
-        this.loadbillsList();
+        this._api.args = {
+          type: "site",
+          filter: [{ name: "custName", value: 'asc' }]
+        };
+        if (this.resetEntries("description-entry", "chrono-entry", "custname-entry", "address-entry")) {
+          this.loadbillsList();
+        }
         break;
       case "sort":
         this.loadbillsList(await this.getSortOptions(null, [_a.lastname, _a.ctime]));

@@ -9,7 +9,7 @@ const { entry } = require('./widgets')
  * @returns 
  */
 
-export function cartridge(ui, note, input) {
+export function cartridge(ui, note, input, extra) {
   let kids = [
     Skeletons.Note({
       className: `${ui.fig.family}__label inactive`,
@@ -17,11 +17,12 @@ export function cartridge(ui, note, input) {
       ...note
     }),
     entry(ui, {
-      className: `${ui.fig.family}__entry}`,
+      className: `${ui.fig.family}__entry`,
       sys_pn: input.name,
       ...input
     }),
   ]
+  if (extra) kids.push(extra)
   return Skeletons.Box.G({
     className: `${ui.fig.family}__cartridge-main`,
     debug: __filename,
@@ -133,6 +134,12 @@ export function contextButtons(ui) {
       service: _a.save,
       tooltips: LOCALE.SAVE_CHANGES
     }),
+    Skeletons.Button.Svg({
+      className: `icon`,
+      ico: `desktop_copy`,
+      service: _e.duplicate,
+      tooltips: LOCALE.DUPLICATE
+    }),
   ]
 }
 
@@ -145,6 +152,9 @@ export function quoteForm(ui) {
 
   return Skeletons.Box.Y({
     className: `${pfx}__cartridge-container`,
+    kidsOpt: {
+      className: `${pfx}__cartridge-main proposal`,
+    },
     kids: [
       cartridge(ui, {
         content: "Montant HT",

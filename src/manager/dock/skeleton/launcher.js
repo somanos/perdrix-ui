@@ -35,6 +35,10 @@ function dockLaunchers(_ui_, ismobile) {
       ico: 'maintenance',
       className: `${button_class} site launcher-icon plus`,
       respawn: 'customer_selector',
+      args: {
+        purpose: "create-site",
+        title: 'Choisir un client pour le chantier'
+      },
       service: _e.launch,
     }, "Ajouter un chantier"),
     button(_ui_, {
@@ -54,13 +58,17 @@ function dockLaunchers(_ui_, ismobile) {
       className: `${button_class} quote launcher-icon`,
       service: _e.launch,
       respawn: 'window_quote_list',
-    }, "Liste des devis"),
+    }, "Rechercher des devis"),
     button(_ui_, {
       ico: 'desktop_docfile',
       className: `${button_class} quote launcher-icon plus`,
-      respawn: 'form_poc',
+      respawn: 'customer_selector',
+      args: {
+        purpose: "create-quote",
+        title: 'Choisir un client pour le devis'
+      },
       service: _e.launch
-    }, "Créer un devis"),
+    }, "Nouveau devis"),
     button(_ui_, {
       ico: 'menu_pages',
       className: `${button_class} bill launcher-icon`,
@@ -70,7 +78,11 @@ function dockLaunchers(_ui_, ismobile) {
     button(_ui_, {
       ico: 'menu_pages',
       className: `${button_class} bill launcher-icon plus`,
-      respawn: 'form_poc',
+      respawn: 'customer_selector',
+      args: {
+        purpose: "create-bill",
+        title: 'Choisir un client pour la facture'
+      },
       service: _e.launch
     }, "Créer une facture"),
     // button(_ui_, {

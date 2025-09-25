@@ -20,7 +20,7 @@ class __locaion_view extends LetcBox {
     require('./skin');
     super.initialize(opt);
     this.declareHandlers();
-    this.model.atLeast({ showMap: 1 })
+    this.model.atLeast({ showMap: 1, editable: 1 })
   }
 
   /**

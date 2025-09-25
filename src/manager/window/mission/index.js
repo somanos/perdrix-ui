@@ -72,46 +72,46 @@ class __window_mission extends __window {
   /**
   * 
   */
-  async promptQuote(cmd) {
-    const { custId, category, siteId, workId, site, workType, customer, description } = this.model.toJSON();
-    this.loadWidget({
-      kind: 'form_quote',
-      custId,
-      siteId,
-      workId,
-      site,
-      category,
-      workType,
-      category,
-      customer,
-      description,
-      id: `quote-form-${workId}`,
-      uiHandler: [this],
-      callbackService: "quote-created"
-    })
-  }
+  // async promptQuote(cmd) {
+  //   const { custId, category, siteId, workId, site, workType, customer, description } = this.model.toJSON();
+  //   this.loadWidget({
+  //     kind: 'form_quote',
+  //     custId,
+  //     siteId,
+  //     workId,
+  //     site,
+  //     category,
+  //     workType,
+  //     category,
+  //     customer,
+  //     description,
+  //     id: `quote-form-${workId}`,
+  //     uiHandler: [this],
+  //     callbackService: "quote-created"
+  //   })
+  // }
 
   /**
   * 
   */
-  async promptBill(cmd) {
-    const { custId, category, siteId, workId, site, workType, customer, description } = this.model.toJSON();
-    this.loadWidget({
-      kind: 'form_bill',
-      custId,
-      siteId,
-      workId,
-      site,
-      category,
-      workType,
-      category,
-      customer,
-      description,
-      id: `bill-form-${workId}`,
-      uiHandler: [this],
-      callbackService: "bill-created"
-    })
-  }
+  // async promptBill(cmd) {
+  //   const { custId, category, siteId, workId, site, workType, customer, description } = this.model.toJSON();
+  //   this.loadWidget({
+  //     kind: 'form_bill',
+  //     custId,
+  //     siteId,
+  //     workId,
+  //     site,
+  //     category,
+  //     workType,
+  //     category,
+  //     customer,
+  //     description,
+  //     id: `bill-form-${workId}`,
+  //     uiHandler: [this],
+  //     callbackService: "bill-created"
+  //   })
+  // }
 
   /**
    * 

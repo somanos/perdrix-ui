@@ -58,6 +58,15 @@
     overflow: auto;
     max-height: 200px;
 
+    &.icon {
+      height: 21px;
+      border: 1px solid rgb(135, 133, 133);
+      border-radius: 50%;
+      width: 25px;
+      margin: auto;
+      overflow: hidden;
+    }
+
     .smart-container {
       min-height: 100px;
     }

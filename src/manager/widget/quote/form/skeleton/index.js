@@ -1,14 +1,24 @@
 
 const {
-  list, customerHeader, siteSelector, actionButtons,
+  list, customerHeader, actionButtons,
   headerBox, messageBock, descriptionEntry, quoteForm
 } = require("../../../skeleton")
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
-  let { site, description } = ui.model.toJSON()
+  let { site, description, id } = ui.model.toJSON()
+  let service = _a.create;
+  let content = "Créer le devis";
+  let title = "Créer un devis";
+
+  if (id) {
+    service = _e.update;
+    content = "Mettre à jour"
+    title = "Mettre à jour un devis"
+  }
+
   let siteView;
-  if(site){
+  if (site) {
     siteView = {
       ...site,
       type: 'site',
@@ -32,7 +42,7 @@ module.exports = function (ui) {
       Skeletons.Wrapper.Y({
         className: `${pfx}__site-address`,
         sys_pn: "site-address",
-        kids:[
+        kids: [
           siteView
         ]
       }),
@@ -58,14 +68,14 @@ module.exports = function (ui) {
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
     kids: [
-      headerBox(ui, { title: "Créer un devis" }),
+      headerBox(ui, { title }),
       customerHeader(ui),
       Skeletons.Box.Y({
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
           actionButtons(ui, [
-            { sys_pn:"btn-create", service: _a.create, content: "Créer le devis" }
+            { sys_pn: "btn-create", service, content }
           ]),
         ]
       })

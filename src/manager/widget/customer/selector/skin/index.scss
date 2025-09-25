@@ -4,7 +4,7 @@
 @use 'mixins/form' as *;
 @use '../../../../window/skin/group/header/list' as *;
 
-.site-selector {
+.customer-selector {
   @include header-list;
   @include window-search-boxes;
   @include form-buttons;
@@ -52,7 +52,7 @@
     }
 
     &[data-state="0"] {
-      .site__header {
+      .customer__header {
         opacity: 0.4;
       }
     }
