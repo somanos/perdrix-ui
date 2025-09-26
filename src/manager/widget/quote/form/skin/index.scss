@@ -219,8 +219,8 @@
     background: white;
     width: 100%;
 
-    &[data-state="1"] {
-      z-ibdex: 0;
+    &.dialog__wrapper[data-state="open"] {
+      z-index: 0;
     }
   }
 }
