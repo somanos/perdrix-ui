@@ -244,21 +244,6 @@ class window_quote_list extends __window {
         })
         break;
       case _e.duplicate:
-        // kind = "form_quote";
-        // let data = {
-        //   ...cmd.data(),
-        //   mode: service,
-        // }
-        // delete data.id;
-        // delete data.workId;
-        // delete data.addressId;
-        // this.loadWidget({
-        //   ...data,
-        //   mode: service,
-        //   callbackService: "quote-created",
-        //   uiHandler: [this],
-        //   kind,
-        // })
         this.duplicateQuote(cmd, service);
         break;
       case "show-doc":

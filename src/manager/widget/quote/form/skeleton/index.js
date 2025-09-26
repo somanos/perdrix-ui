@@ -6,7 +6,7 @@ const {
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
-  let { site, description, id, chrono } = ui.model.toJSON()
+  let { site, description, id, chrono, nid } = ui.model.toJSON()
   let service = _a.create;
   let content = "Créer le devis";
   let title = "Créer un devis";
@@ -66,6 +66,9 @@ module.exports = function (ui) {
   let buttons = [{ sys_pn: "btn-create", service, content }]
   if (id) {
     buttons.push({ sys_pn: "btn-increase", service: _a.create, content: "Nouvelle version" })
+  }
+  if (nid) {
+    buttons.push({ service: "show-doc", content: "Voir le document" })
   }
   return Skeletons.Box.Y({
     debug: __filename,

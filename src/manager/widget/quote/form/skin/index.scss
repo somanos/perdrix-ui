@@ -108,8 +108,13 @@
     justify-content: center;
     width: 100%;
     padding: 20px 0px;
-    opacity: 0.5;
-    pointer-events: none;
+  }
+
+  &__buttons-container {
+    &[data-state="0"] {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 
   // &__button-item {
@@ -195,12 +200,13 @@
     }
   }
 
-  &__entries-manual dialog__wrapper {
+  &__entries-manual.dialog__wrapper {
     position: absolute;
-    top: 90px;
+    top: 55px;
     background: white;
     max-width: 555px;
-    left: 70px;
+    left: 165px;
+    box-shadow: drumee.$drumee-shadow-container;
   }
 
   &__entries-main {
@@ -220,7 +226,7 @@
     width: 100%;
 
     &.dialog__wrapper[data-state="open"] {
-      z-index: 0;
+      z-index: 0 !important;
     }
   }
 }

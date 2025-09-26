@@ -91,10 +91,8 @@ class __form_quote extends Form {
    * 
    */
   onDomRefresh() {
-    this.debug("AAA:86", this)
     if (this.mget(_a.id)) {
       this.fetchService(SERVICE.quote.read, { id: this.mget(_a.id) }).then((data) => {
-        this.debug("AAA:88", data)
         this.mset(data)
         this.feed(require('./skeleton')(this));
       }).catch((e) => {
@@ -103,8 +101,10 @@ class __form_quote extends Form {
       })
       return
     }
+    this.changeDataset("buttons", _a.state, 0)
     if (!this.mget('custId')) {
       this.model.atLeast({ site: {}, costomer: {}, work: {} })
+      this.exnihilo = 1;
       this.feed(require('./skeleton/reuse')(this));
       return
     }
@@ -123,7 +123,6 @@ class __form_quote extends Form {
   async _checkSanity() {
     let args = this.data()
     let { custId, siteId, workId } = args;
-
     if (!custId) {
       Butler.say("Il n'y pas encore de client attaché à ce projet de devis")
       return 0
@@ -171,10 +170,16 @@ class __form_quote extends Form {
     args.workId = workId;
     args.siteId = siteId;
     args.addressId = addressId;
-    this.debug("AAA", args, { custId, siteId, workId, addressId }, this)
 
     this.changeDataset("buttons", _a.state, 0)
     this.postService("quote.create", { args }).then((data) => {
+      if (this.exnihilo) {
+        this.mset(data);
+        let { nid, hub_id, filepath, filename, privilege } = data;
+        this.viewDoc({ nid, hub_id, filepath, filename, privilege });
+        setTimeout(() => { this.goodbye() }, 1000)
+        return
+      }
       let service = this.mget("callbackService") || 'quote-created'
       this.triggerHandlers({ service, data });
       this.goodbye()
@@ -252,10 +257,9 @@ class __form_quote extends Form {
       street, city, housenumber,
       postcode
     }));
-    this.debug("AAA:209", cmd)
-    let { custId } = this.model.toJSON();
-    if (custId) {
-      this.changeDataset("btn-create", _a.state, 1)
+    let { custId, siteId, addressId } = this.data();
+    if (custId && (siteId || addressId || city)) {
+      this.changeDataset("buttons", _a.state, 1)
     }
   }
 
@@ -275,9 +279,9 @@ class __form_quote extends Form {
     })
     let target = await this.ensurePart("entry-custName");
     target.setValue(cmd.mget('custName'))
-    let { custId, siteId, workId, addressId } = this.model.toJSON();
-    if (custId && (siteId || addressId)) {
-      this.changeDataset("btn-create", _a.state, 1)
+    let { custId, siteId, addressId, city } = this.data();
+    if (custId && (siteId || addressId || city)) {
+      this.changeDataset("buttons", _a.state, 1)
     }
   }
 
@@ -321,7 +325,7 @@ class __form_quote extends Form {
         let pn = cmd.mget(_a.sys_pn);
         let input = await this.ensurePart(pn)
         p.el.dataset.state = "1"
-        p.$el.width(input.$el.width() - 40)
+        p.el.style.top = "56px";
       })
       list.restart();
     })
@@ -352,14 +356,16 @@ class __form_quote extends Form {
       uiHandler: [this],
     }
     this.ensurePart(_a.list).then((list) => {
+      list.mset({ api, itemsOpt });
       this.ensurePart("entries-manual").then(async (p) => {
         let pn = cmd.mget(_a.sys_pn);
         let input = await this.ensurePart(pn)
         p.el.dataset.state = "1"
-        p.$el.width(input.$el.width() - 40)
+        p.$el.width(input.$el.width())
+        p.el.style.top = "25px";
       })
       this.feedList(api, itemsOpt, (list) => {
-        list.model.unset(_a.itemsOpt)
+        //list.model.unset(_a.itemsOpt)
         list.feed(placeholder(this, { labels: ["Aucun client trouvé.", "Créer d'abord un client"], service: "create-customer" }));
       })
     })
@@ -386,7 +392,7 @@ class __form_quote extends Form {
    */
   onUiEvent(cmd, args = {}) {
     let service = args.service || cmd.mget(_a.service);
-    this.debug("AAA:135", service, cmd, args, this)
+    // this.debug("AAA:135", service, cmd, args, this)
     switch (service) {
       case _a.create:
         this.createQuote(cmd);
@@ -413,15 +419,22 @@ class __form_quote extends Form {
       case "create-customer":
         this.loadWidget({ kind: "form_customer", uiHandler: [this], callbackService: "customer-created", });
         break
+      case "show-doc":
+        let { nid, hub_id, filepath, filename, privilege } = this.model.toJSON()
+        this.viewDoc({ nid, hub_id, filepath, filename, privilege });
+        break
       case "reset-address":
         this._args = {}
         this.model.unset('addressId');
         this.model.unset('siteId');
         this.changeDataset("btn-create", _a.state, 0)
+        this.changeDataset("address-form", _a.state, _a.closed)
+        this.changeDataset("entries-manual", _a.state, _a.closed)
         this.resetEntries("entry-address");
         break
       case "reset-customer":
         this._args = {}
+        this.changeDataset("entries-manual", _a.state, _a.closed)
         this.changeDataset("btn-create", _a.state, 0)
         this.model.unset('custId');
         this.resetEntries("entry-custName");
