@@ -108,15 +108,17 @@
     justify-content: center;
     width: 100%;
     padding: 20px 0px;
+    opacity: 0.5;
+    pointer-events: none;
   }
 
-  &__button-item {
-    &[data-state="0"] {
-      opacity: 0.5;
-      pointer-events: none;
-    }
+  // &__button-item {
+  //   &[data-state="0"] {
+  //     opacity: 0.5;
+  //     pointer-events: none;
+  //   }
 
-  }
+  // }
 
   @include dialog-acknowledge;
   @include dialog-overlay;
@@ -132,7 +134,7 @@
   &__cartridge-main {
     width: 100%;
     grid-template-columns: 150px 1fr 30px;
-    height: 35px;
+    height: 30px;
 
     input {
       text-align: start;
@@ -151,7 +153,15 @@
       color: rgb(125, 123, 123);
     }
 
-    margin: 10px 0;
+    margin: 2px 0;
+
+    &.menu-input {
+      width: calc(100% - 30px);
+    }
+
+    .menu-input__entry-icon {
+      padding: 3px;
+    }
   }
 
   &__category-main {
@@ -208,6 +218,10 @@
   &__address-form {
     background: white;
     width: 100%;
+
+    &[data-state="1"] {
+      z-ibdex: 0;
+    }
   }
 }
 

@@ -62,11 +62,11 @@ function dockLaunchers(_ui_, ismobile) {
     button(_ui_, {
       ico: 'desktop_docfile',
       className: `${button_class} quote launcher-icon plus`,
-      respawn: 'customer_selector',
-      args: {
-        purpose: "create-quote",
-        title: 'Choisir un client pour le devis'
-      },
+      respawn: 'form_quote',
+      // args: {
+      //   purpose: "create-quote",
+      //   title: 'Choisir un client pour le devis'
+      // },
       service: _e.launch
     }, "Nouveau devis"),
     button(_ui_, {

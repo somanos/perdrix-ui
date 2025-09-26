@@ -6,7 +6,7 @@ export function addressSearchBoxes(ui, itemsOpt) {
   let boxes = [
     entry(ui, {
       className: `${fig}__searchbox street`,
-      placeholder: "Description",
+      placeholder: "Description de mission",
       name: 'description',
       sys_pn: "description-entry",
       service: _a.search,

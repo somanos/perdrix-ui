@@ -6,7 +6,7 @@ const {
 
 module.exports = function (ui) {
   const pfx = ui.fig.family;
-  let { site, description, id } = ui.model.toJSON()
+  let { site, description, id, chrono } = ui.model.toJSON()
   let service = _a.create;
   let content = "Créer le devis";
   let title = "Créer un devis";
@@ -14,7 +14,7 @@ module.exports = function (ui) {
   if (id) {
     service = _e.update;
     content = "Mettre à jour"
-    title = "Mettre à jour un devis"
+    title = `Mettre à jour le devis ${chrono}`
   }
 
   let siteView;
@@ -63,7 +63,10 @@ module.exports = function (ui) {
     ]
   });
 
-
+  let buttons = [{ sys_pn: "btn-create", service, content }]
+  if (id) {
+    buttons.push({ sys_pn: "btn-increase", service: _a.create, content: "Nouvelle version" })
+  }
   return Skeletons.Box.Y({
     debug: __filename,
     className: `${pfx}__main ${ui.fig.group}__main`,
@@ -74,9 +77,7 @@ module.exports = function (ui) {
         className: `${pfx}__container ${ui.fig.group}__container`,
         kids: [
           body,
-          actionButtons(ui, [
-            { sys_pn: "btn-create", service, content }
-          ]),
+          actionButtons(ui, buttons),
         ]
       })
     ]

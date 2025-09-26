@@ -39,7 +39,7 @@ class __menu_input extends LetcBox {
    * @param {*} key 
    */
   clickHandler(e, origin) {
-    if (mouseDragged) {
+    if (pointerDragged) {
       return;
     }
     if (e && this.el.contains(e.currentTarget)) {
@@ -121,6 +121,10 @@ class __menu_input extends LetcBox {
       case "show-menu":
         this.showMenu(cmd);
         break;
+      case _e.reset:
+        this.clearItems();
+        this.setValue('');
+        break;
       case _a.input:
         switch (cmd.mget(_a.name)) {
           case name:
@@ -152,12 +156,10 @@ class __menu_input extends LetcBox {
       if (reg.test(ref) || reg.test(item.label)) {
         let el = Skeletons.Note({
           ...item,
-          className: `${this.fig.family}__item ${name}`,
+          className: `${this.fig.family}__item`,
           content: ref || item.label,
           service: "item-selected",
           uiHandler: [this],
-          formItem: name,
-          name,
           state: 0
         })
         r.push(el);

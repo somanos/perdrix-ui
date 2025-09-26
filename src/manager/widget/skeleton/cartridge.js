@@ -118,7 +118,7 @@ export function entryValue(ui, o1, o2) {
  * @returns 
  */
 export function contextButtons(ui) {
-  return [
+  let r = [
     Skeletons.Button.Svg({
       className: `icon`,
       ico: `drumee-trash`,
@@ -141,6 +141,20 @@ export function contextButtons(ui) {
       tooltips: LOCALE.DUPLICATE
     }),
   ]
+  if (ui.mget(_a.filepath)) {
+    r.unshift(
+      Skeletons.Button.Svg({
+        className: `icon`,
+        ico: `documents_different`,
+        service: "show-doc",
+        dataset: {
+          admin: Visitor.isPdxAdmin()
+        },
+        tooltips: LOCALE.DOCUMENT
+      })
+    )
+  }
+  return r
 }
 
 export function quoteForm(ui) {

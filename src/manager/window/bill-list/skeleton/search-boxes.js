@@ -5,26 +5,26 @@ export function addressSearchBoxes(ui, itemsOpt) {
   let fig = ui.fig.family;
   let boxes = [
     entry(ui, {
+      className: `${fig}__searchbox city`,
+      placeholder: "Description de devis",
+      name: _a.year,
+      sys_pn: "year-entry",
+      service: _a.search,
+    }),
+    entry(ui, {
       className: `${fig}__searchbox street`,
-      placeholder: "Description",
+      placeholder: "N° de devis",
       name: 'description',
       sys_pn: "description-entry",
       service: _a.search,
     }),
     entry(ui, {
       className: `${fig}__searchbox poc`,
-      placeholder: "N° de devis",
-      name: 'chrono',
-      sys_pn: "chrono-entry",
-      service: _a.search,
-      mode: "editable"
-    }),
-    entry(ui, {
-      className: `${fig}__searchbox city`,
-      placeholder: "Num du client",
-      name: "custName",
+      placeholder: "Nom du client",
+      name: 'custName',
       sys_pn: "custname-entry",
       service: _a.search,
+      mode: "editable"
     }),
     entry(ui, {
       className: `${fig}__searchbox city`,
@@ -39,6 +39,7 @@ export function addressSearchBoxes(ui, itemsOpt) {
       service: _e.reset
     }),
   ]
+  
   return Skeletons.Box.Y({
     className: `${fig}__list-container`,
     radio: _a.parent,

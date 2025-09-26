@@ -1,5 +1,4 @@
 
-const { entry } = require("../../../widget/skeleton")
 const { addressSearchBoxes } = require("./search-boxes")
 
 module.exports = function (ui) {

@@ -106,10 +106,12 @@ class __form_customer extends Form {
   async selectAddress(cmd, extended = 0) {
     await this.clearList();
     let p = await this.ensurePart("entries");
-    this._data['properties'] = cmd.mget('properties');
+    if (cmd) {
+      this._data['properties'] = cmd.mget('properties');
+    }
     const {
       street, city, housenumber, postcode, label
-    } = this._data['properties'] || {};
+    } = this._data['properties'] || { street: "", streettype: "", streettype: "", label: "" };
 
     let addr = await this.ensurePart("address-entry");
     addr.setValue(label)
@@ -142,7 +144,7 @@ class __form_customer extends Form {
       args: {
         custName,
         sort_by: _a.name,
-        order:"aasc"
+        order: "aasc"
       },
     };
     let itemsOpt = {
@@ -153,7 +155,10 @@ class __form_customer extends Form {
 
     return new Promise((will, wont) => {
       this.feedList(api, itemsOpt, (data) => {
-        this.clearList()
+        this.clearList();
+        this.debug("AAA:161", data)
+      }, (data) => {
+        this.debug("AAA:163", data)
       })
     })
   }
@@ -215,10 +220,13 @@ class __form_customer extends Form {
     args.category = this.mget(_a.category)
 
     this.postService(PLUGINS.customer.create, { args }).then((data) => {
-      this.debug("AAA:215", data)
       this.mset(data)
-      this.loadPocForm(data);
       this.goodbye();
+      if (this.mget('callbackService')) {
+        this.triggerHandlers({ service: this.mget('callbackService'), data })
+        return;
+      }
+      this.loadPocForm(data);
     }).catch((e) => {
       this.debug("AAA:377 FAILED", e)
     })
@@ -336,6 +344,13 @@ class __form_customer extends Form {
         this.raise();
         break;
       case 'select-address':
+        this.selectAddress(cmd).then(() => {
+          this.ensurePart('btn-create').then((p) => {
+            p.el.dataset.state = 1;
+          })
+        });
+        break;
+      case 'manual-input':
         this.selectAddress(cmd).then(() => {
           this.ensurePart('btn-create').then((p) => {
             p.el.dataset.state = 1;

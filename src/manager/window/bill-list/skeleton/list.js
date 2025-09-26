@@ -1,6 +1,5 @@
 
-const { entry, addressSearchBoxes } = require("../../../widget/skeleton")
-
+const { addressSearchBoxes } = require("./search-boxes")
 module.exports = function (ui) {
   let itemsOpt = {
     kind: 'poc_item',
@@ -11,13 +10,5 @@ module.exports = function (ui) {
     uiHandler: [ui],
     callbackService: "quote-updated"
   };
-  let extra = entry(ui, {
-    className: `${ui.fig.family}__searchbox poc`,
-    placeholder: "Nom du client",
-    name: 'custName',
-    sys_pn: "custname-entry",
-    service: _a.search,
-    mode: "editable"
-  });
-  return addressSearchBoxes(ui, itemsOpt, extra)
+  return addressSearchBoxes(ui, itemsOpt)
 };

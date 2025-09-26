@@ -88,6 +88,7 @@ class window_quote_list extends __window {
       kind: 'quote_item',
       uiHandler: [this],
       service: "update-quote",
+      showAddress: 1,
       mode: "editable"
     }
     if (filter) api.args = { ...api.args, ...filter };
@@ -203,7 +204,7 @@ class window_quote_list extends __window {
     let kind;
     switch (service) {
       case 'quote-created':
-        // this.loadNotesList(cmd)
+        this.loadQuotesList();
         break;
       case 'quote-updated':
         let items = this.getItemsByAttr(_a.id, args.data.id)
@@ -211,7 +212,6 @@ class window_quote_list extends __window {
           item.mset(args.data);
           item.onDomRefresh()
         }
-        // this.loadNotesList(cmd)
         break;
       case _e.reset:
         this._api.args = {
@@ -244,20 +244,28 @@ class window_quote_list extends __window {
         })
         break;
       case _e.duplicate:
-        kind = "form_quote";
-        let data = {
-          ...cmd.data(),
-          mode: service,
-        }
-        delete data.id;
-        this.loadWidget({
-          ...data,
-          mode: service,
-          uiHandler: [this],
-          kind,
-        })
-
+        // kind = "form_quote";
+        // let data = {
+        //   ...cmd.data(),
+        //   mode: service,
+        // }
+        // delete data.id;
+        // delete data.workId;
+        // delete data.addressId;
+        // this.loadWidget({
+        //   ...data,
+        //   mode: service,
+        //   callbackService: "quote-created",
+        //   uiHandler: [this],
+        //   kind,
+        // })
+        this.duplicateQuote(cmd, service);
         break;
+      case "show-doc":
+        let { nid, hub_id, filepath, filename, privilege } = cmd.model.toJSON()
+        this.viewDoc({ nid, hub_id, filepath, filename, privilege });
+        break;
+
       default:
         super.onUiEvent(cmd, args);
     }

@@ -257,6 +257,27 @@ export async function promptQuote(ref) {
 }
 
 /**
+ * 
+ */
+export function duplicateQuote(cmd, service) {
+  let kind = "form_quote";
+  let data = {
+    ...cmd.data(),
+    mode: service,
+  }
+  delete data.id;
+  delete data.workId;
+  delete data.addressId;
+  this.loadWidget({
+    ...data,
+    mode: service,
+    callbackService: "quote-created",
+    uiHandler: [this],
+    kind,
+  })
+}
+
+/**
 * 
 */
 export async function promptBill(ref) {
@@ -310,7 +331,7 @@ export async function searchLocation(cmd, wrapper) {
     if (length <= 2 && words.length < 5) return will(null);
     this.feedList(api, itemsOpt, (list) => {
       list.model.unset(_a.itemsOpt)
-      list.feed(placeholder(this));
+      list.feed(placeholder(this, { service: "manual-input" }));
     })
   })
 }
@@ -608,6 +629,7 @@ export function searchSitePoc(cmd, k) {
  * 
  */
 export function isBlindChar(cmd) {
+  if (!cmd) return true;
   return BLIND_CHARS.includes(cmd.status)
 }
 

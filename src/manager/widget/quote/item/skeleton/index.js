@@ -13,7 +13,7 @@ const { contextButtons } = require("../../../skeleton")
  */
 
 function quote_item(ui) {
-  let { ctime, description = "", chrono = "", filepath, customer, site } = ui.model.toJSON()
+  let { ctime, description = "", chrono = "", filepath, customer, site, showAddress } = ui.model.toJSON()
   let pfx = ui.fig.family;
   let service;
   let tooltips;
@@ -29,7 +29,7 @@ function quote_item(ui) {
     });
   }
   let place;
-  if (site && site.location) {
+  if (showAddress && site && site.location) {
     place = Skeletons.Note({
       className: `${pfx}__text`,
       content: `${normalizelLocation(site.location)} ${site.city}`

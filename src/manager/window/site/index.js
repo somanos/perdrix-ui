@@ -210,8 +210,13 @@ class window_site extends __window {
         let name = cmd.mget(_a.name);
         if (!name) break;
         this.loadSalesHistory(cmd, { type: this._currentTab, custId: this.mget('custId') })
+        break;
       case "load-address-window":
         this.loadAddressWindow(this.data().site)
+        break;
+      case _e.duplicate:
+        this.duplicateQuote(cmd, service);
+        break;
       default:
         super.onUiEvent(cmd, args);
     }

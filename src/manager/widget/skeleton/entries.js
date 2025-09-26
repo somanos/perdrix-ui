@@ -13,7 +13,7 @@ export function address(ui, opt) {
     serviceLabel, service, location
   } = opt;
   const pfx = `${ui.fig.family}`;
-
+  street = street || "";
   if (_.isString(location) || !location) {
     location = []
     if (housenumber) {
@@ -32,7 +32,9 @@ export function address(ui, opt) {
     }
   }
   let o = getLocationFields(location)
-  let { streettype, streetname } = o
+  let { streettype, streetname } = o;
+  streettype = streettype || ""
+  streetname = streetname || ""
   housenumber = housenumber || o.housenumber;
   additional = additional || o.additional;
   let streetType = menuInput(ui, {

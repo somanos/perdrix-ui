@@ -32,13 +32,17 @@ function entry(ui) {
       Skeletons.Entry(args),
       Skeletons.Button.Svg({
         className: `${pfx}-icon`,
+        ico: 'unavailable',
+        service: _e.reset
+      }),
+      Skeletons.Button.Svg({
+        className: `${pfx}-icon`,
         ico: 'arrow-down',
         service: 'show-menu'
       })
     ]
   })
 
-  return Skeletons.Entry(args)
 }
 
 /**

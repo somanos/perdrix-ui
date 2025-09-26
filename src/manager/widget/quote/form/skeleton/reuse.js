@@ -1,6 +1,6 @@
 
 const {
-  list, cartridge, actionButtons, entry,
+  list, cartridge, actionButtons, menuInput,
   headerBox, messageBock, descriptionEntry, quoteForm
 } = require("../../../skeleton")
 const { normalizelLocation } = require('../../../../utils')
@@ -14,7 +14,7 @@ module.exports = function (ui) {
   if (site?.location) {
     address = normalizelLocation(site.location)
   }
-  if (site.city) address = `${address} ${site.city}`
+  if (address && site.city) address = `${address} ${site.city}`
   let custName = customer?.custName || "";
   const body = Skeletons.Box.Y({
     className: `${pfx}__body`,
@@ -31,7 +31,7 @@ module.exports = function (ui) {
         kids: [
           cartridge(ui,
             { content: "Nom du client" },
-            { value: custName, name: "custName", interactive: 1, uiHandler: [ui], service: "search-customer", sys_pn: "custName", placeholder: "" },
+            { value: custName, name: "custName", interactive: 1, uiHandler: [ui], service: "search-customer", sys_pn: "entry-custName", placeholder: "" },
             Skeletons.Button.Svg({
               className: `${pfx}__searchbox icon`,
               ico: "unavailable",
@@ -40,13 +40,31 @@ module.exports = function (ui) {
           ),
           cartridge(ui,
             { content: "Adresse du chantier" },
-            { value: address, name: "address", interactive: 1, uiHandler: [ui], service: "search-address", sys_pn: "address", placeholder: "" },
+            { value: address, name: "address", interactive: 1, uiHandler: [ui], service: "search-address", sys_pn: "entry-address", placeholder: "" },
             Skeletons.Button.Svg({
               className: `${pfx}__searchbox icon`,
               ico: "unavailable",
               service: "reset-address"
-            })
+            }),
           ),
+          Skeletons.Box.G({
+            className: `${ui.fig.family}__cartridge-main`,
+            debug: __filename,
+            kids: [
+              Skeletons.Note({
+                className: `${ui.fig.family}__label inactive`,
+                active: 0,
+                content: "Type de mission"
+              }), menuInput(ui, {
+                items: Env.get('workType'),
+                name: 'category',
+                placeholder: '',
+                refAttribute: 'label',
+                value: ui.mget(_a.type) || "",
+              }),
+
+            ]
+          }),
         ]
       }),
       Skeletons.Wrapper.Y({
