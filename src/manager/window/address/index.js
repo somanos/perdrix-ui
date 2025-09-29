@@ -146,7 +146,7 @@ class __window_address extends __window {
    * 
    */
   searchAddress(cmd) {
-    let order, name;
+    let name;
     if (cmd) {
       name = cmd.mget(_a.name);
       if (BLIND_CHARS.includes(cmd.status)) return;
@@ -192,8 +192,6 @@ class __window_address extends __window {
   */
   onUiEvent(cmd, args = {}) {
     const service = args.service || cmd.model.get(_a.service);
-    this.debug(`onUiEvent service=${service}`, cmd, this);
-
     switch (service) {
       case _e.search:
         this._api = {
@@ -211,6 +209,30 @@ class __window_address extends __window {
         }
         this.searchAddress(cmd);
         return;
+      case _e.reset:
+        let r = this.resetEntries("street-entry", "city-entry", "postcode-entry");
+        if (r) {
+          let api = {
+            service: PLUGINS.address.list,
+            filter: [
+              {
+                name: "streetname",
+                value: "asc",
+              },
+              {
+                name: "housenumber",
+                value: "asc",
+              },
+            ],
+          }
+          this._api = {...api}
+          this.ensurePart(_a.list).then((list) => {
+            list.model.unset(_a.api)
+            list.mset({ api });
+            list.restart();
+          })
+        }
+        return
       case "load-viewer":
         this.loadAddressWindow(cmd.data());
         return;
